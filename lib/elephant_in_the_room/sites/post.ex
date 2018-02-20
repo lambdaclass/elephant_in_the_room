@@ -7,7 +7,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:title, :string)
     field(:content, :string)
     field(:image, :string)
-    field(:tag, :string)
+    field(:tag, {:array, :string})
 
     belongs_to(:category, Category)
 

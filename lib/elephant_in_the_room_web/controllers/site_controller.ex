@@ -20,6 +20,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
         conn
         |> put_flash(:info, "Site created successfully.")
         |> redirect(to: site_path(conn, :show, site))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -27,6 +28,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def show(conn, %{"id" => id}) do
     site = Sites.get_site!(id)
+
+    # fetch all the categories of the given site.
+    # categories = site |> Site.get_categories(id)
+
     render(conn, "show.html", site: site)
   end
 
@@ -44,6 +49,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
         conn
         |> put_flash(:info, "Site updated successfully.")
         |> redirect(to: site_path(conn, :show, site))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", site: site, changeset: changeset)
     end

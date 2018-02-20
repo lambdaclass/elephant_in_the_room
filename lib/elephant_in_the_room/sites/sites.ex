@@ -18,7 +18,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def list_sites do
-    Repo.all(Site)
+    Site |> Repo.all()
   end
 
   @doc """
@@ -109,12 +109,14 @@ defmodule ElephantInTheRoom.Sites do
 
   ## Examples
 
-      iex> list_categories()
+      iex> list_categories(site)
       [%Category{}, ...]
 
   """
-  def list_categories do
-    Repo.all(Category)
+  def list_categories(site) do
+    Category
+    |> where([t], t.site_id == ^site.id)
+    |> Repo.all()
   end
 
   @doc """
@@ -124,14 +126,34 @@ defmodule ElephantInTheRoom.Sites do
 
   ## Examples
 
-      iex> get_category!(123)
+      iex> get_category!(site, 123)
       %Category{}
 
-      iex> get_category!(456)
+      iex> get_category!(site, 456)
       ** (Ecto.NoResultsError)
 
+      iex> get_category!(site, 123)
+      %Category{}
+
+      iex> get_category!(site, 456)
+      ** (Ecto.NoResultsError)
   """
-  def get_category!(id), do: Repo.get!(Category, id)
+
+  def get_category!(site, id) do
+    Category
+    |> where([t], t.site_id == ^site.id)
+    |> Repo.get!(id)
+  end
+
+  def get_category!(id) do
+    Category
+    |> Repo.get!(id)
+  end
+
+  def get_category(id) do
+    Category
+    |> Repo.get(id)
+  end
 
   @doc """
   Creates a category.
@@ -145,9 +167,11 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_category(attrs \\ %{}) do
+  def create_category(site, attrs \\ %{}) do
+    category_attrs = Map.put(attrs, site.id)
+
     %Category{}
-    |> Category.changeset(attrs)
+    |> Category.changeset(category_attrs)
     |> Repo.insert()
   end
 
@@ -195,7 +219,8 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_category(%Category{} = category) do
-    Category.changeset(category, %{})
+    category
+    |> Category.changeset(%{})
   end
 
   alias ElephantInTheRoom.Sites.Post
@@ -209,8 +234,10 @@ defmodule ElephantInTheRoom.Sites do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Repo.all(Post)
+  def list_posts(category) do
+    Post
+    |> where([t], t.category_id == ^category.id)
+    |> Repo.all()
   end
 
   @doc """
@@ -227,7 +254,21 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(category, id) do
+    Post
+    |> where([t], t.category_id == ^category.id)
+    |> Repo.get!(id)
+  end
+
+  def get_post!(id) do
+    Post
+    |> Repo.get!(id)
+  end
+
+  def get_post(id) do
+    Post
+    |> Repo.get(id)
+  end
 
   @doc """
   Creates a post.
@@ -241,9 +282,11 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
+  def create_post(site, attrs \\ %{}) do
+    post_attrs = Map.put(attrs, site.id)
+
     %Post{}
-    |> Post.changeset(attrs)
+    |> Post.changeset(post_attrs)
     |> Repo.insert()
   end
 

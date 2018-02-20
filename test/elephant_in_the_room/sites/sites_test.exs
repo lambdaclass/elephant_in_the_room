@@ -188,4 +188,62 @@ defmodule ElephantInTheRoom.SitesTest do
       assert %Ecto.Changeset{} = Sites.change_post(post)
     end
   end
+
+  describe "categories" do
+    alias ElephantInTheRoom.Sites.Category
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def category_fixture(attrs \\ %{}) do
+      {:ok, category} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sites.create_category()
+
+      category
+    end
+
+    test "list_categories/0 returns all categories" do
+      category = category_fixture()
+      assert Sites.list_categories() == [category]
+    end
+
+    test "get_category!/1 returns the category with given id" do
+      category = category_fixture()
+      assert Sites.get_category!(category.id) == category
+    end
+
+    test "create_category/1 with valid data creates a category" do
+      assert {:ok, %Category{} = category} = Sites.create_category(@valid_attrs)
+    end
+
+    test "create_category/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_category(@invalid_attrs)
+    end
+
+    test "update_category/2 with valid data updates the category" do
+      category = category_fixture()
+      assert {:ok, category} = Sites.update_category(category, @update_attrs)
+      assert %Category{} = category
+    end
+
+    test "update_category/2 with invalid data returns error changeset" do
+      category = category_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_category(category, @invalid_attrs)
+      assert category == Sites.get_category!(category.id)
+    end
+
+    test "delete_category/1 deletes the category" do
+      category = category_fixture()
+      assert {:ok, %Category{}} = Sites.delete_category(category)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_category!(category.id) end
+    end
+
+    test "change_category/1 returns a category changeset" do
+      category = category_fixture()
+      assert %Ecto.Changeset{} = Sites.change_category(category)
+    end
+  end
 end

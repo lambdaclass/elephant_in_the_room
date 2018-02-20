@@ -17,7 +17,11 @@ defmodule ElephantInTheRoomWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
-    resources("/sites", SiteController)
-    resources("/posts", PostController)
+
+    resources "/sites", SiteController do
+      resources "/categories", CategoryController do
+        resources("/posts", PostController)
+      end
+    end
   end
 end
