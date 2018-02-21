@@ -6,6 +6,18 @@
     <strong>Name:</strong>
     <%= @site.name %>
   </li>
+  <li>
+    <strong>
+      <%= link "Categories:", to: site_category_path(@conn, :index, @site), class: "a" %>
+    </strong>
+    <%= for category <- @site.categories do %>
+    <ul>
+      <li>
+        <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a" %>
+      </li>
+    </ul>
+    <% end %>
+  </li>
 
 </ul>
 

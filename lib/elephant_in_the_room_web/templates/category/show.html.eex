@@ -10,6 +10,19 @@
     <strong>Description:</strong>
     <%= @category.description %>
   </li>
+
+  <li>
+    <strong>
+      <%= link "Posts:", to: site_category_post_path(@conn, :index, @site, @category), class: "a" %>
+    </strong>
+    <%= for post <- @category.posts do %>
+    <ul>
+      <li>
+        <%= link post.title, to: site_category_post_path(@conn, :show, @site, @category, post), class: "a" %>
+      </li>
+    </ul>
+    <% end %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category) %></span>

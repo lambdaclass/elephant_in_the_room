@@ -35,7 +35,9 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_site!(id), do: Repo.get!(Site, id)
+  def get_site!(id) do
+    Site |> Repo.get!(id)
+  end
 
   def get_site(id), do: Repo.get(Site, id)
 

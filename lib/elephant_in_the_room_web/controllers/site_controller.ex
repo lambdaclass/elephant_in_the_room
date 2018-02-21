@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Site
 
   def index(conn, _params) do
@@ -27,10 +27,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
   end
 
   def show(conn, %{"id" => id}) do
-    site = Sites.get_site!(id)
-
-    # fetch all the categories of the given site.
-    # categories = site |> Site.get_categories(id)
+    site =
+      id
+      |> Sites.get_site!()
+      |> Repo.preload(:categories)
 
     render(conn, "show.html", site: site)
   end
