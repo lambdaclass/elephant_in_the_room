@@ -3,7 +3,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Title</th>
       <th>Image</th>
       <th>Content</th>
 
@@ -13,14 +13,14 @@
   <tbody>
 <%= for post <- @posts do %>
     <tr>
-      <td><%= post.name %></td>
+      <td><%= post.title %></td>
       <td><%= post.image %></td>
       <td><%= post.content %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: site_category_post_path(@conn, :show, @category, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_category_post_path(@conn, :edit, @category, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_category_post_path(@conn, :delete, @category, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: site_category_post_path(@conn, :show, @site, @category, post), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: site_category_post_path(@conn, :edit, @site, @category, post), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: site_category_post_path(@conn, :delete, @site, @category, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
     </tr>
 <% end %>

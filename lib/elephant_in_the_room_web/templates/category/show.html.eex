@@ -1,7 +1,15 @@
 <h2>Show Category</h2>
 
 <ul>
+  <li>
+    <strong>Name:</strong>
+    <%= @category.name %>
+  </li>
 
+  <li>
+    <strong>Description:</strong>
+    <%= @category.description %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category) %></span>

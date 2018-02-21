@@ -1,5 +1,5 @@
 <h2>Edit Post</h2>
 
- <%= render "form.html", Map.put(assigns, :action, site_category_post_path(@conn, :update, @category, @post)) %>
+ <%= render "form.html", Map.put(assigns, :action, site_category_post_path(@conn, :update, @site, @category, @post)) %>
 
 <span><%= link "Back", to: site_category_post_path(@conn, :index, @category, @post) %></span>

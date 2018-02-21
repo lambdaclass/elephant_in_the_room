@@ -49,14 +49,14 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "edit.html", post: post, changeset: changeset, site: site, category: category)
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}, category) do
+  def update(conn, %{"id" => id, "post" => post_params}, site, category) do
     post = Sites.get_post!(id)
 
     case Sites.update_post(post, post_params) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: site_category_post_path(conn, :show, category, post))
+        |> redirect(to: site_category_post_path(conn, :show, site, category, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, post: post, changeset: changeset)

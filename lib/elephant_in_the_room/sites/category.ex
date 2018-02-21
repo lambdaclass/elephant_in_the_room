@@ -4,10 +4,10 @@ defmodule ElephantInTheRoom.Sites.Category do
   alias ElephantInTheRoom.Sites.{Category, Site, Post}
 
   schema "categories" do
-    field(:description, :string)
     field(:name, :string)
+    field(:description, :string)
 
-    belongs_to(:site, Site)
+    belongs_to(:site, Site, foreign_key: :site_id)
 
     has_many(:posts, Post)
 
@@ -17,8 +17,8 @@ defmodule ElephantInTheRoom.Sites.Category do
   @doc false
   def changeset(%Category{} = category, attrs) do
     category
-    |> cast(attrs, [:name, :description])
-    |> validate_required([:name, :description])
+    |> cast(attrs, [:name, :description, :site_id])
+    |> validate_required([:name, :description, :site_id])
     |> assoc_constraint(:site)
   end
 end

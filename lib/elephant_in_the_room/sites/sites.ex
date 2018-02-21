@@ -37,6 +37,8 @@ defmodule ElephantInTheRoom.Sites do
   """
   def get_site!(id), do: Repo.get!(Site, id)
 
+  def get_site(id), do: Repo.get(Site, id)
+
   @doc """
   Creates a site.
 
@@ -116,7 +118,7 @@ defmodule ElephantInTheRoom.Sites do
   def list_categories(site) do
     Category
     |> where([t], t.site_id == ^site.id)
-    |> preload(:site_id)
+    |> preload(:site)
     |> Repo.all()
   end
 
@@ -169,7 +171,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def create_category(site, attrs \\ %{}) do
-    category_attrs = Map.put(attrs, site.id)
+    category_attrs = Map.put(attrs, "site_id", site.id)
 
     %Category{}
     |> Category.changeset(category_attrs)
@@ -207,7 +209,8 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_category(%Category{} = category) do
-    Repo.delete(category)
+    category
+    |> Repo.delete()
   end
 
   @doc """
@@ -238,9 +241,8 @@ defmodule ElephantInTheRoom.Sites do
   def list_posts(category) do
     Post
     |> where([t], t.category_id == ^category.id)
+    |> preload(:category)
     |> Repo.all()
-    |> preload(:category_id)
-    |> preload(:site_id)
   end
 
   @doc """
@@ -285,8 +287,8 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(site, attrs \\ %{}) do
-    post_attrs = Map.put(attrs, site.id)
+  def create_post(category, attrs \\ %{}) do
+    post_attrs = Map.put(attrs, "category_id", category.id)
 
     %Post{}
     |> Post.changeset(post_attrs)

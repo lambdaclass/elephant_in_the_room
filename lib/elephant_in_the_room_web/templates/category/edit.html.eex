@@ -2,4 +2,4 @@
 
 <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :update, @site, @category)) %>
 
-<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
+<span><%= link "Back", to: site_category_path(@conn, :index, @site, @category) %></span>
