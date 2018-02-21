@@ -1,5 +1,5 @@
 <h2>Edit Category</h2>
 
-<%= render "form.html", Map.put(assigns, :action, category_path(@conn, :update, @category)) %>
+<%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :update, @site, @category)) %>
 
-<span><%= link "Back", to: category_path(@conn, :index) %></span>
+<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>

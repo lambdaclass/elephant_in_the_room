@@ -4,5 +4,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: category_path(@conn, :edit, @category) %></span>
-<span><%= link "Back", to: category_path(@conn, :index) %></span>
+<span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category) %></span>
+<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
