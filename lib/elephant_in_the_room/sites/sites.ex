@@ -116,6 +116,7 @@ defmodule ElephantInTheRoom.Sites do
   def list_categories(site) do
     Category
     |> where([t], t.site_id == ^site.id)
+    |> preload(:site_id)
     |> Repo.all()
   end
 
@@ -238,6 +239,8 @@ defmodule ElephantInTheRoom.Sites do
     Post
     |> where([t], t.category_id == ^category.id)
     |> Repo.all()
+    |> preload(:category_id)
+    |> preload(:site_id)
   end
 
   @doc """

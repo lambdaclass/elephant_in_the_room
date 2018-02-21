@@ -19,7 +19,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def new(conn, _params, site, category) do
     changeset =
-      %Post{site_id: site.id, category_id: category.id}
+      %Post{category_id: category.id}
       |> Sites.change_post()
 
     render(conn, "new.html", changeset: changeset, site: site, category: category)
@@ -38,7 +38,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def show(conn, %{"id" => id}, site, category) do
-    post = Sites.get_post!(cateogry, id)
+    post = Sites.get_post!(category, id)
 
     render(conn, "show.html", site: site, category: category, post: post)
   end
@@ -49,33 +49,33 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "edit.html", post: post, changeset: changeset, site: site, category: category)
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}) do
+  def update(conn, %{"id" => id, "post" => post_params}, category) do
     post = Sites.get_post!(id)
 
     case Sites.update_post(post, post_params) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: site_category_post_path(conn, :show, post))
+        |> redirect(to: site_category_post_path(conn, :show, category, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        render(conn, "edit.html", category: category, post: post, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+  def delete(conn, %{"id" => id}, site, category) do
+    post = Sites.get_post!(category, id)
     {:ok, _post} = Sites.delete_post(post)
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: site_category_post_path(conn, :index))
+    |> redirect(to: site_category_post_path(conn, :index, site, category))
   end
 
   defp assign_category(conn, _opts) do
     case conn.params do
       %{"category_id" => category_id} ->
-        category = Repo.get(Category, category)
+        category = Repo.get(Category, category_id)
         assign(conn, :category, category)
 
       _ ->

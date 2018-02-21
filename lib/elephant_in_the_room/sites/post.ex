@@ -17,8 +17,9 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:name, :image, :content])
-    |> validate_required([:name, :image, :content])
+    |> cast(attrs, [:name, :image, :content, :category_id, :site_id])
+    |> validate_required([:name, :image, :content, :category_id])
     |> assoc_constraint(:category)
+    |> assoc_constraint(:site)
   end
 end
