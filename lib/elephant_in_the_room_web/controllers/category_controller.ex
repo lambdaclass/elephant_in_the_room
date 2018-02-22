@@ -37,7 +37,10 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   end
 
   def show(conn, %{"id" => id}, site) do
-    category = Sites.get_category!(site, id)
+    category =
+      site
+      |> Sites.get_category!(id)
+      |> Repo.preload(:posts)
 
     render(conn, "show.html", site: site, category: category)
   end

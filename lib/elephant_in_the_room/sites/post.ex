@@ -9,7 +9,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:image, :string)
     field(:tag, {:array, :string})
 
-    belongs_to(:category, Category)
+    belongs_to(:category, Category, foreign_key: :category_id)
 
     timestamps()
   end
@@ -17,8 +17,8 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:name, :image, :content])
-    |> validate_required([:name, :image, :content])
+    |> cast(attrs, [:title, :image, :content, :category_id])
+    |> validate_required([:title, :image, :content, :category_id])
     |> assoc_constraint(:category)
   end
 end

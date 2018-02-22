@@ -3,8 +3,8 @@
 <ul>
 
   <li>
-    <strong>Name:</strong>
-    <%= @post.name %>
+    <strong>Title:</strong>
+    <%= @post.title %>
   </li>
 
   <li>
@@ -19,5 +19,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: site_category_post_path(@conn, :edit, @category, @post) %></span>
+<span><%= link "Edit", to: site_category_post_path(@conn, :edit, @site, @category, @post) %></span>
 <span><%= link "Back", to: site_category_post_path(@conn, :index, @site, @category) %></span>
