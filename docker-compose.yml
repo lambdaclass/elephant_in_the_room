@@ -11,12 +11,10 @@ services:
       - DB_PASS="postgres"
       - DB_NAME="elephant_in_the_room_dev"
 
-
-  adminer:
-    image: adminer
+  pgadmin4:
+    image: fenglc/pgadmin4
     restart: always
     depends_on:
       - db
     ports:
-      - 8080:8080
-
+      - 5050:5050
