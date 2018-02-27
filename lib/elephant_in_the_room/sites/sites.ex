@@ -6,7 +6,7 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Repo
 
-  alias ElephantInTheRoom.Sites.Site
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag}
 
   @doc """
   Returns the list of sites.
@@ -18,7 +18,9 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def list_sites do
-    Site |> Repo.all()
+    Site
+    |> Repo.all()
+    |> Repo.preload([:categories, :posts, :tags])
   end
 
   @doc """
@@ -35,7 +37,11 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_site!(id), do: Repo.get!(Site, id)
+  def get_site!(id) do
+    Site
+    |> Repo.get!(id)
+    |> Repo.preload([:categories, :posts, :tags])
+  end
 
   @doc """
   Creates a site.
@@ -52,6 +58,7 @@ defmodule ElephantInTheRoom.Sites do
   def create_site(attrs \\ %{}) do
     %Site{}
     |> Site.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.insert()
   end
 
@@ -70,6 +77,7 @@ defmodule ElephantInTheRoom.Sites do
   def update_site(%Site{} = site, attrs) do
     site
     |> Site.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.update()
   end
 
@@ -102,20 +110,19 @@ defmodule ElephantInTheRoom.Sites do
     Site.changeset(site, %{})
   end
 
-  alias ElephantInTheRoom.Sites.Category
-
   @doc """
   Returns the list of categories.
 
   ## Examples
 
-      iex> list_categories(site)
+      iex> list_categories()
       [%Category{}, ...]
 
   """
   def list_categories(site) do
     Category
     |> where([t], t.site_id == ^site.id)
+    |> preload(:site)
     |> Repo.all()
   end
 
@@ -126,19 +133,13 @@ defmodule ElephantInTheRoom.Sites do
 
   ## Examples
 
-      iex> get_category!(site, 123)
+      iex> get_category!(123)
       %Category{}
 
-      iex> get_category!(site, 456)
+      iex> get_category!(456)
       ** (Ecto.NoResultsError)
 
-      iex> get_category!(site, 123)
-      %Category{}
-
-      iex> get_category!(site, 456)
-      ** (Ecto.NoResultsError)
   """
-
   def get_category!(site, id) do
     Category
     |> where([t], t.site_id == ^site.id)
@@ -168,7 +169,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def create_category(site, attrs \\ %{}) do
-    category_attrs = Map.put(attrs, site.id)
+    category_attrs = Map.put(attrs, "site_id", site.id)
 
     %Category{}
     |> Category.changeset(category_attrs)
@@ -219,11 +220,8 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_category(%Category{} = category) do
-    category
-    |> Category.changeset(%{})
+    Category.changeset(category, %{})
   end
-
-  alias ElephantInTheRoom.Sites.Post
 
   @doc """
   Returns the list of posts.
@@ -234,10 +232,10 @@ defmodule ElephantInTheRoom.Sites do
       [%Post{}, ...]
 
   """
-  def list_posts(category) do
+  def list_posts do
     Post
-    |> where([t], t.category_id == ^category.id)
     |> Repo.all()
+    |> Repo.preload(:tags)
   end
 
   @doc """
@@ -254,20 +252,13 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(category, id) do
-    Post
-    |> where([t], t.category_id == ^category.id)
-    |> Repo.get!(id)
-  end
+  def get_post!(id), do: Repo.get!(Post, id)
 
-  def get_post!(id) do
+  def get_post!(site, id) do
     Post
+    |> where([t], t.site_id == ^site.id)
     |> Repo.get!(id)
-  end
-
-  def get_post(id) do
-    Post
-    |> Repo.get(id)
+    |> Repo.preload(:tags)
   end
 
   @doc """
@@ -282,11 +273,18 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(site, attrs \\ %{}) do
-    post_attrs = Map.put(attrs, site.id)
+
+  def create_post(site, attrs) do
+    post_attrs = Map.put(attrs, "site_id", site.id)
 
     %Post{}
     |> Post.changeset(post_attrs)
+    |> Repo.insert()
+  end
+
+  def create_post(attrs \\ %{}) do
+    %Post{}
+    |> Post.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -335,5 +333,124 @@ defmodule ElephantInTheRoom.Sites do
   """
   def change_post(%Post{} = post) do
     Post.changeset(post, %{})
+  end
+
+  alias ElephantInTheRoom.Sites.Tag
+
+  @doc """
+  Returns the list of tags.
+
+  ## Examples
+  def get_tag!(id), do: Repo.get!(Tag, id)
+      iex> list_tags()
+      [%Tag{}, ...]
+
+  """
+  def list_tags(site) do
+    Tag
+    |> where([t], t.site_id == ^site.id)
+    |> preload(:site)
+    |> Repo.all()
+  end
+
+  @doc """
+  Gets a single tag.
+
+  Raises `Ecto.NoResultsError` if the Tag does not exist.
+
+  ## Examples
+
+      iex> get_tag!(123)
+      %Tag{}
+
+      iex> get_tag!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_tag!(id), do: Repo.get!(Tag, id)
+
+  def get_tag!(site, id) do
+    Tag
+    |> where([t], t.site_id == ^site.id)
+    |> Repo.get!(id)
+  end
+
+  def get_tag_by_name!(site_id, name) do
+    Tag
+    |> where([t], t.site_id == ^site_id and t.name == ^name)
+    |> Repo.get_by!(%{name: name})
+  end
+
+  @doc """
+  Creates a tag.
+
+  ## Examples
+
+      iex> create_tag(%{field: value})
+      {:ok, %Tag{}}
+
+      iex> create_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_tag(site, attrs) do
+    tag_attrs = Map.put(attrs, "site_id", site.id)
+
+    %Tag{}
+    |> Tag.changeset(tag_attrs)
+    |> Repo.insert()
+  end
+
+  def create_tag(attrs \\ %{}) do
+    %Tag{}
+    |> Tag.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a tag.
+
+  ## Examples
+
+      iex> update_tag(tag, %{field: new_value})
+      {:ok, %Tag{}}
+
+      iex> update_tag(tag, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_tag(%Tag{} = tag, attrs) do
+    tag
+    |> Tag.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Tag.
+
+  ## Examples
+
+      iex> delete_tag(tag)
+      {:ok, %Tag{}}
+
+      iex> delete_tag(tag)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_tag(%Tag{} = tag) do
+    Repo.delete(tag)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking tag changes.
+
+  ## Examples
+
+      iex> change_tag(tag)
+      %Ecto.Changeset{source: %Tag{}}
+
+  """
+  def change_tag(%Tag{} = tag) do
+    Tag.changeset(tag, %{})
   end
 end

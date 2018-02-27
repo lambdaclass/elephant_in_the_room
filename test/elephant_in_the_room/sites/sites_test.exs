@@ -128,9 +128,9 @@ defmodule ElephantInTheRoom.SitesTest do
   describe "posts" do
     alias ElephantInTheRoom.Sites.Post
 
-    @valid_attrs %{content: "some content", image: "some image", name: "some name"}
-    @update_attrs %{content: "some updated content", image: "some updated image", name: "some updated name"}
-    @invalid_attrs %{content: nil, image: nil, name: nil}
+    @valid_attrs %{content: "some content", image: "some image", title: "some title"}
+    @update_attrs %{content: "some updated content", image: "some updated image", title: "some updated title"}
+    @invalid_attrs %{content: nil, image: nil, title: nil}
 
     def post_fixture(attrs \\ %{}) do
       {:ok, post} =
@@ -155,7 +155,7 @@ defmodule ElephantInTheRoom.SitesTest do
       assert {:ok, %Post{} = post} = Sites.create_post(@valid_attrs)
       assert post.content == "some content"
       assert post.image == "some image"
-      assert post.name == "some name"
+      assert post.title == "some title"
     end
 
     test "create_post/1 with invalid data returns error changeset" do
@@ -168,7 +168,7 @@ defmodule ElephantInTheRoom.SitesTest do
       assert %Post{} = post
       assert post.content == "some updated content"
       assert post.image == "some updated image"
-      assert post.name == "some updated name"
+      assert post.title == "some updated title"
     end
 
     test "update_post/2 with invalid data returns error changeset" do
@@ -189,61 +189,63 @@ defmodule ElephantInTheRoom.SitesTest do
     end
   end
 
-  describe "categories" do
-    alias ElephantInTheRoom.Sites.Category
+  describe "tags" do
+    alias ElephantInTheRoom.Sites.Tag
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
 
-    def category_fixture(attrs \\ %{}) do
-      {:ok, category} =
+    def tag_fixture(attrs \\ %{}) do
+      {:ok, tag} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Sites.create_category()
+        |> Sites.create_tag()
 
-      category
+      tag
     end
 
-    test "list_categories/0 returns all categories" do
-      category = category_fixture()
-      assert Sites.list_categories() == [category]
+    test "list_tags/0 returns all tags" do
+      tag = tag_fixture()
+      assert Sites.list_tags() == [tag]
     end
 
-    test "get_category!/1 returns the category with given id" do
-      category = category_fixture()
-      assert Sites.get_category!(category.id) == category
+    test "get_tag!/1 returns the tag with given id" do
+      tag = tag_fixture()
+      assert Sites.get_tag!(tag.id) == tag
     end
 
-    test "create_category/1 with valid data creates a category" do
-      assert {:ok, %Category{} = category} = Sites.create_category(@valid_attrs)
+    test "create_tag/1 with valid data creates a tag" do
+      assert {:ok, %Tag{} = tag} = Sites.create_tag(@valid_attrs)
+      assert tag.name == "some name"
     end
 
-    test "create_category/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_category(@invalid_attrs)
+    test "create_tag/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_tag(@invalid_attrs)
     end
 
-    test "update_category/2 with valid data updates the category" do
-      category = category_fixture()
-      assert {:ok, category} = Sites.update_category(category, @update_attrs)
-      assert %Category{} = category
+    test "update_tag/2 with valid data updates the tag" do
+      tag = tag_fixture()
+      assert {:ok, tag} = Sites.update_tag(tag, @update_attrs)
+      assert %Tag{} = tag
+      assert tag.name == "some updated name"
     end
 
-    test "update_category/2 with invalid data returns error changeset" do
-      category = category_fixture()
-      assert {:error, %Ecto.Changeset{}} = Sites.update_category(category, @invalid_attrs)
-      assert category == Sites.get_category!(category.id)
+    test "update_tag/2 with invalid data returns error changeset" do
+      tag = tag_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_tag(tag, @invalid_attrs)
+      assert tag == Sites.get_tag!(tag.id)
     end
 
-    test "delete_category/1 deletes the category" do
-      category = category_fixture()
-      assert {:ok, %Category{}} = Sites.delete_category(category)
-      assert_raise Ecto.NoResultsError, fn -> Sites.get_category!(category.id) end
+    test "delete_tag/1 deletes the tag" do
+      tag = tag_fixture()
+      assert {:ok, %Tag{}} = Sites.delete_tag(tag)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_tag!(tag.id) end
     end
 
-    test "change_category/1 returns a category changeset" do
-      category = category_fixture()
-      assert %Ecto.Changeset{} = Sites.change_category(category)
+    test "change_tag/1 returns a tag changeset" do
+      tag = tag_fixture()
+      assert %Ecto.Changeset{} = Sites.change_tag(tag)
     end
   end
 end

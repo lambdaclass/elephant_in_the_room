@@ -36,7 +36,7 @@ defmodule ElephantInTheRoomWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_elephant_in_the_room_key",
-    signing_salt: "eyek2z1J"
+    signing_salt: "72pHfE4g"
 
   plug ElephantInTheRoomWeb.Router
 

@@ -1,11 +1,10 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.{Category, Site}
-  plug(:assign_site)
+  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.Category
 
-  def action(conn, _) do
+  def action(conn, _params) do
     site = Sites.get_site!(conn.params["site_id"])
     args = [conn, conn.params, site]
     apply(__MODULE__, action_name(conn), args)
@@ -13,7 +12,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
   def index(conn, _params, site) do
     categories = Sites.list_categories(site)
-    render(conn, "index.html", site: site, categories: categories)
+    render(conn, "index.html", categories: categories, site: site)
   end
 
   def new(conn, _params, site) do
@@ -37,15 +36,15 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   end
 
   def show(conn, %{"id" => id}, site) do
-    category = Sites.get_category!(site, id)
+    category = Sites.get_category!(id)
 
-    render(conn, "show.html", site: site, category: category)
+    render(conn, "show.html", category: category, site: site)
   end
 
   def edit(conn, %{"id" => id}, site) do
     category = Sites.get_category!(site, id)
     changeset = Sites.change_category(category)
-    render(conn, "edit.html", category: category, changeset: changeset, site: site)
+    render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}, site) do
@@ -55,7 +54,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: site_category_path(conn, :show, category, site))
+        |> redirect(to: site_category_path(conn, :show, site, category))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
@@ -69,16 +68,5 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     conn
     |> put_flash(:info, "Category deleted successfully.")
     |> redirect(to: site_category_path(conn, :index, site))
-  end
-
-  defp assign_site(conn, _opts) do
-    case conn.params do
-      %{"site_id" => site_id} ->
-        site = Repo.get(Site, site_id)
-        assign(conn, :site, site)
-
-      _ ->
-        conn
-    end
   end
 end

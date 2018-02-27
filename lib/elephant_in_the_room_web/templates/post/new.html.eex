@@ -1,5 +1,6 @@
 <h2>New Post</h2>
 
-<%= render "form.html", Map.put(assigns, :action, site_category_post_path(@conn, :create, @site, @category)) %>
+<%= render "form.html", mk_assigns(@conn, assigns, @site) %>
 
-<span><%= link "Back", to: site_category_post_path(@conn, :index, @site, @category) %></span>
+<span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>
+

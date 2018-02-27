@@ -12,7 +12,7 @@ config :elephant_in_the_room,
 # Configures the endpoint
 config :elephant_in_the_room, ElephantInTheRoomWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "MZh5RjTjSviUaqfLVVGubrhozsvcANpSOSQrWWy7VxVRL00XSAPXmRcMVBr4//qT",
+  secret_key_base: "nzdAWjDdDu8NoQlv0Hhk3Q08LtZ/fLPUoyTR5j+wTN1kPPiGEDRCoKmI4Ftl65V1",
   render_errors: [view: ElephantInTheRoomWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ElephantInTheRoom.PubSub,
            adapter: Phoenix.PubSub.PG2]

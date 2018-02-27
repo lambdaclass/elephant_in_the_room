@@ -14,14 +14,15 @@ defmodule ElephantInTheRoomWeb.Router do
   end
 
   scope "/", ElephantInTheRoomWeb do
+    # Use the default browser stack
     pipe_through(:browser)
 
     get("/", PageController, :index)
 
     resources "/sites", SiteController do
-      resources "/categories", CategoryController do
-        resources("/posts", PostController)
-      end
+      resources("/categories", CategoryController)
+      resources("/posts", PostController)
+      resources("/tags", TagController)
     end
   end
 end

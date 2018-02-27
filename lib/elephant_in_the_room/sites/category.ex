@@ -1,15 +1,15 @@
 defmodule ElephantInTheRoom.Sites.Category do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Category, Site, Post}
+  alias ElephantInTheRoom.Sites.{Category, Site}
 
   schema "categories" do
     field(:description, :string)
     field(:name, :string)
 
-    belongs_to(:site, Site)
+    belongs_to(:site, Site, foreign_key: :site_id)
 
-    has_many(:posts, Post)
+    # has_many(:posts, Post)
 
     timestamps()
   end
@@ -17,8 +17,8 @@ defmodule ElephantInTheRoom.Sites.Category do
   @doc false
   def changeset(%Category{} = category, attrs) do
     category
-    |> cast(attrs, [:name, :description])
-    |> validate_required([:name, :description])
-    |> assoc_constraint(:site)
+    |> cast(attrs, [:name, :description, :site_id])
+    |> validate_required([:name, :description, :site_id])
+    |> unique_constraint(:name)
   end
 end
