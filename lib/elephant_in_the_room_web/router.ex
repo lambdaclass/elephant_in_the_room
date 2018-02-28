@@ -24,5 +24,7 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/posts", PostController)
       resources("/tags", TagController)
     end
+
+    resources("/users", UserController)
   end
 end

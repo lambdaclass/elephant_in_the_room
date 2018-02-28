@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoom.Sites.{Post}
+  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.Post
 
   def action(conn, _params) do
     site = Sites.get_site!(conn.params["site_id"])
