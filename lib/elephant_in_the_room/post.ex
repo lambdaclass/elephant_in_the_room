@@ -15,5 +15,7 @@ defmodule ElephantInTheRoom.Post do
     post
     |> cast(attrs, [:title, :content])
     |> validate_required([:title, :content])
+    |> validate_length(:title, min: 4, message: "Title is too short")
+    |> validate_length(:content, min: 4, message: "Content is too short")
   end
 end
