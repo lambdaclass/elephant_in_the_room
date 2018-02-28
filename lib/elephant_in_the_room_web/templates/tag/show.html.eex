@@ -1,0 +1,13 @@
+<h2>Show Tag</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @tag.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: site_tag_path(@conn, :edit, @tag, @site) %></span>
+<span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>

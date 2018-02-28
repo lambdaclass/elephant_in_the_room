@@ -3,13 +3,8 @@
 <ul>
 
   <li>
-    <strong>Name:</strong>
-    <%= @post.name %>
-  </li>
-
-  <li>
-    <strong>Image:</strong>
-    <%= @post.image %>
+    <strong>Title:</strong>
+    <%= @post.title %>
   </li>
 
   <li>
@@ -17,7 +12,12 @@
     <%= @post.content %>
   </li>
 
+  <li>
+    <strong>Image:</strong>
+    <%= @post.image %>
+  </li>
+
 </ul>
 
-<span><%= link "Edit", to: site_category_post_path(@conn, :edit, @category, @post) %></span>
-<span><%= link "Back", to: site_category_post_path(@conn, :index, @site, @category) %></span>
+<span><%= link "Edit", to: site_post_path(@conn, :edit, @site, @post) %></span>
+<span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>

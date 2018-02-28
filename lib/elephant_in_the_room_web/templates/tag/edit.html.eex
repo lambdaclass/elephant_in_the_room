@@ -1,0 +1,5 @@
+<h2>Edit Tag</h2>
+
+<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :update, @site, @tag)) %>
+
+<span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>

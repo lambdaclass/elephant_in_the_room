@@ -3,9 +3,9 @@ defmodule ElephantInTheRoomWeb.PostControllerTest do
 
   alias ElephantInTheRoom.Sites
 
-  @create_attrs %{content: "some content", image: "some image", name: "some name"}
-  @update_attrs %{content: "some updated content", image: "some updated image", name: "some updated name"}
-  @invalid_attrs %{content: nil, image: nil, name: nil}
+  @create_attrs %{content: "some content", image: "some image", title: "some title"}
+  @update_attrs %{content: "some updated content", image: "some updated image", title: "some updated title"}
+  @invalid_attrs %{content: nil, image: nil, title: nil}
 
   def fixture(:post) do
     {:ok, post} = Sites.create_post(@create_attrs)

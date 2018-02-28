@@ -3,9 +3,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Image</th>
+      <th>Title</th>
       <th>Content</th>
+      <th>Image</th>
 
       <th></th>
     </tr>
@@ -13,18 +13,18 @@
   <tbody>
 <%= for post <- @posts do %>
     <tr>
-      <td><%= post.name %></td>
-      <td><%= post.image %></td>
+      <td><%= post.title %></td>
       <td><%= post.content %></td>
+      <td><%= post.image %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: site_category_post_path(@conn, :show, @category, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_category_post_path(@conn, :edit, @category, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_category_post_path(@conn, :delete, @category, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Post", to: site_category_post_path(@conn, :new, @site, @category) %></span>
+<span><%= link "New Post", to: site_post_path(@conn, :new, @site) %></span>

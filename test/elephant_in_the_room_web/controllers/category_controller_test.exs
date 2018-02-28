@@ -3,9 +3,9 @@ defmodule ElephantInTheRoomWeb.CategoryControllerTest do
 
   alias ElephantInTheRoom.Sites
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{description: "some description", name: "some name"}
+  @update_attrs %{description: "some updated description", name: "some updated name"}
+  @invalid_attrs %{description: nil, name: nil}
 
   def fixture(:category) do
     {:ok, category} = Sites.create_category(@create_attrs)
@@ -60,7 +60,7 @@ defmodule ElephantInTheRoomWeb.CategoryControllerTest do
       assert redirected_to(conn) == category_path(conn, :show, category)
 
       conn = get conn, category_path(conn, :show, category)
-      assert html_response(conn, 200)
+      assert html_response(conn, 200) =~ "some updated description"
     end
 
     test "renders errors when data is invalid", %{conn: conn, category: category} do

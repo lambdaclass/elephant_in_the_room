@@ -6,21 +6,37 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :categories, class: "control-label" %>
+    <%= multiple_select f, :categories, show_categories(@site) %> 
+    <%= error_tag f, :categories %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :content, class: "control-label" %>
+    <%= textarea f, :content, class: "form-control" %>
+    <%= error_tag f, :content %>
   </div>
 
   <div class="form-group">
     <%= label f, :image, class: "control-label" %>
     <%= text_input f, :image, class: "form-control" %>
-    <%= error_tag f, :image %>
+    <%= error_tag f, :image %>   
   </div>
+  
+  <br>
+  <br>
+  <br>
 
   <div class="form-group">
-    <%= label f, :content, class: "control-label" %>
-    <%= text_input f, :content, class: "form-control" %>
-    <%= error_tag f, :content %>
+    <%= label f, "tags (separated by comma)", class: "control-label" %>
+    <%= text_input f, :tags_separated_by_comma, class: "form-control" %>
+    <%= error_tag f, :tags_separated_by_comma %>
   </div>
 
   <div class="form-group">

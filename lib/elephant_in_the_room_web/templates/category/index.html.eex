@@ -1,15 +1,21 @@
-<h2>Listing Categories</h2>
+<h1 style="color: blue"><%= @site.name %></h1>
+<h2>Categories</h2>
 
 <table class="table">
   <thead>
     <tr>
-
+      <th>Name</th>
+      <th>Description</th>
+      <th>Site ID</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for category <- @categories do %>
     <tr>
+      <td><%= category.name %></td>
+      <td><%= category.description %></td>
+      <td><%= category.site_id %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: site_category_path(@conn, :show, @site, category), class: "btn btn-default btn-xs" %></span>
