@@ -13,26 +13,30 @@
 
   <div class="form-group">
     <%= label f, :category, class: "control-label" %>
-    <%= select f, :category, show_select(@categories) %> <strong>(Fix this)<strong>
+    <%= select f, :category, show_categories(@site) %> 
     <%= error_tag f, :category %>
   </div>
 
   <div class="form-group">
     <%= label f, :content, class: "control-label" %>
-    <%= text_input f, :content, class: "form-control" %>
+    <%= textarea f, :content, class: "form-control" %>
     <%= error_tag f, :content %>
   </div>
 
   <div class="form-group">
     <%= label f, :image, class: "control-label" %>
     <%= text_input f, :image, class: "form-control" %>
-    <%= error_tag f, :image %>
+    <%= error_tag f, :image %>   
   </div>
+  
+  <br>
+  <br>
+  <br>
 
   <div class="form-group">
-    <%= label f, :tags, class: "control-label" %>
-    <%= multiple_select f, :selected_tags, show_select(@tags) %>
-    <%= error_tag f, :tags %>
+    <%= label f, "tags (separated by comma)", class: "control-label" %>
+    <%= text_input f, :tags_separated_by_comma, class: "form-control" %>
+    <%= error_tag f, :tags_separated_by_comma %>
   </div>
 
   <div class="form-group">

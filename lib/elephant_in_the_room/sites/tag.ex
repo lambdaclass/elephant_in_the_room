@@ -5,7 +5,9 @@ defmodule ElephantInTheRoom.Sites.Tag do
 
   schema "tags" do
     field(:name, :string)
+
     belongs_to(:site, Site, foreign_key: :site_id)
+
     many_to_many(:posts, Post, join_through: "post_tags", on_delete: :delete_all)
 
     timestamps()
@@ -15,7 +17,7 @@ defmodule ElephantInTheRoom.Sites.Tag do
   def changeset(%Tag{} = tag, attrs) do
     tag
     |> cast(attrs, [:name, :site_id])
-    |> validate_required([:name, :site_id], message: "asdasasdsdas")
+    |> validate_required([:name, :site_id])
     |> unique_constraint(:name)
   end
 end

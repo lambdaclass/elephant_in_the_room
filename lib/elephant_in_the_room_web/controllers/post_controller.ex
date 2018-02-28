@@ -17,7 +17,6 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def new(conn, _params, site) do
     categories = Sites.list_categories(site)
-    tags = Sites.list_tags(site)
 
     changeset =
       %Post{site_id: site.id}
@@ -28,8 +27,7 @@ defmodule ElephantInTheRoomWeb.PostController do
       "new.html",
       changeset: changeset,
       site: site,
-      categories: categories,
-      tags: tags
+      categories: categories
     )
   end
 
