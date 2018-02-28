@@ -1,0 +1,3 @@
+<div class="jumbotron">
+  <h2>Hello messenger '<%= @messenger %>'!</h2>
+</div>

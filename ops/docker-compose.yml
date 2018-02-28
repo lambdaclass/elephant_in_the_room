@@ -1,0 +1,18 @@
+version: "3.5"
+services:
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 8181:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: a@a.com
+      PGADMIN_DEFAULT_PASSWORD: a
