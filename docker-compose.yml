@@ -2,7 +2,6 @@ version: '3.1'
 
 services:
   db:
-    restart: always
     image: postgres:9.5
     ports:
       - "5432:5432"
@@ -13,7 +12,6 @@ services:
 
   pgadmin4:
     image: fenglc/pgadmin4
-    restart: always
     depends_on:
       - db
     ports:
