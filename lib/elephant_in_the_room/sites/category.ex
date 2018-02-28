@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoom.Sites.Category do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Category, Site}
+  alias ElephantInTheRoom.Sites.{Category, Site, Post}
 
   schema "categories" do
     field(:description, :string)
@@ -9,7 +9,7 @@ defmodule ElephantInTheRoom.Sites.Category do
 
     belongs_to(:site, Site, foreign_key: :site_id)
 
-    # has_many(:posts, Post)
+    many_to_many(:posts, Post, join_through: "posts_categories", on_delete: :delete_all)
 
     timestamps()
   end

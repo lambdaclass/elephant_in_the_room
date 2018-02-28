@@ -8,7 +8,6 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateTags do
       timestamps()
     end
 
-    create(unique_index(:tags, [:name]))
     create(index(:tags, [:site_id]))
   end
 end

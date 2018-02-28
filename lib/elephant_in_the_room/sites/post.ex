@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoom.Sites.Post do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag}
-  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.Repo
 
   schema "posts" do
     field(:content, :string)
@@ -20,11 +19,28 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
+    attrs
+    |> inspect()
+    |> IO.puts()
+
     post
     |> cast(attrs, [:title, :content, :image, :site_id])
     |> put_assoc(:tags, parse_tags(attrs))
+    |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :image, :site_id])
     |> unique_constraint(:title)
+  end
+
+  def parse_categories(params) do
+    site_id = params["site_id"]
+
+    (params["categories"] || [])
+    |> Enum.reject(fn s -> s == "" end)
+    |> Enum.map(fn name -> get_category(name, site_id) end)
+  end
+
+  defp get_category(name, site_id) do
+    Repo.get_by!(Category, name: name, site_id: site_id)
   end
 
   defp parse_tags(params) do

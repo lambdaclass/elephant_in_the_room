@@ -14,6 +14,5 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
 
     create(unique_index(:posts, [:title]))
     create(index(:posts, [:site_id]))
-    # create(index(:posts, [:category_id]))
   end
 end

@@ -12,9 +12,9 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :category, class: "control-label" %>
-    <%= select f, :category, show_categories(@site) %> 
-    <%= error_tag f, :category %>
+    <%= label f, :categories, class: "control-label" %>
+    <%= multiple_select f, :categories, show_categories(@site) %> 
+    <%= error_tag f, :categories %>
   </div>
 
   <div class="form-group">
