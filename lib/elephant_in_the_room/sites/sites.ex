@@ -232,8 +232,9 @@ defmodule ElephantInTheRoom.Sites do
       [%Post{}, ...]
 
   """
-  def list_posts do
+  def list_posts(site) do
     Post
+    |> where([t], t.site_id == ^site.id)
     |> Repo.all()
     |> Repo.preload(:tags)
   end

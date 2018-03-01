@@ -11,7 +11,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def index(conn, _params, site) do
-    posts = Sites.list_posts()
+    posts = Sites.list_posts(site)
     render(conn, "index.html", site: site, posts: posts)
   end
 
