@@ -6,7 +6,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
 
   def index(%{assigns: %{site: site}} = conn, _) do
-    posts = Sites.list_posts()
+    posts = Sites.list_posts(site)
     render(conn, "index.html", site: site, posts: posts)
   end
 
