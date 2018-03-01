@@ -8,7 +8,7 @@ defmodule ElephantInTheRoom.Sites.Tag do
 
     belongs_to(:site, Site, foreign_key: :site_id)
 
-    many_to_many(:posts, Post, join_through: "post_tags", on_delete: :delete_all)
+    many_to_many(:posts, Post, join_through: "posts_tags", on_delete: :delete_all)
 
     timestamps()
   end
