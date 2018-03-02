@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.{Post}
 
   def index(%{assigns: %{site: site}} = conn, _) do
@@ -38,7 +38,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post!(site, id)
     render(conn, "show.html", site: site, post: post)
   end
 
@@ -58,9 +58,10 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"id" => id, "post" => post_params}) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post!(site, id)
+    post_params_with_site_id = Map.put(post_params, "site_id", site.id)
 
-    case Sites.update_post(post, post_params) do
+    case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
@@ -72,7 +73,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post!(site, id)
     {:ok, _post} = Sites.delete_post(post)
 
     conn
