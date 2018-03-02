@@ -44,7 +44,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def show(conn, %{"id" => id}, site) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post!(site, id)
     render(conn, "show.html", site: site, post: post)
   end
 
@@ -64,7 +64,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def update(conn, %{"id" => id, "post" => post_params}, site) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post!(site, id)
 
     case Sites.update_post(post, post_params) do
       {:ok, post} ->

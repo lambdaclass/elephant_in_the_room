@@ -254,7 +254,6 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
 
   def get_post!(site, id) do
     Post
