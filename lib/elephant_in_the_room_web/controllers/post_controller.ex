@@ -52,7 +52,6 @@ defmodule ElephantInTheRoomWeb.PostController do
     post = Sites.get_post!(site, id)
     categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
-    IO.puts(inspect(changeset.data))
 
     render(
       conn,
