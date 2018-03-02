@@ -11,9 +11,9 @@
     <%= error_tag f, :title %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group"> 
     <%= label f, :categories, class: "control-label" %>
-    <%= multiple_select f, :categories, show_categories(@site) %> 
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data) %> 
     <%= error_tag f, :categories %>
   </div>
 

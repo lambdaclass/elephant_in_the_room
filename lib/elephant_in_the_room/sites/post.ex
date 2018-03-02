@@ -6,15 +6,28 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.Repo
 
   schema "posts" do
-    field(:content,          :string)
+    field(:content, :string)
     field(:rendered_content, :string)
-    field(:image,            :string)
-    field(:title,            :string)
+    field(:image, :string)
+    field(:title, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
 
-    many_to_many(:categories, Category, join_through: "posts_categories", on_delete: :delete_all)
-    many_to_many(:tags, Tag, join_through: "posts_tags", on_delete: :delete_all)
+    many_to_many(
+      :categories,
+      Category,
+      join_through: "posts_categories",
+      on_replace: :delete,
+      on_delete: :delete_all
+    )
+
+    many_to_many(
+      :tags,
+      Tag,
+      join_through: "posts_tags",
+      on_replace: :delete,
+      on_delete: :delete_all
+    )
 
     timestamps()
   end
@@ -31,19 +44,21 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
-  when not valid? do
+      when not valid? do
     changeset
   end
+
   def put_rendered_content(%Changeset{} = changeset) do
     content = get_field(changeset, :content)
-    rendered_content = generate_markdown content
+    rendered_content = generate_markdown(content)
+
     put_change(changeset, :rendered_content, rendered_content)
     |> validate_length(:rendered_content, min: 1)
   end
 
   def generate_markdown(input) do
-    {:safe, safe_input} = Phoenix.HTML.html_escape input
-    Cmark.to_html safe_input
+    {:safe, safe_input} = Phoenix.HTML.html_escape(input)
+    Cmark.to_html(safe_input)
   end
 
   def parse_categories(params) do

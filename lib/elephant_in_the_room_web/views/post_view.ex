@@ -3,8 +3,14 @@ defmodule ElephantInTheRoomWeb.PostView do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Post
 
+  def mk_assigns(conn, assigns, site, post) do
+    assigns
+    |> Map.put(:action, site_post_path(conn, :update, site, post))
+    |> Map.put(:categories, site.categories)
+  end
+
   def mk_assigns(conn, assigns, site) do
-    if !(Map.has_key?(assigns, "categories") and Map.has_key?(assigns, "tags")) do
+    if !Map.has_key?(assigns, "categories") do
       Map.put(assigns, :action, site_post_path(conn, :create, site))
     else
       Map.put(assigns, :action, site_post_path(conn, :create, site, assigns.categories))
@@ -12,7 +18,16 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_categories(site) do
-    Sites.list_categories(site) |> Enum.map(& &1.name)
+    site.categories
+    |> Enum.map(fn category -> category.name end)
+  end
+
+  def show_selected_categories(data) do
+    if Map.has_key?(data, "categories") do
+      Enum.map(data.categories, fn category -> category.name end)
+    else
+      []
+    end
   end
 
   def show_content(%Post{rendered_content: content}), do: content
