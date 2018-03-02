@@ -1,30 +1,37 @@
-<h2>Listing Posts</h2>
+<div class="uk-grid">
+  <h2>Posts</h2>
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Image</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for post <- @posts do %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= raw show_content(post) %></td>
+        <td><%= post.image %></td>
+        <td class="text-right">
+          <span>
+            <%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "uk-button uk-button-default" %>
+          </span>
+          <span>
+            <%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "uk-button uk-button-default" %>
+          </span>
+          <span>
+            <%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger" %>
+          </span>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Image</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for post <- @posts do %>
-    <tr>
-      <td><%= post.title %></td>
-      <td><%= raw show_content(post) %></td>
-      <td><%= post.image %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Post", to: site_post_path(@conn, :new, @site) %></span>
+  <span>
+    <%= link "New Post", to: site_post_path(@conn, :new, @site), class: "uk-button uk-button-primary" %>
+  </span>
+</div>

@@ -7,19 +7,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello ElephantInTheRoom!</title>
+    <title>ElephantInTheRoom!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
-    <div class="container">
+    <div class="uk-grid">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
+        <nav role="uk-navbar uk-navbar-container">
+          <h1> Elephant In The Room
         </nav>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

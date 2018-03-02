@@ -1,5 +1,8 @@
-<h2>New Site</h2>
+<div class="uk-grid">
+    <h2>New Site</h2>
+    <%= render "form.html", Map.put(assigns, :action, site_path(@conn, :create)) %>
 
-<%= render "form.html", Map.put(assigns, :action, site_path(@conn, :create)) %>
-
-<span><%= link "Back", to: site_path(@conn, :index) %></span>
+    <span>
+        <%= link "Back", to: site_path(@conn, :index) %>
+    </span>
+</div>

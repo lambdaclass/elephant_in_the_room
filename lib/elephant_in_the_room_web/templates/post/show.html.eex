@@ -1,5 +1,4 @@
 <h2>Show Post</h2>
-
 <ul>
 
   <li>
@@ -19,5 +18,9 @@
 
 </ul>
 
-<span><%= link "Edit", to: site_post_path(@conn, :edit, @site, @post) %></span>
-<span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>
+<span>
+  <%= link "Edit", to: site_post_path(@conn, :edit, @site, @post) %>
+</span>
+<span>
+  <%= link "Back", to: site_post_path(@conn, :index, @site) %>
+</span>
