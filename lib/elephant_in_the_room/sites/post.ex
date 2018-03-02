@@ -11,8 +11,21 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     belongs_to(:site, Site, foreign_key: :site_id)
 
-    many_to_many(:categories, Category, join_through: "posts_categories", on_delete: :delete_all)
-    many_to_many(:tags, Tag, join_through: "posts_tags", on_delete: :delete_all)
+    many_to_many(
+      :categories,
+      Category,
+      join_through: "posts_categories",
+      on_replace: :delete,
+      on_delete: :delete_all
+    )
+
+    many_to_many(
+      :tags,
+      Tag,
+      join_through: "posts_tags",
+      on_replace: :delete,
+      on_delete: :delete_all
+    )
 
     timestamps()
   end

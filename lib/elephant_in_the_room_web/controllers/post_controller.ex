@@ -50,8 +50,18 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def edit(conn, %{"id" => id}, site) do
     post = Sites.get_post!(site, id)
+    categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
-    render(conn, "edit.html", site: site, post: post, changeset: changeset)
+    IO.puts(inspect(changeset.data))
+
+    render(
+      conn,
+      "edit.html",
+      site: site,
+      post: post,
+      changeset: changeset,
+      categories: categories
+    )
   end
 
   def update(conn, %{"id" => id, "post" => post_params}, site) do
