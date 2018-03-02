@@ -14,7 +14,7 @@
 <%= for post <- @posts do %>
     <tr>
       <td><%= post.title %></td>
-      <td><%= post.content %></td>
+      <td><%= raw show_content(post) %></td>
       <td><%= post.image %></td>
 
       <td class="text-right">

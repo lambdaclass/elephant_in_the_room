@@ -4,18 +4,12 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
 
-  def action(conn, _params) do
-    site = Sites.get_site!(conn.params["site_id"])
-    args = [conn, conn.params, site]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def index(conn, _params, site) do
+  def index(%{assigns: %{site: site}} = conn, _) do
     categories = Sites.list_categories(site)
     render(conn, "index.html", categories: categories, site: site)
   end
 
-  def new(conn, _params, site) do
+  def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Category{site_id: site.id}
       |> Sites.change_category()
@@ -23,7 +17,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "new.html", changeset: changeset, site: site)
   end
 
-  def create(conn, %{"category" => category_params}, site) do
+  def create(%{assigns: %{site: site}} = conn, %{"category" => category_params}) do
     case Sites.create_category(site, category_params) do
       {:ok, category} ->
         conn
@@ -35,19 +29,20 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     end
   end
 
-  def show(conn, %{"id" => id}, site) do
+  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     category = Sites.get_category!(id)
 
     render(conn, "show.html", category: category, site: site)
   end
 
-  def edit(conn, %{"id" => id}, site) do
+  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     category = Sites.get_category!(site, id)
     changeset = Sites.change_category(category)
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "category" => category_params}, site) do
+  def update(%{assigns: %{site: site}} = conn,
+    %{"id" => id, "category" => category_params}) do
     category = Sites.get_category!(id)
 
     case Sites.update_category(category, category_params) do
@@ -61,7 +56,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     end
   end
 
-  def delete(conn, %{"id" => id}, site) do
+  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     category = Sites.get_category!(id)
     {:ok, _category} = Sites.delete_category(category)
 

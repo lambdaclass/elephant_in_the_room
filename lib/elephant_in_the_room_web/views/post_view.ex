@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.Post
 
   def mk_assigns(conn, assigns, site, post) do
     assigns
@@ -28,4 +29,7 @@ defmodule ElephantInTheRoomWeb.PostView do
       []
     end
   end
+
+  def show_content(%Post{rendered_content: content}), do: content
+  
 end
