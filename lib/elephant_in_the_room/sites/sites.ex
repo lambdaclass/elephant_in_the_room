@@ -5,7 +5,6 @@ defmodule ElephantInTheRoom.Sites do
 
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Repo
-
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag}
 
   @doc """
@@ -94,6 +93,12 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_site(%Site{} = site) do
+    Repo.transaction(fn ->
+      site.categories |> Enum.map(fn c -> delete_category(c) end)
+      site.posts |> Enum.map(fn p -> delete_post(p) end)
+      site.tags |> Enum.map(fn t -> delete_tag(t) end)
+    end)
+
     Repo.delete(site)
   end
 
