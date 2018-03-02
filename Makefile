@@ -19,4 +19,4 @@ ops:
 	docker-compose -f docker-compose.yml up
 
 ops_reset:
-	docker-compose -f docker-compose.yml down
+	docker-compose down --volumes

@@ -1,13 +1,15 @@
 defmodule ElephantInTheRoom.Sites.Post do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag}
   alias ElephantInTheRoom.Repo
 
   schema "posts" do
-    field(:content, :string)
-    field(:image, :string)
-    field(:title, :string)
+    field(:content,          :string)
+    field(:rendered_content, :string)
+    field(:image,            :string)
+    field(:title,            :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
 
@@ -19,16 +21,29 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    attrs
-    |> inspect()
-    |> IO.puts()
-
     post
     |> cast(attrs, [:title, :content, :image, :site_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :image, :site_id])
     |> unique_constraint(:title)
+    |> put_rendered_content
+  end
+
+  def put_rendered_content(%Changeset{valid?: valid?} = changeset)
+  when not valid? do
+    changeset
+  end
+  def put_rendered_content(%Changeset{} = changeset) do
+    content = get_field(changeset, :content)
+    rendered_content = generate_markdown content
+    put_change(changeset, :rendered_content, rendered_content)
+    |> validate_length(:rendered_content, min: 1)
+  end
+
+  def generate_markdown(input) do
+    {:safe, safe_input} = Phoenix.HTML.html_escape input
+    Cmark.to_html safe_input
   end
 
   def parse_categories(params) do
