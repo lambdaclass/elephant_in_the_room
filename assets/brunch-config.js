@@ -47,6 +47,11 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
+    },
+    sass: {
+      options: {
+        includePaths: ["node_modules/uikit/src/scss"]
+      }
     }
   },
 
@@ -57,6 +62,11 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    globals: {
+      $: "jquery",
+      uikit: "uikit",
+      icons: "uikit/dist/js/uikit-icons"
+    }
   }
 };
