@@ -1,0 +1,5 @@
+<h2>Edit Author</h2>
+
+<%= render "form.html", Map.put(assigns, :action, author_path(@conn, :update, @author)) %>
+
+<span><%= link "Back", to: author_path(@conn, :index) %></span>
