@@ -1,5 +1,9 @@
-<h2>Edit Post</h2>
+<div class="uk-grid">
+    <h2>Edit Post</h2>
 
-<%= render "form.html", mk_assigns(@conn, assigns, @site, @post) %>
+    <%= render "form.html", mk_assigns(@conn, assigns, @site, @post) %>
 
-<span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>
+    <span>
+        <%= link "Back", to: site_post_path(@conn, :index, @site) %>
+    </span>
+</div>

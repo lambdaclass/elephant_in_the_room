@@ -6,26 +6,26 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control" %>
+    <%= label f, :title, class: "uk-legend" %>
+    <%= text_input f, :title, class: "uk-input" %>
     <%= error_tag f, :title %>
   </div>
 
-  <div class="form-group"> 
-    <%= label f, :categories, class: "control-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data) %> 
+  <div class="uk-width-1-2@s"> 
+    <%= label f, :categories, class: "uk-legend" %>
+    <%= multiple_select f, :categories, show_categories(@site), class: "uk-select", selected: show_selected_categories(@changeset.data) %> 
     <%= error_tag f, :categories %>
   </div>
 
   <div class="form-group">
-    <%= label f, :content, class: "control-label" %>
-    <%= textarea f, :content, class: "form-control" %>
+    <%= label f, :content, class: "uk-legend" %>
+    <%= textarea f, :content, class: "uk-textarea" %>
     <%= error_tag f, :content %>
   </div>
 
   <div class="form-group">
-    <%= label f, :image, class: "control-label" %>
-    <%= text_input f, :image, class: "form-control" %>
+    <%= label f, :image, class: "uk-legend" %>
+    <%= text_input f, :image, class: "uk-input" %>
     <%= error_tag f, :image %>   
   </div>
   
@@ -33,13 +33,17 @@
   <br>
   <br>
 
-  <div class="form-group">
-    <%= label f, "tags (separated by comma)", class: "control-label" %>
-    <%= text_input f, :tags_separated_by_comma, class: "form-control" %>
+  <div class="uk-width-1-2@m">
+    <%= label f, "tags (separated by comma)", class: "uk-legend" %>
+    <%= text_input f, :tags_separated_by_comma, class: "uk-input" %>
     <%= error_tag f, :tags_separated_by_comma %>
   </div>
 
+  <br>
+  <br>
+  <br>
+  
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Submit", class: "uk-button uk-button-default" %>
   </div>
 <% end %>

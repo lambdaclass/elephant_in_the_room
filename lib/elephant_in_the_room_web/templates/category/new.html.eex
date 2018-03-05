@@ -1,5 +1,8 @@
 <h2>New Category</h2>
+<div class="uk-grid">
+    <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :create, @site)) %>
 
-<%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :create, @site)) %>
-
-<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
+    <span>
+        <%= link "Back", to: site_category_path(@conn, :index, @site) %>
+    </span>
+</div>
