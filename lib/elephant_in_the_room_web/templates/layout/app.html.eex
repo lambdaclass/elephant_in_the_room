@@ -9,27 +9,39 @@
 
     <title>Hello ElephantInTheRoom!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+          <li class="uk-active">
+            <a href="<%=  page_path(@conn, :index) %>">
+              Elephant In The Room!
+            </a>
+          </li>
+          <li class="uk-parent"><a href="">SA</a></li>
+          <li><a href=""></a></li>
+        </ul>
+      </div>
+    </nav>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <div class="uk-animation-toggle">
+      <div class="uk-card uk-card-default uk-card-body uk-animation-scale-down">
+        <div class="uk-tile uk-tile-primary uk-padding-small">
+          <p class="uk-h4">Site 1</p>
+        </div>
+      </div>
+    </div>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <div class="uk-animation-toggle">
+      <div class="uk-card uk-card-default uk-card-body uk-animation-scale-down">
+        <div class="uk-tile uk-tile-primary uk-padding-small">
+          <p class="uk-h4">Site 1</p>
+        </div>
+      </div>
+    </div>
+        
   </body>
 </html>
