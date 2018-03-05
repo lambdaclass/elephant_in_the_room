@@ -14,7 +14,11 @@
         <ul>
           <%= for post <- @site.posts do %>
             <li>
-              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a"  %>
+              <a href="<%= post_path(@conn, :public_show,
+                       @site.id, post.id) %>">
+                post.title
+              </a>
+              
             </li>
           <% end %>
         </ul>

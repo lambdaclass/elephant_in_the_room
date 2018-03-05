@@ -42,9 +42,9 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
+  def public_show(%{assigns: %{site: site}} = conn, %{"post_id" => id}) do
     post = Sites.get_post!(site, id)
-    render(conn, "pubilic_show.html", site: site, post: post)
+    render(conn, "public_show.html", site: site, post: post)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
