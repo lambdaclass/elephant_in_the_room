@@ -21,9 +21,19 @@ defmodule ElephantInTheRoomWeb.Router do
 
     resources "/sites", SiteController do
       pipe_through :load_site_info
-      resources("/categories", CategoryController)
-      resources("/posts", PostController)
-      resources("/tags", TagController)
+      resources "/categories", CategoryController, only: [:show]
+      resources "/posts", PostController, only: [:show]
+      resources "/tags", TagController, only: [:show]
     end
+
+    scope "/admin" do
+      resources "/sites", SiteController do
+        pipe_through :load_site_info
+        resources "/categories", CategoryController, except: [:show]
+        resources "/posts", PostController, except: [:show]
+        resources "/tags", TagController, except: [:show]
+      end
+    end
+    
   end
 end
