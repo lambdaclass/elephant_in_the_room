@@ -19,11 +19,13 @@
     <div class="el-sites-nav">
       <div class="uk-flex uk-flex-center">
         <ul class="uk-subnav uk-subnav-divider " uk-margin>
-          <li class="uk-active"><a href="#">Active</a></li>
-          <li><a href="#">Site1</a></li>
-          <li><a href="#">Site2</a></li>
-          <li><a href="#">Site3</a></li>
-          <li><a href="#">Site4</a></li>
+          <%= for {site_id, site_name} <- get_nav_sites() do %>
+            <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
+              <a href="<%= site_path(@conn, :show, site_id) %>">
+                <%= site_name %>
+              </a>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
@@ -32,7 +34,7 @@
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
           <li class="uk-active">
-            <a href="<%=  page_path(@conn, :index) %>">
+            <a href="<%= page_path(@conn, :index) %>">
               Elephant In The Room!
             </a>
           </li>
@@ -40,19 +42,28 @@
       </div>
     </nav>
 
-
-    <div class="el-cat-nav">
-      <div class="uk-flex uk-flex-center">
-        <ul class="uk-subnav uk-subnav-divider " uk-margin>
-          <li class="uk-active"><a href="#">Active</a></li>
-          <li><a href="#">Cat1</a></li>
-          <li><a href="#">Cat2</a></li>
-          <li><a href="#">Cat3</a></li>
-          <li><a href="#">Cat4</a></li>
-        </ul>
+    <%= if assigns[:site] do %>
+      <div class="el-cat-nav">
+        <div class="uk-flex uk-flex-center">
+          <ul class="uk-subnav uk-subnav-divider " uk-margin>
+            <%= for {category_id, category_name} <- get_categories(@conn) do %>
+              <li>
+                <a href="<%= site_category_path(@conn, :show,
+                         @site.id, category_id) %>">
+                  <%= category_name %>
+                </a>
+              </li>
+            <%= end %>
+          </ul>
+        </div>
       </div>
-    </div>
+    <%= end %>
+
     
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
         
   </body>
 </html>
