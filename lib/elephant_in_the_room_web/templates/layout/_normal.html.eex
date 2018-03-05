@@ -3,7 +3,7 @@
     <ul class="uk-subnav uk-subnav-divider " uk-margin>
       <%= for {site_id, site_name} <- get_nav_sites() do %>
       <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-        <a href="<%= site_path(@conn, :show, site_id) %>">
+        <a href="<%= site_path(@conn, :public_show, site_id) %>">
           <%= site_name %>
         </a>
       </li>
@@ -24,7 +24,7 @@
   </div>
 </nav>
 
-<%= if assigns[:site] && assigns[:admin] !=true  do %>
+<%= if assigns[:site] do %>
 <div class="el-cat-nav">
   <div class="uk-flex uk-flex-center">
     <ul class="uk-subnav uk-subnav-divider " uk-margin>

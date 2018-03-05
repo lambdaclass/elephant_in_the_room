@@ -19,11 +19,12 @@ defmodule ElephantInTheRoomWeb.Router do
 
     get("/", PageController, :index)
 
-    scope "/sites", SiteController do
+    scope "/sites" do
       pipe_through :load_site_info
-      get "/categories", CategoryController, :display
-      get "/posts", PostController, :display
-      get "/tags", TagController, :displayxs
+      get "/:site_id", SiteController, :public_show
+      get "/:site_id/categories", CategoryController, :public_show
+      get "/:site_id/posts", PostController, :public_show
+      get "/:site_id/tags", TagController, :public_show
     end
 
     scope "/admin" do

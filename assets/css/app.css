@@ -12,3 +12,9 @@
 .el-sites-nav li{
     padding-left: 2px;
 }
+
+.el-sites > .el-title > * {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-bottom: 1em !important;
+}

@@ -1,0 +1,50 @@
+<div class="el-sites">
+  <div class="el-title">
+    <div class="uk-tile uk-tile-primary">
+      <p class="uk-h4"> <h1><%= @site.name %> </h1></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1"> </div>
+    <div class="col-xs-10">
+
+      <div>
+        <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site), class: "a" %></span></h3>
+        <ul>
+          <%= for post <- @site.posts do %>
+            <li>
+              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a"  %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      
+      <div>
+        <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
+        <ul>
+          <%= for category <- @site.categories do %>
+            <li>
+              <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a"  %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div>
+        <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site), class: "a" %></span></h3>
+        <ul>
+          <%= for tag <- @site.tags do %>
+            <li>
+              <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a"  %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>    
+    <div class="col-xs-1"> </div>
+  </div>
+    
+</div>
+  
