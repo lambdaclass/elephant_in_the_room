@@ -1,0 +1,27 @@
+<style>
+.card-image {
+    width: 200px;
+    height: 120px;
+}
+
+/* resize images */
+.card-image img {
+    width: 100%;
+    height: auto;
+}
+</style>
+<div class="uk-card uk-card-default uk-grid-margin uk-card-hover">
+    <div class="uk-card-media-top card-image ">
+        <img class="" src=<%= @post.image%> alt="">
+    </div>
+    <div class="uk-card-header">
+        <h3 class="uk-card-title"><strong><%= @post.title %></strong></h3>
+    </div>
+
+    <div class="uk-card-footer">
+        <strong>
+            <%= link "Read More", to: site_post_path(@conn, :show, @post.site_id, @post), 
+                class: "uk-button uk-button-text" %>
+        </strong>
+    </div>
+</div>

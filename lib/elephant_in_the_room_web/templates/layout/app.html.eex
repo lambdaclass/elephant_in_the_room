@@ -9,24 +9,61 @@
 
     <title>ElephantInTheRoom!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
+  
+  
   <body>
-    <div class="uk-grid">
-      <header class="header">
-        <nav role="uk-navbar uk-navbar-container">
-          <h1> Elephant In The Room
-        </nav>
-      </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <div class="el-sites-nav">
+      <div class="uk-flex uk-flex-center">
+        <ul class="uk-subnav uk-subnav-divider " uk-margin>
+          <%= for {site_id, site_name} <- get_nav_sites() do %>
+            <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
+              <a href="<%= site_path(@conn, :show, site_id) %>">
+                <%= site_name %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+          <li class="uk-active">
+            <a href="<%= page_path(@conn, :index) %>">
+              Elephant In The Room!
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= if assigns[:site] do %>
+      <div class="el-cat-nav">
+        <div class="uk-flex uk-flex-center">
+          <ul class="uk-subnav uk-subnav-divider " uk-margin>
+            <%= for {category_id, category_name} <- get_categories(@conn) do %>
+              <li>
+                <a href="<%= site_category_path(@conn, :show,
+                         @site.id, category_id) %>">
+                  <%= category_name %>
+                </a>
+              </li>
+            <%= end %>
+          </ul>
+        </div>
+      </div>
+    <%= end %>
+
+    
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+        
   </body>
 </html>

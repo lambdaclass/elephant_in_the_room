@@ -1,11 +1,8 @@
-<h2>Show Category</h2>
 
 <ul>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @category.name %>
-  </li>
+    <h2><%= @category.name %></h2>
+  
 
   <li>
     <strong>Description:</strong>
@@ -16,8 +13,15 @@
     <strong>Site ID:</strong>
     <%= @category.site_id %>
   </li>
-
 </ul>
+
+<div uk-grid>
+  <%= for post <- load_posts(@category) do %>
+    <div>
+        <%= render "_post_card.html", Map.put(assigns, :post, post) %>
+    </div>
+  <% end %>
+</div>
 
 <span><%= link "Edit", to: site_category_path(@conn, :edit, @category, @site) %></span>
 <span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>

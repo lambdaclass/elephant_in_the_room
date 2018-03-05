@@ -1,7 +1,8 @@
-version: '3.1'
+version: '3.2'
 
 services:
   db:
+    container_name: elephant_in_the_room_db
     image: postgres:9.5
     ports:
       - "5432:5432"
@@ -9,6 +10,8 @@ services:
       - DB_USER="postgres"
       - DB_PASS="postgres"
       - DB_NAME="elephant_in_the_room_dev"
+    volumes:
+      - elephant_in_the_room_db_data:/var/lib/postgresql/data
 
   pgadmin4:
     image: fenglc/pgadmin4
@@ -16,3 +19,6 @@ services:
       - db
     ports:
       - 5050:5050
+
+volumes:
+  elephant_in_the_room_db_data:

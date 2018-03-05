@@ -7,8 +7,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
       add(:content, :string)
       add(:rendered_content, :string)
       add(:image, :string)
-      add(:site_id, references(:sites, on_delete: :delete_all))
-      # add(:category_id, references(:categories, on_delete: :nothing), null: true)
+      add(:site_id, references(:sites, on_replace: :delete, on_delete: :delete_all))
 
       timestamps()
     end

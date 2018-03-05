@@ -1,33 +1,44 @@
 <div class="uk-grid">
   <h2>Posts</h2>
-  <table class="uk-table uk-table-divider">
+  <table class="uk-table uk-table-justify">
     <thead>
       <tr>
         <th>Title</th>
+        <th>Categories</th>
         <th>Content</th>
         <th>Image</th>
-        <th></th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
-  <%= for post <- @posts do %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= raw show_content(post) %></td>
-        <td><%= post.image %></td>
-        <td class="text-right">
-          <span>
-            <%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "uk-button uk-button-default" %>
-          </span>
-          <span>
-            <%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "uk-button uk-button-default" %>
-          </span>
-          <span>
-            <%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger" %>
-          </span>
-        </td>
-      </tr>
-  <% end %>
+      <%= for post <- @posts do %>
+          <tr>
+            <td><%= post.title %></td>
+            <td>
+              <%= for category <- post.categories do %>
+                <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "uk-link-text"  %>
+              <% end %>
+            </td>
+            <td><%= raw show_content(post) %></td>
+            <td><%= post.image %></td>
+            <td class="uk-text-shrink">
+              <%= for tag <- post.tags do %>
+                <%= tag.name  %>
+              <% end %>
+            </td>
+            <td class="text-right">
+              <span>
+                <%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "uk-button uk-button-default" %>
+              </span>
+              <span>
+                <%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "uk-button uk-button-default" %>
+              </span>
+              <span>
+                <%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger" %>
+              </span>
+            </td>
+          </tr>
+      <% end %>
     </tbody>
   </table>
 
