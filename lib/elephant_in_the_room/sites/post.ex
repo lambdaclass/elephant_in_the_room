@@ -35,8 +35,6 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    IO.puts(inspect(attrs))
-
     post
     |> cast(attrs, [:title, :content, :image, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
