@@ -2,7 +2,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
   alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.{Post}
+  alias ElephantInTheRoom.Sites.Post
 
   def index(%{assigns: %{site: site}} = conn, _) do
     posts = Sites.list_posts(site)

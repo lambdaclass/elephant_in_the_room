@@ -249,6 +249,132 @@ defmodule ElephantInTheRoom.SitesTest do
     end
   end
 
+  describe "users" do
+    alias ElephantInTheRoom.Sites.User
+
+    @valid_attrs %{email: "some email", firstname: "some firstname", lastname: "some lastname", password: "some password", username: "some username"}
+    @update_attrs %{email: "some updated email", firstname: "some updated firstname", lastname: "some updated lastname", password: "some updated password", username: "some updated username"}
+    @invalid_attrs %{email: nil, firstname: nil, lastname: nil, password: nil, username: nil}
+
+    def user_fixture(attrs \\ %{}) do
+      {:ok, user} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sites.create_user()
+
+      user
+    end
+
+    test "list_users/0 returns all users" do
+      user = user_fixture()
+      assert Sites.list_users() == [user]
+    end
+
+    test "get_user!/1 returns the user with given id" do
+      user = user_fixture()
+      assert Sites.get_user!(user.id) == user
+    end
+
+    test "create_user/1 with valid data creates a user" do
+      assert {:ok, %User{} = user} = Sites.create_user(@valid_attrs)
+      assert user.email == "some email"
+      assert user.firstname == "some firstname"
+      assert user.lastname == "some lastname"
+      assert user.password == "some password"
+      assert user.username == "some username"
+    end
+
+    test "create_user/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_user(@invalid_attrs)
+    end
+
+    test "update_user/2 with valid data updates the user" do
+      user = user_fixture()
+      assert {:ok, user} = Sites.update_user(user, @update_attrs)
+      assert %User{} = user
+      assert user.email == "some updated email"
+      assert user.firstname == "some updated firstname"
+      assert user.lastname == "some updated lastname"
+      assert user.password == "some updated password"
+      assert user.username == "some updated username"
+    end
+
+    test "update_user/2 with invalid data returns error changeset" do
+      user = user_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_user(user, @invalid_attrs)
+      assert user == Sites.get_user!(user.id)
+    end
+
+    test "delete_user/1 deletes the user" do
+      user = user_fixture()
+      assert {:ok, %User{}} = Sites.delete_user(user)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_user!(user.id) end
+    end
+
+    test "change_user/1 returns a user changeset" do
+      user = user_fixture()
+      assert %Ecto.Changeset{} = Sites.change_user(user)
+    end
+  end
+
+  describe "roles" do
+    
+    alias ElephantInTheRoom.Sites.Role
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def role_fixture(attrs \\ %{}) do
+      {:ok, role} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sites.create_role()
+
+      role
+    end
+
+    test "list_roles/0 returns all roles" do
+      role = role_fixture()
+      assert Sites.list_roles() == [role]
+    end
+
+    test "get_role!/1 returns the role with given id" do
+      role = role_fixture()
+      assert Sites.get_role!(role.id) == role
+    end
+
+    test "create_role/1 with valid data creates a role" do
+      assert {:ok, %Role{} = role} = Sites.create_role(@valid_attrs)
+      assert role.name == "some name"
+    end
+
+    test "create_role/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_role(@invalid_attrs)
+    end
+
+    test "update_role/2 with valid data updates the role" do
+      role = role_fixture()
+      assert {:ok, role} = Sites.update_role(role, @update_attrs)
+      assert %Role{} = role
+      assert role.name == "some updated name"
+    end
+
+    test "update_role/2 with invalid data returns error changeset" do
+      role = role_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_role(role, @invalid_attrs)
+      assert role == Sites.get_role!(role.id)
+    end
+
+    test "delete_role/1 deletes the role" do
+      role = role_fixture()
+      assert {:ok, %Role{}} = Sites.delete_role(role)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_role!(role.id) end
+    end
+
+    test "change_role/1 returns a role changeset" do
+      role = role_fixture()
+      assert %Ecto.Changeset{} = Sites.change_role(role)
   describe "authors" do
     alias ElephantInTheRoom.Sites.Author
 

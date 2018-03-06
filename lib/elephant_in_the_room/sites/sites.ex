@@ -5,7 +5,7 @@ defmodule ElephantInTheRoom.Sites do
 
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag}
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
   @doc """
   Returns the list of sites.
@@ -36,6 +36,7 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
+
   def get_site!(id) do
     Site
     |> Repo.get!(id)
@@ -461,7 +462,34 @@ defmodule ElephantInTheRoom.Sites do
     Tag.changeset(tag, %{})
   end
 
-  alias ElephantInTheRoom.Sites.Author
+  @doc """
+  Deletes a Author.
+
+  ## Examples
+
+      iex> delete_author(author)
+      {:ok, %Author{}}
+
+      iex> delete_author(author)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_author(%Author{} = author) do
+    Repo.delete(author)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking author changes.
+
+  ## Examples
+
+      iex> change_author(author)
+      %Ecto.Changeset{source: %Author{}}
+
+  """
+  def change_author(%Author{} = author) do
+    Author.changeset(author, %{})
+  end
 
   @doc """
   Returns the list of authors.
@@ -490,7 +518,9 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_author!(id), do: Repo.get!(Author, id)
+  def get_author!(id) do
+    Repo.get!(Author, id)
+  end
 
   @doc """
   Creates a author.
@@ -526,34 +556,5 @@ defmodule ElephantInTheRoom.Sites do
     author
     |> Author.changeset(attrs)
     |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Author.
-
-  ## Examples
-
-      iex> delete_author(author)
-      {:ok, %Author{}}
-
-      iex> delete_author(author)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_author(%Author{} = author) do
-    Repo.delete(author)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking author changes.
-
-  ## Examples
-
-      iex> change_author(author)
-      %Ecto.Changeset{source: %Author{}}
-
-  """
-  def change_author(%Author{} = author) do
-    Author.changeset(author, %{})
   end
 end
