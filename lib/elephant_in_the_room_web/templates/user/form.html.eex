@@ -37,7 +37,7 @@
 
   <div class="form-group">
     <%= label f, :password, class: "control-label" %>
-    <%= text_input f, :password, class: "form-control" %>
+    <%= text_input f, :password, class: "form-control", type: "password", value: "" %>
     <%= error_tag f, :password %>
   </div>
 
