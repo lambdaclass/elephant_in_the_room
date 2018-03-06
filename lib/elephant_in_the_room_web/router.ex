@@ -30,12 +30,12 @@ defmodule ElephantInTheRoomWeb.Router do
     scope "/admin" do
       pipe_through :on_admin_page
       get "/", AdminController, :index
+      resources "/authors", AuthorController
       resources "/sites", SiteController do
         pipe_through :load_site_info
         resources "/categories", CategoryController
         resources "/posts", PostController
         resources "/tags", TagController
-        resources "/authors", AuthorController
       end
     end    
   end
