@@ -16,7 +16,7 @@
             <li>
               <a href="<%= post_path(@conn, :public_show,
                        @site.id, post.id) %>">
-                post.title
+                <%= post.title %>
               </a>
               
             </li>
