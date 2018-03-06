@@ -29,6 +29,12 @@
               <%= category.name %>
             </a>
           <% end %>
+          with tags:
+          <%= for tag <- @site.tags do %>
+            <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
+              <%= tag.name %>
+            </a>
+          <% end %>
         </p>
 
         <p class="uk-text-lead">[ADD ABSTRACT]</p>
