@@ -16,7 +16,9 @@
         <ul>
           <%= for category <- @site.categories do %>
             <li>
-              <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a"  %>
+              <%= link category.name,
+              to: category_path(@conn, :public_show, @site.id, category.id),
+              class: "a"  %>
             </li>
           <% end %>
         </ul>
@@ -27,7 +29,9 @@
         <ul>
           <%= for tag <- @site.tags do %>
             <li>
-              <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a"  %>
+              <%= link tag.name,
+              to: tag_path(@conn, :public_show, @site.id, tag.id),
+              class: "a"  %>
             </li>
           <% end %>
         </ul>

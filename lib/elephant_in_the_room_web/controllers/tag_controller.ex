@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.TagController do
 
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Tag
+  alias ElephantInTheRoom.Repo
 
   def index(%{assigns: %{site: site}} = conn, _) do
     tags = Sites.list_tags(site)
@@ -32,6 +33,12 @@ defmodule ElephantInTheRoomWeb.TagController do
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(id)
     render(conn, "show.html", tag: tag, site: site)
+  end
+
+  def public_show(%{assigns: %{site: site}} = conn, %{"tag_id" => id}) do
+    tag = Sites.get_tag!(id)
+    |> Repo.preload(:posts)
+    render(conn, "public_show.html", tag: tag, site: site)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

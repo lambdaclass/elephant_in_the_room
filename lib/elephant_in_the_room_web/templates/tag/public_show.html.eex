@@ -1,0 +1,14 @@
+<div class="el-sites">
+  <div class="el-title">
+    <div class="uk-tile uk-tile-primary">
+      <p class="uk-h4"><h1>Tag: <%= @tag.name %></h1></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1"> </div>
+    <div class="col-xs-10">
+      <%= shared_render_posts_card @conn, @tag.posts, assigns %>
+    </div>
+  </div>
+</div>

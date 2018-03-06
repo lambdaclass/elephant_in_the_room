@@ -39,8 +39,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
                   %{"category_id" => id}) do
     category = Sites.get_category!(id)
     |> Repo.preload(:posts)
-    IO.puts(inspect(category))
-    render(conn, "public_show.html", category: category, site: site,)
+    render(conn, "public_show.html", category: category, site: site)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
