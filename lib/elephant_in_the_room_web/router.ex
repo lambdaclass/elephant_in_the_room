@@ -36,7 +36,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/:site_id", SiteController, :public_show)
       get("/:site_id/post/:post_id", PostController, :public_show)
       get("/:site_id/category/:category_id", CategoryController, :public_show)
-      get("/:site_id/tags", TagController, :public_show)
+      get("/:site_id/tag/:tag_id", TagController, :public_show)
     end
 
     scope "/admin" do

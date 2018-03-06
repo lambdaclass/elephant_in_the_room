@@ -18,7 +18,9 @@ defmodule ElephantInTheRoom.Auth do
 
   """
   def list_users do
-    Repo.all(User)
+    User
+    |> Repo.all()
+    |> Repo.preload(:role)
   end
 
   @doc """
@@ -36,7 +38,9 @@ defmodule ElephantInTheRoom.Auth do
 
   """
   def get_user!(id) do
-    Repo.get!(User, id)
+    User
+    |> Repo.get!(id)
+    |> Repo.preload(:role)
   end
 
   @doc """

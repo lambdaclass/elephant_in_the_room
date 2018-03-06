@@ -1,6 +1,6 @@
 <div class="el-sites-nav">
   <div class="uk-flex uk-flex-center">
-    <ul class="uk-subnav uk-subnav-divider " uk-margin>
+    <ul class="uk-subnav uk-subnav-divider" uk-margin>
       <%= for {site_id, site_name} <- get_nav_sites() do %>
       <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
         <a href="<%= site_path(@conn, :public_show, site_id) %>">
@@ -9,6 +9,14 @@
       </li>
       <% end %>
     </ul>
+  </div>
+  <div class="uk-flex uk-flex-right">
+    <div class="uk-subnav uk-subnav-divider" uk-margin>
+
+       <%= link "Login", to: login_path(@conn, :index), class: "uk-link" %>
+       <%= link "SignUp", to: user_path(@conn, :new), class: "un-link" %>
+
+    </div>
   </div>
 </div>
 

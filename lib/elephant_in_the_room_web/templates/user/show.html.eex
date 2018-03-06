@@ -8,6 +8,11 @@
   </li>
 
   <li>
+    <strong>Role:</strong>
+    <%= @user.role %>
+  </li>
+
+  <li>
     <strong>Firstname:</strong>
     <%= @user.firstname %>
   </li>

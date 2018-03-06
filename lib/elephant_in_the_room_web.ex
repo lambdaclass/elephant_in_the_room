@@ -41,6 +41,12 @@ defmodule ElephantInTheRoomWeb do
       import ElephantInTheRoomWeb.Router.Helpers
       import ElephantInTheRoomWeb.ErrorHelpers
       import ElephantInTheRoomWeb.Gettext
+
+      def shared_render_posts_card(conn, posts, assigns) do
+        all_assigns = Enum.concat([posts: posts, conn: conn], assigns)
+        render ElephantInTheRoomWeb.SharedPostCardView,
+          "_shared_post_card.html", all_assigns 
+      end
     end
   end
 
