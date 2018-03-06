@@ -1,6 +1,14 @@
 defmodule ElephantInTheRoomWeb.Router do
   use ElephantInTheRoomWeb, :router
 
+  pipeline :auth do
+    plug(ElephantInTheRoom.Auth.Pipeline)
+  end
+
+  pipeline :ensure_auth do
+    plug(Guardian.Plug.EnsureAuthenticated)
+  end
+
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)
@@ -15,9 +23,13 @@ defmodule ElephantInTheRoomWeb.Router do
 
   scope "/", ElephantInTheRoomWeb do
     # Use the default browser stack
-    pipe_through(:browser)
+    pipe_through([:browser, :auth])
 
     get("/", PageController, :index)
+    get("/login", LoginController, :index)
+    post("/login", LoginController, :login)
+    post("/logout", LoginController, :logout)
+    resources("/users", UserController, only: [:new, :create])
 
     scope "/site" do
       pipe_through(:load_site_info)
@@ -28,10 +40,12 @@ defmodule ElephantInTheRoomWeb.Router do
     end
 
     scope "/admin" do
-      pipe_through(:on_admin_page)
+      pipe_through([:on_admin_page, :ensure_auth])
       get("/", AdminController, :index)
       resources("/roles", RoleController)
-      resources("/users", UserController)
+      resources("/users", UserController, except: [:new, :create])
+
+      get("/secret", LoginController, :secret)
       resources("/authors", AuthorController)
 
       resources "/sites", SiteController do
