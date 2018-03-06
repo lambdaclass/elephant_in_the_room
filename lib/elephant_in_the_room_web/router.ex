@@ -35,8 +35,8 @@ defmodule ElephantInTheRoomWeb.Router do
         resources "/categories", CategoryController
         resources "/posts", PostController
         resources "/tags", TagController
+        resources "/authors", AuthorController
       end
     end    
-    
   end
 end
