@@ -9,5 +9,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: site_tag_path(@conn, :edit, @tag, @site) %></span>
+<span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, @tag) %></span>
 <span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>

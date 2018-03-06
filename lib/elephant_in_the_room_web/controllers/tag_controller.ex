@@ -4,18 +4,12 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Tag
 
-  def action(conn, _params) do
-    site = Sites.get_site!(conn.params["site_id"])
-    args = [conn, conn.params, site]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def index(conn, _params, site) do
+  def index(%{assigns: %{site: site}} = conn, _) do
     tags = Sites.list_tags(site)
     render(conn, "index.html", tags: tags, site: site)
   end
 
-  def new(conn, _params, site) do
+  def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Tag{site_id: site.id}
       |> Sites.change_tag()
@@ -23,7 +17,7 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "new.html", changeset: changeset, site: site)
   end
 
-  def create(conn, %{"tag" => tag_params}, site) do
+  def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
     case Sites.create_tag(site, tag_params) do
       {:ok, tag} ->
         conn
@@ -35,18 +29,18 @@ defmodule ElephantInTheRoomWeb.TagController do
     end
   end
 
-  def show(conn, %{"id" => id}, site) do
+  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(id)
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def edit(conn, %{"id" => id}, site) do
+  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(site, id)
     changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
+    render(conn, "edit.html", tag: tag, site: site, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "tag" => tag_params}, site) do
+  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "tag" => tag_params}) do
     tag = Sites.get_tag!(id)
 
     case Sites.update_tag(tag, tag_params) do
@@ -60,7 +54,7 @@ defmodule ElephantInTheRoomWeb.TagController do
     end
   end
 
-  def delete(conn, %{"id" => id}, site) do
+  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(id)
     {:ok, _tag} = Sites.delete_tag(tag)
 

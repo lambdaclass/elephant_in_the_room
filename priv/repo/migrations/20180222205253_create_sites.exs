@@ -3,11 +3,11 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
 
   def change do
     create table(:sites) do
-      add :name, :string
+      add(:name, :string)
 
       timestamps()
     end
 
-    create unique_index(:sites, [:name])
+    create(unique_index(:sites, [:name]))
   end
 end

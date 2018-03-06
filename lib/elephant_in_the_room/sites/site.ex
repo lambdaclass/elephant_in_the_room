@@ -6,9 +6,9 @@ defmodule ElephantInTheRoom.Sites.Site do
   schema "sites" do
     field(:name, :string)
 
-    has_many(:categories, Category)
-    has_many(:posts, Post)
-    has_many(:tags, Tag)
+    has_many(:categories, Category, on_delete: :delete_all)
+    has_many(:posts, Post, on_delete: :delete_all)
+    has_many(:tags, Tag, on_delete: :delete_all)
 
     timestamps()
   end

@@ -45,7 +45,9 @@ defmodule ElephantInTheRoom.Mixfile do
       # added deps
       {:guardian, "~> 1.0.1"},
       {:comeonin, "~> 4.0"},
-      {:bcrypt_elixir, "~> 0.12"}
+      {:bcrypt_elixir, "~> 0.12"},
+      # markdown
+      {:cmark, "~> 0.7"}
     ]
   end
 

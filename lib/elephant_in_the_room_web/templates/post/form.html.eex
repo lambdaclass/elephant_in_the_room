@@ -12,8 +12,14 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :author, class: "control-label" %>
+    <%= select f, :author_id, get_authors() %>
+    <%= error_tag f, :author %>
+  </div>
+
+  <div class="form-group"> 
     <%= label f, :categories, class: "control-label" %>
-    <%= multiple_select f, :categories, show_categories(@site) %> 
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data) %> 
     <%= error_tag f, :categories %>
   </div>
 

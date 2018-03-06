@@ -1,0 +1,23 @@
+<h2>Show Author</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @author.name %>
+  </li>
+
+  <li>
+    <strong>Image:</strong>
+    <%= @author.image %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @author.description %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: author_path(@conn, :edit, @author) %></span>
+<span><%= link "Back", to: author_path(@conn, :index) %></span>

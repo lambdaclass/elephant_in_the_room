@@ -4,18 +4,12 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Post
 
-  def action(conn, _params) do
-    site = Sites.get_site!(conn.params["site_id"])
-    args = [conn, conn.params, site]
-    apply(__MODULE__, action_name(conn), args)
-  end
-
-  def index(conn, _params, site) do
-    posts = Sites.list_posts()
+  def index(%{assigns: %{site: site}} = conn, _) do
+    posts = Sites.list_posts(site)
     render(conn, "index.html", site: site, posts: posts)
   end
 
-  def new(conn, _params, site) do
+  def new(%{assigns: %{site: site}} = conn, _) do
     categories = Sites.list_categories(site)
 
     changeset =
@@ -31,7 +25,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def create(conn, %{"post" => post_params}, site) do
+  def create(%{assigns: %{site: site}} = conn, %{"post" => post_params}) do
     case Sites.create_post(site, post_params) do
       {:ok, post} ->
         conn
@@ -43,21 +37,31 @@ defmodule ElephantInTheRoomWeb.PostController do
     end
   end
 
-  def show(conn, %{"id" => id}, site) do
-    post = Sites.get_post!(id)
+  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
+    post = Sites.get_post!(site, id)
     render(conn, "show.html", site: site, post: post)
   end
 
-  def edit(conn, %{"id" => id}, site) do
+  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     post = Sites.get_post!(site, id)
+    categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
-    render(conn, "edit.html", site: site, post: post, changeset: changeset)
+
+    render(
+      conn,
+      "edit.html",
+      site: site,
+      post: post,
+      changeset: changeset,
+      categories: categories
+    )
   end
 
-  def update(conn, %{"id" => id, "post" => post_params}, site) do
-    post = Sites.get_post!(id)
+  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "post" => post_params}) do
+    post = Sites.get_post!(site, id)
+    post_params_with_site_id = Map.put(post_params, "site_id", site.id)
 
-    case Sites.update_post(post, post_params) do
+    case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "Post updated successfully.")
@@ -68,8 +72,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     end
   end
 
-  def delete(conn, %{"id" => id}, site) do
-    post = Sites.get_post!(id)
+  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
+    post = Sites.get_post!(site, id)
     {:ok, _post} = Sites.delete_post(post)
 
     conn

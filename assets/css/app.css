@@ -1,1 +1,14 @@
 /* This file is for your main application css. */
+
+.el-sites-nav ul, .el-cat-nav ul {
+    margin-bottom: 0px;
+}
+.el-sites-nav li, .el-cat-nav li {
+    margin-top: 0px !important;
+}
+.el-sites-nav *{
+    font-size: small !important; 
+}
+.el-sites-nav li{
+    padding-left: 2px;
+}

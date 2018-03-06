@@ -19,4 +19,10 @@ ops:
 	docker-compose -f docker-compose.yml up
 
 ops_reset:
-	docker-compose -f docker-compose.yml down
+	docker-compose down --volumes
+
+ops_backup_db:
+	@echo "Generation dump backup"
+	mkdir -p pg_dump
+	docker exec elephant_in_the_room_db pg_dumpall -h localhost -U postgres \
+	 > pg_dump/backup_$$(date +"%Y%m%d%H%M%S").sql
