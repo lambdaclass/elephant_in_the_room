@@ -11,7 +11,7 @@
 
       <article class="uk-article">
 
-        <h1 class="uk-article-title">
+        <h1 class="uk-heading-hero">
           <%= @post.title %>
         </h1>
 
@@ -22,6 +22,19 @@
           <a href="<%= site_path @conn, :public_show, @site.id %>">
             <%= @site.name %>
           </a>
+          under categories:
+          <%= for category <- @site.categories do %>
+            <a href="<%= category_path @conn, :public_show,
+                     @site.id, category.id %>">
+              <%= category.name %>
+            </a>
+          <% end %>
+          with tags:
+          <%= for tag <- @site.tags do %>
+            <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
+              <%= tag.name %>
+            </a>
+          <% end %>
         </p>
 
         <p class="uk-text-lead">[ADD ABSTRACT]</p>
@@ -29,7 +42,7 @@
         <%= raw show_content @post %>
 
       </article>
-      
+
     </div>
 
   </div>

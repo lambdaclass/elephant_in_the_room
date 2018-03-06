@@ -9,27 +9,16 @@
     <div class="col-xs-1"> </div>
     <div class="col-xs-10">
 
-      <div>
-        <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site), class: "a" %></span></h3>
-        <ul>
-          <%= for post <- @site.posts do %>
-            <li>
-              <a href="<%= post_path(@conn, :public_show,
-                       @site.id, post.id) %>">
-                <%= post.title %>
-              </a>
-              
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      
+      <%= shared_render_posts_card @conn, @site.posts, assigns %>
+            
       <div>
         <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
         <ul>
           <%= for category <- @site.categories do %>
             <li>
-              <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a"  %>
+              <%= link category.name,
+              to: category_path(@conn, :public_show, @site.id, category.id),
+              class: "a"  %>
             </li>
           <% end %>
         </ul>
@@ -40,7 +29,9 @@
         <ul>
           <%= for tag <- @site.tags do %>
             <li>
-              <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a"  %>
+              <%= link tag.name,
+              to: tag_path(@conn, :public_show, @site.id, tag.id),
+              class: "a"  %>
             </li>
           <% end %>
         </ul>
