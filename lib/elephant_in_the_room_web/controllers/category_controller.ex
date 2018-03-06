@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
+  alias ElephantInTheRoom.Repo
 
   def index(%{assigns: %{site: site}} = conn, _) do
     categories = Sites.list_categories(site)
@@ -31,14 +32,15 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     category = Sites.get_category!(id)
-
     render(conn, "show.html", category: category, site: site)
   end
 
   def public_show(%{assigns: %{site: site}} = conn,
                   %{"category_id" => id}) do
     category = Sites.get_category!(id)
-    render(conn, "show.html", category: category, site: site)
+    |> Repo.preload(:posts)
+    IO.puts(inspect(category))
+    render(conn, "public_show.html", category: category, site: site,)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
