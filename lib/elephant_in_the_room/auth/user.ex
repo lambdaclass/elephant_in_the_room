@@ -21,9 +21,12 @@ defmodule ElephantInTheRoom.Auth.User do
     user
     |> cast(attrs, [:username, :firstname, :lastname, :email, :password, :role_id])
     |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id])
-    |> put_pass_hash()
     |> unique_constraint(:username)
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 6)
+    |> validate_length(:username, min: 4)
+    |> put_pass_hash()
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
