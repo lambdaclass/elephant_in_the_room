@@ -8,7 +8,7 @@
       <%= text_input f, :username, class: "form-control" %>
       <%= error_tag f, :username %>
     </div>
-
+    
     <div class="form-group">
       <%= label f, :password, class: "control-label" %>
       <%= password_input f, :password, class: "form-control" %>

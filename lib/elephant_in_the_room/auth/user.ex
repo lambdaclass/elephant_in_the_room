@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Auth.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias ElephantInTheRoom.Auth.User
+  alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
 
   schema "users" do
@@ -12,21 +12,22 @@ defmodule ElephantInTheRoom.Auth.User do
     field(:password, :string)
     field(:username, :string)
 
+    belongs_to(:role, Role)
     timestamps()
   end
 
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:username, :firstname, :lastname, :email, :password])
-    |> validate_required([:username, :firstname, :lastname, :email, :password])
+    |> cast(attrs, [:username, :firstname, :lastname, :email, :password, :role_id])
+    |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id])
     |> put_pass_hash()
     |> unique_constraint(:username)
     |> unique_constraint(:email)
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, password: Bcrypt.hashpwsalt(password))
+    changeset |> change(password: Bcrypt.hashpwsalt(password))
   end
 
   defp put_pass_hash(changeset) do

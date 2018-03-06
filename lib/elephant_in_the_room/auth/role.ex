@@ -1,12 +1,11 @@
-defmodule ElephantInTheRoom.Sites.Role do
+defmodule ElephantInTheRoom.Auth.Role do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.Role
-
+  alias ElephantInTheRoom.Auth.{Role, User}
 
   schema "roles" do
-    field :name, :string
-
+    field(:name, :string)
+    has_many(:users, User)
     timestamps()
   end
 
