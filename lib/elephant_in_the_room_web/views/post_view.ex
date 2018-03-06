@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.Sites
 
   def mk_assigns(conn, assigns, site, post) do
     assigns
@@ -19,6 +20,10 @@ defmodule ElephantInTheRoomWeb.PostView do
   def show_categories(site) do
     site.categories
     |> Enum.map(fn category -> category.name end)
+  end
+
+  def get_authors() do
+    Sites.list_authors() |> Enum.map(fn author -> {author.name, author.id} end)
   end
 
   def show_selected_categories(data) do
