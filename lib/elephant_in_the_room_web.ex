@@ -50,6 +50,7 @@ defmodule ElephantInTheRoomWeb do
       import Plug.Conn
       import Phoenix.Controller
       import ElephantInTheRoomWeb.Plugs.SiteInfo
+      import ElephantInTheRoomWeb.Plugs.Admin
     end
   end
 

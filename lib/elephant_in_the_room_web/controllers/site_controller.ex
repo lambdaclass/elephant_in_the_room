@@ -30,6 +30,11 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "show.html", site: site)
   end
 
+  def public_show(conn, %{"site_id" => id}) do
+    site = Sites.get_site!(id)
+    render(conn, "public_show.html", site: site)
+  end
+
   def edit(conn, %{"id" => id}) do
     site = Sites.get_site!(id)
     changeset = Sites.change_site(site)
