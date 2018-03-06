@@ -9,6 +9,7 @@
     <div class="col-xs-1"> </div>
     <div class="col-xs-10">
 
+      <%= shared_render_posts_card @conn, @site.posts, assigns %>
       <div>
         <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site), class: "a" %></span></h3>
         <ul>

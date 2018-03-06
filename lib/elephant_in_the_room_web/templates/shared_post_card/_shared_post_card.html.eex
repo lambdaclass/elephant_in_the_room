@@ -1,0 +1,38 @@
+<style>
+ .card-image {
+     width: 200px;
+     height: 120px;
+ }
+ /* resize images */
+ .card-image img {
+     width: 100%;
+     height: auto;
+ }
+</style>
+
+<%= for post <- @posts do %>
+
+<a href="/">
+  <div class="uk-card uk-card-default 
+              uk-grid-collapse uk-child-width-1-2@s 
+              uk-margin
+              uk-card-hover" uk-grid>
+  
+  <div class="uk-card-media-left uk-cover-container">
+    <img src="http://via.placeholder.com/350x150" alt="" uk-cover>
+    <canvas width="600" height="400"></canvas>
+  </div>
+  <div>
+    <div class="uk-card-body">
+      <h3 class="uk-card-title"><%= post.title %></h3>
+      <p>[TODO: POST ABSTRACT]</p>
+    </div>
+  </div>
+  </div>
+</a>
+
+
+
+
+
+<% end %>
