@@ -30,8 +30,8 @@
     <ul class="uk-subnav uk-subnav-divider " uk-margin>
       <%= for {category_id, category_name} <- get_categories(@conn) do %>
       <li>
-        <a href="<%= site_category_path(@conn, :show,
-                 @site.id, category_id) %>">
+        <a href="<%= category_path(@conn, :public_show,
+                                   @site.id, category_id) %>">
           <%= category_name %>
         </a>
       </li>

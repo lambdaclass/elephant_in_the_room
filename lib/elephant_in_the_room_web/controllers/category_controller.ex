@@ -35,6 +35,12 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
+  def public_show(%{assigns: %{site: site}} = conn,
+                  %{"category_id" => id}) do
+    category = Sites.get_category!(id)
+    render(conn, "show.html", category: category, site: site)
+  end
+
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     category = Sites.get_category!(site, id)
     changeset = Sites.change_category(category)

@@ -23,7 +23,7 @@ defmodule ElephantInTheRoomWeb.Router do
       pipe_through :load_site_info
       get "/:site_id", SiteController, :public_show
       get "/:site_id/post/:post_id", PostController, :public_show
-      get "/:site_id/categories", CategoryController, :public_show
+      get "/:site_id/category/:category_id", CategoryController, :public_show
       get "/:site_id/tags", TagController, :public_show
     end
 
