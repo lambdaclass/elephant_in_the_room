@@ -1,0 +1,36 @@
+<div class="el-sites">
+  <div class="el-title">
+    <div class="uk-tile uk-tile-primary">
+      <p class="uk-h4"> <h1>[ADD IMAGE HERE]</h1></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1"> </div>
+    <div class="col-xs-10">
+
+      <article class="uk-article">
+
+        <h1 class="uk-article-title">
+          <%= @post.title %>
+        </h1>
+
+        <p class="uk-article-meta">
+          Written by <a href="#">[ADD AUTHOR HERE]</a> on
+          <%= @post.updated_at %>.
+          Posted in
+          <a href="<%= site_path @conn, :public_show, @site.id %>">
+            <%= @site.name %>
+          </a>
+        </p>
+
+        <p class="uk-text-lead">[ADD ABSTRACT]</p>
+
+        <%= raw show_content @post %>
+
+      </article>
+      
+    </div>
+
+  </div>
+</div>
