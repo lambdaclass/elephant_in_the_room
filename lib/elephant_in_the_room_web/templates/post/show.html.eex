@@ -8,6 +8,11 @@
   </li>
 
   <li>
+    <strong>Abstract:</strong>
+    <%= @post.abstract %>
+  </li>
+
+  <li>
     <strong>Content:</strong>
     <%= raw show_content @post %>
   </li>

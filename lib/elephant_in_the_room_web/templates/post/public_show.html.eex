@@ -37,7 +37,7 @@
           <% end %>
         </p>
 
-        <p class="uk-text-lead">[ADD ABSTRACT]</p>
+        <p class="uk-text-lead"><%= @post.abstract %></p>
 
         <%= raw show_content @post %>
 

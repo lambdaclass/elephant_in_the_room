@@ -17,6 +17,12 @@
     <%= error_tag f, :author %>
   </div>
 
+  <div class="form-group">
+    <%= label f, :abstract, class: "control-label" %>
+    <%= textarea f, :abstract, class: "form-control" %>
+    <%= error_tag f, :abstract %>
+  </div>
+
   <div class="form-group"> 
     <%= label f, :categories, class: "control-label" %>
     <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data) %> 
