@@ -11,9 +11,23 @@
 # and so on) as they will fail if something goes wrong.
 
 alias ElephantInTheRoom.Auth
+alias ElephantInTheRoom.Auth.Role
+alias ElephantInTheRoom.Repo
 
-IO.puts("Creating admin and user roles")
+case Repo.get_by(Role, name: "admin") do
+  nil ->
+    IO.puts("Creating admin role")
+    Auth.create_role(%{name: "admin"})
 
-{:ok, admin_role} = Auth.create_role(%{name: "admin"})
+  _admin_role ->
+    IO.puts("admin role already created!")
+end
 
-{:ok, user_role} = Auth.create_role(%{name: "user"})
+case Repo.get_by(Role, name: "user") do
+  nil ->
+    IO.puts("Creating user role")
+    Auth.create_role(%{name: "user"})
+
+  _user_role ->
+    IO.puts("user role already created!")
+end
