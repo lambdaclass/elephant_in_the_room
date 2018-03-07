@@ -30,6 +30,7 @@ defmodule ElephantInTheRoomWeb.Router do
     post("/login", LoginController, :login)
     post("/logout", LoginController, :logout)
     resources("/users", UserController, only: [:new, :create])
+    get("/author/:author_id", AuthorController, :public_show)
 
     scope "/site" do
       pipe_through(:load_site_info)
