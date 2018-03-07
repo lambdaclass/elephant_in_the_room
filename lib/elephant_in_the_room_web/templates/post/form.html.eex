@@ -41,7 +41,7 @@
 
   <div class="form-group">
     <%= label f, "tags (separated by comma)", class: "control-label" %>
-    <%= text_input f, :tags_separated_by_comma, class: "form-control" %>
+    <%= text_input f, :tags_separated_by_comma, class: "form-control", value: show_tags(@changeset.data) %>
     <%= error_tag f, :tags_separated_by_comma %>
   </div>
 
