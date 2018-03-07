@@ -35,4 +35,14 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_content(%Post{rendered_content: content}), do: content
+
+  def show_tags(data) do
+    if Map.has_key?(data, :tags) do
+      data.tags
+      |> Enum.map(fn t -> t.name end)
+      |> Enum.intersperse(", ")
+    else
+      ""
+    end
+  end
 end
