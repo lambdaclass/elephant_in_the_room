@@ -1,0 +1,15 @@
+<div class="el-sites">
+  <div class="el-title">
+    <div class="uk-tile uk-tile-primary">
+      <p class="uk-h4"><h1><%= @author.name %></h1></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1"> </div>
+    <div class="col-xs-10">
+      <p> Image: <%= @author.image %> </p>
+      <%= @author.description %>
+    </div>
+  </div>
+</div>
