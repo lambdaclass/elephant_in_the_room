@@ -10,6 +10,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:rendered_content, :string)
     field(:image, :string)
     field(:title, :string)
+    field(:abstract, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, foreign_key: :author_id)
@@ -36,11 +37,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :image, :site_id, :author_id])
+    |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :image, :site_id, :author_id])
+    |> validate_required([:title, :content, :abstract, :image, :site_id, :author_id])
     |> unique_constraint(:title)
+    |> validate_length(:abstract, max: 200)
     |> put_rendered_content
   end
 

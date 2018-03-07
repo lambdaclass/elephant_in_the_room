@@ -4,6 +4,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
   def change do
     create table(:posts) do
       add(:title, :string)
+      add(:abstract, :string)
       add(:content, :string)
       add(:rendered_content, :string)
       add(:image, :string)

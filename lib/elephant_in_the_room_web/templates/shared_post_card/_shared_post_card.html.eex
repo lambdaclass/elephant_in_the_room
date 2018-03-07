@@ -13,7 +13,7 @@
   <div>
     <div class="uk-card-body">
       <h3 class="uk-card-title"><%= post.title %></h3>
-      <p>[TODO: POST ABSTRACT]</p>
+      <p><%= post.abstract %></p>
     </div>
   </div>
   </div>
