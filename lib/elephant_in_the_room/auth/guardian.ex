@@ -18,10 +18,6 @@ defmodule ElephantInTheRoom.Auth.Guardian do
   def resource_from_claims(claims) do
     user =
       claims["sub"]
-      |> Auth.get_user!()
-
-    {:ok, user}
-
-    # If something goes wrong here return {:error, reason}
+      |> Auth.get_user()
   end
 end
