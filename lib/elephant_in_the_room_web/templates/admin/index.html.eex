@@ -1,34 +1,11 @@
-<h2>Sites</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for site <- @sites do %>
-      <tr>
-        <td>
-          <%= link site.name,
-          to: site_path(@conn, :show, site) %>
-        </td>
-
-        <td class="text-right">
-          <span>
-            <%= link "Edit",
-            to: site_path(@conn, :edit, site),
-            class: "btn btn-default btn-xs" %></span>
-          <span>
-            <%= link "Delete",
-            to: site_path(@conn, :delete, site),
-            method: :delete,
-            data: [confirm: "Are you sure?"],
-            class: "btn btn-danger btn-xs" %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Site", to: site_path(@conn, :new) %></span>
+<h2>Administrate:</h2>
+<ul>
+  <li>
+    <%= link "Sites",
+    to: site_path(@conn, :index) %>
+  </li>
+  <li>
+    <%= link "Authors",
+    to: author_path(@conn, :index) %>
+  </li>
+</ul>
