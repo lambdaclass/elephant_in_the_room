@@ -7,6 +7,8 @@ defmodule ElephantInTheRoom.Sites.Comment do
   schema "comments" do
     field :text, :string
 
+    belongs_to :post, Post, foreign_key: :user_id
+
     timestamps()
   end
 
