@@ -23,24 +23,19 @@ defmodule ElephantInTheRoom.Auth do
     |> Repo.preload(:role)
   end
 
-  @doc """
-  Gets a single user.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!(123)
-      %User{}
-
-      iex> get_user!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_user!(id) do
     User
     |> Repo.get!(id)
     |> Repo.preload(:role)
+  end
+
+  def get_user(id) do
+    case Repo.get(User, id) do
+      nil -> {:error, :user_not_found}
+      user ->
+        user = Repo.preload(user, :role)
+        {:ok, user}
+    end
   end
 
   @doc """
