@@ -248,25 +248,13 @@ defmodule ElephantInTheRoom.Sites do
 
   @doc """
   Gets a single post.
-
   Raises `Ecto.NoResultsError` if the Post does not exist.
-
-  ## Examples
-
-      iex> get_post!(123)
-      %Post{}
-
-      iex> get_post!(456)
-      ** (Ecto.NoResultsError)
-
   """
-
   def get_post!(site, id) do
     Post
     |> where([t], t.site_id == ^site.id)
     |> Repo.get!(id)
-    |> Repo.preload(:tags)
-    |> Repo.preload(:categories)
+    |> Repo.preload([:tags, :categories, :author])
   end
 
   @doc """

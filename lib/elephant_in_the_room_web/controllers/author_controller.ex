@@ -30,6 +30,11 @@ defmodule ElephantInTheRoomWeb.AuthorController do
     render(conn, "show.html", author: author)
   end
 
+  def public_show(conn, %{"author_id" => id}) do
+    author = Sites.get_author!(id)
+    render(conn, "public_show.html", author: author)
+  end
+
   def edit(conn, %{"id" => id}) do
     author = Sites.get_author!(id)
     changeset = Sites.change_author(author)
