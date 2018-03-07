@@ -12,6 +12,8 @@ defmodule ElephantInTheRoom.Auth.User do
     field(:password, :string)
     field(:username, :string)
 
+    has_many(:comments, Comment, on_delete: :delete_all)
+
     belongs_to(:role, Role)
     timestamps()
   end

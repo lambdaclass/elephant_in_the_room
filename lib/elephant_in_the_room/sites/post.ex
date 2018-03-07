@@ -15,6 +15,8 @@ defmodule ElephantInTheRoom.Sites.Post do
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, foreign_key: :author_id)
 
+    has_many(:comments, Comment, on_delete: :delete_all)
+
     many_to_many(
       :categories,
       Category,
