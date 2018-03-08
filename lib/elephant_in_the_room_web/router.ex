@@ -28,7 +28,7 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/", PageController, :index)
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
-    get("/logout", LoginController, :logout)
+    post("/logout", LoginController, :logout)
     resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
 

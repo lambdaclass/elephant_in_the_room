@@ -5,7 +5,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateAuthors do
     create table(:authors) do
       add(:name, :string)
       add(:image, :string)
-      add(:description, :string)
+      add(:description, :text)
 
       timestamps()
     end
