@@ -7,23 +7,12 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   def index(conn, _params) do
     changeset = Auth.change_user(%User{})
-    maybe_user = Guardian.Plug.current_resource(conn)
+    user = case Guardian.Plug.current_resource(conn) do
+             %User{} = user -> user
+             nil -> :no_user
+           end
 
-    message =
-      if maybe_user != nil do
-        "Someone is logged in"
-      else
-        "No one is logged in"
-      end
-
-    conn
-    |> put_flash(:info, message)
-    |> render(
-      "login.html",
-      changeset: changeset,
-      action: login_path(conn, :login),
-      maybe_user: maybe_user
-    )
+    render(conn, "login.html", changeset: changeset, user: user)
   end
 
   def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
