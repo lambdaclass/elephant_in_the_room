@@ -31,11 +31,11 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def get_logged_user(conn) do
     case Auth.get_user(conn) do
-      {:ok, %User{:role => %Role{:name => "admin"}} = user} ->
+      {:admin, %User{:role => %Role{:name => "admin"}} = user} ->
         {:ok, user}
 
       {:ok, user} ->
-        {:ok, user}
+        {:not_an_admin, user}
 
       {:error, _} ->
         {:error, :not_logged_in}
