@@ -4,10 +4,10 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
   def change do
     create table(:posts) do
       add(:title, :string)
-      add(:abstract, :string)
-      add(:content, :string)
-      add(:rendered_content, :string)
-      add(:image, :string)
+      add(:abstract, :text)
+      add(:content, :text)
+      add(:rendered_content, :text)
+      add(:image, :text)
       add(:site_id, references(:sites, on_replace: :delete, on_delete: :delete_all))
 
       timestamps()
