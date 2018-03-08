@@ -6,8 +6,6 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Site ID</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,8 +13,6 @@
     <tr>
       <td><%= category.name %></td>
       <td><%= category.description %></td>
-      <td><%= category.site_id %></td>
-
       <td class="text-right">
         <span><%= link "Show", to: site_category_path(@conn, :show, @site, category), class: "btn btn-default btn-xs" %></span>
         <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, category), class: "btn btn-default btn-xs" %></span>
