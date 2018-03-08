@@ -10,14 +10,6 @@
       <% end %>
     </ul>
   </div>
-  <div class="uk-flex uk-flex-right">
-    <div class="uk-subnav uk-subnav-divider" uk-margin>
-
-       <%= link "Login", to: login_path(@conn, :index), class: "uk-link" %>
-       <%= link "SignUp", to: user_path(@conn, :new), class: "un-link" %>
-
-    </div>
-  </div>
 </div>
 
 <nav class="uk-navbar-container" uk-navbar>

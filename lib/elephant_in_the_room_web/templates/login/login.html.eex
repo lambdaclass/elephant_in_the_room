@@ -24,22 +24,29 @@
             </div>
           </fieldset>
          <% end %>
-    
 
-         <%= %User{username: name} -> %>
-           <h1>Hello <%= @user.username%>!</h1>
-           <span>
-             <%= link "Logout", 
+         <%= %User{username: name, role: role} -> %>
+           <h1>Hello <%= name%>!</h1>
+           <div class="uk-margin">
+             <%= if role.name == "admin" do %>
+               <%= link "Administrate",
+               to: admin_path(@conn, :index),
+               class: "uk-button uk-button-danger
+                     uk-width-1-1 uk-margin-small-bottom"%>
+             <% end %>
+             <%= link "Logout",
              to: login_path(@conn, :logout),
-             method: :post %>
-           </span>
+             method: :post,
+             class: "uk-button uk-button-primary
+                     uk-width-1-1 uk-margin-small-bottom"%>
+           </div>
 
-           <%= :login_failed -> %>
+         <%= :login_failed -> %>
            <div class="uk-alert-danger" uk-alert>
              <a class="uk-alert-close"></a>
              <p>Wrong user name or password</p>
            </div>
-  
+
      <% end %>
   </div>
 </div>
