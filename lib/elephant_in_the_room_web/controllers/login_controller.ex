@@ -7,7 +7,7 @@ defmodule ElephantInTheRoomWeb.LoginController do
   def index(conn, _params) do
     changeset = Auth.change_user(%User{})
     user = case Auth.get_user(conn) do
-             {:ok, %User{}} = user -> user
+             {:ok, %User{} = user} -> user
              {:error, reason} -> reason
            end
 
