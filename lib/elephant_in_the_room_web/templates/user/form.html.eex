@@ -18,7 +18,7 @@
       <%= error_tag f, :username %>
     </div>
     
-    <div class="uk-maring">
+    <div class="uk-margin">
       <%= label f, :role, class: "uk-form-label" %>
       <%= select f, :role_id, get_roles(), class: "uk-select uk-form-small" %>
       <%= error_tag f, :role_id %>
