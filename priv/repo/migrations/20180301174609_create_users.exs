@@ -8,6 +8,8 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateUsers do
       add(:lastname, :string)
       add(:email, :string)
       add(:password, :string)
+      add(:role_id, references(:roles), on_delete: :delete_all)
+      
 
       timestamps()
     end
