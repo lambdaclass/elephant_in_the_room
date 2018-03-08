@@ -1,47 +1,55 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="row">
+  <div class="col-xs-0  col-sm-2 col-md-4"> </div>
+  <div class="col-xs-12 col-sm-8 col-md-4">
+    
+    <%= form_for @changeset, @action, fn f -> %>
+    <fieldset class="uk-fieldset">
+      <legend class="uk-legend"><%= @form_title %></legend>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
+    </fieldset>
+    
+    <div class="uk-margin">
+      <%= label f, :username, class: "uk-form-label" %>
+      <%= text_input f, :username, class: "uk-input uk-form-small" %>
+      <%= error_tag f, :username %>
     </div>
-  <% end %>
+    
+    <div class="uk-margin">
+      <%= label f, :role, class: "uk-form-label" %>
+      <%= select f, :role_id, get_roles(), class: "uk-select uk-form-small" %>
+      <%= error_tag f, :role_id %>
+    </div>
 
-  <div class="form-group">
-    <%= label f, :username, class: "control-label" %>
-    <%= text_input f, :username, class: "form-control" %>
-    <%= error_tag f, :username %>
-  </div>
+    <div class="uk-margin">
+      <%= label f, :firstname, class: "uk-form-label" %>
+      <%= text_input f, :firstname, class: "uk-input uk-form-small" %>
+      <%= error_tag f, :firstname %>
+    </div>
+    
+    <div class="uk-margin">
+      <%= label f, :lastname, class: "uk-form-label" %>
+      <%= text_input f, :lastname, class: "uk-input uk-form-small" %>
+      <%= error_tag f, :lastname %>
+    </div>
+    
+    <div class="uk-margin">
+      <%= label f, :email, class: "uk-form-label" %>
+      <%= text_input f, :email, class: "uk-input uk-form-small" %>
+      <%= error_tag f, :email %>
+    </div>
 
-  <div class="form-group">
-    <%= label f, :role, class: "control-label" %>
-    <%= select f, :role_id, get_roles() %>
-    <%= error_tag f, :role_id %>
-  </div>
+    <div class="uk-margin">
+      <%= label f, :password, class: "uk-form-label" %>
+      <%= text_input f, :password, class: "uk-input uk-form-small", type: "password", value: "" %>
+      <%= error_tag f, :password %>
+    </div>
 
-  <div class="form-group">
-    <%= label f, :firstname, class: "control-label" %>
-    <%= text_input f, :firstname, class: "form-control" %>
-    <%= error_tag f, :firstname %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :lastname, class: "control-label" %>
-    <%= text_input f, :lastname, class: "form-control" %>
-    <%= error_tag f, :lastname %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
-    <%= text_input f, :password, class: "form-control", type: "password", value: "" %>
-    <%= error_tag f, :password %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <div class="uk-margin">
+      <%= submit "Submit", class: "uk-button uk-button-primary" %>
+    </div>
   </div>
 <% end %>

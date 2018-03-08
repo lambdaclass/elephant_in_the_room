@@ -3,27 +3,15 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.User
-  alias ElephantInTheRoom.Auth.Guardian
 
   def index(conn, _params) do
     changeset = Auth.change_user(%User{})
-    maybe_user = Guardian.Plug.current_resource(conn)
+    user = case Auth.get_user(conn) do
+             {:ok, %User{}} = user -> user
+             {:error, reason} -> reason
+           end
 
-    message =
-      if maybe_user != nil do
-        "Someone is logged in"
-      else
-        "No one is logged in"
-      end
-
-    conn
-    |> put_flash(:info, message)
-    |> render(
-      "login.html",
-      changeset: changeset,
-      action: login_path(conn, :login),
-      maybe_user: maybe_user
-    )
+    render(conn, "login.html", changeset: changeset, user: user)
   end
 
   def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
@@ -31,22 +19,18 @@ defmodule ElephantInTheRoomWeb.LoginController do
     |> login_reply(conn)
   end
 
-  defp login_reply({:error, error}, conn) do
-    conn
-    |> put_flash(:error, error)
-    |> redirect(to: "/")
+  defp login_reply({:error, _}, conn) do
+    render(conn, "login.html", user: :login_failed)
   end
 
   defp login_reply({:ok, user}, conn) do
-    conn
-    |> put_flash(:success, "Welcome back!")
-    |> Guardian.Plug.sign_in(user)
-    |> redirect(to: "/")
+    {:ok, conn, user} = Auth.sign_in_user(conn, user)
+    render(conn, "login.html", user: user)
   end
 
   def logout(conn, _) do
     conn
-    |> Guardian.Plug.sign_out()
+    |> Auth.sign_out_user()
     |> redirect(to: login_path(conn, :login))
   end
 
