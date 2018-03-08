@@ -1,36 +1,47 @@
-<h2>Login Page</h2>
+<% alias ElephantInTheRoom.Auth.User %>
 
-<%= case @user do %>
-  <%= :no_user -> %>
-    <%= form_for @changeset, login_path(@conn, :login), fn f -> %>
+<div class="row">
+  <div class="col-xs-0  col-sm-2 col-md-4"> </div>
+  <div class="col-xs-12 col-sm-8 col-md-4">
 
-      <div class="form-group">
-        <%= label f, :username, class: "control-label" %>
-        <%= text_input f, :username, class: "form-control" %>
-        <%= error_tag f, :username %>
-      </div>
+    <%= case @user do %>
+      <%= :no_user -> %>
+        <%= form_for @changeset, login_path(@conn, :login), fn f -> %>
+          <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Login</legend>
+            <div class="uk-margin">
+              <%= label f, :username, class: "uk-form-label" %>
+              <%= text_input f, :username, class: "uk-input" %>
+            </div>
 
-      <div class="form-group">
-        <%= label f, :password, class: "control-label" %>
-        <%= password_input f, :password, class: "form-control" %>
-        <%= error_tag f, :password %>
-      </div>
+            <div class="uk-margin">
+              <%= label f, :password, class: "uk-form-label" %>
+              <%= password_input f, :password, class: "uk-input" %>
+            </div>
 
-      <div class="form-group">
-        <%= submit "Submit", class: "btn btn-primary" %>
-      </div>
-      
-    <% end %>
+            <div class="form-group">
+              <%= submit "Submit", class: "uk-button uk-button-primary" %>
+            </div>
+          </fieldset>
+         <% end %>
+    
 
-  <%= %ElephantInTheRoom.Auth.User{username: name} -> %>
-    <h1>Hello <%= @maybe_user.username%>!</h1>
-    <span>
-      <%= link "Logout", 
-      to: login_path(@conn, :logout),
-      method: :post %>
-    </span>
+         <%= %User{username: name} -> %>
+           <h1>Hello <%= @user.username%>!</h1>
+           <span>
+             <%= link "Logout", 
+             to: login_path(@conn, :logout),
+             method: :post %>
+           </span>
+
+           <%= :login_failed -> %>
+           <div class="uk-alert-danger" uk-alert>
+             <a class="uk-alert-close"></a>
+             <p>Wrong user name or password</p>
+           </div>
   
-<% end %>
-
+     <% end %>
+  </div>
+</div>
 
 

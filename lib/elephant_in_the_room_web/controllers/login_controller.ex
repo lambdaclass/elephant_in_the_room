@@ -21,16 +21,13 @@ defmodule ElephantInTheRoomWeb.LoginController do
   end
 
   defp login_reply({:error, error}, conn) do
-    conn
-    |> put_flash(:error, error)
-    |> redirect(to: "/")
+    render(conn, "login.html", user: :login_failed)
   end
 
   defp login_reply({:ok, user}, conn) do
     conn
-    |> put_flash(:success, "Welcome back!")
     |> Guardian.Plug.sign_in(user)
-    |> redirect(to: "/")
+    |> render("login.html", user: user)
   end
 
   def logout(conn, _) do
