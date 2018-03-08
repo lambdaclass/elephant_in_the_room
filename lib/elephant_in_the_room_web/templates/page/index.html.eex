@@ -1,23 +1,10 @@
-<style>
-footer {
-    position: fixed;
-    bottom: 4vh;
-}
-
-.sites-grid {
-  margin-top: 10vh;
-
-  white-space: nowrap;
-}
-</style>
-
 <div class="uk-container">
 
-  <div class="sites-grid uk-container uk-grid">
+  <div class="root-sites-grid uk-container uk-grid">
     <%= for site <- get_sites() do %>
       <a href="<%= site_path @conn, :show, site.id %>">
         <div class="uk-card uk-card-small uk-card-default 
-                     uk-child-width-1-2@s 
+                    uk-child-width-1-2@s 
                     uk-margin
                     uk-card-hover " uk-grid>
         <div>
@@ -26,7 +13,7 @@ footer {
               <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle">
                 <ul class="uk-list">
                 <%= for category <- get_categories(site) do %>            
-                  <li><% category %></li>
+                  <li><%= category %></li>
                 <% end %>
                 </ul>
               </div>
@@ -40,7 +27,7 @@ footer {
     <% end %>
   </div>
 
-  <footer class="uk-container">
+  <footer class="uk-container root-footer">
     <div class="uk-column-1-2@s uk-column-1-3@m uk-column-1-4@l">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 

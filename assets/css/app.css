@@ -1,24 +1,37 @@
 /* This file is for your main application css. */
 
-.el-sites-nav ul, .el-cat-nav ul {
-    margin-bottom: 0px;
+.el-sites-nav ul,
+.el-cat-nav ul {
+  margin-bottom: 0px;
 }
-.el-sites-nav li, .el-cat-nav li {
-    margin-top: 0px !important;
+.el-sites-nav li,
+.el-cat-nav li {
+  margin-top: 0px !important;
 }
-.el-sites-nav *{
-    font-size: small !important; 
+.el-sites-nav * {
+  font-size: small !important;
 }
-.el-sites-nav li{
-    padding-left: 2px;
+.el-sites-nav li {
+  padding-left: 2px;
 }
 
 .el-sites > .el-title > * {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-    margin-bottom: 1em !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-bottom: 1em !important;
 }
 
 .row {
-    margin: 0px ! important;
+  margin: 0px !important;
+}
+
+.root-footer {
+  position: fixed;
+  bottom: 4vh;
+}
+
+.root-sites-grid {
+  margin-top: 10vh;
+
+  white-space: nowrap;
 }
