@@ -1,6 +1,6 @@
 <div class="uk-flex uk-flex-right">
     <div class="uk-subnav uk-subnav-divider" uk-margin>
-        <%= case is_admin?(@conn) do %>
+        <%= case get_logged_user(@conn) do %>
             <% {:ok, user} -> %>
                 <p><strong><%= user.username %></strong></p>
                 <%= link "Admin", to: admin_path(@conn, :index), class: "uk-link" %>

@@ -29,7 +29,7 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     end
   end
 
-  def is_admin?(conn) do
+  def get_logged_user(conn) do
     case Auth.get_user(conn) do
       {:ok, %User{:role => %Role{:name => "admin"}} = user} ->
         {:ok, user}
