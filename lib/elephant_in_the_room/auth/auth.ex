@@ -5,8 +5,9 @@ defmodule ElephantInTheRoom.Auth do
 
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Auth.{User, Role}
+  alias ElephantInTheRoom.Auth.{User, Role, Guardian}
   alias Comeonin.Bcrypt
+  alias Plug.Conn
 
   @doc """
   Returns the list of users.
@@ -29,6 +30,16 @@ defmodule ElephantInTheRoom.Auth do
     |> Repo.preload(:role)
   end
 
+  def get_user(%Conn{} = conn) do
+    case Guardian.Plug.current_resource(conn) do
+      nil ->
+        {:error, :no_user}
+      %User{} = user ->
+        user = Repo.preload(user, :role)
+        {:ok, user}
+    end
+  end
+
   def get_user(id) do
     case Repo.get(User, id) do
       nil -> {:error, :user_not_found}
@@ -37,6 +48,17 @@ defmodule ElephantInTheRoom.Auth do
         {:ok, user}
     end
   end
+
+  def sign_in_user(%Conn{} = conn, %User{} = user) do
+    conn = Guardian.Plug.sign_in(conn,user)
+    user = Repo.preload(user, :role)
+    {:ok, conn, user}
+  end
+
+  def sign_out_user(%Conn{} = conn) do
+    Guardian.Plug.sign_out(conn)
+  end
+
 
   @doc """
   Creates a user.
