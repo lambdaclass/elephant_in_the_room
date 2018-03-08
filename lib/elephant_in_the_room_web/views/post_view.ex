@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Repo
 
   def mk_assigns(conn, assigns, site, post) do
     assigns
@@ -36,9 +37,11 @@ defmodule ElephantInTheRoomWeb.PostView do
 
   def show_content(%Post{rendered_content: content}), do: content
 
-  def show_tags(data) do
-    if Map.has_key?(data, :tags) do
-      data.tags
+  def show_tags(post) do
+    if Map.has_key?(post, :tags) do
+      post = Repo.preload(post, :tags)
+
+      post.tags
       |> Enum.map(fn t -> t.name end)
       |> Enum.intersperse(", ")
     else
