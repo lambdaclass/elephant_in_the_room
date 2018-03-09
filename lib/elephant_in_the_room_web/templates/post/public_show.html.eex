@@ -1,3 +1,4 @@
+<% alias ElephantInTheRoom.Sites.Author %>
 <div class="el-sites">
   <div class="el-title">
     <div class="uk-tile uk-tile-primary">
@@ -16,9 +17,15 @@
         </h1>
 
         <p class="uk-article-meta">
-          Written by
-          <%= link @post.author.name,
-          to:  author_path @conn, :public_show, @post.author.id %>
+          <%= case @post.author do %>
+            <% nil -> %>
+
+            <% %Author{:id => id, :name => name} -> %>
+            Written by
+            <%= link name,
+            to:  author_path @conn, :public_show, id %>
+          <% end %>
+
           on <%= @post.updated_at %>.
           Posted in
           <a href="<%= site_path @conn, :public_show, @site.id %>">
@@ -32,7 +39,7 @@
             </a>
           <% end %>
           with tags:
-          <%= for tag <- @site.tags do %>
+          <%= for tag <- @post.tags do %>
             <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
               <%= tag.name %>
             </a>

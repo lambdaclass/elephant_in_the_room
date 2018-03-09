@@ -10,7 +10,8 @@
       <% end %>
     </ul>
   </div>
-  <%= render "_login_options.html", assigns %>
+    <%= render "_login_options.html", assigns %>
+  
 </div>
 
 <nav class="uk-navbar-container" uk-navbar>

@@ -8,7 +8,7 @@ defmodule ElephantInTheRoom.Sites.Author do
     field(:image, :string)
     field(:name, :string)
 
-    has_many(:posts, Post, on_delete: :delete_all)
+    has_many(:posts, Post, on_delete: :nilify_all)
 
     timestamps()
   end

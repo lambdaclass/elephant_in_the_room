@@ -331,8 +331,6 @@ defmodule ElephantInTheRoom.Sites do
     Post.changeset(post, %{})
   end
 
-  alias ElephantInTheRoom.Sites.Tag
-
   @doc """
   Returns the list of tags.
 
