@@ -28,3 +28,4 @@
 </table>
 
 <span><%= link "New Author", to: author_path(@conn, :new) %></span>
+<span><%= link "Back", to: admin_path(@conn, :index) %></span>

@@ -40,9 +40,8 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :abstract, :image, :site_id])
+    |> validate_required([:title, :content, :image, :site_id])
     |> unique_constraint(:title)
-    |> validate_length(:abstract, max: 200)
     |> put_rendered_content
   end
 

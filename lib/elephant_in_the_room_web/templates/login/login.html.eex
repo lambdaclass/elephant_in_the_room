@@ -30,7 +30,7 @@
            <h1>Hello <%= name%>!</h1>
            <div class="uk-margin">
              <%= if role.name == "admin" do %>
-               <%= link "Administrate",
+               <%= link "Admin",
                to: admin_path(@conn, :index),
                class: "uk-button uk-button-danger
                      uk-width-1-1 uk-margin-small-bottom"%>

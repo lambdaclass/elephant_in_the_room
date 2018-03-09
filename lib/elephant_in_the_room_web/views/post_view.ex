@@ -37,11 +37,11 @@ defmodule ElephantInTheRoomWeb.PostView do
 
   def show_content(%Post{rendered_content: content}), do: content
 
-  def show_tags(post) do
-    if Map.has_key?(post, :tags) do
-      post = Repo.preload(post, :tags)
+  def put_commas(post, key) do
+    if Map.has_key?(post, key) do
+      post = Repo.preload(post, key)
 
-      post.tags
+      Map.get(post, key)
       |> Enum.map(fn t -> t.name end)
       |> Enum.intersperse(", ")
     else
