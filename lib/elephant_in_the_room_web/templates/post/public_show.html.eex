@@ -23,7 +23,7 @@
             <% %Author{:id => id, :name => name} -> %>
             Written by
             <%= link name,
-            to:  author_path @conn, :public_show, id %>
+            to: author_path @conn, :public_show, id %>
           <% end %>
 
           on <%= @post.updated_at %>.
