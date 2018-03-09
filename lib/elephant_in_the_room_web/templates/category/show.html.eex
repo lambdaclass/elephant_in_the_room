@@ -14,5 +14,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: site_category_path(@conn, :edit, @category, @site) %></span>
+<span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category) %></span>
 <span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
