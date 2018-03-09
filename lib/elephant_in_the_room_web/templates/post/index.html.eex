@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Content</th>
+      <th>Abstract</th>
       <th>Image</th>
 
       <th></th>
@@ -15,7 +15,6 @@
     <tr>
       <td><%= post.title %></td>
       <td><%= post.abstract %></td>
-      <td><%= raw show_content(post) %></td>
       <td><%= post.image %></td>
 
       <td class="text-right">
