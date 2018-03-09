@@ -1,6 +1,8 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoom.Auth.{User, Role}
 
   def get_nav_sites() do
     Sites.list_sites
