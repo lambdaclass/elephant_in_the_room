@@ -331,11 +331,6 @@ defmodule ElephantInTheRoom.Sites do
     Post.changeset(post, %{})
   end
 
-  def delete_all_tags_from_post(post) do
-    from(assoc in "posts_tags", where: assoc.post_id == ^post.id)
-    |> Repo.delete_all()
-  end
-
   @doc """
   Returns the list of tags.
 
