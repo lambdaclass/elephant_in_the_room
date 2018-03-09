@@ -13,7 +13,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:abstract, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
-    belongs_to(:author, Author, foreign_key: :author_id)
+    belongs_to(:author, Author, on_replace: :nilify)
 
     many_to_many(
       :categories,
@@ -40,7 +40,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :abstract, :image, :site_id, :author_id])
+    |> validate_required([:title, :content, :abstract, :image, :site_id])
     |> unique_constraint(:title)
     |> validate_length(:abstract, max: 200)
     |> put_rendered_content

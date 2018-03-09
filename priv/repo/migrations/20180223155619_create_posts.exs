@@ -9,6 +9,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
       add(:rendered_content, :text)
       add(:image, :text)
       add(:site_id, references(:sites, on_replace: :delete, on_delete: :delete_all))
+      add(:author_id, references(:authors))
 
       timestamps()
     end
