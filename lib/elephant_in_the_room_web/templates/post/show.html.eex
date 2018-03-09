@@ -8,6 +8,11 @@
   </li>
 
   <li>
+    <strong>Categories:</strong>
+    <%= put_commas(@post, :categories) %>
+  </li>
+
+  <li>
     <strong>Abstract:</strong>
     <%= @post.abstract %>
   </li>
@@ -20,6 +25,11 @@
   <li>
     <strong>Image:</strong>
     <%= @post.image %>
+  </li>
+
+  <li>
+    <strong>tags:</strong>
+    <%= put_commas(@post, :tags) %>
   </li>
 
 </ul>

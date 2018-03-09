@@ -4,9 +4,10 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Categories</th>
       <th>Abstract</th>
       <th>Image</th>
-
+      <th>Tags</th>
       <th></th>
     </tr>
   </thead>
@@ -14,9 +15,10 @@
 <%= for post <- @posts do %>
     <tr>
       <td><%= post.title %></td>
+      <td><%= put_commas(post, :categories) %></td>
       <td><%= post.abstract %></td>
       <td><%= post.image %></td>
-
+      <td><%= put_commas(post, :tags) %></td>
       <td class="text-right">
         <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "btn btn-default btn-xs" %></span>
         <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "btn btn-default btn-xs" %></span>
