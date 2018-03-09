@@ -9,7 +9,7 @@
 
   <li>
     <strong>Role:</strong>
-    <%= @user.role %>
+    <%= @user.role.name %>
   </li>
 
   <li>

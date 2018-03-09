@@ -11,4 +11,5 @@
       <%= shared_render_posts_card @conn, @tag.posts, assigns %>
     </div>
   </div>
+  <span><%= link "Back", to: site_path(@conn, :index) %></span>
 </div>

@@ -12,4 +12,5 @@
       <%= @author.description %>
     </div>
   </div>
+  <span><%= link "Back", to: site_path(@conn, :index) %></span>
 </div>
