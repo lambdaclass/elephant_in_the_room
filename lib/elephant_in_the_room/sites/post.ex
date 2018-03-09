@@ -3,7 +3,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Sites, Repo}
 
   schema "posts" do
     field(:content, :string)
@@ -38,7 +38,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   def changeset(%Post{} = post, attrs) do
     post
     |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
-    |> put_assoc(:tags, parse_tags(attrs))
+    |> put_assoc(:tags, parse_tags(post, attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :abstract, :image, :site_id])
     |> unique_constraint(:title)
@@ -76,7 +76,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     Repo.get_by!(Category, name: name, site_id: site_id)
   end
 
-  defp parse_tags(params) do
+  defp parse_tags(post, params) do
     site_id = params["site_id"]
 
     (params["tags_separated_by_comma"] || "")
@@ -92,5 +92,9 @@ defmodule ElephantInTheRoom.Sites.Post do
       on_conflict: [set: [name: name, site_id: site_id]],
       conflict_target: :name
     )
+  end
+
+  defp eliminate_current_tags(post) do
+    Sites.delete_all_tags_from_post(post)
   end
 end

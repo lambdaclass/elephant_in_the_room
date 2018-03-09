@@ -38,7 +38,7 @@
             </a>
           <% end %>
           with tags:
-          <%= for tag <- @site.tags do %>
+          <%= for tag <- @post.tags do %>
             <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
               <%= tag.name %>
             </a>
