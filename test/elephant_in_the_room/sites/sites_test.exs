@@ -375,6 +375,10 @@ defmodule ElephantInTheRoom.SitesTest do
     test "change_role/1 returns a role changeset" do
       role = role_fixture()
       assert %Ecto.Changeset{} = Sites.change_role(role)
+    end
+
+  end
+      
   describe "authors" do
     alias ElephantInTheRoom.Sites.Author
 
