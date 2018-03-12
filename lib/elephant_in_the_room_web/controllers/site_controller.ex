@@ -41,7 +41,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
     case length(sites) == 0 do
       true ->
-        render(conn, "hola")
+        render(conn, "no_site_created")
 
       false ->
         render(conn, "public_show.html", site: hd(sites))
