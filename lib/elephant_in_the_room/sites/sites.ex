@@ -175,7 +175,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def create_category(site, attrs \\ %{}) do
-    category_attrs = Map.put(attrs, "site_id", site.id)
+    category_attrs = Map.put(attrs, :site_id, site.id)
 
     %Category{}
     |> Category.changeset(category_attrs)
@@ -271,16 +271,10 @@ defmodule ElephantInTheRoom.Sites do
   """
 
   def create_post(site, attrs) do
-    post_attrs = Map.put(attrs, "site_id", site.id)
+    post_attrs = Map.put(attrs, :site_id, site.id)
 
     %Post{}
     |> Post.changeset(post_attrs)
-    |> Repo.insert()
-  end
-
-  def create_post(attrs \\ %{}) do
-    %Post{}
-    |> Post.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -388,7 +382,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def create_tag(site, attrs) do
-    tag_attrs = Map.put(attrs, "site_id", site.id)
+    tag_attrs = Map.put(attrs, :site_id, site.id)
 
     %Tag{}
     |> Tag.changeset(tag_attrs)
