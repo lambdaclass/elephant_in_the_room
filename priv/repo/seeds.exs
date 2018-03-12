@@ -13,6 +13,7 @@
 alias ElephantInTheRoom.Auth
 alias ElephantInTheRoom.Auth.Role
 alias ElephantInTheRoom.Repo
+alias ElephantInTheRoom.Sites
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
@@ -30,4 +31,15 @@ case Repo.get_by(Role, name: "user") do
 
   _user_role ->
     IO.puts("user role already created!")
+end
+
+case length(Sites.list_sites()) == 0 do
+  false ->
+    # do nothing
+    IO.puts("No need to create a new site")
+
+  true ->
+    # create a site 
+    IO.puts("Creating a new site!")
+    Sites.create_site(%{name: "default site"})
 end

@@ -16,7 +16,7 @@ defmodule ElephantInTheRoomWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     case Auth.create_user(user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: login_path(conn, :index))

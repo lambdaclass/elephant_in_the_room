@@ -20,6 +20,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
         conn
         |> put_flash(:info, "Site created successfully.")
         |> redirect(to: site_path(conn, :show, site))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -33,6 +34,18 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def public_show(conn, %{"site_id" => id}) do
     site = Sites.get_site!(id)
     render(conn, "public_show.html", site: site)
+  end
+
+  def show_default_site(conn, _params) do
+    sites = Sites.list_sites()
+
+    case length(sites) == 0 do
+      true ->
+        render(conn, "hola")
+
+      false ->
+        render(conn, "public_show.html", site: hd(sites))
+    end
   end
 
   def edit(conn, %{"id" => id}) do
@@ -49,6 +62,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
         conn
         |> put_flash(:info, "Site updated successfully.")
         |> redirect(to: site_path(conn, :show, site))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", site: site, changeset: changeset)
     end
