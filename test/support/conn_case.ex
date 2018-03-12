@@ -32,9 +32,9 @@ defmodule ElephantInTheRoomWeb.ConnCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElephantInTheRoom.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(ElephantInTheRoom.Repo, {:shared, self()})
     end
@@ -99,6 +99,6 @@ defmodule ElephantInTheRoomWeb.ConnCase do
       categories: [],
       posts:      [],
       tags:       []}
-  end
 
+  end
 end

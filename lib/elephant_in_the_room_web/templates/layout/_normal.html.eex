@@ -18,7 +18,7 @@
   <div class="uk-navbar-left">
     <ul class="uk-navbar-nav">
       <li class="uk-active">
-        <a href="<%= page_path(@conn, :index) %>">
+        <a href="<%= site_path(@conn, :index) %>">
           Elephant In The Room!
         </a>
       </li>
