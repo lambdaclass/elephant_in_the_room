@@ -43,6 +43,13 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload([:categories, :posts, :tags])
   end
 
+  def get_site_by_name(site_name) do
+    case Repo.get_by(Site, name: site_name) do
+      nil -> {:error, :not_found}
+      site -> {:ok, site}
+    end
+  end
+
   @doc """
   Creates a site.
 
