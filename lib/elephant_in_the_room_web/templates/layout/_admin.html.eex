@@ -1,3 +1,8 @@
+<div class="el-sites-nav">
+
+    <%= render "_login_options.html", assigns %>
+  
+</div>
 <div class="uk-tile uk-tile-secondary">
   <p class="uk-h4">ADMINISTRATION</p>
 </div>
