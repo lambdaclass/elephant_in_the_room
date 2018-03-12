@@ -1,8 +1,20 @@
 <div class="el-sites-nav">
+  <div class="uk-flex uk-flex-center">
+    <ul class="uk-subnav uk-subnav-divider" uk-margin>
+      <%= for {site_id, site_name} <- get_nav_sites() do %>
+      <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
+        <a href="<%= site_path(@conn, :public_show, site_id) %>">
+          <%= site_name %>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+  </div>
 
-    <%= render "_login_options.html", assigns %>
+  <%= render "_login_options.html", assigns %>
   
 </div>
+
 <div class="uk-tile uk-tile-secondary">
   <p class="uk-h4">ADMINISTRATION</p>
 </div>
