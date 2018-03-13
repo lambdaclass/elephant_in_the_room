@@ -1,0 +1,72 @@
+.container {
+  display: grid;
+  grid-template-areas: "header header" "main-post main-post" "posts posts" "more-post newsletter";
+  width: 100vw;
+  height: 100vh;
+}
+
+.header {
+  display: grid;
+  grid-area: header;
+  grid-template-columns: 40px 50px auto 50px 40px;
+}
+
+.header-center {
+  display: grid;
+  grid-template-rows: 1fr 2fr 2fr;
+}
+
+.header-center h1 {
+  font-size: 100px;
+  font-family: "Segoe UI";
+}
+
+.categories {
+  display: grid;
+}
+
+.main-post {
+  display: grid;
+  grid-area: main-post;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+
+.posts {
+  display: grid;
+  grid-area: posts;
+  grid-template-columns: 15% 70% 15%;
+}
+
+.posts-body {
+  display: flex;
+}
+
+.post {
+  display: flex;
+  grid-area: post;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.more-posts {
+  display: grid;
+  grid-area: more-post;
+  grid-template-columns: 1fr 1fr;
+  /* flex-direction: column; */
+}
+
+.newsletter {
+  display: flex;
+  grid-area: newsletter;
+  flex-direction: column-reverse;
+}
+
+.navbar-item {
+  margin: 5px;
+}
+
+.misc {
+  display: flex;
+  width: 200px;
+  height: 200px;
+}
