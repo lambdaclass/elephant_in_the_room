@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  grid-gap: 15px;
   grid-template-areas: "header header" "main-post main-post" "posts posts" "more-post newsletter";
   width: 100vw;
   height: 100vh;
@@ -46,27 +47,38 @@
   grid-area: post;
   margin-left: 40px;
   margin-right: 40px;
+  margin-top: 20px;
 }
 
 .more-posts {
   display: grid;
   grid-area: more-post;
-  grid-template-columns: 1fr 1fr;
-  /* flex-direction: column; */
+  grid-template-columns: 1fr 1.7fr 0.3fr;
+  grid-gap: 20px;
 }
 
-.newsletter {
-  display: flex;
+.misc {
+  display: grid;
   grid-area: newsletter;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .navbar-item {
   margin: 5px;
 }
 
-.misc {
+.misc-item {
+  width: 30%;
+  height: 30%;
+
+  padding-bottom: 45px;
+}
+
+.misc-item > p {
+  text-align: center;
+}
+
+.posts-container {
   display: flex;
-  width: 200px;
-  height: 200px;
+  flex-direction: column;
 }

@@ -1,0 +1,68 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: gainsboro;
+  margin: 0;
+}
+.container {
+  display: grid;
+  grid-gap: 10px;
+  width: 100vw;
+  margin: 0;
+  height: 100vh;
+  background-color: black;
+  grid-template-columns: 1fr 2fr 2fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr 1fr;
+  grid-template-areas:
+    ". header header ."
+    ". main-post main-post ."
+    ". posts posts ."
+    ". post-and-newsletter post-and-newsletter .";
+}
+
+.header {
+  grid-area: header;
+  background-color: greenyellow;
+}
+
+.main-post {
+  grid-area: main-post;
+  background-color: yellow;
+}
+
+.post-and-newsletter {
+  display: grid;
+  grid-area: post-and-newsletter;
+  grid-template-columns: ". more-posts more-posts newsletter .";
+  background-color: darkcyan;
+}
+
+.posts {
+  display: grid;
+  grid-gap: 20px;
+  grid-area: posts;
+  background-color: wheat;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.post-h {
+  background-color: brown;
+}
+
+.more-posts {
+  display: grid;
+  grid-gap: 20px;
+  grid-area: more-posts;
+  background-color: tan;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.post-v {
+  background-color: cadetblue;
+  height: 100px;
+}
+
+.newsletter {
+  grid-area: newsletter;
+  background-color: chocolate;
+}
