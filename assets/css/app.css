@@ -1,37 +1,20 @@
-/* This file is for your main application css. */
-
-.el-sites-nav ul,
-.el-cat-nav ul {
-  margin-bottom: 0px;
+.title h1 {
+  font-size: 100px;
+  font-family: "Segoe UI";
 }
-.el-sites-nav li,
-.el-cat-nav li {
-  margin-top: 0px !important;
-}
-.el-sites-nav * {
-  font-size: small !important;
-}
-.el-sites-nav li {
-  padding-left: 2px;
+.title h1 a {
+  all: unset;
+  cursor: pointer;
 }
 
-.el-sites > .el-title > * {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-  margin-bottom: 1em !important;
+.nav-mini-interactions {
+  min-height: 1em;
 }
-
-.row {
-  margin: 0px !important;
-}
-
-.root-footer {
-  position: fixed;
-  bottom: 4vh;
-}
-
-.root-sites-grid {
-  margin-top: 10vh;
-
-  white-space: nowrap;
+.nav-mini-interactions .uk-button {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  font-size: small;
+  line-height: inherit;
 }

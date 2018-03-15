@@ -1,44 +1,52 @@
-<div class="el-sites-nav">
-  <div class="uk-flex uk-flex-center">
+<div class="container">
+  <div class="uk-flex uk-flex-center uk-navbar-center">
     <ul class="uk-subnav uk-subnav-divider" uk-margin>
       <%= for {site_id, site_name} <- get_nav_sites() do %>
-      <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-        <a href="<%= site_path(@conn, :public_show, site_id) %>">
+        <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
+          <a class="uk-link-text"
+          href="<%= site_path(@conn, :public_show, site_id) %>">
           <%= site_name %>
-        </a>
-      </li>
+          </a>
+        </li>
       <% end %>
-    </ul>
+    </ul> 
   </div>
-    <%= render "_login_options.html", assigns %>
-  
 </div>
 
-<nav class="uk-navbar-container" uk-navbar>
-  <div class="uk-navbar-left">
-    <ul class="uk-navbar-nav">
-      <li class="uk-active">
-        <a href="<%= site_path(@conn, :index) %>">
-          Elephant In The Room!
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<%= render "_login_options.html", assigns %>
 
-<%= if assigns[:site] do %>
-<div class="el-cat-nav">
-  <div class="uk-flex uk-flex-center">
-    <ul class="uk-subnav uk-subnav-divider " uk-margin>
-      <%= for {category_id, category_name} <- get_categories(@conn) do %>
-      <li>
-        <a href="<%= category_path(@conn, :public_show,
-                                   @site.id, category_id) %>">
-          <%= category_name %>
-        </a>
-      </li>
-      <% end %>
-    </ul>
+<div class="container">
+  <div class="title uk-text-large uk-text-center">
+    <h1>
+      <a href="<%= site_path(@conn, :public_show, @site.id) %>">
+        Elephant In The Room!
+      </a>
+    </h1>
   </div>
 </div>
-<% end %>
+
+<div class="container">
+  <div class="categories uk-navbar-container">
+    <div class="uk-flex uk-flex-center uk-navbar-center">
+      <ul class="uk-navbar-nav">
+        <%= for {category_id, category_name} <- get_categories(@conn) do %>
+          <li class="uk-text-large navbar-item">
+              <a href="<%= category_path(@conn, :public_show,
+              @site.id, category_id) %>">
+              <%= category_name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container nav-mini-interactions uk-text-right">
+    <button class="uk-button uk-button-default">Login</button>
+    <button class="uk-button uk-button-primary">Subscribe</button>
+    <button class="uk-button uk-button-danger">
+      <i class="fas fa-search"></i>
+    </button>
+
+</div>
