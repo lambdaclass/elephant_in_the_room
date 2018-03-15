@@ -1,24 +1,4 @@
-defmodule ElephantInTheRoom.Repo.Chooser do
-  def choose_author(authors) do
-    random_author_index = authors |> length |> :rand.uniform()
-    IO.puts(random_author_index)
-    authors |> Enum.at(random_author_index)
-  end
-
-  def choose_n(n, list) do
-    set = MapSet.new()
-    len = length(list)
-
-    for _n <- 1..n do
-      set |> MapSet.put(list |> Enum.at(:rand.uniform(len)))
-    end
-
-    MapSet.to_list(set)
-  end
-end
-
 alias ElephantInTheRoomWeb.Faker
-alias ElephantInTheRoom.Repo.Chooser
 
 config = %{
   :sites => 5,
@@ -36,11 +16,22 @@ for site <- Faker.Site.insert_many(config[:sites]) do
   categories = Faker.Category.insert_many(config[:categories], %{site: site})
   tags = Faker.Tag.insert_many(config[:tags], %{site: site})
 
+  random_author = Faker.Chooser.choose_one(authors)
+
+  categories_id =
+    Faker.Chooser.choose_n(:rand.uniform(5), categories)
+    |> Enum.map(fn cat -> cat.id end)
+
+  tags_separated_by_comma =
+    Faker.Chooser.choose_n(:rand.uniform(10), tags)
+    |> Enum.map(fn tag -> tag.name end)
+    |> Enum.intersperse(", ")
+
   posts =
     Faker.Post.insert_many(config[:posts], %{
       site: site,
-      author: Chooser.choose_author(authors),
-      categories: Chooser.choose_n(:rand.uniform(5), categories),
-      tags: Chooser.choose_n(:rand.uniform(10), tags)
+      author_id: random_author.id,
+      categories: categories_id,
+      tags: tags_separated_by_comma
     })
 end

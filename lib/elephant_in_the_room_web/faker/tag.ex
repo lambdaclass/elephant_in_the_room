@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
 
   defp default_attrs do
     %{
-      :name => Faker.Pizza.cheese() <> to_string(:rand.uniform(10000))
+      :name => Faker.Pizza.cheese() <> to_string(:rand.uniform(1_000_000))
     }
   end
 
