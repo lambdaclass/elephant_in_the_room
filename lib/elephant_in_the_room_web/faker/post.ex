@@ -7,10 +7,10 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   # tags N
   def default_attrs do
     %{
-      content: generate_content(),
-      image: Faker.Avatar.image_url(),
-      title: Faker.Lorem.Shakespeare.romeo_and_juliet(),
-      abstract: Faker.Lorem.paragraph(2)
+      :content => generate_content(),
+      :image => Faker.Avatar.image_url(),
+      :title => Faker.Lorem.Shakespeare.romeo_and_juliet() <> to_string(:rand.uniform(1000)),
+      :abstract => Faker.Lorem.paragraph(2)
     }
   end
 
@@ -18,6 +18,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     changes = Map.merge(default_attrs(), attrs)
 
     {:ok, post} = Sites.create_post(attrs[:site], changes)
+
     post
   end
 
@@ -27,6 +28,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
+    Faker.Lorem.paragraph(20)
     # generate random markdown text
   end
 end

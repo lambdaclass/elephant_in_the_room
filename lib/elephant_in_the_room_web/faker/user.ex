@@ -1,17 +1,30 @@
-defmodule ElephantInTheRoom.Repo.Faker.User do
+defmodule ElephantInTheRoomWeb.Faker.User do
   alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoom.Repo
 
-  defp default_attrs do
+  defp choose_role() do
+    admin_role = Repo.get_by!(Auth.Role, name: "admin")
+    user_role = Repo.get_by!(Auth.Role, name: "user")
+
+    case :rand.uniform(2) do
+      1 -> admin_role
+      2 -> user_role
+    end
+  end
+
+  def default_attrs do
     first_name = Faker.Name.first_name()
     last_name = Faker.Name.last_name()
     user_name = first_name <> last_name <> to_string(:rand.uniform(100))
+    role = choose_role()
 
     %{
-      first_name: first_name,
-      last_name: last_name,
+      firstname: first_name,
+      lastname: last_name,
       username: user_name,
       email: Faker.Internet.email(),
-      password: "secretsecret"
+      password: "secretsecret",
+      role_id: role.id
     }
   end
 
