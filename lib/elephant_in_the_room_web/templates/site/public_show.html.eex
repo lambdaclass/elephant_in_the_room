@@ -1,3 +1,29 @@
 <div class="container">
-  <%= shared_render_posts_card @conn, @site.posts, assigns %>
+  <%= case get_top_featured_post(@conn, @site.posts) do %>
+  <% {:error, _} -> %> error
+  <% {:ok, top_post } -> %>
+    <div class="main-post">
+        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+            <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+                <img src="https://getuikit.com/docs/images/light.jpg" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title"><%= top_post.title %></h3>
+                    <p><%= top_post.abstract %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+  <%= case get_normal_posts(@conn, @site.posts) do %>
+    <% {:error, _} -> %>  error
+    <% {:ok, normal_posts } -> %>
+      <%= shared_render_posts_card @conn, 
+          normal_posts,
+          assigns %>
+  <% end %>
+  
 </div>
