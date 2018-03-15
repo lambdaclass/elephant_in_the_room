@@ -22,3 +22,13 @@
 .no-link-decoration:hover {
   text-decoration: none; 
 }
+
+.el .el-featured-image{
+  display: block;
+  width: 100%;
+  height: 20em !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  overflow: hidden;
+}

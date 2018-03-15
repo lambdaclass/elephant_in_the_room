@@ -1,9 +1,7 @@
 <% alias ElephantInTheRoom.Sites.Author %>
-<div class="el-sites">
-  <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"> <h1>[ADD IMAGE HERE]</h1></p>
-    </div>
+<div class="el">
+  <div class="el-featured-image">
+      <img src="https://getuikit.com/docs/images/light.jpg">
   </div>
 
   <div class="container">
