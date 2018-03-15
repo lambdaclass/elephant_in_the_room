@@ -13,8 +13,6 @@
   </div>
 </div>
 
-<%= render "_login_options.html", assigns %>
-
 <div class="container">
   <div class="title uk-text-large uk-text-center">
     <h1>
@@ -43,10 +41,27 @@
 </div>
 
 <div class="container nav-mini-interactions uk-text-right">
-    <button class="uk-button uk-button-default">Login</button>
-    <button class="uk-button uk-button-primary">Subscribe</button>
-    <button class="uk-button uk-button-danger">
+    <% login = get_logged_user(@conn) %>
+      <%= case login do %>
+        <% {:error,  _} -> %>
+          <button class="uk-button uk-button-default">
+            <i class="fas fa-user"></i>
+            Login
+          </button>
+        <% {:ok, user, _} -> %>
+          <a class="uk-button uk-button-default" href="<%= user_path(@conn, :show, user.id) %>">
+            <i class="fas fa-user"></i>
+            <%= user.username %>
+          </a>
+        <% end %>
+
+    <button class="uk-button uk-button-default">
+      <i class="far fa-envelope"></i>
+      Subscribe
+    </button>
+    <button class="uk-button uk-button-default">
       <i class="fas fa-search"></i>
+      Search
     </button>
 
 </div>
