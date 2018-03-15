@@ -18,3 +18,7 @@
   font-size: small;
   line-height: inherit;
 }
+
+.no-link-decoration:hover {
+  text-decoration: none; 
+}

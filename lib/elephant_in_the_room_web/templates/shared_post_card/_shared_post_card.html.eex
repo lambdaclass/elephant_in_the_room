@@ -1,22 +1,22 @@
-<%= for post <- @posts do %>
+<div class="row">
+  <%= for post <- @posts do %>
 
-<a href="<%= post_path @conn, :public_show, @site.id, post.id %>">
-  <div class="uk-card uk-card-default 
-              uk-grid-collapse uk-child-width-1-2@s 
-              uk-margin
-              uk-card-hover" uk-grid>
-  
-  <div class="uk-card-media-left uk-cover-container">
-    <img src="http://via.placeholder.com/350x150" alt="" uk-cover>
-    <canvas width="600" height="400"></canvas>
-  </div>
-  <div>
-    <div class="uk-card-body">
-      <h3 class="uk-card-title"><%= post.title %></h3>
-      <p><%= post.abstract %></p>
-    </div>
-  </div>
-  </div>
-</a>
+    
+      <div class="col-lg-4 col-sm-6">
+        <a href="<%= post_path @conn, :public_show, @site.id, post.id %>"
+           class="no-link-decoration">
+          <div class="clickeable-card uk-card uk-card-default uk-card-hover">
+              <div class="uk-card-media-top">
+                  <img src="https://getuikit.com/docs/images/light.jpg" alt="">
+              </div>
+              <div class="uk-card-body">
+                  <h3 class="uk-card-title"><%= post.title %></h3>
+                  <p><%= post.abstract %>.</p>
+              </div>
+          </div>
+        </a>
+      </div>
+    
 
-<% end %>
+  <% end %>
+</div>
