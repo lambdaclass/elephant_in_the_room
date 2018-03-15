@@ -46,10 +46,11 @@
     <% login = get_logged_user(@conn) %>
       <%= case login do %>
         <% {:error,  _} -> %>
-          <button class="uk-button uk-button-default">
+          <a class="uk-button uk-button-default"
+             href="<%= login_path(@conn, :index) %>">
             <i class="fas fa-user"></i>
             Login
-          </button>
+          </a>
         <% {:ok, user, _} -> %>
           <a class="uk-button uk-button-default"
              href="<%= login_path(@conn, :index) %>">
