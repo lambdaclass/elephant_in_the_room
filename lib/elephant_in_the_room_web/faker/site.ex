@@ -1,20 +1,21 @@
 defmodule ElephantInTheRoomWeb.Faker.Site do
   alias ElephantInTheRoom.Sites
 
-  def default_attrs do
+  defp default_attrs do
     %{
-      name: Faker.Pokemon.name()
+      name: "Site " <> to_string(:rand.uniform(100_000_000))
     }
   end
 
-  def insert_one(site, attrs \\ %{}) do
-    changes = Map.merge(default_attrs, attrs)
+  def insert_one(attrs \\ %{}) do
+    changes = Map.merge(default_attrs(), attrs)
 
-    Sites.create_site(changes)
+    {:ok, site} = Sites.create_site(changes)
+    site
   end
 
-  def insert_many(site, attrs \\ %{}, n) do
+  def insert_many(n, attrs \\ %{}) do
     Enum.to_list(1..n)
-    |> Enum.each(fn _ -> insert_one(site, attrs) end)
+    |> Enum.map(fn _ -> insert_one(attrs) end)
   end
 end

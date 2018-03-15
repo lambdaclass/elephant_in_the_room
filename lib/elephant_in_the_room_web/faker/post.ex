@@ -1,4 +1,4 @@
-defmodule ElephantInTheRoomWeb.Faker.User do
+defmodule ElephantInTheRoomWeb.Faker.Post do
   alias ElephantInTheRoom.Sites
 
   # author 1
@@ -15,14 +15,15 @@ defmodule ElephantInTheRoomWeb.Faker.User do
   end
 
   def insert_one(attrs \\ %{}) do
-    changes = Map.merge(default_attrs, attrs)
+    changes = Map.merge(default_attrs(), attrs)
 
-    Sites.create_post(attrs[:site], changes)
+    {:ok, post} = Sites.create_post(attrs[:site], changes)
+    post
   end
 
-  def insert_many(site, attrs \\ %{}, n) do
+  def insert_many(n, attrs \\ %{}) do
     Enum.to_list(1..n)
-    |> Enum.each(fn _ -> insert_one(site, attrs) end)
+    |> Enum.map(fn _ -> insert_one(attrs) end)
   end
 
   defp generate_content() do

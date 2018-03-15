@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoom.Repo.Faker.User do
   alias ElephantInTheRoom.Auth
 
-  def default_attrs do
+  defp default_attrs do
     first_name = Faker.Name.first_name()
     last_name = Faker.Name.last_name()
     user_name = first_name <> last_name <> to_string(:rand.uniform(100))
@@ -16,13 +16,14 @@ defmodule ElephantInTheRoom.Repo.Faker.User do
   end
 
   def insert_one(attrs \\ %{}) do
-    changes = Map.merge(default_attrs, attrs)
+    changes = Map.merge(default_attrs(), attrs)
 
-    Auth.create_user(changes)
+    {:ok, user} = Auth.create_user(changes)
+    user
   end
 
-  def insert_many(attrs \\ %{}, n) do
+  def insert_many(n, attrs \\ %{}) do
     Enum.to_list(1..n)
-    |> Enum.each(fn _ -> insert_one(attrs) end)
+    |> Enum.map(fn _ -> insert_one(attrs) end)
   end
 end

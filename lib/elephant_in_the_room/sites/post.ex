@@ -3,7 +3,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.{Repo}
 
   schema "posts" do
     field(:content, :string)
@@ -41,7 +41,6 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :image, :site_id])
-    |> unique_constraint(:title)
     |> put_rendered_content
   end
 
