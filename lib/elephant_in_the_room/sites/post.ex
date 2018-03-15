@@ -75,9 +75,9 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   defp parse_tags(params) do
-    site_id = params["site_id"]
+    site_id = params[:site_id]
 
-    (params["tags_separated_by_comma"] || "")
+    (params[:tags_separated_by_comma] || "")
     |> String.split(",")
     |> Enum.map(&String.trim/1)
     |> Enum.reject(fn s -> s == "" end)

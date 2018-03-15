@@ -18,20 +18,21 @@ for site <- Faker.Site.insert_many(config[:sites]) do
 
   random_author = Faker.Chooser.choose_one(authors)
 
-  categories_name =
-    Faker.Chooser.choose_n(:rand.uniform(5), categories)
-    |> Enum.map(fn cat -> cat.name end)
+  for post <- 1..config[:posts] do
+    categories_name =
+      Faker.Chooser.choose_n(:rand.uniform(5), categories)
+      |> Enum.map(fn cat -> cat.name end)
 
-  tags_separated_by_comma =
-    Faker.Chooser.choose_n(:rand.uniform(10), tags)
-    |> Enum.map(fn tag -> tag.name end)
-    |> Enum.intersperse(", ")
+    tags_separated_by_comma =
+      Faker.Chooser.choose_n(:rand.uniform(10), tags)
+      |> Enum.map(fn tag -> tag.name end)
+      |> Enum.join(", ")
 
-  posts =
-    Faker.Post.insert_many(config[:posts], %{
+    Faker.Post.insert_one(%{
       site: site,
       author_id: random_author.id,
       categories: categories_name,
-      tags: tags_separated_by_comma
+      tags_separated_by_comma: tags_separated_by_comma
     })
+  end
 end

@@ -5,9 +5,10 @@ defmodule ElephantInTheRoomWeb.Faker.Chooser do
     list |> Enum.at(random_index - 1)
   end
 
-  def choose_n(n, list) do
+  def choose_n(max_number, list) do
     set = MapSet.new()
     len = length(list)
+    n = :rand.uniform(max_number)
 
     set = accum(n, set, fn -> Enum.at(list, :rand.uniform(len - 1)) end)
 
