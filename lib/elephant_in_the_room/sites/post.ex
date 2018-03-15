@@ -63,9 +63,9 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def parse_categories(params) do
-    site_id = params["site_id"]
+    site_id = params[:site_id]
 
-    (params["categories"] || [])
+    (params[:categories] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.map(fn name -> get_category(name, site_id) end)
   end
