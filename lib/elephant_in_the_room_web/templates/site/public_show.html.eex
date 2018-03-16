@@ -1,19 +1,31 @@
-<div class="el-sites">
-  <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"> <h1><%= @site.name %> </h1></p>
-    </div>
-  </div>
+<div class="container">
+  <%= case get_top_featured_post(@conn, @site.posts) do %>
+  <% {:error, _} -> %> error
+  <% {:ok, top_post } -> %>
+    <a href="<%= post_path @conn, :public_show, @site.id, top_post.id %>"
+       class="no-link-decoration">
+        <div class="uk-card uk-card-default uk-grid-collapse 
+                    uk-child-width-1-2@s uk-margin uk-card-hover" uk-grid>
+            <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+                <img src="https://getuikit.com/docs/images/light.jpg" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title"><%= top_post.title %></h3>
+                    <p><%= top_post.abstract %></p>
+                </div>
+            </div>
+        </div>
+    </a>
+<% end %>
 
-  <div class="row">
-    <div class="col-xs-1"> </div>
-    <div class="col-xs-10">
+  <%= case get_normal_posts(@conn, @site.posts) do %>
+    <% {:error, _} -> %>  error
+    <% {:ok, normal_posts } -> %>
+      <%= shared_render_posts_card @conn, 
+          normal_posts,
+          assigns %>
+  <% end %>
 
-      <%= shared_render_posts_card @conn, @site.posts, assigns %>
-            
-    </div>    
-    <div class="col-xs-1"> </div>
-  </div>
-    
 </div>
-  

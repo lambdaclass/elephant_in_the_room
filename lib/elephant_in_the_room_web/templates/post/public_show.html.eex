@@ -1,58 +1,68 @@
 <% alias ElephantInTheRoom.Sites.Author %>
-<div class="el-sites">
-  <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"> <h1>[ADD IMAGE HERE]</h1></p>
+
+<div class="el">
+  <div class="el-feature-image-container">
+
+    <div uk-grid uk-lightbox="animation: slide">
+      <div>
+        <a id="feature-image-lightbox"
+           class="uk-inline el-featured-image"
+           href="https://getuikit.com/docs/images/light.jpg"
+           caption="<%= @post.title %>">
+          <img src="https://getuikit.com/docs/images/light.jpg" alt="">
+        </a>
+      </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xs-1"> </div>
-    <div class="col-xs-10">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-1"> </div>
+      <div class="col-xs-10">
 
-      <article class="uk-article">
+        <article class="uk-article">
 
-        <h1 class="uk-heading-hero">
-          <%= @post.title %>
-        </h1>
+          <h1 class="uk-heading-hero">
+            <%= @post.title %>
+          </h1>
 
-        <p class="uk-article-meta">
-          <%= case @post.author do %>
-            <% nil -> %>
+          <p class="uk-article-meta">
+            <%= case @post.author do %>
+              <% nil -> %>
 
-            <% %Author{:id => id, :name => name} -> %>
-            Written by
-            <%= link name,
-            to: author_path @conn, :public_show, id %>
-          <% end %>
+              <% %Author{:id => id, :name => name} -> %>
+              Written by
+              <%= link name,
+              to: author_path @conn, :public_show, id %>
+            <% end %>
 
-          on <%= @post.updated_at %>.
-          Posted in
-          <a href="<%= site_path @conn, :public_show, @site.id %>">
-            <%= @site.name %>
-          </a>
-          under categories:
-          <%= for category <- @site.categories do %>
-            <a href="<%= category_path @conn, :public_show,
-                     @site.id, category.id %>">
-              <%= category.name %>
+            on <%= @post.updated_at %>.
+            Posted in
+            <a href="<%= site_path @conn, :public_show, @site.id %>">
+              <%= @site.name %>
             </a>
-          <% end %>
-          with tags:
-          <%= for tag <- @post.tags do %>
-            <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
-              <%= tag.name %>
-            </a>
-          <% end %>
-        </p>
+            under categories:
+            <%= for category <- @site.categories do %>
+              <a href="<%= category_path @conn, :public_show,
+                      @site.id, category.id %>">
+                <%= category.name %>
+              </a>
+            <% end %>
+            with tags:
+            <%= for tag <- @post.tags do %>
+              <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
+                <%= tag.name %>
+              </a>
+            <% end %>
+          </p>
 
-        <p class="uk-text-lead"><%= @post.abstract %></p>
+          <p class="uk-text-lead"><%= @post.abstract %></p>
 
-        <%= raw show_content @post %>
+          <%= raw show_content @post %>
 
-      </article>
+        </article>
 
+      </div>
     </div>
-   <span><%= link "Back", to: site_path(@conn, :index) %></span>
   </div>
 </div>

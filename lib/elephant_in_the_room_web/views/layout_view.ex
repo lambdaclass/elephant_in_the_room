@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoomWeb.Router.Helpers
   alias ElephantInTheRoom.Auth.{User, Role}
 
   def get_nav_sites() do
@@ -31,14 +32,23 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def get_logged_user(conn) do
     case Auth.get_user(conn) do
-      {:ok, %User{:role => %Role{:name => "admin"}} = user} ->
-        {:admin, user}
-
-      {:ok, user} ->
-        {:not_an_admin, user}
-
-      {:error, _} ->
-        {:error, :not_logged_in}
+      {:ok, %User{:role => %Role{:name => role}} = user} ->
+        {:ok, user, String.to_atom(role)}
+      {:error, _} = error  -> error
     end
   end
+
+  def get_site_path(conn) do
+    case conn && conn.assigns[:site] do
+      nil -> "/"
+      site ->
+        IO.puts(inspect(site))
+        Helpers.site_path(conn, :public_show, site.id)
+    end
+  end
+
+  def current_site(conn) do
+    conn.assigns[:site]
+  end
+
 end
