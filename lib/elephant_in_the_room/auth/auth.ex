@@ -34,6 +34,7 @@ defmodule ElephantInTheRoom.Auth do
     case Guardian.Plug.current_resource(conn) do
       nil ->
         {:error, :no_user}
+
       %User{} = user ->
         user = Repo.preload(user, :role)
         {:ok, user}
@@ -42,7 +43,9 @@ defmodule ElephantInTheRoom.Auth do
 
   def get_user(id) do
     case Repo.get(User, id) do
-      nil -> {:error, :user_not_found}
+      nil ->
+        {:error, :user_not_found}
+
       user ->
         user = Repo.preload(user, :role)
         {:ok, user}
@@ -50,7 +53,7 @@ defmodule ElephantInTheRoom.Auth do
   end
 
   def sign_in_user(%Conn{} = conn, %User{} = user) do
-    conn = Guardian.Plug.sign_in(conn,user)
+    conn = Guardian.Plug.sign_in(conn, user)
     user = Repo.preload(user, :role)
     {:ok, conn, user}
   end
@@ -58,7 +61,6 @@ defmodule ElephantInTheRoom.Auth do
   def sign_out_user(%Conn{} = conn) do
     Guardian.Plug.sign_out(conn)
   end
-
 
   @doc """
   Creates a user.
