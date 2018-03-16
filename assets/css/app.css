@@ -51,6 +51,12 @@
     display: block;
 }
 
+@media (min-width: 0px) and (max-width: 350px) {
+    .uk-navbar-item.uk-logo {
+        font-size: 1em;
+    }
+}
+
 @media (max-width: 1040px) {
     .title h1 {
         font-size: 60px;
@@ -65,3 +71,4 @@
         display: block;
     }
 }
+
