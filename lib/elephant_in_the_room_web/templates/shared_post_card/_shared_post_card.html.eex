@@ -3,7 +3,7 @@
 
     
       <div class="col-lg-4 col-sm-6">
-        <a href="<%= post_path @conn, :public_show, @site.id, post.id %>"
+        <a href="<%= show_link_with_date(@conn, @site, post) %>"
            class="no-link-decoration">
           <div class="clickeable-card uk-card uk-card-default uk-card-hover">
               <div class="uk-card-media-top">
