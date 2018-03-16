@@ -1,0 +1,12 @@
+<%= if current_site(@conn) do %>
+  <%= for {category_id, category_name} <- get_categories(@conn) do %>
+    
+  <li>
+    <a href="<%= category_path(@conn, :public_show,
+             @site.id, category_id) %>">
+      <%= category_name %>
+    </a>
+  </li>
+
+  <% end %>
+<% end %>

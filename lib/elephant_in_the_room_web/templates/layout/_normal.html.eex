@@ -30,14 +30,7 @@
       <div class="categories uk-navbar-container">
         <div class="uk-flex uk-flex-center uk-navbar-center">
           <ul class="uk-navbar-nav">
-            <%= for {category_id, category_name} <- get_categories(@conn) do %>
-              <li class="uk-text-large navbar-item">
-                <a href="<%= category_path(@conn, :public_show,
-                         @site.id, category_id) %>">
-                  <%= category_name %>
-                </a>
-              </li>
-            <% end %>
+            <%= render "_category_options.html", assigns %>
           </ul>
         </div>
       </div>
@@ -62,7 +55,7 @@
            uk-toggle="target: #offcanvas-nav-primary"
            uk-navbar-toggle-icon href="#"></a>
         <a class="uk-navbar-item uk-logo"
-           href="#">Elephant in the room</a>
+           href="<%= get_site_path(@conn) %>">Elephant in the room</a>
       </div>
     </nav>  
   </div>
@@ -75,19 +68,22 @@
     <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
       <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
         <li class="uk-parent">
-          <a href="#">Sites</a>
+          <a href="">Sites</a>
           <ul class="uk-nav-sub">
             <li><a href="#">Site 1</a></li>
             <li><a href="#">Site 2</a></li>
           </ul>
         </li>
+
+        <%= if current_site(@conn) do %>
         <li class="uk-parent">
           <a href="#">Categories</a>
           <ul class="uk-nav-sub">
-            <li><a href="#">Category 1</a></li>
-            <li><a href="#">Category 2</a></li>
+            <%= render "_category_options.html", assigns %>
           </ul>
         </li>
+        <% end %>
+
         <li class="uk-parent">
           <a href="#">User options</a>
           <ul class="uk-nav-sub">
