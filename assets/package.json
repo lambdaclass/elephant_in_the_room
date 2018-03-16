@@ -6,14 +6,17 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
+    "flexboxgrid": "^6.3.1",
     "jquery": "^3.3.1",
     "phoenix": "file:../deps/phoenix",
-    "phoenix_html": "file:../deps/phoenix_html"
+    "phoenix_html": "file:../deps/phoenix_html",
+    "uikit": "^3.0.0-beta.40"
   },
   "devDependencies": {
     "babel-brunch": "6.1.1",
     "brunch": "2.10.9",
     "clean-css-brunch": "2.10.0",
+    "sass-brunch": "^2.10.4",
     "uglify-js-brunch": "2.10.0"
   }
 }
