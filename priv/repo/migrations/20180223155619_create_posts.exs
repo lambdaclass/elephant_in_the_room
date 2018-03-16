@@ -14,7 +14,6 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
       timestamps()
     end
 
-    create(unique_index(:posts, [:title]))
     create(index(:posts, [:site_id]))
   end
 end
