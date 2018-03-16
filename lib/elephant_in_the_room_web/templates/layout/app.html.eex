@@ -23,10 +23,6 @@
     <%= if assigns[:admin] do %>
       <%= render "_admin.html", assigns %>
     <% end %>
-
-    <main role="main">
-      <%= render @view_module, @view_template, assigns %>
-    </main>
         
   </body>
 </html>

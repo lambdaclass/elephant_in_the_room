@@ -2,6 +2,9 @@
   font-size: 100px;
   font-family: "Segoe UI";
 }
+.uk-navbar-item.uk-logo {
+  font-family: "Segoe UI";
+}
 .title h1 a {
   all: unset;
   cursor: pointer;
@@ -33,4 +36,27 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
+}
+
+.el.el-sm {
+    display: none;
+}
+
+.el.el-md {
+    display: block;
+}
+
+@media (max-width: 1040px) {
+    .title h1 {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 700px) {
+    .el.el-md {
+        display: none;
+    }
+    .el.el-sm {
+        display: block;
+    }
 }

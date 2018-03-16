@@ -1,73 +1,75 @@
-<div class="container">
-  <div class="uk-flex uk-flex-center uk-navbar-center">
-    <ul class="uk-subnav uk-subnav-divider" uk-margin>
-      <%= for {site_id, site_name} <- get_nav_sites() do %>
-        <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-          <a class="uk-link-text"
-          href="<%= site_path(@conn, :public_show, site_id) %>">
-          <%= site_name %>
-          </a>
-        </li>
-      <% end %>
-    </ul> 
-  </div>
-</div>
-
-<div class="container">
-  <div class="title uk-text-large uk-text-center">
-    <h1>
-      <a href="<%= get_site_path(@conn) %>">
-        Elephant In The Room!
-      </a>
-    </h1>
-  </div>
-</div>
-
-<%= if current_site(@conn) do %>
-<div class="container">
-  <div class="categories uk-navbar-container">
+<div class="el el-md">
+  
+  <div class="container">
     <div class="uk-flex uk-flex-center uk-navbar-center">
-      <ul class="uk-navbar-nav">
-        <%= for {category_id, category_name} <- get_categories(@conn) do %>
-          <li class="uk-text-large navbar-item">
-              <a href="<%= category_path(@conn, :public_show,
-              @site.id, category_id) %>">
-              <%= category_name %>
+      <ul class="uk-subnav uk-subnav-divider" uk-margin>
+        <%= for {site_id, site_name} <- get_nav_sites() do %>
+          <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
+            <a class="uk-link-text"
+               href="<%= site_path(@conn, :public_show, site_id) %>">
+              <%= site_name %>
             </a>
           </li>
         <% end %>
-      </ul>
+      </ul> 
     </div>
   </div>
-</div>
-<% end %>
 
-<div class="container nav-mini-interactions uk-text-right">
+  <div class="container">
+    <div class="title uk-text-large uk-text-center">
+      <h1>
+        <a href="<%= get_site_path(@conn) %>">
+          Elephant In The Room!
+        </a>
+      </h1>
+    </div>
+  </div>
+
+  <%= if current_site(@conn) do %>
+    <div class="container">
+      <div class="categories uk-navbar-container">
+        <div class="uk-flex uk-flex-center uk-navbar-center">
+          <ul class="uk-navbar-nav">
+            <%= for {category_id, category_name} <- get_categories(@conn) do %>
+              <li class="uk-text-large navbar-item">
+                <a href="<%= category_path(@conn, :public_show,
+                         @site.id, category_id) %>">
+                  <%= category_name %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="container nav-mini-interactions uk-text-right">
     <% login = get_logged_user(@conn) %>
-      <%= case login do %>
-        <% {:error,  _} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= login_path(@conn, :index) %>">
-            <i class="fas fa-user"></i>
-            Login
-          </a>
-        <% {:ok, user, _} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= login_path(@conn, :index) %>">
-            <i class="fas fa-user"></i>
-            <%= user.username %>
-          </a>
-       <% end %>
+    <%= case login do %>
+      <% {:error,  _} -> %>
+      <a class="uk-button uk-button-default"
+         href="<%= login_path(@conn, :index) %>">
+        <i class="fas fa-user"></i>
+        Login
+      </a>
+      <% {:ok, user, _} -> %>
+      <a class="uk-button uk-button-default"
+         href="<%= login_path(@conn, :index) %>">
+        <i class="fas fa-user"></i>
+        <%= user.username %>
+      </a>
+    <% end %>
 
-      <%= case login do %>
-        <% {:ok, user, :admin} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= admin_path(@conn, :index) %>">
-            <i class="fas fa-cogs"></i>
-            Control panel
-          </a>
-        <% _ -> %>
-      <% end %>
+    <%= case login do %>
+      <% {:ok, user, :admin} -> %>
+      <a class="uk-button uk-button-default"
+         href="<%= admin_path(@conn, :index) %>">
+        <i class="fas fa-cogs"></i>
+        Control panel
+      </a>
+      <% _ -> %>
+    <% end %>
 
     <button class="uk-button uk-button-default">
       <i class="far fa-envelope"></i>
@@ -78,4 +80,51 @@
       Search
     </button>
 
-</div>
+  </div>
+
+</div> <!-- md -->
+
+
+<div class="uk-offcanvas-content">
+  <div class="el el-sm">
+
+    <nav class="uk-navbar uk-navbar-container uk-margin">
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle"
+           uk-toggle="target: #offcanvas-nav-primary"
+           uk-navbar-toggle-icon href="#"></a>
+        <a class="uk-navbar-item uk-logo"
+           href="#">Elephant in the room</a>
+      </div>
+    </nav>  
+  </div>
+
+  <div role="main">
+    <%= render @view_module, @view_template, assigns %>
+  </div>
+  
+    <div id="offcanvas-nav-primary" uk-offcanvas="mode: push; overlay: true">
+        <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+          <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+            <li class="uk-parent">
+              <a href="#">hello</a>
+            </li>
+            
+            <li class="uk-active"><a href="#">Active</a></li>
+            <li class="uk-parent">
+              <a href="#">Parent</a>
+              <ul class="uk-nav-sub">
+                <li><a href="#">Sub item</a></li>
+                <li><a href="#">Sub item</a></li>
+              </ul>
+            </li>
+                <li class="uk-nav-header">Header</li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+            </ul>
+
+        </div>
+    </div>
+  </div>
