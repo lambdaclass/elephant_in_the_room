@@ -13,14 +13,19 @@
 .nav-mini-interactions {
   min-height: 1em;
 }
-.nav-mini-interactions .uk-button {
-  padding-left: 0px;
-  padding-right: 0px;
-  border-top-width: 0px;
-  border-bottom-width: 0px;
-  font-size: small;
-  line-height: inherit;
+.nav-mini-interactions ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;   
 }
+.nav-mini-interactions li {
+    display: inline;
+}
+.nav-mini-interactions a {
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .no-link-decoration:hover {
   text-decoration: none; 

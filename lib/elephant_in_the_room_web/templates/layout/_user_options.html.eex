@@ -1,0 +1,28 @@
+<% login = get_logged_user(@conn) %>
+<%= case login do %>
+  <% {:error,  _} -> %>
+  <li>
+    <a href="<%= login_path(@conn, :index) %>">
+      <i class="fas fa-user"></i>
+      Login
+    </a>
+  </li>
+  <% {:ok, user, _} -> %>
+  <li>
+    <a href="<%= login_path(@conn, :index) %>">
+      <i class="fas fa-user"></i>
+      <%= user.username %>
+    </a>
+  </li>
+<% end %>
+
+<%= case login do %>
+  <% {:ok, user, :admin} -> %>
+  <li>
+    <a href="<%= admin_path(@conn, :index) %>">
+      <i class="fas fa-cogs"></i>
+      Control panel
+    </a>
+  </li>
+  <% _ -> %>
+<% end %>

@@ -45,41 +45,9 @@
   <% end %>
 
   <div class="container nav-mini-interactions uk-text-right">
-    <% login = get_logged_user(@conn) %>
-    <%= case login do %>
-      <% {:error,  _} -> %>
-      <a class="uk-button uk-button-default"
-         href="<%= login_path(@conn, :index) %>">
-        <i class="fas fa-user"></i>
-        Login
-      </a>
-      <% {:ok, user, _} -> %>
-      <a class="uk-button uk-button-default"
-         href="<%= login_path(@conn, :index) %>">
-        <i class="fas fa-user"></i>
-        <%= user.username %>
-      </a>
-    <% end %>
-
-    <%= case login do %>
-      <% {:ok, user, :admin} -> %>
-      <a class="uk-button uk-button-default"
-         href="<%= admin_path(@conn, :index) %>">
-        <i class="fas fa-cogs"></i>
-        Control panel
-      </a>
-      <% _ -> %>
-    <% end %>
-
-    <button class="uk-button uk-button-default">
-      <i class="far fa-envelope"></i>
-      Subscribe
-    </button>
-    <button class="uk-button uk-button-default">
-      <i class="fas fa-search"></i>
-      Search
-    </button>
-
+    <ul>
+      <%= render "_user_options.html", assigns %>
+    </ul>
   </div>
 
 </div> <!-- md -->
@@ -103,28 +71,30 @@
     <%= render @view_module, @view_template, assigns %>
   </div>
   
-    <div id="offcanvas-nav-primary" uk-offcanvas="mode: push; overlay: true">
-        <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-          <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-            <li class="uk-parent">
-              <a href="#">hello</a>
-            </li>
-            
-            <li class="uk-active"><a href="#">Active</a></li>
-            <li class="uk-parent">
-              <a href="#">Parent</a>
-              <ul class="uk-nav-sub">
-                <li><a href="#">Sub item</a></li>
-                <li><a href="#">Sub item</a></li>
-              </ul>
-            </li>
-                <li class="uk-nav-header">Header</li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
-                <li class="uk-nav-divider"></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
-            </ul>
-
-        </div>
+  <div id="offcanvas-nav-primary" uk-offcanvas="mode: push; overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+        <li class="uk-parent">
+          <a href="#">Sites</a>
+          <ul class="uk-nav-sub">
+            <li><a href="#">Site 1</a></li>
+            <li><a href="#">Site 2</a></li>
+          </ul>
+        </li>
+        <li class="uk-parent">
+          <a href="#">Categories</a>
+          <ul class="uk-nav-sub">
+            <li><a href="#">Category 1</a></li>
+            <li><a href="#">Category 2</a></li>
+          </ul>
+        </li>
+        <li class="uk-parent">
+          <a href="#">User options</a>
+          <ul class="uk-nav-sub">
+            <%= render "_user_options.html", assigns %>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
