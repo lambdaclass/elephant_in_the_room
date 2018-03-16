@@ -23,9 +23,12 @@
   text-decoration: none; 
 }
 
+.el .el-feature-image-container .uk-first-column {
+    padding: 0 !important;
+}
 .el .el-featured-image{
   display: block;
-  width: 100%;
+  width: 100% !important;
   max-height: 20em !important;
   background-size: cover;
   background-repeat: no-repeat;

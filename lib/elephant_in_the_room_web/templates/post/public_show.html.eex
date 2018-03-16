@@ -1,7 +1,18 @@
 <% alias ElephantInTheRoom.Sites.Author %>
+
 <div class="el">
-  <div class="el-featured-image">
-      <img src="https://getuikit.com/docs/images/light.jpg">
+  <div class="el-feature-image-container">
+
+    <div uk-grid uk-lightbox="animation: slide">
+      <div>
+        <a id="feature-image-lightbox"
+           class="uk-inline el-featured-image"
+           href="https://getuikit.com/docs/images/light.jpg"
+           caption="<%= @post.title %>">
+          <img src="https://getuikit.com/docs/images/light.jpg" alt="">
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="container">
