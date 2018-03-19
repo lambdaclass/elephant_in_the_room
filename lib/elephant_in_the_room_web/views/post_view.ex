@@ -48,4 +48,12 @@ defmodule ElephantInTheRoomWeb.PostView do
       ""
     end
   end
+
+  def show_featured_category(%Post{categories: categories}) do
+    case categories do
+      [] -> ""
+      [featured_category | _] -> featured_category.name
+    end
+  end
+  
 end
