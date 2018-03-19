@@ -24,7 +24,7 @@ $card-padding-2: 0.7em;
     img {
         width: 100%;
     }
-    .uk-card-media-top {
+    .media {
         margin-bottom: 1em;
         overflow:hidden;
         height: 0;
@@ -32,7 +32,12 @@ $card-padding-2: 0.7em;
         background-size:     cover !important;
         background-repeat:   no-repeat !important;
         background-position: center center !important;
+        margin-bottom: 0.2em;
     }
+    
+}
+
+.post-card {
     .featured-category {
         font-size: 0.8em;
         font-weight: bold;
@@ -41,17 +46,55 @@ $card-padding-2: 0.7em;
         font-size: 0.7em;
         color: black;
     }
+    .body {
+        padding: 0;
+        padding-bottom: 5px;
+        h3 {
+            font-size: 1.3em;
+            line-height: 1em;
+            margin-bottom: 0.3em;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 0.3em;
+        }
+    }
 }
 
-.uk-card-body {
-    padding: 0;
-    padding-bottom: 5px;
-    h3 {
-        font-size: 1.3em;
-        line-height: 1em;
-        margin-bottom: 0.3em;
+
+.featured-post {
+    overflow: hidden;
+
+    @media (min-width: $break-xs) {
+        margin-top: 2 * $card-padding-2;
+        margin-bottom: 2 * $card-padding-2;
     }
-    p {
-        margin-top: 0;
+
+    .media, .body {
+        @media (min-width: $break-xs) {
+            height: 50%;
+        }
+        
     }
+      
+    
+    
+    .media {
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-size:     cover !important;
+        background-repeat:   no-repeat !important;
+        background-position: center center !important;
+
+        @media (min-width: 0px) and (max-width: $break-xs) {
+            height: 300px;
+        }
+
+        
+        
+    }
+
 }
+
+

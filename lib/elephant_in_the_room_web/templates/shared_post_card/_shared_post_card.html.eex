@@ -1,7 +1,22 @@
-<div class="row">
+<div class="row post-card" style="margin: 0;">
   <%= for post <- @posts do %>
 
-    
+    <%= if assigns[:featured] do %>
+      <div class="row featured-post">
+        <div class="columns col-xs-12 col-sm-7">
+          <div class="media"
+               style="background: url(<%= post.image %>);">
+          </div>
+        </div>
+        <div class="columns col-xs-12 col-sm-5 body">
+          <h3 class="uk-card-title"><%= post.title %></h3>
+          <p><%= post.abstract %></p>
+          <p class="author"><%= post.author.name %></p>
+        </div>
+      </div>
+
+    <% else %>
+      
     <div class="col-xs-12 col-sm-6 col-md-3">
       <a href="<%= post_path @conn, :public_show, @site.id, post.id %>"
          class="no-link-decoration">
@@ -9,10 +24,10 @@
           <div class="featured-category">
             <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
           </div>
-          <div class="uk-card-media-top"
+          <div class="uk-card-media-top media"
                style="background: url(<%= post.image %>);">
           </div>
-          <div class="uk-card-body">
+          <div class="uk-card-body body">
             <h3 class="uk-card-title"><%= post.title %></h3>
             <p><%= post.abstract %></p>
             <p class="author"><%= post.author.name %></p>
@@ -20,6 +35,8 @@
         </div>
       </a>
     </div>
+    
+    <%  end %>
     
 
   <% end %>
