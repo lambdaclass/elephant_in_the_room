@@ -67,12 +67,13 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
-      when not valid? do
+  when not valid? do
     changeset
   end
-
+      
   def put_slugified_title(%Changeset{} = changeset) do
-    if String.length(get_field(changeset, :slug)) == 0 do
+    slug = get_field(changeset, :slug)
+    if slug==nil || String.length(slug) == 0 do
       slug = get_field(changeset, :title) |> slugified_title()
 
       case calculate_occurrences(0, slug, "") do
