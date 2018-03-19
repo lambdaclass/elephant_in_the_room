@@ -4,7 +4,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.Repo
-  import Ecto.Query
 
   schema "posts" do
     field(:title, :string)
@@ -38,8 +37,6 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    IO.puts(inspect(attrs))
-
     post
     |> cast(attrs, [:title, :content, :image, :slug, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))

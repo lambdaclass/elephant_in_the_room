@@ -1,11 +1,7 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
-  alias Plug.Conn
 
   def get_top_featured_post(_conn, posts) do
-    IO.puts("----\n")
-    IO.puts(inspect(posts))
-
     case posts do
       [top | _] -> {:ok, top}
       [] -> {:error, :no_top_featured}
