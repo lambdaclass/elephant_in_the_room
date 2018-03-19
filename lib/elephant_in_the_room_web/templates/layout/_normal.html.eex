@@ -1,3 +1,34 @@
+<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
+  <nav class="uk-navbar-container uk-navbar-sticky">
+    <div class="uk-container uk-container-expand">
+      <div uk-navbar="" class="uk-navbar">
+
+        <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="#">left</a></li>
+          </ul>
+        </div>
+
+
+        <div class="uk-navbar-center">
+          <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="#">Active</a></li>
+          </ul>
+        </div>
+
+        <div class="uk-navbar-right">
+          <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="#">right</a></li>
+          </ul>
+        </div>
+        
+        
+      </div>
+    </div>
+  </nav>
+</div>
+
+
 <div class="el el-md">
   
   <div class="container">
