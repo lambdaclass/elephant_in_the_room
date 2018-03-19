@@ -9,6 +9,9 @@
           </div>
         </div>
         <div class="columns col-xs-12 col-sm-5 body">
+          <div class="featured-category">
+            <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
+          </div>
           <h3 class="uk-card-title"><%= post.title %></h3>
           <p><%= post.abstract %></p>
           <p class="author"><%= post.author.name %></p>

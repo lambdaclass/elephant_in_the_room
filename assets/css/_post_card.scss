@@ -64,20 +64,21 @@ $card-padding-2: 0.7em;
 
 .featured-post {
     overflow: hidden;
+    
 
+    .columns {
+        padding: 0;
+    }
+    
     @media (min-width: $break-xs) {
         margin-top: 2 * $card-padding-2;
         margin-bottom: 2 * $card-padding-2;
+        margin-left: $card-padding-2;
     }
 
-    .media, .body {
-        @media (min-width: $break-xs) {
-            height: 50%;
-        }
-        
+    h3 {
+        margin-top:0;
     }
-      
-    
     
     .media {
         padding: 0;
@@ -86,15 +87,12 @@ $card-padding-2: 0.7em;
         background-size:     cover !important;
         background-repeat:   no-repeat !important;
         background-position: center center !important;
-
-        @media (min-width: 0px) and (max-width: $break-xs) {
-            height: 300px;
-        }
-
-        
-        
+        height: 50vh;
     }
 
+    .body {
+        padding-left: 1em;
+    }
 }
 
 
