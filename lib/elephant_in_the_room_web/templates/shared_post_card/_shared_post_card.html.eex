@@ -2,20 +2,20 @@
   <%= for post <- @posts do %>
 
     
-      <div class="col-lg-4 col-sm-6">
-        <a href="<%= post_path @conn, :public_show, @site.id, post.id %>"
-           class="no-link-decoration">
-          <div class="clickeable-card uk-card uk-card-default uk-card-hover">
-              <div class="uk-card-media-top">
-                  <img src="https://getuikit.com/docs/images/light.jpg" alt="">
-              </div>
-              <div class="uk-card-body">
-                  <h3 class="uk-card-title"><%= post.title %></h3>
-                  <p><%= post.abstract %>.</p>
-              </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a href="<%= post_path @conn, :public_show, @site.id, post.id %>"
+         class="no-link-decoration">
+        <div class="clickeable-card uk-card uk-card-default">
+          <div class="uk-card-media-top"
+               style="background: url(<%= post.image %>);">
           </div>
-        </a>
-      </div>
+          <div class="uk-card-body">
+            <h3 class="uk-card-title"><%= post.title %></h3>
+            <p><%= post.abstract %>.</p>
+          </div>
+        </div>
+      </a>
+    </div>
     
 
   <% end %>

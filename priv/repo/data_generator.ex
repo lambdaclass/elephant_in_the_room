@@ -6,7 +6,7 @@ config = %{
   :authors => 100,
   :tags => 200,
   :users => 100,
-  :posts => 300
+  :posts => 20
 }
 
 authors = Faker.Author.insert_many(config[:authors])

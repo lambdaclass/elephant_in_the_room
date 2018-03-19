@@ -1,0 +1,28 @@
+.uk-card-default {
+    background: white;
+    box-shadow: unset;
+    margin-bottom: 2em;
+    img {
+        width: 100%;
+    }
+    .uk-card-media-top {
+        overflow:hidden;
+        height: 0;
+        padding-top:56.25%;
+        background-size:     cover !important;
+        background-repeat:   no-repeat !important;
+        background-position: center center !important;
+    }
+}
+
+.uk-card-body {
+    padding: 0;
+    padding-bottom: 5px;
+    h3 {
+        font-size: 1.3em;
+        margin-bottom: 0;
+    }
+    p {
+        margin-top: 0;
+    }
+}
