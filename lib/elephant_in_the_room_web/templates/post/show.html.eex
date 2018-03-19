@@ -8,6 +8,11 @@
   </li>
 
   <li>
+    <strong>Slug:</strong>
+    <%= @post.slug %>
+  </li>
+
+  <li>
     <strong>Categories:</strong>
     <%= put_commas(@post, :categories) %>
   </li>

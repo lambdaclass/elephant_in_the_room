@@ -278,7 +278,7 @@ defmodule ElephantInTheRoom.Sites do
   """
 
   def create_post(site, attrs) do
-    post_attrs = Map.put(attrs, :site_id, site.id)
+    post_attrs = Map.put(attrs, "site_id", site.id)
 
     %Post{}
     |> Post.changeset(post_attrs)

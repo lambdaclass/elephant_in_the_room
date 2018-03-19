@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.Repo
 
   def index(%{assigns: %{site: site}} = conn, _) do
     posts = Sites.list_posts(site)
@@ -42,8 +43,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"post_id" => id}) do
-    post = Sites.get_post!(site, id)
+  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug} = params) do
+    post = Post |> Repo.get_by!(slug: slug) |> Repo.preload([:author, :tags, :categories])
     render(conn, "public_show.html", site: site, post: post)
   end
 

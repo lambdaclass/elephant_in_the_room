@@ -2,7 +2,7 @@
   <%= case get_top_featured_post(@conn, @site.posts) do %>
   <% {:error, _} -> %> error
   <% {:ok, top_post } -> %>
-    <a href="<%= post_path @conn, :public_show, @site.id, top_post.id %>"
+    <a href="<%= show_link_with_date(@conn, @site, top_post) %>"
        class="no-link-decoration">
         <div class="uk-card uk-card-default uk-grid-collapse 
                     uk-child-width-1-2@s uk-margin uk-card-hover" uk-grid>
