@@ -1,5 +1,8 @@
 .PHONY: dev test release ops start install_frontend
 
+start:
+	mix deps.get && make install_frontend && make create_db && make create_roles && make dev
+
 create_db:
 	mix ecto.create && mix ecto.migrate
 
@@ -11,9 +14,6 @@ install_frontend:
 
 create_roles:
 	mix run priv/repo/seeds.exs
-
-start:
-	mix deps.get && make install_frontend && make create_db && make create_roles && make dev
 
 test:
 	./rebar3 ct
