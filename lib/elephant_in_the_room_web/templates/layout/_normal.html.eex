@@ -1,101 +1,52 @@
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
-  <nav class="uk-navbar-container uk-navbar-sticky">
-    <div class="uk-container uk-container-expand">
-      <div uk-navbar="" class="uk-navbar">
-
-        <div class="uk-navbar-left">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="#">left</a></li>
-          </ul>
-        </div>
-
-
-        <div class="uk-navbar-center">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="#">Active</a></li>
-          </ul>
-        </div>
-
-        <div class="uk-navbar-right">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="#">right</a></li>
-          </ul>
-        </div>
-        
-        
-      </div>
-    </div>
-  </nav>
-</div>
-
-
-<div class="el el-md">
-  
-  <div class="container">
-    <div class="uk-flex uk-flex-center uk-navbar-center">
-      <ul class="uk-subnav uk-subnav-divider" uk-margin>
-        <%= for {site_id, site_name} <- get_nav_sites() do %>
-          <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-            <a class="uk-link-text"
-               href="<%= site_path(@conn, :public_show, site_id) %>">
-              <%= site_name %>
-            </a>
-          </li>
-        <% end %>
-      </ul> 
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="title uk-text-large uk-text-center">
-      <h1>
-        <a href="<%= get_site_path(@conn) %>">
-          Elephant In The Room!
-        </a>
-      </h1>
-    </div>
-  </div>
-
-  <%= if current_site(@conn) do %>
-    <div class="container">
-      <div class="categories uk-navbar-container">
-        <div class="uk-flex uk-flex-center uk-navbar-center">
-          <ul class="uk-navbar-nav">
-            <%= render "_category_options.html", assigns %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="container nav-mini-interactions uk-text-right">
-    <ul>
-      <%= render "_user_options.html", assigns %>
-    </ul>
-  </div>
-
-</div> <!-- md -->
-
-
 <div class="uk-offcanvas-content">
-  <div class="el el-sm">
 
-    <nav class="uk-navbar uk-navbar-container uk-margin">
-      <div class="uk-navbar-left">
-        <a class="uk-navbar-toggle"
-           uk-toggle="target: #offcanvas-nav-primary"
-           uk-navbar-toggle-icon href="#"></a>
-        <a class="uk-navbar-item uk-logo"
-           href="<%= get_site_path(@conn) %>">Elephant in the room</a>
+  <!-- NAVIGATION BAR -->
+  <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
+    <nav class="uk-navbar-container uk-navbar-sticky">
+      <div class="uk-container uk-container-expand">
+        <div uk-navbar="" class="uk-navbar">
+
+          <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+              <button class="uk-button uk-button-default uk-margin-small-right"
+                      type="button" uk-toggle="target: #offcanvas-nav-primary">
+                <i class="fas fa-bars"></i>
+              </button>
+            </ul>
+          </div>
+
+
+          <div class="uk-navbar-center">
+            <ul class="uk-navbar-nav">
+              <li class="uk-active">
+                 <a href="<%= get_site_path(@conn) %>">
+                   Elephant
+                 </a>
+            </ul>
+          </div>
+
+          <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+              <button class="uk-button uk-button-default uk-margin-small-right"
+                      type="button" uk-toggle="target: #offcanvas-nav-secondary">
+                Sites
+              </button>
+            </ul>
+          </div>
+          
+          
+        </div>
       </div>
-    </nav>  
+    </nav>
   </div>
-
+  <!-- NAVIGATION BAR -->
+  
   <div role="main">
     <%= render @view_module, @view_template, assigns %>
   </div>
-  
-  <div id="offcanvas-nav-primary" uk-offcanvas="mode: push; overlay: true">
+
+  <!-- RIGHT OFFCANVAS -->
+  <div id="offcanvas-nav-secondary" uk-offcanvas="flip: true; overlay: true">
     <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
       <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
         <li class="uk-parent">
@@ -112,7 +63,15 @@
             <% end %>
           </ul>
         </li>
+      </ul>
+    </div>
+  </div>
+  <!-- RIGHT OFFCANVAS -->
 
+  <!-- LEFT OFFCANVAS -->
+  <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
         <%= if current_site(@conn) do %>
         <li class="uk-parent">
           <a href="#">Categories</a>
@@ -131,4 +90,5 @@
       </ul>
     </div>
   </div>
+  <!-- LEFT OFFCANVAS -->
 </div>
