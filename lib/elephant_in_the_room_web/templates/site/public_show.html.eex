@@ -1,6 +1,6 @@
 <div class="container">
 <%= case get_top_featured_post(@conn, @site.posts) do %>
-  <% {:error, _} -> %> error
+  <% {:error, _} -> %>
   <% {:ok, top_post } -> %>
   <%= shared_render_posts_card @conn, 
   [top_post],
@@ -9,7 +9,7 @@
 <% end %>
 
   <%= case get_normal_posts(@conn, @site.posts) do %>
-    <% {:error, _} -> %>  error
+    <% {:error, _} -> %> 
     <% {:ok, normal_posts } -> %>
       <%= shared_render_posts_card @conn, 
           normal_posts,

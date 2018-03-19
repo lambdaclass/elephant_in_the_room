@@ -1,20 +1,36 @@
 # ElephantInTheRoom
 
-To start your Phoenix server:
+## Prerequisites
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+In order to run this project you need to have installed:
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+* [Elixir](https://elixir-lang.org/)
+* [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
+* [npm](https://www.npmjs.com/)
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+## Installing
 
-## Learn more
+To setup the database, first run:
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+```
+$ make ops
+```
+
+Then, run:
+
+```
+$ make start
+```
+
+To install all the dependencies and start the project.
+You can visit [`localhost:4000`](http://localhost:4000) from your browser to see it working.
+
+## Generate test data
+
+You can run:
+
+```
+$ make ops_start
+```
+
+To populate the database with sample data.

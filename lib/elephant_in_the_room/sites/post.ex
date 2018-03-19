@@ -3,14 +3,15 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.{Repo}
+  alias ElephantInTheRoom.Repo
 
   schema "posts" do
+    field(:title, :string)
+    field(:slug, :string)
+    field(:abstract, :string)
     field(:content, :string)
     field(:rendered_content, :string)
     field(:image, :string)
-    field(:title, :string)
-    field(:abstract, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -37,11 +38,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
+    |> cast(attrs, [:title, :content, :image, :slug, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :image, :site_id])
     |> put_rendered_content
+    |> put_slugified_title
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
@@ -55,6 +57,31 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     put_change(changeset, :rendered_content, rendered_content)
     |> validate_length(:rendered_content, min: 1)
+  end
+
+  defp calculate_occurrences(n, slug, suffix) do
+    case Repo.get_by(Post, slug: slug <> suffix) do
+      nil -> n
+      %Post{} -> calculate_occurrences(n + 1, slug, "-#{n + 1}")
+    end
+  end
+
+  def put_slugified_title(%Changeset{valid?: valid?} = changeset)
+      when not valid? do
+    changeset
+  end
+
+  def put_slugified_title(%Changeset{} = changeset) do
+    if String.length(get_field(changeset, :slug)) == 0 do
+      slug = get_field(changeset, :title) |> slugified_title()
+
+      case calculate_occurrences(0, slug, "") do
+        0 -> put_change(changeset, :slug, slug)
+        n -> put_change(changeset, :slug, slug <> "-#{n}")
+      end
+    else
+      changeset
+    end
   end
 
   def generate_markdown(input) do
@@ -77,7 +104,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   defp parse_tags(params) do
     site_id = params[:site_id]
 
-    (params[:tags_separated_by_comma] || "")
+    (params["tags_separated_by_comma"] || "")
     |> String.split(",")
     |> Enum.map(&String.trim/1)
     |> Enum.reject(fn s -> s == "" end)
@@ -90,5 +117,12 @@ defmodule ElephantInTheRoom.Sites.Post do
       on_conflict: [set: [name: name, site_id: site_id]],
       conflict_target: :name
     )
+  end
+
+  def slugified_title(title) do
+    title
+    |> String.downcase()
+    |> String.replace(~r/[^a-z0-9\s-]/, "")
+    |> String.replace(~r/(\s|-)+/, "-")
   end
 end
