@@ -58,7 +58,9 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def public_show(%{assigns: %{site: site}} = conn, params) do
-    if validate_params(conn.assigns.post, params) do
+    post = Sites.get_post!(site, params.id)
+
+    if validate_params(post, params) do
       post = Post |> Repo.get_by!(title: conn.assigns.post.title)
       render(conn, "public_show.html", site: site, post: post)
     end

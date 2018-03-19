@@ -3,14 +3,15 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.Repo
 
   schema "posts" do
+    field(:title, :string)
+    field(:slug, :string)
+    field(:abstract, :string)
     field(:content, :string)
     field(:rendered_content, :string)
     field(:image, :string)
-    field(:title, :string)
-    field(:abstract, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -43,6 +44,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> validate_required([:title, :content, :image, :site_id])
     |> unique_constraint(:title)
     |> put_rendered_content
+    |> put_slugified_title
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
@@ -56,6 +58,11 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     put_change(changeset, :rendered_content, rendered_content)
     |> validate_length(:rendered_content, min: 1)
+  end
+
+  def put_slugified_title(%Changeset{} = changeset) do
+    slug = get_field(changeset, :title) |> slugified_title()
+    put_change(changeset, :slug, slug)
   end
 
   def generate_markdown(input) do
