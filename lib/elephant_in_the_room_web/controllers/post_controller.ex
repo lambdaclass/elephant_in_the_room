@@ -43,27 +43,9 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  defp validate_params(post, %{
-         "year" => year,
-         "month" => month,
-         "day" => day,
-         "title" => title
-       }) do
-    post_year = post.inserted_at.year
-    post_month = post.inserted_at.month
-    post_day = post.inserted_at.day
-    post_title_slug = Post.slugified_title(post.title)
-
-    year == post_year && month == post_month && day == post_day && title == post_title_slug
-  end
-
-  def public_show(%{assigns: %{site: site}} = conn, params) do
-    post = Sites.get_post!(site, params.id)
-
-    if validate_params(post, params) do
-      post = Post |> Repo.get_by!(title: conn.assigns.post.title)
-      render(conn, "public_show.html", site: site, post: post)
-    end
+  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug} = params) do
+    post = Post |> Repo.get_by!(slug: slug) |> Repo.preload([:author, :tags, :categories])
+    render(conn, "public_show.html", site: site, post: post)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

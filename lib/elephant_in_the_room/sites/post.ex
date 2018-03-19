@@ -4,6 +4,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.Repo
+  import Ecto.Query
 
   schema "posts" do
     field(:title, :string)
@@ -38,7 +39,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :image, :abstract, :site_id, :author_id])
+    |> cast(attrs, [:title, :content, :image, :slug, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :image, :site_id])
@@ -59,9 +60,25 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> validate_length(:rendered_content, min: 1)
   end
 
+  defp calculate_occurrences(n, slug, suffix) do
+    case Repo.get_by(Post, slug: slug <> suffix) do
+      nil -> n
+      %Post{} -> calculate_occurrences(n + 1, slug, "-#{n + 1}")
+    end
+  end
+
+  def put_slugified_title(%Changeset{valid?: valid?} = changeset)
+      when not valid? do
+    changeset
+  end
+
   def put_slugified_title(%Changeset{} = changeset) do
     slug = get_field(changeset, :title) |> slugified_title()
-    put_change(changeset, :slug, slug)
+
+    case calculate_occurrences(0, slug, "") do
+      0 -> put_change(changeset, :slug, slug)
+      n -> put_change(changeset, :slug, slug <> "-#{n}")
+    end
   end
 
   def generate_markdown(input) do
