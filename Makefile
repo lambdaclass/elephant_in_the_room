@@ -15,6 +15,9 @@ install_frontend:
 create_roles:
 	mix run priv/repo/seeds.exs
 
+test:
+	mix test
+
 ops:
 	docker-compose -f docker-compose.yml up
 
