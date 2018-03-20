@@ -89,6 +89,26 @@ $card-padding-2: 0.7em;
     .body {
         padding-left: 1em;
     }
+
 }
 
 
+.featured-top-bar {
+    background: black;
+    height: 0.1em;
+    margin-bottom: 0.6em;
+    @media (max-width: $break-xs) {
+        display: none;
+    }
+}
+
+.featured-bar-bottom {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background: black;
+    height: 0.15em;
+    width: 100%;
+    @media (max-width: $break-xs) {
+        display: none;
+    }
+}
