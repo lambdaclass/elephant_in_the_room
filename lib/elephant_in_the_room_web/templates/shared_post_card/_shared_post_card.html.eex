@@ -1,7 +1,8 @@
 <div class="row post-card">
   <%= for post <- @posts do %>
 
-    <%= if assigns[:featured] do %>
+    <%= case assigns[:type] do %>
+      <% :featured ->  %>
       <div class="row featured-post">
         <div class="columns col-xs-12 col-sm-7">
           <div class="media"
@@ -16,36 +17,50 @@
           <h3 class="uk-card-title"><%= post.title %></h3>
           <p><%= post.abstract %></p>
           <p class="author"><%= post.author.name %></p>
-          
         </div>
-        
       </div>
       <div class="featured-bar-bottom"></div>
-      
 
-    <% else %>
-      
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <a href="<%= 
-               ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
-               @site, post%>"
-         class="no-link-decoration">
-        <div class="clickeable-card uk-card uk-card-default">
+      <% :important -> %>
+      <div class="row featured-post important">
+        <div class="columns col-xs-12 col-sm-7">
+          <div class="media"
+               style="background: url(<%= post.image %>);">
+          </div>
+        </div>
+        <div class="columns col-xs-12 col-sm-5 body">
           <div class="featured-category">
             <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
           </div>
-          <div class="uk-card-media-top media"
-               style="background: url(<%= post.image %>);">
-          </div>
-          <div class="uk-card-body body">
-            <h3 class="uk-card-title"><%= post.title %></h3>
-            <p><%= post.abstract %></p>
-            <p class="author"><%= post.author.name %></p>
-          </div>
+          <h3 class="uk-card-title"><%= post.title %></h3>
+          <p><%= post.abstract %></p>
+          <p class="author"><%= post.author.name %></p>
         </div>
-      </a>
-    </div>
-    
+      </div>      
+
+      <% :normal -> %>
+      
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <a href="<%= 
+                 ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
+                 @site, post%>"
+           class="no-link-decoration">
+          <div class="clickeable-card uk-card uk-card-default">
+            <div class="featured-category">
+              <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
+            </div>
+            <div class="uk-card-media-top media"
+                 style="background: url(<%= post.image %>);">
+            </div>
+            <div class="uk-card-body body">
+              <h3 class="uk-card-title"><%= post.title %></h3>
+              <p><%= post.abstract %></p>
+              <p class="author"><%= post.author.name %></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      
     <%  end %>
     
 
