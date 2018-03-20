@@ -1,2 +1,8 @@
 $break-xs: 768px;
 $break-md: 1050px;
+
+@import url('https://fonts.googleapis.com/css?family=Coda+Caption:800');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+$caption-font: 'Coda Caption', sans-serif;
+$default-font: 'Roboto', sans-serif;

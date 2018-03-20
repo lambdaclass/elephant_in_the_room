@@ -50,11 +50,14 @@ $card-padding-2: 0.7em;
         padding: 0;
         padding-bottom: 5px;
         h3 {
+            font-family: $caption-font;
             font-size: 1.3em;
-            line-height: 1em;
+            line-height: 1.5em;
             margin-bottom: 0.3em;
         }
         p {
+            font-family: $default-font;
+            line-height: 1.3em;
             margin-top: 0;
             margin-bottom: 0.3em;
         }
