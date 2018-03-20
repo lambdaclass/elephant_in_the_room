@@ -8,12 +8,19 @@
         display: block;
         width: 100% !important;
         height: 60vh !important;
+        @media (max-width: $break-xs) {
+            height: 30vh !important;
+        }
         background-size: cover;
         background-repeat: no-repeat;
         overflow: hidden;
 
         img {
-            width: 100vw;   
+            width: 100vw;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 
