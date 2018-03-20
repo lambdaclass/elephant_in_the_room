@@ -6,7 +6,8 @@
     
     <%= case assigns[:type] do %>
       <% :featured ->  %>
-      <div class="row featured-post">
+      <div class="row featured-post"
+           onclick="window.location.href = '<%= link_post %>'">
         <div class="columns col-xs-12 col-sm-7">
           <div class="media"
                style="background: url(<%= post.image %>);">
@@ -26,7 +27,7 @@
 
       <% :important -> %>
         <div class="row featured-post important"
-        onclick="window.location.href =">
+             onclick="window.location.href = '<%= link_post %>'">
           <div class="columns col-xs-12 col-sm-7">
             <div class="media"
                  style="background: url(<%= post.image %>);">
