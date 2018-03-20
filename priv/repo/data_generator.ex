@@ -16,9 +16,9 @@ for site <- Faker.Site.insert_many(config[:sites]) do
   categories = Faker.Category.insert_many(config[:categories], %{site: site})
   tags = Faker.Tag.insert_many(config[:tags], %{site: site})
 
-  random_author = Faker.Chooser.choose_one(authors)
-
   for post <- 1..config[:posts] do
+    random_author = Faker.Chooser.choose_one(authors)
+
     categories_name =
       Faker.Chooser.choose_n(:rand.uniform(5), categories)
       |> Enum.map(fn cat -> cat.name end)
