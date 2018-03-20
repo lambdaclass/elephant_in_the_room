@@ -1,0 +1,98 @@
+$card-padding-1: 0.2em;
+$card-padding-2: 0.7em;
+
+.uk-card-default {
+    background: white;
+    box-shadow: unset;
+    margin-bottom: 2em;
+
+    @media (min-width: 0px) and (max-width: $break-xs) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @media (min-width: $break-xs) and (max-width: $break-md) {
+        padding-left: $card-padding-1;
+        padding-right: $card-padding-1;
+    }
+
+    @media (min-width: $break-md) {
+        padding-left: $card-padding-2;
+        padding-right: $card-padding-2;
+    }
+    
+    img {
+        width: 100%;
+    }
+    .media {
+        margin-bottom: 1em;
+        overflow:hidden;
+        height: 0;
+        padding-top:56.25%;
+        background-size:     cover !important;
+        background-repeat:   no-repeat !important;
+        background-position: center center !important;
+        margin-bottom: 0.2em;
+    }
+    
+}
+
+.post-card {
+    .featured-category {
+        font-size: 0.8em;
+        font-weight: bold;
+    }
+    .author {
+        font-size: 0.7em;
+        color: black;
+    }
+    .body {
+        padding: 0;
+        padding-bottom: 5px;
+        h3 {
+            font-size: 1.3em;
+            line-height: 1em;
+            margin-bottom: 0.3em;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 0.3em;
+        }
+    }
+}
+
+
+.featured-post {
+    overflow: hidden;
+    
+
+    .columns {
+        padding: 0;
+    }
+    
+    @media (min-width: $break-xs) {
+        margin-top: 2 * $card-padding-2;
+        margin-bottom: 2 * $card-padding-2;
+        margin-left: $card-padding-2;
+    }
+
+    h3 {
+        margin-top:0;
+    }
+    
+    .media {
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-size:     cover !important;
+        background-repeat:   no-repeat !important;
+        background-position: center center !important;
+        height: 50vh;
+    }
+
+    .body {
+        padding-left: 1em;
+    }
+}
+
+

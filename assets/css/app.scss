@@ -1,0 +1,80 @@
+@import '_variables';
+@import '../node_modules/flexboxgrid/dist/flexboxgrid';
+@import '../node_modules/uikit/dist/css/uikit.min';
+@import '_navigation';
+@import '_post_card';
+
+.title h1 {
+  font-size: 100px;
+  font-family: "Segoe UI";
+}
+.uk-navbar-item.uk-logo {
+  font-family: "Segoe UI";
+}
+.title h1 a {
+  all: unset;
+  cursor: pointer;
+}
+
+.nav-mini-interactions {
+  min-height: 1em;
+}
+.nav-mini-interactions ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;   
+}
+.nav-mini-interactions li {
+    display: inline;
+}
+.nav-mini-interactions a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.no-link-decoration:hover {
+  text-decoration: none; 
+}
+
+.el .el-feature-image-container .uk-first-column {
+    padding: 0 !important;
+}
+.el .el-featured-image{
+  display: block;
+  width: 100% !important;
+  max-height: 20em !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.el.el-sm {
+    display: none;
+}
+
+.el.el-md {
+    display: block;
+}
+
+@media (min-width: 0px) and (max-width: 350px) {
+    .uk-navbar-item.uk-logo {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 1040px) {
+    .title h1 {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 700px) {
+    .el.el-md {
+        display: none;
+    }
+    .el.el-sm {
+        display: block;
+    }
+}
+

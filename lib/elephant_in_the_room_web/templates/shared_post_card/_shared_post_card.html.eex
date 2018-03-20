@@ -1,21 +1,47 @@
-<div class="row">
+<div class="row post-card" style="margin: 0;">
   <%= for post <- @posts do %>
 
-    
-      <div class="col-lg-4 col-sm-6">
-        <a href="<%= show_link_with_date(@conn, @site, post) %>"
-           class="no-link-decoration">
-          <div class="clickeable-card uk-card uk-card-default uk-card-hover">
-              <div class="uk-card-media-top">
-                  <img src="https://getuikit.com/docs/images/light.jpg" alt="">
-              </div>
-              <div class="uk-card-body">
-                  <h3 class="uk-card-title"><%= post.title %></h3>
-                  <p><%= post.abstract %>.</p>
-              </div>
+    <%= if assigns[:featured] do %>
+      <div class="row featured-post">
+        <div class="columns col-xs-12 col-sm-7">
+          <div class="media"
+               style="background: url(<%= post.image %>);">
           </div>
-        </a>
+        </div>
+        <div class="columns col-xs-12 col-sm-5 body">
+          <div class="featured-category">
+            <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
+          </div>
+          <h3 class="uk-card-title"><%= post.title %></h3>
+          <p><%= post.abstract %></p>
+          <p class="author"><%= post.author.name %></p>
+        </div>
       </div>
+
+    <% else %>
+      
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a href="<%= 
+               ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
+               @site, post%>"
+         class="no-link-decoration">
+        <div class="clickeable-card uk-card uk-card-default">
+          <div class="featured-category">
+            <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
+          </div>
+          <div class="uk-card-media-top media"
+               style="background: url(<%= post.image %>);">
+          </div>
+          <div class="uk-card-body body">
+            <h3 class="uk-card-title"><%= post.title %></h3>
+            <p><%= post.abstract %></p>
+            <p class="author"><%= post.author.name %></p>
+          </div>
+        </div>
+      </a>
+    </div>
+    
+    <%  end %>
     
 
   <% end %>

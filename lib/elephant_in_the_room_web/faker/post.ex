@@ -10,7 +10,8 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       :content => generate_content(),
       :image => Faker.Avatar.image_url(),
       :title => Faker.Lorem.Shakespeare.romeo_and_juliet(),
-      :abstract => Faker.Lorem.paragraph(2)
+      :abstract => Faker.Lorem.paragraph(2),
+      :slug => ""
     }
   end
 

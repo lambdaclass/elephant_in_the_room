@@ -40,7 +40,10 @@ defmodule ElephantInTheRoom.Sites do
   def get_site!(id) do
     Site
     |> Repo.get!(id)
-    |> Repo.preload([:categories, :posts, :tags])
+    |> Repo.preload([:categories,
+                    [posts: :author],
+                    [posts: :categories],
+                    :tags])
   end
 
   def get_site_by_name(site_name) do
@@ -278,7 +281,7 @@ defmodule ElephantInTheRoom.Sites do
   """
 
   def create_post(site, attrs) do
-    post_attrs = Map.put(attrs, "site_id", site.id)
+    post_attrs = Map.put(attrs, :site_id, site.id)
 
     %Post{}
     |> Post.changeset(post_attrs)

@@ -67,12 +67,13 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
-      when not valid? do
+  when not valid? do
     changeset
   end
-
+      
   def put_slugified_title(%Changeset{} = changeset) do
-    if String.length(get_field(changeset, :slug)) == 0 do
+    slug = get_field(changeset, :slug)
+    if slug==nil || String.length(slug) == 0 do
       slug = get_field(changeset, :title) |> slugified_title()
 
       case calculate_occurrences(0, slug, "") do
@@ -90,9 +91,9 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def parse_categories(params) do
-    site_id = params["site_id"]
+    site_id = params[:site_id]
 
-    (params["categories"] || [])
+    (params[:categories] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.map(fn name -> get_category(name, site_id) end)
   end
@@ -102,7 +103,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   defp parse_tags(params) do
-    site_id = params["site_id"]
+    site_id = params[:site_id]
 
     (params["tags_separated_by_comma"] || "")
     |> String.split(",")

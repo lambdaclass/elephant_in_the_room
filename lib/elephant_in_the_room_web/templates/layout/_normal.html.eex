@@ -1,81 +1,94 @@
-<div class="container">
-  <div class="uk-flex uk-flex-center uk-navbar-center">
-    <ul class="uk-subnav uk-subnav-divider" uk-margin>
-      <%= for {site_id, site_name} <- get_nav_sites() do %>
-        <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-          <a class="uk-link-text"
-          href="<%= site_path(@conn, :public_show, site_id) %>">
-          <%= site_name %>
-          </a>
+<div class="uk-offcanvas-content">
+
+  <!-- NAVIGATION BAR -->
+  <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
+    <nav class="uk-navbar-container uk-navbar-sticky">
+      <div class="uk-container uk-container-expand">
+        <div uk-navbar="" class="uk-navbar">
+
+          <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+              <button class="uk-button uk-button-default uk-margin-small-right"
+                      type="button" uk-toggle="target: #offcanvas-nav-primary">
+                <i class="fas fa-bars"></i>
+              </button>
+            </ul>
+          </div>
+
+
+          <div class="uk-navbar-center">
+            <ul class="uk-navbar-nav">
+              <li class="uk-active">
+                 <a href="<%= get_site_path(@conn) %>">
+                   Elephant
+                 </a>
+            </ul>
+          </div>
+
+          <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+              <button class="uk-button uk-button-default uk-margin-small-right"
+                      type="button" uk-toggle="target: #offcanvas-nav-secondary">
+                Sites
+              </button>
+            </ul>
+          </div>
+          
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- NAVIGATION BAR -->
+  
+  <div role="main">
+    <%= render @view_module, @view_template, assigns %>
+  </div>
+
+  <!-- RIGHT OFFCANVAS -->
+  <div id="offcanvas-nav-secondary" uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+        <li class="uk-parent">
+          <a href="">Sites</a>
+          <ul class="uk-nav-sub">
+            <%= for {site_id, site_name} <- get_nav_sites() do %>
+              <li class="<%= if in_current_site(@conn, site_id), 
+                         do: "uk-active" %>">
+                <a class="uk-link-text"
+                   href="<%= site_path(@conn, :public_show, site_id) %>">
+                  <%= site_name %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
         </li>
-      <% end %>
-    </ul> 
-  </div>
-</div>
-
-<div class="container">
-  <div class="title uk-text-large uk-text-center">
-    <h1>
-      <a href="<%= get_site_path(@conn) %>">
-        Elephant In The Room!
-      </a>
-    </h1>
-  </div>
-</div>
-
-<%= if current_site(@conn) do %>
-<div class="container">
-  <div class="categories uk-navbar-container">
-    <div class="uk-flex uk-flex-center uk-navbar-center">
-      <ul class="uk-navbar-nav">
-        <%= for {category_id, category_name} <- get_categories(@conn) do %>
-          <li class="uk-text-large navbar-item">
-              <a href="<%= category_path(@conn, :public_show,
-              @site.id, category_id) %>">
-              <%= category_name %>
-            </a>
-          </li>
-        <% end %>
       </ul>
     </div>
   </div>
-</div>
-<% end %>
+  <!-- RIGHT OFFCANVAS -->
 
-<div class="container nav-mini-interactions uk-text-right">
-    <% login = get_logged_user(@conn) %>
-      <%= case login do %>
-        <% {:error,  _} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= login_path(@conn, :index) %>">
-            <i class="fas fa-user"></i>
-            Login
-          </a>
-        <% {:ok, user, _} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= login_path(@conn, :index) %>">
-            <i class="fas fa-user"></i>
-            <%= user.username %>
-          </a>
-       <% end %>
+  <!-- LEFT OFFCANVAS -->
+  <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+        <%= if current_site(@conn) do %>
+        <li class="uk-parent">
+          <a href="#">Categories</a>
+          <ul class="uk-nav-sub">
+            <%= render "_category_options.html", assigns %>
+          </ul>
+        </li>
+        <% end %>
 
-      <%= case login do %>
-        <% {:ok, user, :admin} -> %>
-          <a class="uk-button uk-button-default"
-             href="<%= admin_path(@conn, :index) %>">
-            <i class="fas fa-cogs"></i>
-            Control panel
-          </a>
-        <% _ -> %>
-      <% end %>
-
-    <button class="uk-button uk-button-default">
-      <i class="far fa-envelope"></i>
-      Subscribe
-    </button>
-    <button class="uk-button uk-button-default">
-      <i class="fas fa-search"></i>
-      Search
-    </button>
-
+        <li class="uk-parent">
+          <a href="#">User options</a>
+          <ul class="uk-nav-sub">
+            <%= render "_user_options.html", assigns %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- LEFT OFFCANVAS -->
 </div>
