@@ -1,0 +1,46 @@
+.el-post {
+
+    feature-image-container .uk-first-column {
+        padding: 0 !important;
+    }
+
+    .featured-image{
+        display: block;
+        width: 100% !important;
+        height: 60vh !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+
+        img {
+            width: 100vw;   
+        }
+    }
+
+    .title-container {
+        position: relative;
+        top: -10vh;
+        margin-bottom: -10vh;
+        background: white;
+        
+        h1 {
+            font-family: $caption-font;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    }
+
+    .uk-article {
+        font-family: $default-font;
+    }
+
+    .post-content {
+        color: #242424;
+    }
+
+    .uk-text-lead {
+        line-height: 1.1em;
+    }
+
+}

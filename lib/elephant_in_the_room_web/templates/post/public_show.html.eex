@@ -18,8 +18,8 @@
   
     <div class="container title-container">
       <div class="row">
-        <div class="col-xs-0  col-md-1"></div>
-        <div class="col-xs-12 col-md-10">
+        <div class="col-xs-0"></div>
+        <div class="col-xs-12">
           <h1>
             <%= @post.title %>
           </h1>
@@ -29,16 +29,12 @@
   
 
   <div class="container">
-
-    
     
     <div class="row">      
       <div class="col-xs-0  col-md-2"> </div>
       <div class="col-xs-12 col-md-8">
 
         <article class="uk-article">
-
-          
 
           <p class="uk-article-meta">
             <%= case @post.author do %>
@@ -72,8 +68,9 @@
 
           <p class="uk-text-lead"><%= @post.abstract %></p>
 
-          <%= raw show_content @post %>
-
+          <div class="post-content">
+            <%= raw show_content @post %>
+          </div>
         </article>
 
       </div>

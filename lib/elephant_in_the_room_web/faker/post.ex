@@ -9,8 +9,8 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     %{
       :content => generate_content(),
       :image => "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}",
-      :title => Faker.Lorem.Shakespeare.romeo_and_juliet(),
-      :abstract => Faker.Lorem.paragraph(2),
+      :title => Enum.join(Faker.Lorem.words(7), " "),
+      :abstract => Faker.Lorem.paragraph(10),
       :slug => ""
     }
   end
@@ -29,7 +29,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    Faker.Lorem.paragraph(20)
+    Faker.Lorem.paragraph(40)
     # generate random markdown text
   end
 end
