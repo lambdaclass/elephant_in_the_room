@@ -8,7 +8,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       :content => generate_content(),
-      :image => Faker.Avatar.image_url(),
+      :image => "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}",
       :title => Faker.Lorem.Shakespeare.romeo_and_juliet(),
       :abstract => Faker.Lorem.paragraph(2),
       :slug => ""
