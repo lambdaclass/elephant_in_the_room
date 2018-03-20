@@ -32,12 +32,12 @@
 <%= case compare(@page_number, @total_pages) do %>
   <% :greater -> %>
   <% :equal -> %>
-    <span><%= link "Back", to: site_post_path(@conn, :index, page: @page_number - 1) %></span>
+    <span><%= link "Back", to: site_post_path(@conn, :index, @site, page: @page_number - 1) %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: site_post_path(@conn, :index, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: site_post_path(@conn, :index, page: @page_number - 1) %></span>
+    <span><%= link "Next", to: site_post_path(@conn, :index, @site, page: @page_number + 1) %></span>
+    <span><%= link "Back", to: site_post_path(@conn, :index, @site, page: @page_number - 1) %></span>
   <% :first -> %>
-    <span><%= link "Next", to: site_post_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "Next", to: site_post_path(@conn, :index, @site, page: @page_number + 1) %></span>
 <% end %>
 
 <br>

@@ -10,7 +10,7 @@
 </ul>
 
 <div>
-  <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
+  <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
   <ul>
     <%= for category <- @site.categories do %>
       <li>
@@ -32,7 +32,7 @@
 </div>
 
 <div>
-  <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, page: 1), class: "a" %></span></h3>
+  <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
   <ul>
     <%= for tag <- @site.tags do %>
       <li>
