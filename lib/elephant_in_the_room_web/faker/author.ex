@@ -3,9 +3,9 @@ defmodule ElephantInTheRoomWeb.Faker.Author do
 
   defp default_attrs do
     %{
-      description: Faker.Lorem.paragraph(2),
-      image: Faker.Avatar.image_url(),
-      name: Faker.Name.name()
+      "description" => Faker.Lorem.paragraph(2),
+      "image" => Faker.Avatar.image_url(),
+      "name" => Faker.Name.name()
     }
   end
 

@@ -13,8 +13,8 @@ authors = Faker.Author.insert_many(config[:authors])
 users = Faker.User.insert_many(config[:users])
 
 for site <- Faker.Site.insert_many(config[:sites]) do
-  categories = Faker.Category.insert_many(config[:categories], %{site: site})
-  tags = Faker.Tag.insert_many(config[:tags], %{site: site})
+  categories = Faker.Category.insert_many(config[:categories], %{"site" => site})
+  tags = Faker.Tag.insert_many(config[:tags], %{"site" => site})
 
   random_author = Faker.Chooser.choose_one(authors)
 
@@ -29,10 +29,10 @@ for site <- Faker.Site.insert_many(config[:sites]) do
       |> Enum.join(", ")
 
     Faker.Post.insert_one(%{
-      site: site,
-      author_id: random_author.id,
-      categories: categories_name,
-      tags_separated_by_comma: tags_separated_by_comma
+      "site" => site,
+      "author_id" => random_author.id,
+      "categories" => categories_name,
+      "tags_separated_by_comma" => tags_separated_by_comma
     })
   end
 end
