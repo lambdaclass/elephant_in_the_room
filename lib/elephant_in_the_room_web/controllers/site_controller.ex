@@ -3,10 +3,30 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Site
+  alias ElephantInTheRoom.Repo
 
-  def index(conn, _params) do
-    sites = Sites.list_sites()
-    render(conn, "index.html", sites: sites)
+  def index(conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Site
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Site
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      sites: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(conn, _params) do

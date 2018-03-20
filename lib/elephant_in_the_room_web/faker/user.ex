@@ -19,12 +19,12 @@ defmodule ElephantInTheRoomWeb.Faker.User do
     role = choose_role()
 
     %{
-      firstname: first_name,
-      lastname: last_name,
-      username: user_name,
-      email: Faker.Internet.email(),
-      password: "secretsecret",
-      role_id: role.id
+      "firstname" => first_name,
+      "lastname" => last_name,
+      "username" => user_name,
+      "email" => Faker.Internet.email(),
+      "password" => "secretsecret",
+      "role_id" => role.id
     }
   end
 

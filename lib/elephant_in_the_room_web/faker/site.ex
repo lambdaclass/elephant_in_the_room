@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
 
   defp default_attrs do
     %{
-      name: "Site " <> to_string(:rand.uniform(100_000_000))
+      "name" => "Site " <> to_string(:rand.uniform(100_000_000))
     }
   end
 

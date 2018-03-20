@@ -20,7 +20,7 @@ defmodule ElephantInTheRoom.Mixfile do
   def application do
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :faker]
+      extra_applications: [:logger, :runtime_tools, :faker, :scrivener_ecto]
     ]
   end
 
@@ -48,7 +48,10 @@ defmodule ElephantInTheRoom.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       # markdown
       {:cmark, "~> 0.7"},
-      {:faker, "~> 0.9", only: :dev}
+      {:faker, "~> 0.9", only: :dev},
+
+      # pagination
+      {:scrivener_ecto, "~> 1.0"}
     ]
   end
 

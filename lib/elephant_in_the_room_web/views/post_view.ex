@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
+  import ElephantInTheRoomWeb.Utils.ViewUtils
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Repo
@@ -55,5 +56,4 @@ defmodule ElephantInTheRoomWeb.PostView do
       [featured_category | _] -> featured_category.name
     end
   end
-  
 end

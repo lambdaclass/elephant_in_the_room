@@ -1,12 +1,31 @@
 defmodule ElephantInTheRoomWeb.RoleController do
   use ElephantInTheRoomWeb, :controller
-
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.Role
 
-  def index(conn, _params) do
-    roles = Auth.list_roles()
-    render(conn, "index.html", roles: roles)
+  def index(conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Role
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Role
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      roles: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(conn, _params) do
