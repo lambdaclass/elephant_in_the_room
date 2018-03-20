@@ -1,6 +1,9 @@
 <div class="row post-card">
   <%= for post <- @posts do %>
-
+    <% link_post =
+    ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
+    @site, post%>
+    
     <%= case assigns[:type] do %>
       <% :featured ->  %>
       <div class="row featured-post">
@@ -22,21 +25,22 @@
       <div class="featured-bar-bottom"></div>
 
       <% :important -> %>
-      <div class="row featured-post important">
-        <div class="columns col-xs-12 col-sm-7">
-          <div class="media"
-               style="background: url(<%= post.image %>);">
+        <div class="row featured-post important"
+        onclick="window.location.href =">
+          <div class="columns col-xs-12 col-sm-7">
+            <div class="media"
+                 style="background: url(<%= post.image %>);">
+            </div>
+          </div>
+          <div class="columns col-xs-12 col-sm-5 body">
+            <div class="featured-category">
+              <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
+            </div>
+            <h3 class="uk-card-title"><%= post.title %></h3>
+            <p><%= post.abstract %></p>
+            <p class="author"><%= post.author.name %></p>
           </div>
         </div>
-        <div class="columns col-xs-12 col-sm-5 body">
-          <div class="featured-category">
-            <%= ElephantInTheRoomWeb.PostView.show_featured_category(post) %>
-          </div>
-          <h3 class="uk-card-title"><%= post.title %></h3>
-          <p><%= post.abstract %></p>
-          <p class="author"><%= post.author.name %></p>
-        </div>
-      </div>      
 
       <% :normal -> %>
       
