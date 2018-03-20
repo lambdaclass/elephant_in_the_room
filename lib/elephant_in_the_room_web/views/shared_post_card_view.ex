@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.SharedPostCardView do
   use ElephantInTheRoomWeb, :view
+  import ElephantInTheRoomWeb.Utils.ViewUtils
 
   def show_link_with_date(conn, site, post) do
     year = site.inserted_at.year

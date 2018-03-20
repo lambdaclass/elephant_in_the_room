@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.UserView do
   use ElephantInTheRoomWeb, :view
-
+  import ElephantInTheRoomWeb.Utils.ViewUtils
   alias ElephantInTheRoom.Auth
 
   def get_roles() do

@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
+  import ElephantInTheRoomWeb.Utils.ViewUtils
 
   def get_top_featured_post(_conn, posts) do
     case posts do
@@ -16,11 +17,14 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
 
   def show_link_with_date(conn, site, post) do
-    site_id = site.id
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
 
     post_path(conn, :public_show, site.id, year, month, day, post.slug)
+  end
+
+  def number_of_entries(entries, entries_per_page) do
+    max(entries_per_page - entries, entries)
   end
 end

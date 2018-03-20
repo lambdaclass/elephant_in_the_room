@@ -5,9 +5,28 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Repo
 
-  def index(%{assigns: %{site: site}} = conn, _) do
-    tags = Sites.list_tags(site)
-    render(conn, "index.html", tags: tags, site: site)
+  def index(%{assigns: %{site: site}} = conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Tag
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Tag
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      tags: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(%{assigns: %{site: site}} = conn, _) do
@@ -36,8 +55,10 @@ defmodule ElephantInTheRoomWeb.TagController do
   end
 
   def public_show(%{assigns: %{site: site}} = conn, %{"tag_id" => id}) do
-    tag = Sites.get_tag!(id)
-    |> Repo.preload(:posts)
+    tag =
+      Sites.get_tag!(id)
+      |> Repo.preload(:posts)
+
     render(conn, "public_show.html", tag: tag, site: site)
   end
 

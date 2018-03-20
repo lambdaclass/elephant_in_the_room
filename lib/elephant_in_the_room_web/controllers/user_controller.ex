@@ -1,12 +1,33 @@
 defmodule ElephantInTheRoomWeb.UserController do
   use ElephantInTheRoomWeb, :controller
-
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.User
 
-  def index(conn, _params) do
-    users = Auth.list_users()
-    render(conn, "index.html", users: users)
+  def index(conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          User
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          User
+          |> Repo.paginate(page: 1)
+    end
+
+    entries = page.entries |> Repo.preload(:role)
+
+    render(
+      conn,
+      "index.html",
+      users: entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(conn, _params) do

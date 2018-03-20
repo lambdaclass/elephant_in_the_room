@@ -5,9 +5,29 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   alias ElephantInTheRoom.Sites.Category
   alias ElephantInTheRoom.Repo
 
-  def index(%{assigns: %{site: site}} = conn, _) do
-    categories = Sites.list_categories(site)
-    render(conn, "index.html", categories: categories, site: site)
+  def index(%{assigns: %{site: site}} = conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Category
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Category
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      categories: page.entries,
+      site: site,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(%{assigns: %{site: site}} = conn, _) do
@@ -35,10 +55,11 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn,
-                  %{"category_id" => id}) do
-    category = Sites.get_category!(id)
-    |> Repo.preload(:posts)
+  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => id}) do
+    category =
+      Sites.get_category!(id)
+      |> Repo.preload(:posts)
+
     render(conn, "public_show.html", category: category, site: site)
   end
 
@@ -48,8 +69,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
 
-  def update(%{assigns: %{site: site}} = conn,
-    %{"id" => id, "category" => category_params}) do
+  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "category" => category_params}) do
     category = Sites.get_category!(id)
 
     case Sites.update_category(category, category_params) do

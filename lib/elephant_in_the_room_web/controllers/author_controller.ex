@@ -1,12 +1,31 @@
 defmodule ElephantInTheRoomWeb.AuthorController do
   use ElephantInTheRoomWeb, :controller
-
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Author
 
-  def index(conn, _params) do
-    authors = Sites.list_authors()
-    render(conn, "index.html", authors: authors)
+  def index(conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Author
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Author
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      authors: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(conn, _params) do
@@ -20,6 +39,7 @@ defmodule ElephantInTheRoomWeb.AuthorController do
         conn
         |> put_flash(:info, "Author created successfully.")
         |> redirect(to: author_path(conn, :show, author))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -49,6 +69,7 @@ defmodule ElephantInTheRoomWeb.AuthorController do
         conn
         |> put_flash(:info, "Author updated successfully.")
         |> redirect(to: author_path(conn, :show, author))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", author: author, changeset: changeset)
     end

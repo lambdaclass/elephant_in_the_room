@@ -5,9 +5,28 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Repo
 
-  def index(%{assigns: %{site: site}} = conn, _) do
-    posts = Sites.list_posts(site)
-    render(conn, "index.html", site: site, posts: posts)
+  def index(%{assigns: %{site: site}} = conn, params) do
+    case params do
+      %{"page" => page} ->
+        page =
+          Post
+          |> Repo.paginate(page: page)
+
+      %{} ->
+        page =
+          Post
+          |> Repo.paginate(page: 1)
+    end
+
+    render(
+      conn,
+      "index.html",
+      posts: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def new(%{assigns: %{site: site}} = conn, _) do

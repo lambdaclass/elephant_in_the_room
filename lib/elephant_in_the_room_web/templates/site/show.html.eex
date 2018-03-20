@@ -21,7 +21,7 @@
 </div>
 
 <div>
-  <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site), class: "a" %></span></h3>
+  <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
   <ul>
     <%= for post <- @site.posts do %>
       <li>
@@ -32,7 +32,7 @@
 </div>
 
 <div>
-  <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site), class: "a" %></span></h3>
+  <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
   <ul>
     <%= for tag <- @site.tags do %>
       <li>
