@@ -23,7 +23,7 @@
     <div class="col-xs-12 col-sm-6 col-md-3">
       <a href="<%= 
                ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
-               :public_show, post%>"
+               @site, post%>"
          class="no-link-decoration">
         <div class="clickeable-card uk-card uk-card-default">
           <div class="featured-category">

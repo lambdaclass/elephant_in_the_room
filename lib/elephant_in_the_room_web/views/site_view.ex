@@ -16,9 +16,10 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
 
   def show_link_with_date(conn, site, post) do
-    year = site.inserted_at.year
-    month = site.inserted_at.month
-    day = site.inserted_at.day
+    site_id = site.id
+    year = post.inserted_at.year
+    month = post.inserted_at.month
+    day = post.inserted_at.day
 
     post_path(conn, :public_show, site.id, year, month, day, post.slug)
   end
