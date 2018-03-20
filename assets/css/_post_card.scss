@@ -63,12 +63,8 @@ $card-padding-2: 0.7em;
 
 
 .featured-post {
+    width: 100vw;
     overflow: hidden;
-    
-
-    .columns {
-        padding: 0;
-    }
     
     @media (min-width: $break-xs) {
         margin-top: 2 * $card-padding-2;

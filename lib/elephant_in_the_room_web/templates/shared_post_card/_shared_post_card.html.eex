@@ -1,4 +1,4 @@
-<div class="row post-card" style="margin: 0;">
+<div class="row post-card">
   <%= for post <- @posts do %>
 
     <%= if assigns[:featured] do %>
