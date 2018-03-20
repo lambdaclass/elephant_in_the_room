@@ -1,30 +1,40 @@
 <% alias ElephantInTheRoom.Sites.Author %>
 
-<div class="el">
-  <div class="el-feature-image-container">
+<div class="el-post">
+  <div class="feature-image-container">
 
     <div uk-grid uk-lightbox="animation: slide">
       <div>
         <a id="feature-image-lightbox"
-           class="uk-inline el-featured-image"
-           href="https://getuikit.com/docs/images/light.jpg"
+           class="uk-inline featured-image"
+           href="<%= @post.image %>"
            caption="<%= @post.title %>">
-          <img src="https://getuikit.com/docs/images/light.jpg" alt="">
+          <img src="<%= @post.image %>" alt="">
         </a>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-1"> </div>
-      <div class="col-xs-10">
-
-        <article class="uk-article">
-
-          <h1 class="uk-heading-hero">
+  
+    <div class="container title-container">
+      <div class="row">
+        <div class="col-xs-0"></div>
+        <div class="col-xs-12">
+          <h1>
             <%= @post.title %>
           </h1>
+        </div>
+      </div>
+    </div>
+  
+
+  <div class="container">
+    
+    <div class="row">      
+      <div class="col-xs-0  col-md-2"> </div>
+      <div class="col-xs-12 col-md-8">
+
+        <article class="uk-article">
 
           <p class="uk-article-meta">
             <%= case @post.author do %>
@@ -58,8 +68,9 @@
 
           <p class="uk-text-lead"><%= @post.abstract %></p>
 
-          <%= raw show_content @post %>
-
+          <div class="post-content">
+            <%= raw show_content @post %>
+          </div>
         </article>
 
       </div>

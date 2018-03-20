@@ -29,7 +29,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    Faker.Lorem.paragraph(20)
+    Faker.Lorem.paragraph(40)
     # generate random markdown text
   end
 end
