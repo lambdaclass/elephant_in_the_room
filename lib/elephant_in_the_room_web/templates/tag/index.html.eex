@@ -23,5 +23,18 @@
   </tbody>
 </table>
 
+<%= case compare(@page_number, @total_pages) do %>
+  <% :greater -> %>
+  <% :equal -> %>
+    <span><%= link "Back", to: site_tag_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :lesser -> %>
+    <span><%= link "Next", to: site_tag_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "Back", to: site_tag_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :first -> %>
+    <span><%= link "Next", to: site_tag_path(@conn, :index, page: @page_number + 1) %></span>
+<% end %>
+
+<br>
+
 <span><%= link "New Tag", to: site_tag_path(@conn, :new, @site) %></span>
 <span><%= link "Back", to: site_path(@conn, :index) %></span>

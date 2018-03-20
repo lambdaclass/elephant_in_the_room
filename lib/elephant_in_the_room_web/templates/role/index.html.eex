@@ -1,5 +1,5 @@
 <h2>Listing Roles</h2>
-
+<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="table">
   <thead>
     <tr>
@@ -22,6 +22,19 @@
 <% end %>
   </tbody>
 </table>
+
+<%= case compare(@page_number, @total_pages) do %>
+  <% :greater -> %>
+  <% :equal -> %>
+    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :lesser -> %>
+    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :first -> %>
+    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
+<% end %>
+
+<br>
 
 <span><%= link "New Role", to: role_path(@conn, :new) %></span>
 <span><%= link "Back", to: admin_path(@conn, :index) %></span>
