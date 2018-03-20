@@ -7,18 +7,18 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   # tags N
   def default_attrs do
     %{
-      :content => generate_content(),
-      :image => Faker.Avatar.image_url(),
-      :title => Faker.Lorem.Shakespeare.romeo_and_juliet(),
-      :abstract => Faker.Lorem.paragraph(2),
-      :slug => ""
+      "content" => generate_content(),
+      "image" => Faker.Avatar.image_url(),
+      "title" => Faker.Lorem.Shakespeare.romeo_and_juliet(),
+      "abstract" => Faker.Lorem.paragraph(2),
+      "slug" => ""
     }
   end
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    {:ok, post} = Sites.create_post(attrs[:site], changes)
+    {:ok, post} = Sites.create_post(attrs["site"], changes)
 
     post
   end

@@ -4,15 +4,15 @@ defmodule ElephantInTheRoomWeb.Faker.Category do
   # site 1 
   defp default_attrs do
     %{
-      :name => Faker.Company.bullshit() <> to_string(:rand.uniform(10000)),
-      :description => Faker.Lorem.sentence(10)
+      "name" => Faker.Company.bullshit() <> to_string(:rand.uniform(10000)),
+      "description" => Faker.Lorem.sentence(10)
     }
   end
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    {:ok, category} = Sites.create_category(attrs[:site], changes)
+    {:ok, category} = Sites.create_category(attrs["site"], changes)
     category
   end
 
