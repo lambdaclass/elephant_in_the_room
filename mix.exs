@@ -51,7 +51,10 @@ defmodule ElephantInTheRoom.Mixfile do
       {:faker, "~> 0.9"},
 
       # pagination
-      {:scrivener_ecto, "~> 1.0"}
+      {:scrivener_ecto, "~> 1.0"},
+
+      # test dependencies
+      {:guardian_backdoor, "~> 1.0.0", only: :test}
     ]
   end
 

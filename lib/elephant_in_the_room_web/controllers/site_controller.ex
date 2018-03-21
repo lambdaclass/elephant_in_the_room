@@ -57,14 +57,16 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def show_default_site(conn, _params) do
     sites = Sites.list_sites()
-    IO.puts("S")
 
     case length(sites) == 0 do
       true ->
         render(conn, "no_site_created")
 
       false ->
-        site = sites |> hd() |> Repo.preload([:categories, :posts])
+        site =
+          sites
+          |> hd()
+          |> Repo.preload([:categories, [posts: [:categories, :author, :tags]]])
 
         render(conn, "public_show.html", site: site)
     end
