@@ -1,24 +1,11 @@
 defmodule ElephantInTheRoomWeb.SiteControllerTest do
   use ElephantInTheRoomWeb.ConnCase
-
+  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Auth.Guardian
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
-
-  def default_user() do
-    %{
-      :id => 1,
-      "firstname" => "firstname",
-      "lastname" => "lastname",
-      "username" => "username",
-      "password" => "password",
-      "email" => "some@email.com",
-      :role => %{:name => "admin"}
-    }
-  end
 
   def fixture(:site) do
     {:ok, site} = Sites.create_site(@create_attrs)
@@ -34,10 +21,9 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
 
   describe "index" do
     test "lists all sites", %{conn: conn} do
-      # Sign in
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> get(site_path(conn, :index))
 
       assert html_response(conn, 200)
@@ -46,10 +32,9 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
 
   describe "new site" do
     test "renders form", %{conn: conn} do
-      # Sign in
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> get(site_path(conn, :new))
 
       assert html_response(conn, 200) =~ "New Site"
@@ -58,23 +43,19 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
 
   describe "create site" do
     test "redirects to show when data is valid", %{conn: conn} do
-      # Sign In
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> post(site_path(conn, :create), site: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
 
       assert redirected_to(conn) == site_path(conn, :show, id)
 
-      # Sign out and then sign in again with the same user
       conn =
         conn
-        |> recycle()
-        |> Guardian.Plug.sign_in(default_user())
-
-      conn = get(conn, site_path(conn, :show, id))
+        |> FakeSession.sign_out_then_sign_in()
+        |> get(site_path(conn, :show, id))
 
       assert html_response(conn, 200) =~ "Show Site"
     end
@@ -82,7 +63,7 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> post(site_path(conn, :create), site: @invalid_attrs)
 
       assert html_response(conn, 200) =~ "New Site"
@@ -95,7 +76,7 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     test "renders form for editing chosen site", %{conn: conn, site: site} do
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> get(site_path(conn, :edit, site))
 
       assert html_response(conn, 200) =~ "Edit Site"
@@ -108,15 +89,14 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     test "redirects when data is valid", %{conn: conn, site: site} do
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> put(site_path(conn, :update, site), site: @update_attrs)
 
       assert redirected_to(conn) == site_path(conn, :show, site)
 
       conn =
         conn
-        |> recycle()
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_out_then_sign_in()
         |> get(site_path(conn, :show, site))
 
       assert html_response(conn, 200) =~ "some updated name"
@@ -125,7 +105,7 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     test "renders errors when data is invalid", %{conn: conn, site: site} do
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> put(site_path(conn, :update, site), site: @invalid_attrs)
 
       assert html_response(conn, 200) =~ "Edit Site"
@@ -138,16 +118,14 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     test "deletes chosen site", %{conn: conn, site: site} do
       conn =
         conn
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_in()
         |> delete(site_path(conn, :delete, site))
 
       assert redirected_to(conn) == site_path(conn, :index)
 
-      # Sign out and then Sign in again
       assert_error_sent(404, fn ->
         conn
-        |> recycle()
-        |> Guardian.Plug.sign_in(default_user())
+        |> FakeSession.sign_out_then_sign_in()
         |> get(site_path(conn, :show, site))
       end)
     end
