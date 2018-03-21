@@ -8,7 +8,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       "content" => generate_content(),
-      "image" => "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}",
+      "image" => gen_image_link(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
       "slug" => ""
@@ -29,6 +29,23 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    Faker.Lorem.paragraph(40)
+    [gen_text(50),
+     gen_md_image(),
+     gen_text(40)] |> Enum.join(" ")    
   end
+
+  defp gen_image_link() do
+    "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}"
+  end
+
+  defp gen_text(length) do
+    Faker.Lorem.paragraph(:rand.uniform(length))
+  end
+
+  defp gen_md_image() do
+    description = Faker.Lorem.word()
+    image = gen_image_link()
+    "![#{description}](#{image})"
+  end
+  
 end
