@@ -2,16 +2,8 @@
 
 <div class="el-post">
   <div class="feature-image-container">
-
-    <div uk-grid uk-lightbox="animation: slide">
-      <div>
-        <a id="feature-image-lightbox"
-           class="uk-inline featured-image"
-           href="<%= @post.image %>"
-           caption="<%= @post.title %>">
-          <img src="<%= @post.image %>" alt="">
-        </a>
-      </div>
+    <div class="featured-image">
+      <img src="<%= @post.image %>" alt="<%= @post.title %>">
     </div>
   </div>
 

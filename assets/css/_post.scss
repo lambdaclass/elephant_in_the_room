@@ -1,6 +1,6 @@
 .el-post {
 
-    feature-image-container .uk-first-column {
+    feature-image-container {
         padding: 0 !important;
     }
 
@@ -44,6 +44,11 @@
 
     .post-content {
         color: #242424;
+
+        img {
+            padding-top: 0.6em;
+            padding-bottom: 0.6em;
+        }
     }
 
     .uk-text-lead {
