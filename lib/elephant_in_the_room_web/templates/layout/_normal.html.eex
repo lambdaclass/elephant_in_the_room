@@ -48,6 +48,8 @@
   <!-- RIGHT OFFCANVAS -->
   <div id="offcanvas-nav-secondary" uk-offcanvas="flip: true; overlay: true">
     <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <button class="uk-offcanvas-close close-right"
+              type="button" uk-close></button>
       <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
         <li class="uk-parent">
           <a href="">Sites</a>
@@ -71,7 +73,10 @@
   <!-- LEFT OFFCANVAS -->
   <div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
     <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+      <button class="uk-offcanvas-close close-left"
+              type="button" uk-close></button>
       <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+        
         <%= if current_site(@conn) do %>
         <li class="uk-parent">
           <a href="#">Categories</a>
