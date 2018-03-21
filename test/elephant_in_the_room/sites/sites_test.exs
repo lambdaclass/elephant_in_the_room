@@ -136,74 +136,6 @@ defmodule ElephantInTheRoom.SitesTest do
     end
   end
 
-  describe "posts" do
-    alias ElephantInTheRoom.Sites.Post
-
-    @valid_attrs %{content: "some content", image: "some image", title: "some title"}
-    @update_attrs %{
-      content: "some updated content",
-      image: "some updated image",
-      title: "some updated title"
-    }
-    @invalid_attrs %{content: nil, image: nil, title: nil}
-
-    def post_fixture(attrs \\ %{}) do
-      {:ok, post} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_post()
-
-      post
-    end
-
-    test "list_posts/0 returns all posts" do
-      post = post_fixture()
-      assert Sites.list_posts() == [post]
-    end
-
-    test "get_post!/1 returns the post with given id" do
-      post = post_fixture()
-      assert Sites.get_post!(post.id) == post
-    end
-
-    test "create_post/1 with valid data creates a post" do
-      assert {:ok, %Post{} = post} = Sites.create_post(@valid_attrs)
-      assert post.content == "some content"
-      assert post.image == "some image"
-      assert post.title == "some title"
-    end
-
-    test "create_post/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_post(@invalid_attrs)
-    end
-
-    test "update_post/2 with valid data updates the post" do
-      post = post_fixture()
-      assert {:ok, post} = Sites.update_post(post, @update_attrs)
-      assert %Post{} = post
-      assert post.content == "some updated content"
-      assert post.image == "some updated image"
-      assert post.title == "some updated title"
-    end
-
-    test "update_post/2 with invalid data returns error changeset" do
-      post = post_fixture()
-      assert {:error, %Ecto.Changeset{}} = Sites.update_post(post, @invalid_attrs)
-      assert post == Sites.get_post!(post.id)
-    end
-
-    test "delete_post/1 deletes the post" do
-      post = post_fixture()
-      assert {:ok, %Post{}} = Sites.delete_post(post)
-      assert_raise Ecto.NoResultsError, fn -> Sites.get_post!(post.id) end
-    end
-
-    test "change_post/1 returns a post changeset" do
-      post = post_fixture()
-      assert %Ecto.Changeset{} = Sites.change_post(post)
-    end
-  end
-
   describe "tags" do
     alias ElephantInTheRoom.Sites.Tag
 
@@ -342,6 +274,106 @@ defmodule ElephantInTheRoom.SitesTest do
     test "change_author/1 returns a author changeset" do
       author = author_fixture()
       assert %Ecto.Changeset{} = Sites.change_author(author)
+    end
+  end
+
+  describe "posts" do
+    alias ElephantInTheRoom.Sites.Post
+
+    @valid_attrs %{
+      "content" => "some content",
+      "image" => "some image",
+      "title" => "some title",
+      "slug" => "",
+      "abstract" => "some abstract"
+    }
+    @update_attrs %{
+      "content" => "some updated content",
+      "image" => "some updated image",
+      "title" => "some updated title"
+    }
+    @invalid_attrs %{"content" => nil, "image" => nil, "title" => nil}
+
+    def post_fixture(site, attrs \\ %{}) do
+      author = author_fixture()
+
+      tags =
+        for i <- 0..3 do
+          tag = tag_fixture(site, %{"name" => "tag #{i}"})
+          tag.id
+        end
+
+      categories =
+        for i <- 0..3 do
+          category = category_fixture(site, %{"name" => "category #{i}"})
+          category.name
+        end
+
+      new_attrs =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Enum.into(%{"author" => author, "categories" => categories, "tags" => tags})
+
+      {:ok, post} =
+        site
+        |> Sites.create_post(new_attrs)
+
+      post
+    end
+
+    test "list_posts/0 returns all posts" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert Sites.list_posts(site) == [post]
+    end
+
+    test "get_post!/1 returns the post with given id" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert Sites.get_post!(site, post.id) == post |> Repo.preload([:author])
+    end
+
+    test "create_post/1 with valid data creates a post" do
+      site = site_fixture()
+      assert {:ok, %Post{} = post} = Sites.create_post(site, @valid_attrs)
+      assert post.content == "some content"
+      assert post.image == "some image"
+      assert post.title == "some title"
+    end
+
+    test "create_post/1 with invalid data returns error changeset" do
+      site = site_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.create_post(site, @invalid_attrs)
+    end
+
+    test "update_post/2 with valid data updates the post" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:ok, post} = Sites.update_post(post, @update_attrs)
+      assert %Post{} = post
+      assert post.content == "some updated content"
+      assert post.image == "some updated image"
+      assert post.title == "some updated title"
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:error, %Ecto.Changeset{}} = Sites.update_post(post, @invalid_attrs)
+      assert Repo.preload(post, :author) == Sites.get_post!(site, post.id)
+    end
+
+    test "delete_post/1 deletes the post" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:ok, %Post{}} = Sites.delete_post(post)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_post!(site, post.id) end
+    end
+
+    test "change_post/1 returns a post changeset" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert %Ecto.Changeset{} = Sites.change_post(post)
     end
   end
 end
