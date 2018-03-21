@@ -6,17 +6,16 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   alias ElephantInTheRoom.Repo
 
   def index(%{assigns: %{site: site}} = conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+    page =
+      case params do
+        %{"page" => page_number} ->
           Category
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           Category
           |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,

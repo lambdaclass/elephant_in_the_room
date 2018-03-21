@@ -5,17 +5,16 @@ defmodule ElephantInTheRoomWeb.UserController do
   alias ElephantInTheRoom.Auth.User
 
   def index(conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+    page =
+      case params do
+        %{"page" => page_number} ->
           User
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           User
           |> Repo.paginate(page: 1)
-    end
+      end
 
     entries = page.entries |> Repo.preload(:role)
 
