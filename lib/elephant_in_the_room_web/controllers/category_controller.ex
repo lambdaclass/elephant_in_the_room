@@ -1,6 +1,5 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
   alias ElephantInTheRoom.Repo
@@ -63,7 +62,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    category = Sites.get_category!(site, id)
+    category = Sites.get_category!(id)
     changeset = Sites.change_category(category)
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
