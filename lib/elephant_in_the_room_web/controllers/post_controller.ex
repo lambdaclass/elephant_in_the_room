@@ -57,7 +57,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(site, id)
+    post = Sites.get_post!(id)
     render(conn, "show.html", site: site, post: post)
   end
 
@@ -67,7 +67,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(site, id)
+    post = Sites.get_post!(id)
     categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
 
@@ -82,7 +82,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"id" => id, "post" => post_params}) do
-    post = Sites.get_post!(site, id)
+    post = Sites.get_post!(id)
     post_params_with_site_id = Map.put(post_params, "site_id", site.id)
 
     case Sites.update_post(post, post_params_with_site_id) do
@@ -97,7 +97,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(site, id)
+    post = Sites.get_post!(id)
     {:ok, _post} = Sites.delete_post(post)
 
     conn

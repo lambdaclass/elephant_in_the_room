@@ -264,6 +264,12 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload([:tags, :categories, :author])
   end
 
+  def get_post!(id) do
+    Post
+    |> Repo.get!(id)
+    |> Repo.preload([:tags, :categories, :author])
+  end
+
   @doc """
   Creates a post.
 
