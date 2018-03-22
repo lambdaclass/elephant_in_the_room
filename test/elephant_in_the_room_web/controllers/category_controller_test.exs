@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoomWeb.CategoryControllerTest do
   use ElephantInTheRoomWeb.ConnCase, admin: true
-
+  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Sites.Category
+  alias ElephantInTheRoom.Sites.{Site, Category}
 
   describe "create category" do
     test "redirects to show when data is valid", %{conn: conn, site: site} do

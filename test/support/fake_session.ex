@@ -12,8 +12,8 @@ defmodule ElephantInTheRoomWeb.FakeSession do
     :role => %{:name => "admin"}
   }
 
-  def sign_in(conn) do
-    Guardian.Plug.sign_in(conn, @default_user)
+  def sign_in(conn, user \\ @default_user) do
+    Guardian.Plug.sign_in(conn, user)
   end
 
   def sign_out(conn) do

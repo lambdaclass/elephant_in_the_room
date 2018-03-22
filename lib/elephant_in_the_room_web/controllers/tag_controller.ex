@@ -62,9 +62,9 @@ defmodule ElephantInTheRoomWeb.TagController do
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    tag = Sites.get_tag!(site, id)
+    tag = Sites.get_tag!(id)
     changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", tag: tag, site: site, changeset: changeset)
+    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"id" => id, "tag" => tag_params}) do
