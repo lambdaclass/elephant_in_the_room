@@ -1,7 +1,8 @@
 defmodule ElephantInTheRoomWeb.UserControllerTest do
   use ElephantInTheRoomWeb.ConnCase
   alias ElephantInTheRoomWeb.FakeSession
-  alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoom.{Auth, Repo}
+  alias ElephantInTheRoom.Auth.User
 
   @create_attrs %{
     email: "some@email.com",
@@ -67,17 +68,14 @@ defmodule ElephantInTheRoomWeb.UserControllerTest do
         |> FakeSession.sign_in()
         |> post(user_path(conn, :create), user: attrs)
 
-      IO.inspect(conn, label: "CONNECTION: ")
-      IO.inspect(redirected_params(conn), label: "REDIRECTED_PARAMS: ")
-      assert %{id: id} = redirected_params(conn)
-      IO.inspect(redirected_to(conn), label: "REDIRECT_TO: ")
-      IO.inspect(user_path(conn, :show, id), label: "USER PATH: ")
-      assert redirected_to(conn) == user_path(conn, :show, id)
+      assert redirected_to(conn) == login_path(conn, :index)
+
+      created_user = Repo.get_by(User, username: @create_attrs.username)
 
       conn =
         conn
         |> FakeSession.sign_out_then_sign_in()
-        |> get(user_path(conn, :show, id))
+        |> get(user_path(conn, :show, created_user.id))
 
       assert html_response(conn, 200)
     end
