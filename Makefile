@@ -1,7 +1,10 @@
 .PHONY: dev test release ops start install_frontend
 
 start:
-	mix deps.get && make install_frontend && make create_db && make create_roles && make dev
+	mix deps.get && make install_frontend && \
+	make create_db && make create_roles && \
+	make ops_start && \
+	make dev
 
 create_db:
 	mix ecto.create && mix ecto.migrate
@@ -15,7 +18,7 @@ install_frontend:
 create_roles:
 	mix run priv/repo/seeds.exs
 
-ops:
+ops: ops_reset
 	docker-compose -f docker-compose.yml up
 
 ops_reset:

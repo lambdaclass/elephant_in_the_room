@@ -1,5 +1,10 @@
 # ElephantInTheRoom
 
+Run with:
+
+- `make ops` to create the local database.
+- `make start` to populate the database and start the web server.
+
 ## Prerequisites
 
 In order to run this project you need to have installed:
