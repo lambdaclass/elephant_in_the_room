@@ -5,17 +5,16 @@ defmodule ElephantInTheRoomWeb.RoleController do
   alias ElephantInTheRoom.Auth.Role
 
   def index(conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+    page =
+      case params do
+        %{"page" => page_number} ->
           Role
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           Role
           |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,

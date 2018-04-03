@@ -5,18 +5,17 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Repo
 
-  def index(%{assigns: %{site: site}} = conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+  def index(conn, params) do
+    page =
+      case params do
+        %{"page" => page_number} ->
           Tag
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           Tag
           |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,
@@ -63,9 +62,9 @@ defmodule ElephantInTheRoomWeb.TagController do
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    tag = Sites.get_tag!(site, id)
+    tag = Sites.get_tag!(id)
     changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", tag: tag, site: site, changeset: changeset)
+    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"id" => id, "tag" => tag_params}) do

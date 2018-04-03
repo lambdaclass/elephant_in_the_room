@@ -1,45 +1,94 @@
 defmodule ElephantInTheRoomWeb.UserControllerTest do
   use ElephantInTheRoomWeb.ConnCase
+  alias ElephantInTheRoomWeb.FakeSession
+  alias ElephantInTheRoom.{Auth, Repo}
+  alias ElephantInTheRoom.Auth.User
 
-  alias ElephantInTheRoom.Sites
-
-  @create_attrs %{email: "some email", firstname: "some firstname", lastname: "some lastname", password: "some password", username: "some username"}
-  @update_attrs %{email: "some updated email", firstname: "some updated firstname", lastname: "some updated lastname", password: "some updated password", username: "some updated username"}
-  @invalid_attrs %{email: nil, firstname: nil, lastname: nil, password: nil, username: nil}
+  @create_attrs %{
+    email: "some@email.com",
+    firstname: "some firstname",
+    lastname: "some lastname",
+    password: "some_password",
+    username: "some_username"
+  }
+  @update_attrs %{
+    email: "some_updated@email.com",
+    firstname: "some updated firstname",
+    lastname: "some updated lastname",
+    password: "some_updated_password",
+    username: "some_updated_username"
+  }
+  @invalid_attrs %{
+    email: nil,
+    firstname: nil,
+    lastname: nil,
+    password: nil,
+    username: nil,
+    role_id: nil
+  }
 
   def fixture(:user) do
-    {:ok, user} = Sites.create_user(@create_attrs)
+    {:ok, role} = Auth.create_role(%{name: "admin"})
+    attrs = Enum.into(@create_attrs, %{role_id: role.id})
+    {:ok, user} = Auth.create_user(attrs)
     user
   end
 
   describe "index" do
     test "lists all users", %{conn: conn} do
-      conn = get conn, user_path(conn, :index)
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> get(user_path(conn, :index))
+
       assert html_response(conn, 200) =~ "Listing Users"
     end
   end
 
   describe "new user" do
     test "renders form", %{conn: conn} do
-      conn = get conn, user_path(conn, :new)
-      assert html_response(conn, 200) =~ "New User"
+      user = fixture(:user)
+
+      conn =
+        conn
+        |> FakeSession.sign_in(user)
+        |> get(user_path(conn, :new))
+
+      assert html_response(conn, 200)
     end
   end
 
   describe "create user" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, user_path(conn, :create), user: @create_attrs
+      {:ok, role} = Auth.create_role(%{name: "editor"})
+      attrs = Enum.into(@create_attrs, %{role_id: role.id})
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == user_path(conn, :show, id)
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> post(user_path(conn, :create), user: attrs)
 
-      conn = get conn, user_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show User"
+      assert redirected_to(conn) == login_path(conn, :index)
+
+      created_user = Repo.get_by(User, username: @create_attrs.username)
+
+      conn =
+        conn
+        |> FakeSession.sign_out_then_sign_in()
+        |> get(user_path(conn, :show, created_user.id))
+
+      assert html_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, user_path(conn, :create), user: @invalid_attrs
-      assert html_response(conn, 200) =~ "New User"
+      user = fixture(:user)
+
+      conn =
+        conn
+        |> FakeSession.sign_in(user)
+        |> post(user_path(conn, :create), user: @invalid_attrs)
+
+      assert html_response(conn, 200)
     end
   end
 
@@ -47,7 +96,11 @@ defmodule ElephantInTheRoomWeb.UserControllerTest do
     setup [:create_user]
 
     test "renders form for editing chosen user", %{conn: conn, user: user} do
-      conn = get conn, user_path(conn, :edit, user)
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> get(user_path(conn, :edit, user))
+
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
@@ -56,15 +109,27 @@ defmodule ElephantInTheRoomWeb.UserControllerTest do
     setup [:create_user]
 
     test "redirects when data is valid", %{conn: conn, user: user} do
-      conn = put conn, user_path(conn, :update, user), user: @update_attrs
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> put(user_path(conn, :update, user), user: @update_attrs)
+
       assert redirected_to(conn) == user_path(conn, :show, user)
 
-      conn = get conn, user_path(conn, :show, user)
-      assert html_response(conn, 200) =~ "some updated email"
+      conn =
+        conn
+        |> FakeSession.sign_out_then_sign_in()
+        |> get(user_path(conn, :show, user))
+
+      assert html_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> put(user_path(conn, :update, user), user: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
@@ -73,11 +138,18 @@ defmodule ElephantInTheRoomWeb.UserControllerTest do
     setup [:create_user]
 
     test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete conn, user_path(conn, :delete, user)
+      conn =
+        conn
+        |> FakeSession.sign_in()
+        |> delete(user_path(conn, :delete, user))
+
       assert redirected_to(conn) == user_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get conn, user_path(conn, :show, user)
-      end
+
+      assert_error_sent(404, fn ->
+        conn
+        |> FakeSession.sign_out_then_sign_in()
+        |> get(user_path(conn, :show, user))
+      end)
     end
   end
 

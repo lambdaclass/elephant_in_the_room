@@ -1,22 +1,20 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
   alias ElephantInTheRoom.Repo
 
   def index(%{assigns: %{site: site}} = conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+    page =
+      case params do
+        %{"page" => page_number} ->
           Category
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           Category
           |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,
@@ -64,7 +62,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    category = Sites.get_category!(site, id)
+    category = Sites.get_category!(id)
     changeset = Sites.change_category(category)
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end

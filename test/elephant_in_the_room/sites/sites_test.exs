@@ -1,14 +1,15 @@
 defmodule ElephantInTheRoom.SitesTest do
   use ElephantInTheRoom.DataCase
-
+  alias ElephantInTheRoom.Sites.{Site, Post, Author, Tag, Category}
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites
 
   describe "sites" do
     alias ElephantInTheRoom.Sites.Site
 
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
+    @valid_attrs %{"name" => "some name"}
+    @update_attrs %{"name" => "some updated name"}
+    @invalid_attrs %{"name" => nil}
 
     def site_fixture(attrs \\ %{}) do
       {:ok, site} =
@@ -17,6 +18,7 @@ defmodule ElephantInTheRoom.SitesTest do
         |> Sites.create_site()
 
       site
+      |> Repo.preload([:categories, :posts, :tags])
     end
 
     test "list_sites/0 returns all sites" do
@@ -66,41 +68,47 @@ defmodule ElephantInTheRoom.SitesTest do
   describe "categories" do
     alias ElephantInTheRoom.Sites.Category
 
-    @valid_attrs %{description: "some description", name: "some name"}
-    @update_attrs %{description: "some updated description", name: "some updated name"}
-    @invalid_attrs %{description: nil, name: nil}
+    @valid_attrs %{"description" => "some description", "name" => "some name"}
+    @update_attrs %{"description" => "some updated description", "name" => "some updated name"}
+    @invalid_attrs %{"description" => nil, "name" => nil}
 
-    def category_fixture(attrs \\ %{}) do
+    def category_fixture(site, attrs \\ %{}) do
+      new_attrs = Enum.into(attrs, @valid_attrs)
+
       {:ok, category} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_category()
+        site
+        |> Sites.create_category(new_attrs)
 
       category
     end
 
     test "list_categories/0 returns all categories" do
-      category = category_fixture()
-      assert Sites.list_categories() == [category]
+      site = site_fixture()
+      category = category_fixture(site)
+      assert Sites.list_categories(site) == [category |> Repo.preload(:site)]
     end
 
     test "get_category!/1 returns the category with given id" do
-      category = category_fixture()
-      assert Sites.get_category!(category.id) == category
+      site = site_fixture()
+      category = category_fixture(site)
+      assert Sites.get_category!(site, category.id) == category
     end
 
     test "create_category/1 with valid data creates a category" do
-      assert {:ok, %Category{} = category} = Sites.create_category(@valid_attrs)
+      site = site_fixture()
+      assert {:ok, %Category{} = category} = Sites.create_category(site, @valid_attrs)
       assert category.description == "some description"
       assert category.name == "some name"
     end
 
     test "create_category/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_category(@invalid_attrs)
+      site = site_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.create_category(site, @invalid_attrs)
     end
 
     test "update_category/2 with valid data updates the category" do
-      category = category_fixture()
+      site = site_fixture()
+      category = category_fixture(site)
       assert {:ok, category} = Sites.update_category(category, @update_attrs)
       assert %Category{} = category
       assert category.description == "some updated description"
@@ -108,283 +116,109 @@ defmodule ElephantInTheRoom.SitesTest do
     end
 
     test "update_category/2 with invalid data returns error changeset" do
-      category = category_fixture()
+      site = site_fixture()
+      category = category_fixture(site)
       assert {:error, %Ecto.Changeset{}} = Sites.update_category(category, @invalid_attrs)
       assert category == Sites.get_category!(category.id)
     end
 
     test "delete_category/1 deletes the category" do
-      category = category_fixture()
+      site = site_fixture()
+      category = category_fixture(site)
       assert {:ok, %Category{}} = Sites.delete_category(category)
       assert_raise Ecto.NoResultsError, fn -> Sites.get_category!(category.id) end
     end
 
     test "change_category/1 returns a category changeset" do
-      category = category_fixture()
+      site = site_fixture()
+      category = category_fixture(site)
       assert %Ecto.Changeset{} = Sites.change_category(category)
-    end
-  end
-
-  describe "posts" do
-    alias ElephantInTheRoom.Sites.Post
-
-    @valid_attrs %{content: "some content", image: "some image", title: "some title"}
-    @update_attrs %{content: "some updated content", image: "some updated image", title: "some updated title"}
-    @invalid_attrs %{content: nil, image: nil, title: nil}
-
-    def post_fixture(attrs \\ %{}) do
-      {:ok, post} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_post()
-
-      post
-    end
-
-    test "list_posts/0 returns all posts" do
-      post = post_fixture()
-      assert Sites.list_posts() == [post]
-    end
-
-    test "get_post!/1 returns the post with given id" do
-      post = post_fixture()
-      assert Sites.get_post!(post.id) == post
-    end
-
-    test "create_post/1 with valid data creates a post" do
-      assert {:ok, %Post{} = post} = Sites.create_post(@valid_attrs)
-      assert post.content == "some content"
-      assert post.image == "some image"
-      assert post.title == "some title"
-    end
-
-    test "create_post/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_post(@invalid_attrs)
-    end
-
-    test "update_post/2 with valid data updates the post" do
-      post = post_fixture()
-      assert {:ok, post} = Sites.update_post(post, @update_attrs)
-      assert %Post{} = post
-      assert post.content == "some updated content"
-      assert post.image == "some updated image"
-      assert post.title == "some updated title"
-    end
-
-    test "update_post/2 with invalid data returns error changeset" do
-      post = post_fixture()
-      assert {:error, %Ecto.Changeset{}} = Sites.update_post(post, @invalid_attrs)
-      assert post == Sites.get_post!(post.id)
-    end
-
-    test "delete_post/1 deletes the post" do
-      post = post_fixture()
-      assert {:ok, %Post{}} = Sites.delete_post(post)
-      assert_raise Ecto.NoResultsError, fn -> Sites.get_post!(post.id) end
-    end
-
-    test "change_post/1 returns a post changeset" do
-      post = post_fixture()
-      assert %Ecto.Changeset{} = Sites.change_post(post)
     end
   end
 
   describe "tags" do
     alias ElephantInTheRoom.Sites.Tag
 
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
+    @valid_attrs %{"name" => "some name"}
+    @update_attrs %{"name" => "some updated name"}
+    @invalid_attrs %{"name" => nil}
 
-    def tag_fixture(attrs \\ %{}) do
+    def tag_fixture(site, attrs \\ %{}) do
+      new_attrs = Enum.into(attrs, @valid_attrs)
+
       {:ok, tag} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_tag()
+        site
+        |> Sites.create_tag(new_attrs)
 
       tag
     end
 
     test "list_tags/0 returns all tags" do
-      tag = tag_fixture()
-      assert Sites.list_tags() == [tag]
+      site = site_fixture()
+      tag = tag_fixture(site)
+      assert Sites.list_tags(site) == [tag |> Repo.preload(:site)]
     end
 
     test "get_tag!/1 returns the tag with given id" do
-      tag = tag_fixture()
-      assert Sites.get_tag!(tag.id) == tag
+      site = site_fixture()
+      tag = tag_fixture(site)
+      assert Sites.get_tag!(site, tag.id) == tag
     end
 
     test "create_tag/1 with valid data creates a tag" do
-      assert {:ok, %Tag{} = tag} = Sites.create_tag(@valid_attrs)
+      site = site_fixture()
+      assert {:ok, %Tag{} = tag} = Sites.create_tag(site, @valid_attrs)
       assert tag.name == "some name"
     end
 
     test "create_tag/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_tag(@invalid_attrs)
+      site = site_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.create_tag(site, @invalid_attrs)
     end
 
     test "update_tag/2 with valid data updates the tag" do
-      tag = tag_fixture()
+      site = site_fixture()
+      tag = tag_fixture(site)
       assert {:ok, tag} = Sites.update_tag(tag, @update_attrs)
       assert %Tag{} = tag
       assert tag.name == "some updated name"
     end
 
     test "update_tag/2 with invalid data returns error changeset" do
-      tag = tag_fixture()
+      site = site_fixture()
+      tag = tag_fixture(site)
       assert {:error, %Ecto.Changeset{}} = Sites.update_tag(tag, @invalid_attrs)
       assert tag == Sites.get_tag!(tag.id)
     end
 
     test "delete_tag/1 deletes the tag" do
-      tag = tag_fixture()
+      site = site_fixture()
+      tag = tag_fixture(site)
       assert {:ok, %Tag{}} = Sites.delete_tag(tag)
       assert_raise Ecto.NoResultsError, fn -> Sites.get_tag!(tag.id) end
     end
 
     test "change_tag/1 returns a tag changeset" do
-      tag = tag_fixture()
+      site = site_fixture()
+      tag = tag_fixture(site)
       assert %Ecto.Changeset{} = Sites.change_tag(tag)
     end
   end
 
-  describe "users" do
-    alias ElephantInTheRoom.Sites.User
-
-    @valid_attrs %{email: "some email", firstname: "some firstname", lastname: "some lastname", password: "some password", username: "some username"}
-    @update_attrs %{email: "some updated email", firstname: "some updated firstname", lastname: "some updated lastname", password: "some updated password", username: "some updated username"}
-    @invalid_attrs %{email: nil, firstname: nil, lastname: nil, password: nil, username: nil}
-
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_user()
-
-      user
-    end
-
-    test "list_users/0 returns all users" do
-      user = user_fixture()
-      assert Sites.list_users() == [user]
-    end
-
-    test "get_user!/1 returns the user with given id" do
-      user = user_fixture()
-      assert Sites.get_user!(user.id) == user
-    end
-
-    test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Sites.create_user(@valid_attrs)
-      assert user.email == "some email"
-      assert user.firstname == "some firstname"
-      assert user.lastname == "some lastname"
-      assert user.password == "some password"
-      assert user.username == "some username"
-    end
-
-    test "create_user/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_user(@invalid_attrs)
-    end
-
-    test "update_user/2 with valid data updates the user" do
-      user = user_fixture()
-      assert {:ok, user} = Sites.update_user(user, @update_attrs)
-      assert %User{} = user
-      assert user.email == "some updated email"
-      assert user.firstname == "some updated firstname"
-      assert user.lastname == "some updated lastname"
-      assert user.password == "some updated password"
-      assert user.username == "some updated username"
-    end
-
-    test "update_user/2 with invalid data returns error changeset" do
-      user = user_fixture()
-      assert {:error, %Ecto.Changeset{}} = Sites.update_user(user, @invalid_attrs)
-      assert user == Sites.get_user!(user.id)
-    end
-
-    test "delete_user/1 deletes the user" do
-      user = user_fixture()
-      assert {:ok, %User{}} = Sites.delete_user(user)
-      assert_raise Ecto.NoResultsError, fn -> Sites.get_user!(user.id) end
-    end
-
-    test "change_user/1 returns a user changeset" do
-      user = user_fixture()
-      assert %Ecto.Changeset{} = Sites.change_user(user)
-    end
-  end
-
-  describe "roles" do
-    
-    alias ElephantInTheRoom.Sites.Role
-
-    @valid_attrs %{name: "some name"}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
-
-    def role_fixture(attrs \\ %{}) do
-      {:ok, role} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Sites.create_role()
-
-      role
-    end
-
-    test "list_roles/0 returns all roles" do
-      role = role_fixture()
-      assert Sites.list_roles() == [role]
-    end
-
-    test "get_role!/1 returns the role with given id" do
-      role = role_fixture()
-      assert Sites.get_role!(role.id) == role
-    end
-
-    test "create_role/1 with valid data creates a role" do
-      assert {:ok, %Role{} = role} = Sites.create_role(@valid_attrs)
-      assert role.name == "some name"
-    end
-
-    test "create_role/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Sites.create_role(@invalid_attrs)
-    end
-
-    test "update_role/2 with valid data updates the role" do
-      role = role_fixture()
-      assert {:ok, role} = Sites.update_role(role, @update_attrs)
-      assert %Role{} = role
-      assert role.name == "some updated name"
-    end
-
-    test "update_role/2 with invalid data returns error changeset" do
-      role = role_fixture()
-      assert {:error, %Ecto.Changeset{}} = Sites.update_role(role, @invalid_attrs)
-      assert role == Sites.get_role!(role.id)
-    end
-
-    test "delete_role/1 deletes the role" do
-      role = role_fixture()
-      assert {:ok, %Role{}} = Sites.delete_role(role)
-      assert_raise Ecto.NoResultsError, fn -> Sites.get_role!(role.id) end
-    end
-
-    test "change_role/1 returns a role changeset" do
-      role = role_fixture()
-      assert %Ecto.Changeset{} = Sites.change_role(role)
-    end
-
-  end
-      
   describe "authors" do
     alias ElephantInTheRoom.Sites.Author
 
-    @valid_attrs %{description: "some description", image: "some image", name: "some name"}
-    @update_attrs %{description: "some updated description", image: "some updated image", name: "some updated name"}
-    @invalid_attrs %{description: nil, image: nil, name: nil}
+    @valid_attrs %{
+      "description" => "some description",
+      "image" => "some image",
+      "name" => "some name"
+    }
+    @update_attrs %{
+      "description" => "some updated description",
+      "image" => "some updated image",
+      "name" => "some updated name"
+    }
+    @invalid_attrs %{"description" => nil, "image" => nil, "name" => nil}
 
     def author_fixture(attrs \\ %{}) do
       {:ok, author} =
@@ -440,6 +274,106 @@ defmodule ElephantInTheRoom.SitesTest do
     test "change_author/1 returns a author changeset" do
       author = author_fixture()
       assert %Ecto.Changeset{} = Sites.change_author(author)
+    end
+  end
+
+  describe "posts" do
+    alias ElephantInTheRoom.Sites.Post
+
+    @valid_attrs %{
+      "content" => "some content",
+      "image" => "some image",
+      "title" => "some title",
+      "slug" => "",
+      "abstract" => "some abstract"
+    }
+    @update_attrs %{
+      "content" => "some updated content",
+      "image" => "some updated image",
+      "title" => "some updated title"
+    }
+    @invalid_attrs %{"content" => nil, "image" => nil, "title" => nil}
+
+    def post_fixture(site, attrs \\ %{}) do
+      author = author_fixture()
+
+      tags =
+        for i <- 0..3 do
+          tag = tag_fixture(site, %{"name" => "tag #{i}"})
+          tag.id
+        end
+
+      categories =
+        for i <- 0..3 do
+          category = category_fixture(site, %{"name" => "category #{i}"})
+          category.name
+        end
+
+      new_attrs =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Enum.into(%{"author" => author, "categories" => categories, "tags" => tags})
+
+      {:ok, post} =
+        site
+        |> Sites.create_post(new_attrs)
+
+      post
+    end
+
+    test "list_posts/0 returns all posts" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert Sites.list_posts(site) == [post]
+    end
+
+    test "get_post!/1 returns the post with given id" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert Sites.get_post!(site, post.id) == post |> Repo.preload([:author])
+    end
+
+    test "create_post/1 with valid data creates a post" do
+      site = site_fixture()
+      assert {:ok, %Post{} = post} = Sites.create_post(site, @valid_attrs)
+      assert post.content == "some content"
+      assert post.image == "some image"
+      assert post.title == "some title"
+    end
+
+    test "create_post/1 with invalid data returns error changeset" do
+      site = site_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.create_post(site, @invalid_attrs)
+    end
+
+    test "update_post/2 with valid data updates the post" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:ok, post} = Sites.update_post(post, @update_attrs)
+      assert %Post{} = post
+      assert post.content == "some updated content"
+      assert post.image == "some updated image"
+      assert post.title == "some updated title"
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:error, %Ecto.Changeset{}} = Sites.update_post(post, @invalid_attrs)
+      assert Repo.preload(post, :author) == Sites.get_post!(site, post.id)
+    end
+
+    test "delete_post/1 deletes the post" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert {:ok, %Post{}} = Sites.delete_post(post)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_post!(site, post.id) end
+    end
+
+    test "change_post/1 returns a post changeset" do
+      site = site_fixture()
+      post = post_fixture(site)
+      assert %Ecto.Changeset{} = Sites.change_post(post)
     end
   end
 end

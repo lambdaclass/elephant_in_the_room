@@ -34,15 +34,18 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     case Auth.get_user(conn) do
       {:ok, %User{:role => %Role{:name => role}} = user} ->
         {:ok, user, String.to_atom(role)}
-      {:error, _} = error  -> error
+
+      {:error, _} = error ->
+        error
     end
   end
 
   def get_site_path(conn) do
     case conn && conn.assigns[:site] do
-      nil -> "/"
+      nil ->
+        "/"
+
       site ->
-        IO.puts(inspect(site))
         Helpers.site_path(conn, :public_show, site.id)
     end
   end
@@ -50,5 +53,4 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   def current_site(conn) do
     conn.assigns[:site]
   end
-
 end

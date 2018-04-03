@@ -48,10 +48,10 @@ defmodule ElephantInTheRoom.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       # markdown
       {:cmark, "~> 0.7"},
-      {:faker, "~> 0.9", only: :dev},
+      {:faker, "~> 0.9", only: [:dev, :test]},
 
       # pagination
-      {:scrivener_ecto, "~> 1.0"}
+      {:scrivener_ecto, "~> 1.0"},
     ]
   end
 

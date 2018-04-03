@@ -6,17 +6,16 @@ defmodule ElephantInTheRoomWeb.SiteController do
   alias ElephantInTheRoom.Repo
 
   def index(conn, params) do
-    case params do
-      %{"page" => page} ->
-        page =
+    page =
+      case params do
+        %{"page" => page_number} ->
           Site
-          |> Repo.paginate(page: page)
+          |> Repo.paginate(page: page_number)
 
-      %{} ->
-        page =
+        %{} ->
           Site
           |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,
@@ -64,7 +63,12 @@ defmodule ElephantInTheRoomWeb.SiteController do
         render(conn, "no_site_created")
 
       false ->
-        render(conn, "public_show.html", site: hd(sites))
+        site =
+          sites
+          |> hd()
+          |> Repo.preload([:categories, [posts: [:categories, :author, :tags]]])
+
+        render(conn, "public_show.html", site: site)
     end
   end
 

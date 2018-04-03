@@ -17,7 +17,6 @@ defmodule ElephantInTheRoomWeb.ConnCase do
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.User
-  alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoom.Sites
   alias Plug.Conn
 
@@ -41,11 +40,10 @@ defmodule ElephantInTheRoomWeb.ConnCase do
 
     conn =
       Phoenix.ConnTest.build_conn()
-      |> may_log_as_administrator(tags) # :admin
-    
-    {:ok,
-     conn: conn,
-     site: ensure_default_site_exists()}
+      # :admin
+      |> may_log_as_administrator(tags)
+
+    {:ok, conn: conn, site: ensure_default_site_exists()}
   end
 
   defp may_log_as_administrator(conn, tags) do
@@ -53,7 +51,9 @@ defmodule ElephantInTheRoomWeb.ConnCase do
       true ->
         user = ensure_default_administrator_exists()
         set_administrator_session(conn, user)
-      _ -> conn
+
+      _ ->
+        conn
     end
   end
 
@@ -64,25 +64,28 @@ defmodule ElephantInTheRoomWeb.ConnCase do
 
   defp ensure_default_administrator_exists do
     %User{email: email} = admin = default_administrator_user()
-    case Repo.get(%User{email: email}) do
+
+    case Repo.get_by(User, email: email) do
       nil -> Repo.insert!(admin)
       _ -> admin
     end
   end
 
   defp default_administrator_user do
-    %User{email:      "admin@elephant.com",
-          firstname:  "administrtor",
-          lastname:   "administrator",
-          password:   "password",
-          role:       "admin"}
+    %User{
+      email: "admin@elephant.com",
+      firstname: "administrtor",
+      lastname: "administrator",
+      password: "password",
+      role: "admin"
+    }
   end
 
   def ensure_default_site_exists() do
     case get_default_site_from_db() do
       {:ok, site} ->
-        IO.puts(inspect(site))
         site
+
       {:error, :not_found} ->
         Sites.create_site(default_site())
         {:ok, site} = get_default_site_from_db()
@@ -93,12 +96,8 @@ defmodule ElephantInTheRoomWeb.ConnCase do
   def get_default_site_from_db() do
     Sites.get_site_by_name(default_site().name)
   end
-  
-  def default_site() do
-    %{name:       "default_site",
-      categories: [],
-      posts:      [],
-      tags:       []}
 
+  def default_site() do
+    %{name: "default_site", categories: [], posts: [], tags: []}
   end
 end
