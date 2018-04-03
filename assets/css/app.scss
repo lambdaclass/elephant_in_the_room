@@ -4,6 +4,7 @@
 @import '_navigation';
 @import '_post_card';
 @import '_post';
+@import '_administration';
 
 .row {
     margin-left:0;
@@ -11,7 +12,7 @@
 }
 
 .no-link-decoration:hover {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 
