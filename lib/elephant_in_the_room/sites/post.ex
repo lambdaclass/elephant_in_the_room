@@ -102,15 +102,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   defp get_category(name, site_id) do
     Repo.get_by!(Category, name: name, site_id: site_id)
   end
-
-  def parse(tags) do
-    tags
-    |> String.split(",")
-    |> Enum.map(&String.trim/1)
-    |> Enum.reject(fn s -> s == "" end)
-    |> Enum.uniq
-  end
-
+  
   defp parse_tags(params) do
     site_id = params["site_id"]
     
