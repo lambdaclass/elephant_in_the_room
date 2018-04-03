@@ -52,9 +52,6 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # pagination
       {:scrivener_ecto, "~> 1.0"},
-
-      # test dependencies
-      {:guardian_backdoor, "~> 1.0.0", only: :test}
     ]
   end
 
