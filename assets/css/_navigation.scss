@@ -1,4 +1,15 @@
-.uk-navbar-container > .uk-container .uk-navbar-right {
-    //margin-right: 0;
-    //margin-left: auto;
+.uk-offcanvas-close {
+    position: absolute;
+    &.close-left {
+        left: 1em;
+    }
+    &.close-right {
+        right: 1em;
+    }
+}
+
+.uk-offcanvas-bar-animation {
+    @media (max-width: $break-xs) {
+        width: 100%;
+    }
 }

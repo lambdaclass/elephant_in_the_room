@@ -4,9 +4,6 @@ defmodule ElephantInTheRoom.Auth.Pipeline do
     error_handler: ElephantInTheRoom.Auth.ErrorHandler,
     module: ElephantInTheRoom.Auth.Guardian
 
-  if Mix.env() == :test do
-    plug Guardian.Plug.Backdoor, module: ElephantInThRoom.Guardian
-  end
   # If there is a session token, validate it
   plug(Guardian.Plug.VerifySession, claims: %{"typ" => "access"})
 
