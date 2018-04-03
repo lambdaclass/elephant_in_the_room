@@ -9,7 +9,7 @@
   <% end %>
 
   <%= case get_important_posts(@conn, @site.posts) do %>
-    <% {:error, _} -> %> ERROR
+    <% {:error, _} -> %> 
     <% {:ok, important_posts} -> %>
     <%= shared_render_posts_card @conn,
     important_posts,
