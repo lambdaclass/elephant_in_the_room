@@ -58,7 +58,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => id}) do
     category =
       Sites.get_category!(id)
-      |> Repo.preload(:posts)
+      |> Repo.preload([posts: :categories, posts: :author])
 
     render(conn, "public_show.html", category: category, site: site)
   end
