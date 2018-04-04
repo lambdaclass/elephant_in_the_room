@@ -1,6 +1,5 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  import ElephantInTheRoomWeb.Utils.ViewUtils
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Repo

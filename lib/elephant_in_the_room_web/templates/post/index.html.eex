@@ -1,3 +1,5 @@
+<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
+
 <h2>Listing Posts</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="table">
