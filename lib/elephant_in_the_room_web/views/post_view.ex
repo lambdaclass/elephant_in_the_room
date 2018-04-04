@@ -56,4 +56,35 @@ defmodule ElephantInTheRoomWeb.PostView do
       [featured_category | _] -> featured_category.name
     end
   end
+
+  # 'Just now' if it's less than 5 minutes.
+  # Show the minutes if higher than 5 minutes.
+  # After 60 minutes, should show hours.
+  # After 24 hours should show days.
+  # After 14 days should show the plain date of the post.
+  @one_minute 60
+  @five_minutes 300
+  @one_hour 3600
+  @one_day 86400
+  @two_weeks 1_209_600
+
+  defp format_diff(diff, date) when diff < @five_minutes, do: {:now, "just now"}
+
+  defp format_diff(diff, date) when diff < @one_hour,
+    do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
+
+  defp format_diff(diff, date) when diff > @one_hour,
+    do: {:hours, "#{div(diff, @one_hour)} hours ago"}
+
+  defp format_diff(diff, date) when diff > @one_day,
+    do: {:days, "#{div(diff, @one_day)} days ago"}
+
+  defp format_diff(diff, date) when diff > @two_weeks,
+    do: {:date, "on #{date.day}-#{date.month}-#{date.year}"}
+
+  def show_date(date) do
+    now = NaiveDateTime.utc_now()
+    {res, msg} = format_diff(NaiveDateTime.diff(now, date), date)
+    msg
+  end
 end
