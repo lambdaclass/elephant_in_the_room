@@ -32,6 +32,7 @@
 </table>
 
 <%= case compare(@page_number, @total_pages) do %>
+  <% :unique_page -> %>
   <% :greater -> %>
   <% :equal -> %>
     <span><%= link "Back", to: site_post_path(@conn, :index, @site, page: @page_number - 1) %></span>

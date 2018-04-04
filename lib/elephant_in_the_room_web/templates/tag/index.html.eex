@@ -1,7 +1,7 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
 <h2>Listing Tags</h2>
-
+<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="table">
   <thead>
     <tr>
@@ -26,6 +26,7 @@
 </table>
 
 <%= case compare(@page_number, @total_pages) do %>
+  <% :unique_page  -> %>
   <% :greater -> %>
   <% :equal -> %>
     <span><%= link "Back", to: site_tag_path(@conn, :index, @site, page: @page_number - 1) %></span>
