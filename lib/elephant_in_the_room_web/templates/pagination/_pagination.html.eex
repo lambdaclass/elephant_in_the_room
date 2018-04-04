@@ -1,0 +1,12 @@
+<% alias ElephantInTheRoom.Router %>
+
+<%= case compare(@page_number, @total_pages) do %> 
+  <% :equal -> %>
+    <span><%= link "Back", to: apply(Router.Helpers, @path_function, [@conn, :index, page: @page_number - 1]) %></span>
+  <% :lesser -> %>
+    <span><%= link "Next", to: apply(Router.Helpers, @path_function, [@conn, :index, page: @page_number + 1]) %></span>
+    <span><%= link "Back", to: apply(Router.Helpers, @path_function, [@conn, :index, page: @page_number - 1]) %></span>
+  <% :first -> %>
+    <span><%= link "Next", to: apply(Router.Helpers, @path_function, [@conn, :index, page: @page_number + 1]) %></span>
+  <% _ -> %>
+<% end %>
