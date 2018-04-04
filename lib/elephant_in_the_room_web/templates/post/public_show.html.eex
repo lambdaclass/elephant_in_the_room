@@ -46,8 +46,9 @@
               to: author_path @conn, :public_show, id %>
             <% end %>
 
-            on <%= @post.updated_at %>.
-            Posted in
+            
+            posted <%= show_date(@post.updated_at) %>
+            in
             <a href="<%= site_path @conn, :public_show, @site.id %>">
               <%= @site.name %>
             </a>
