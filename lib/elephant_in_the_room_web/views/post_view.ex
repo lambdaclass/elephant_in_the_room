@@ -68,15 +68,15 @@ defmodule ElephantInTheRoomWeb.PostView do
   @one_day 86400
   @two_weeks 1_209_600
 
-  defp format_diff(diff, date) when diff < @five_minutes, do: {:now, "just now"}
+  defp format_diff(diff, _date) when diff < @five_minutes, do: {:now, "just now"}
 
-  defp format_diff(diff, date) when diff < @one_hour,
+  defp format_diff(diff, _date) when diff < @one_hour,
     do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
 
-  defp format_diff(diff, date) when diff > @one_hour,
+  defp format_diff(diff, _date) when diff > @one_hour,
     do: {:hours, "#{div(diff, @one_hour)} hours ago"}
 
-  defp format_diff(diff, date) when diff > @one_day,
+  defp format_diff(diff, _date) when diff > @one_day,
     do: {:days, "#{div(diff, @one_day)} days ago"}
 
   defp format_diff(diff, date) when diff > @two_weeks,
@@ -84,7 +84,7 @@ defmodule ElephantInTheRoomWeb.PostView do
 
   def show_date(date) do
     now = NaiveDateTime.utc_now()
-    {res, msg} = format_diff(NaiveDateTime.diff(now, date), date)
+    {_res, msg} = format_diff(NaiveDateTime.diff(now, date), date)
     msg
   end
 end
