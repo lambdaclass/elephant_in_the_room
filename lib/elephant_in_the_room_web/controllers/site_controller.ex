@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.Sites
+  alias Scrivener.Config
   alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Sites, Repo}
 
   def index(conn, params) do
     page =
@@ -99,5 +98,72 @@ defmodule ElephantInTheRoomWeb.SiteController do
     conn
     |> put_flash(:info, "Site deleted successfully.")
     |> redirect(to: site_path(conn, :index))
+  end
+
+  def paginate_elements(conn, params) do
+    category_page =
+      case params do
+        %{
+          "cat_page" => cat_page_number
+        } ->
+          Site
+          |> Repo.paginate(page: cat_page_number)
+
+        %{} ->
+          Site
+          |> Repo.paginate(page: 1)
+      end
+
+    tag_page =
+      case params do
+        %{
+          "tag_page" => tag_page_number
+        } ->
+          Site
+          |> Repo.paginate(page: tag_page_number)
+
+        %{} ->
+          Site
+          |> Repo.paginate(page: 1)
+      end
+
+    post_page =
+      case params do
+        %{
+          "posts_page" => post_page_number
+        } ->
+          Site
+          |> Repo.paginate(page: post_page_number)
+
+        %{} ->
+          Site
+          |> Repo.paginate(page: 1)
+      end
+
+    render(
+      conn,
+      "index.html",
+      tag_page: %{
+        tags: tag_page.entries,
+        page_number: tag_page.page_number,
+        page_size: tag_page.page_size,
+        total_pages: tag_page.total_pages,
+        total_entries: tag_page.total_entries
+      },
+      post_page: %{
+        posts: post_page.entries,
+        page_number: post_page.page_number,
+        page_size: post_page.page_size,
+        total_pages: post_page.total_pages,
+        total_entries: post_page.total_entries
+      },
+      cat_page: %{
+        categories: category_page.entries,
+        page_number: category_page.page_number,
+        page_size: category_page.page_size,
+        total_pages: category_page.total_pages,
+        total_entries: category_page.total_entries
+      }
+    )
   end
 end
