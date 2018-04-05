@@ -1,19 +1,10 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Show Site</h2>
+<h2>Site: <%= @site.name %></h2>
 
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @site.name %>
-  </li>
-
-</ul>
-
-  <% cat_page_number = @pages.cat_page.page_number %>
-  <% tag_page_number = @pages.tag_page.page_number %>
-  <% post_page_number = @pages.post_page.page_number %>
+<% cat_page_number = @pages.cat_page.page_number %>
+<% tag_page_number = @pages.tag_page.page_number %>
+<% post_page_number = @pages.post_page.page_number %>
 
 <div>
   <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
@@ -76,7 +67,6 @@
       </span>
     <% _ -> %>
   <% end %>
-
 </div>
 
 <div>
