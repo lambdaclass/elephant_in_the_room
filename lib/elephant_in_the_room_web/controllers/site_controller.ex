@@ -1,6 +1,5 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-  alias Scrivener.Config
   alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoom.{Sites, Repo}
 

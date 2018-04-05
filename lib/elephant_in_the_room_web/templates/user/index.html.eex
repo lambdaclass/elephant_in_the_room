@@ -34,8 +34,6 @@
 </table>
 
 <%= case compare(@page_number, @total_pages) do %>
-  <% :unique_page  -> %>
-  <% :greater -> %>
   <% :equal -> %>
     <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
   <% :lesser -> %>
@@ -43,6 +41,7 @@
     <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
   <% :first -> %>
     <span><%= link "Next", to: user_path(@conn, :index, page: @page_number + 1) %></span>
+  <% _ -> %>
 <% end %>
 
 <br/>

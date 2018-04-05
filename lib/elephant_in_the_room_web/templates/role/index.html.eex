@@ -1,5 +1,4 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
-<% alias ElephantInTheRoomWeb.PaginationView %>
 
 <h2>Listing Roles</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
@@ -26,7 +25,16 @@
   </tbody>
 </table>
 
-<%= PaginationView.paginate(@conn, @page_number, @total_pages, &ElephantInTheRoomWeb.Router.Helpers.role_path/3) %>
+<%= case compare(@page_number, @total_pages) do %>
+  <% :equal -> %>
+    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :lesser -> %>
+    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :first -> %>
+    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
+  <% _ -> %>
+<% end %>
 
 <br>
 
