@@ -1,3 +1,5 @@
+<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
+
 <h2>Listing Authors</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="table">
@@ -28,7 +30,6 @@
 </table>
 
 <%= case compare(@page_number, @total_pages) do %>
-  <% :greater -> %>
   <% :equal -> %>
     <span><%= link "Back", to: author_path(@conn, :index, page: @page_number - 1) %></span>
   <% :lesser -> %>
@@ -36,6 +37,7 @@
     <span><%= link "Back", to: author_path(@conn, :index, page: @page_number - 1) %></span>
   <% :first -> %>
     <span><%= link "Next", to: author_path(@conn, :index, page: @page_number + 1) %></span>
+  <% _ -> %>
 <% end %>
 
 <br>

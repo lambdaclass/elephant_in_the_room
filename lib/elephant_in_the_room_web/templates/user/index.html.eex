@@ -1,5 +1,7 @@
-<h2>Listing Users</h2>
+<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
+<h2>Listing Users</h2>
+<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="table">
   <thead>
     <tr>
@@ -30,6 +32,19 @@
 <% end %>
   </tbody>
 </table>
+
+<%= case compare(@page_number, @total_pages) do %>
+  <% :equal -> %>
+    <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :lesser -> %>
+    <span><%= link "Next", to: user_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
+  <% :first -> %>
+    <span><%= link "Next", to: user_path(@conn, :index, page: @page_number + 1) %></span>
+  <% _ -> %>
+<% end %>
+
+<br/>
 
 <span><%= link "New User", to: user_path(@conn, :new) %></span>
 <span><%= link "Back", to: admin_path(@conn, :index) %></span>

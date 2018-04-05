@@ -1,9 +1,7 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Sites, Repo}
 
   def index(conn, params) do
     page =
@@ -45,9 +43,57 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def paginate_elements(site, params) do
+    category_page =
+      case params do
+        %{
+          "cat_page" => cat_page_number
+        } ->
+          Repo.paginate(site.categories, page: cat_page_number)
+
+        %{} ->
+          Repo.paginate(site.categories, page: 1)
+      end
+
+    tag_page =
+      case params do
+        %{
+          "tag_page" => tag_page_number
+        } ->
+          Repo.paginate(site.tags, page: tag_page_number)
+
+        %{} ->
+          Repo.paginate(site.tags, page: 1)
+      end
+
+    post_page =
+      case params do
+        %{
+          "post_page" => post_page_number
+        } ->
+          Repo.paginate(site.posts, page: post_page_number)
+
+        %{} ->
+          Repo.paginate(site.posts, page: 1)
+      end
+
+    %{
+      tag_page: tag_page,
+      post_page: post_page,
+      cat_page: category_page
+    }
+  end
+
+  def show(conn, %{"id" => id} = params) do
     site = Sites.get_site!(id)
-    render(conn, "show.html", site: site)
+    pages = paginate_elements(site, params)
+
+    render(
+      conn,
+      "show.html",
+      site: site,
+      pages: pages
+    )
   end
 
   def public_show(conn, %{"site_id" => id}) do
