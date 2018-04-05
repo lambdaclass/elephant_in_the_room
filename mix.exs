@@ -52,6 +52,7 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # pagination
       {:scrivener_ecto, "~> 1.0"},
+      {:scrivener_list, "~> 1.0"}
     ]
   end
 
