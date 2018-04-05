@@ -50,12 +50,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
         %{
           "cat_page" => cat_page_number
         } ->
-          site.categories
-          |> Repo.paginate(page: cat_page_number)
+          Repo.paginate(site.categories, page: cat_page_number)
 
         %{} ->
-          site.categories
-          |> Repo.paginate(page: 1)
+          Repo.paginate(site.categories, page: 1)
       end
 
     tag_page =
@@ -63,12 +61,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
         %{
           "tag_page" => tag_page_number
         } ->
-          site.tags
-          |> Repo.paginate(page: tag_page_number)
+          Repo.paginate(site.tags, page: tag_page_number)
 
         %{} ->
-          site.tags
-          |> Repo.paginate(page: 1)
+          Repo.paginate(site.tags, page: 1)
       end
 
     post_page =
@@ -76,12 +72,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
         %{
           "post_page" => post_page_number
         } ->
-          site.posts
-          |> Repo.paginate(page: post_page_number)
+          Repo.paginate(site.posts, page: post_page_number)
 
         %{} ->
-          site.posts
-          |> Repo.paginate(page: 1)
+          Repo.paginate(site.posts, page: 1)
       end
 
     %{
