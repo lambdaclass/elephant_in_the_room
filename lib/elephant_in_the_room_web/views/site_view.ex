@@ -1,7 +1,5 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
-  alias Scrivener.Config
-  alias ElephantInTheRoom.Repo
 
   def get_top_featured_post(_conn, posts) do
     case posts do
@@ -40,30 +38,5 @@ defmodule ElephantInTheRoomWeb.SiteView do
 
   def number_of_entries(entries, entries_per_page) do
     max(entries_per_page - entries, entries)
-  end
-
-  def pagination_config(page, page_size) do
-    %Config{page_number: page, page_size: page_size}
-  end
-
-  def paginate_categories(categories, page, page_size) do
-    config = pagination_config(page, page_size)
-
-    categories
-    |> Repo.paginate()
-  end
-
-  def paginate_tags(tags, page, page_size) do
-    config = pagination_config(page, page_size)
-
-    tags
-    |> Repo.paginate()
-  end
-
-  def paginate_posts(posts, page, page_size) do
-    config = pagination_config(page, page_size)
-
-    posts
-    |> Repo.paginate()
   end
 end

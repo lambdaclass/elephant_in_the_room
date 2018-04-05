@@ -1,3 +1,5 @@
+<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
+
 <h2>Show Site</h2>
 
 <ul>
@@ -9,40 +11,106 @@
 
 </ul>
 
+  <% cat_page_number = @pages.cat_page.page_number %>
+  <% tag_page_number = @pages.tag_page.page_number %>
+  <% post_page_number = @pages.post_page.page_number %>
+
 <div>
   <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
+  <p><%= "Page: #{@pages.cat_page.page_number}/#{@pages.cat_page.total_pages}" %></p>
   <ul>
-    <% category_page = paginate_categories(@site.categories, 1, 4) %>
-    <%= for category <- category_page.entries do %>
+    <%= for category <- @pages.cat_page.entries do %>
       <li>
         <%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a"  %>
       </li>
     <% end %>
   </ul>
+
+  <%= case compare(@pages.cat_page.page_number, @pages.cat_page.total_pages) do %>
+    <% :equal -> %>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number - 1, post_page: post_page_number) %>
+      </span>
+    <% :lesser -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number + 1, post_page: post_page_number) %>
+      </span>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number - 1, post_page: post_page_number) %>
+      </span>
+    <% :first -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number + 1, post_page: post_page_number) %>
+      </span>
+    <% _ -> %>
+  <% end %>
+
 </div>
 
 <div>
   <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
+  <p><%= "Page: #{@pages.post_page.page_number}/#{@pages.post_page.total_pages}" %></p>
   <ul>
-    <% post_page = paginate_posts(@site.posts, 1, 4) %>
-    <%= for post <- post_page.entries do %>
+    <%= for post <- @pages.post_page.entries do %>
       <li>
         <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a"  %>
       </li>
     <% end %>
   </ul>
+
+  <%= case compare(@pages.post_page.page_number, @pages.post_page.total_pages) do %>
+    <% :equal -> %>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number - 1) %>
+      </span>
+    <% :lesser -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number + 1) %>
+      </span>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number - 1) %>
+      </span>
+    <% :first -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number + 1) %>
+      </span>
+    <% _ -> %>
+  <% end %>
+
 </div>
 
 <div>
   <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
+  <p><%= "Page: #{@pages.tag_page.page_number}/#{@pages.tag_page.total_pages}" %></p>
   <ul>
-    <% tag_page = paginate_tags(@site.tags, 1, 4) %>
-    <%= for tag <- tag_page.entries do %>
+    <%= for tag <- @pages.tag_page.entries do %>
       <li>
         <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a"  %>
       </li>
     <% end %>
   </ul>
+
+
+
+  <%= case compare(@pages.tag_page.page_number, @pages.tag_page.total_pages) do %>
+    <% :equal -> %>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), cat_page: cat_page_number, post_page: post_page_number) %>
+      </span>
+    <% :lesser -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1), cat_page: cat_page_number, post_page: post_page_number) %>
+      </span>
+      <span>
+        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), cat_page: cat_page_number, post_page: post_page_number) %>
+      </span>
+    <% :first -> %>
+      <span>
+        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1), cat_page: cat_page_number, post_page: post_page_number) %>
+      </span>
+    <% _ -> %>
+  <% end %>
+
 </div>
 
 <span><%= link "Edit", to: site_path(@conn, :edit, @site) %></span>
