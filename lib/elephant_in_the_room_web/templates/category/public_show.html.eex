@@ -1,7 +1,7 @@
 <div class="el-sites">
   <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"><h1>Category: <%= @category.name %></h1></p>
+    <div class="uk-tile uk-tile-secondary">
+      <p class="uk-h4"><h1><%= @category.name %></h1></p>
       <p><%= @category.description %></p>
     </div>
   </div>
