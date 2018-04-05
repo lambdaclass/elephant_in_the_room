@@ -65,9 +65,10 @@ defmodule ElephantInTheRoomWeb.PostView do
   @five_minutes 300
   @one_hour 3600
   @one_day 86400
+  @a_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 
-  defp format_diff(diff, _date) when diff < @five_minutes, do: {:now, "just now"}
+  defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "just now"}
 
   defp format_diff(diff, _date) when diff < @one_hour,
     do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
@@ -75,7 +76,9 @@ defmodule ElephantInTheRoomWeb.PostView do
   defp format_diff(diff, _date) when diff > @one_hour,
     do: {:hours, "#{div(diff, @one_hour)} hours ago"}
 
-  defp format_diff(diff, _date) when diff > @one_day,
+  defp format_diff(diff, _date) when diff <= @one_day_and_few_hours, do: {:day, "a day ago"}
+
+  defp format_diff(diff, _date) when diff > @one_day_and_few_hours,
     do: {:days, "#{div(diff, @one_day)} days ago"}
 
   defp format_diff(diff, date) when diff > @two_weeks,
