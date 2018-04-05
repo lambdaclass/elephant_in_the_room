@@ -1,11 +1,6 @@
-<h2>Show Category</h2>
+<h2><%= @category.name %></h2>
 
 <ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @category.name %>
-  </li>
 
   <li>
     <strong>Description:</strong>

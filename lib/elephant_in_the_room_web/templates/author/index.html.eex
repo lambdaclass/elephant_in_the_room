@@ -1,6 +1,6 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Listing Authors</h2>
+<h2>Authors</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
@@ -20,9 +20,19 @@
       <td><%= author.description %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: author_path(@conn, :show, author), class: "uk-button uk-button-secondary uk-button-small" %></span>
-        <span><%= link "Edit", to: author_path(@conn, :edit, author), class: "uk-button uk-button-primary uk-button-small" %></span>
-        <span><%= link "Delete", to: author_path(@conn, :delete, author), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
+        <span>
+          <%= link "Show", to: author_path(@conn, :show, author), 
+            class: "uk-button uk-button-secondary uk-button-small" %>
+        </span>
+        <span>
+          <%= link "Edit", to: author_path(@conn, :edit, author), 
+            class: "uk-button uk-button-primary uk-button-small" %>
+        </span>
+        <span>
+          <%= link "Delete", to: author_path(@conn, :delete, author), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "uk-button uk-button-danger uk-button-small" %>
+        </span>
       </td>
     </tr>
 <% end %>

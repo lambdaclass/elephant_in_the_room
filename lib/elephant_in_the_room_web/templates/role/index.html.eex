@@ -1,6 +1,6 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Listing Roles</h2>
+<h2>Roles</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
