@@ -2,7 +2,7 @@
 
 <h2>Sites</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -21,13 +21,15 @@
           <span>
             <%= link "Edit",
             to: site_path(@conn, :edit, site),
-            class: "btn btn-default btn-xs" %></span>
+            class: "uk-button uk-button-primary uk-button-small" %>
+          </span>
           <span>
             <%= link "Delete",
             to: site_path(@conn, :delete, site),
             method: :delete,
             data: [confirm: "Are you sure?"],
-            class: "btn btn-danger btn-xs" %></span>
+            class: "uk-button uk-button-danger uk-button-small" %>
+          </span>
         </td>
       </tr>
     <% end %>

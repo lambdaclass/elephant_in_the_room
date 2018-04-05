@@ -2,7 +2,7 @@
 
 <h2>Listing Posts</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Title</th>
@@ -22,9 +22,9 @@
       <td><%= post.image %></td>
       <td><%= put_commas(post, :tags) %></td>
       <td class="text-right">
-        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "uk-button uk-button-secondary uk-button-small" %></span>
+        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "uk-button uk-button-primary uk-button-small" %></span>
+        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
       </td>
     </tr>
 <% end %>

@@ -3,7 +3,7 @@
 <h1 style="color: blue"><%= @site.name %></h1>
 <h2>Categories</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -16,9 +16,9 @@
       <td><%= category.name %></td>
       <td><%= category.description %></td>
       <td class="text-right">
-        <span><%= link "Show", to: site_category_path(@conn, :show, @site, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_category_path(@conn, :delete, @site, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: site_category_path(@conn, :show, @site, category), class: "uk-button uk-button-secondary uk-button-small" %></span>
+        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, category), class: "uk-button uk-button-primary uk-button-small" %></span>
+        <span><%= link "Delete", to: site_category_path(@conn, :delete, @site, category), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
       </td>
     </tr>
 <% end %>
