@@ -5,6 +5,7 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
+      <th>Menu</th>
       <th>Name</th>
       <th>Description</th>
     </tr>
@@ -12,12 +13,22 @@
   <tbody>
 <%= for category <- @categories do %>
     <tr>
-      <td><%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a" %></td>
-      <td><%= category.description %></td>
       <td class="text-right">
-        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, category), class: "uk-button uk-button-primary uk-button-small" %></span>
-        <span><%= link "Delete", to: site_category_path(@conn, :delete, @site, category), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
+        <span>
+          <%= link "", to: site_category_path(@conn, :edit, @site, category), 
+            class: "el-menu-icon fa fa-edit" %>
+        </span>
+        <span>
+          <%= link "", to: site_category_path(@conn, :delete, @site, category), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "el-menu-icon fa fa-trash-alt" %>
+        </span>
       </td>
+      <td>
+        <%= link category.name, to: site_category_path(@conn, :show, @site, category), 
+          class: "a" %>
+      </td>
+      <td><%= category.description %></td>
     </tr>
 <% end %>
   </tbody>
@@ -25,12 +36,12 @@
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: site_category_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_category_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: site_category_path(@conn, :index, @site, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: site_category_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_category_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_category_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% :first -> %>
-    <span><%= link "Next", to: site_category_path(@conn, :index, @site, page: @page_number + 1) %></span>
+    <span><%= link "", to: site_category_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 

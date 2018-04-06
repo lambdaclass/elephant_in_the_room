@@ -5,19 +5,27 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
+      <th>Menu</th>
       <th>Name</th>
-
-      <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for tag <- @tags do %>
     <tr>
-      <td><%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a" %></td>
-
       <td class="text-right">
-        <span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, tag), class: "uk-button uk-button-primary uk-button-small" %></span>
-        <span><%= link "Delete", to: site_tag_path(@conn, :delete, @site, tag), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
+        <span>
+          <%= link "", to: site_tag_path(@conn, :edit, @site, tag), 
+            class: "el-menu-icon fa fa-edit" %>
+        </span>
+        <span>
+          <%= link "", to: site_tag_path(@conn, :delete, @site, tag), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "el-menu-icon fa fa-trash-alt" %>
+        </span>
+      </td>
+      <td>
+        <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), 
+          class: "a" %>
       </td>
     </tr>
 <% end %>
@@ -26,12 +34,12 @@
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: site_tag_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: site_tag_path(@conn, :index, @site, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: site_tag_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number - 1, class: "el-arrow-icon fa fa-arrow-right fa-2x") %></span>
   <% :first -> %>
-    <span><%= link "Next", to: site_tag_path(@conn, :index, @site, page: @page_number + 1) %></span>
+    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 

@@ -5,9 +5,9 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
+      <th>Menu</th>
       <th>Name</th>
       <th>Description</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -24,8 +24,10 @@
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
-
-      <td><%= link author.name, to: author_path(@conn, :show, author), class: "a"  %></td>
+      <td>
+        <%= link author.name, to: author_path(@conn, :show, author), 
+          class: "a"  %>
+      </td>
       <td><%= author.description %></td>
     </tr>
 <% end %>
@@ -37,8 +39,7 @@
     <span><%= link "", to: author_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
       <span><%= link "", to: author_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <span><%= link "", to: author_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x"%></span>
-
+    <span><%= link "", to: author_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% :first -> %>
     <span><%= link "", to: author_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
