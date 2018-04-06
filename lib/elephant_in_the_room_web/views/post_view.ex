@@ -65,7 +65,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   @five_minutes 300
   @one_hour 3600
   @one_day 86400
-  @a_day_and_few_hours @one_day + 5 * @one_hour
+  @one_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 
   defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "just now"}
