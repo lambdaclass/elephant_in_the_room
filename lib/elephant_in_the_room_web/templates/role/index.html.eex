@@ -13,12 +13,17 @@
   <tbody>
 <%= for role <- @roles do %>
     <tr>
-      <td><%= role.name %></td>
+      <td><%= link role.name, to: role_path(@conn, :show, role), class: "a" %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: role_path(@conn, :show, role), class: "uk-button uk-button-secondary uk-button-small" %></span>
-        <span><%= link "Edit", to: role_path(@conn, :edit, role), class: "uk-button uk-button-primary uk-button-small" %></span>
-        <span><%= link "Delete", to: role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
+        <span>
+          <%= link "Edit", to: role_path(@conn, :edit, role), class: "uk-button uk-button-primary uk-button-small" %>
+        </span>
+        <span>
+          <%= link "Delete", to: role_path(@conn, :delete, role), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "uk-button uk-button-danger uk-button-small" %>
+        </span>
       </td>
     </tr>
 <% end %>

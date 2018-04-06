@@ -1,6 +1,6 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Tags</h2>
+<h2><%= @site.name %>Tags</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
@@ -13,10 +13,9 @@
   <tbody>
 <%= for tag <- @tags do %>
     <tr>
-      <td><%= tag.name %></td>
+      <td><%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), class: "a" %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: site_tag_path(@conn, :show, @site, tag), class: "uk-button uk-button-default uk-button-small" %></span>
         <span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, tag), class: "uk-button uk-button-primary uk-button-small" %></span>
         <span><%= link "Delete", to: site_tag_path(@conn, :delete, @site, tag), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
       </td>

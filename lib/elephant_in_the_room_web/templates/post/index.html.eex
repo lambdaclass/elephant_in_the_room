@@ -1,6 +1,6 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Posts</h2>
+<h2><%= @site.name %>>Posts</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
@@ -8,26 +8,29 @@
       <th>Title</th>
       <th>Categories</th>
       <th>Abstract</th>
-      <th>Image</th>
       <th>Tags</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for post <- @posts do %>
-    <tr>
-      <td><%= post.title %></td>
-      <td><%= put_commas(post, :categories) %></td>
-      <td><%= post.abstract %></td>
-      <td><%= post.image %></td>
-      <td><%= put_commas(post, :tags) %></td>
-      <td class="text-right">
-        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "uk-button uk-button-secondary uk-button-small" %></span>
-        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "uk-button uk-button-primary uk-button-small" %></span>
-        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
-      </td>
-    </tr>
-<% end %>
+    <%= for post <- @posts do %>
+        <tr>
+          <td><%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %></td>
+          <td><%= put_commas(post, :categories) %></td>
+          <td><%= post.abstract %></td>
+          <td><%= put_commas(post, :tags) %></td>
+          <td class="text-right">
+            <span>
+              <%= link "Edit", to: site_post_path(@conn, :edit, @site, post), 
+                class: "uk-button uk-button-primary uk-button-small" %>
+            </span>
+            <span>
+              <%= link "Delete", to: site_post_path(@conn, :delete, @site, post), 
+                method: :delete, data: [confirm: "Are you sure?"], 
+                class: "uk-button uk-button-danger uk-button-small" %>
+            </span>
+          </td>
+        </tr>
+    <% end %>
   </tbody>
 </table>
 

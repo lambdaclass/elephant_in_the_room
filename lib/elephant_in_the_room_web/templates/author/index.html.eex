@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Image</th>
       <th>Description</th>
 
       <th></th>
@@ -15,15 +14,11 @@
   <tbody>
 <%= for author <- @authors do %>
     <tr>
-      <td><%= author.name %></td>
-      <td><%= author.image %></td>
+      <td><%= link author.name, to: author_path(@conn, :show, author), class: "a"  %></td>
       <td><%= author.description %></td>
 
       <td class="text-right">
-        <span>
-          <%= link "Show", to: author_path(@conn, :show, author), 
-            class: "uk-button uk-button-secondary uk-button-small" %>
-        </span>
+
         <span>
           <%= link "Edit", to: author_path(@conn, :edit, author), 
             class: "uk-button uk-button-primary uk-button-small" %>

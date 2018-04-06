@@ -1,7 +1,6 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h1 style="color: blue"><%= @site.name %></h1>
-<h2>Categories</h2>
+<h2><%= @site.name %>>Categories</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
@@ -13,10 +12,9 @@
   <tbody>
 <%= for category <- @categories do %>
     <tr>
-      <td><%= category.name %></td>
+      <td><%= link category.name, to: site_category_path(@conn, :show, @site, category), class: "a" %></td>
       <td><%= category.description %></td>
       <td class="text-right">
-        <span><%= link "Show", to: site_category_path(@conn, :show, @site, category), class: "uk-button uk-button-secondary uk-button-small" %></span>
         <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, category), class: "uk-button uk-button-primary uk-button-small" %></span>
         <span><%= link "Delete", to: site_category_path(@conn, :delete, @site, category), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
       </td>

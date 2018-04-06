@@ -17,14 +17,13 @@
   <tbody>
 <%= for user <- @users do %>
     <tr>
-      <td><%= user.username %></td>
+      <td><%= link user.username, to: user_path(@conn, :show, user), class: "a" %></td>
       <td><%= get_rolename(user.role) %></td>
       <td><%= user.firstname %></td>
       <td><%= user.lastname %></td>
       <td><%= user.email %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: user_path(@conn, :show, user), class: "uk-button uk-button-secondary uk-button-small" %></span>
         <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "uk-button uk-button-primary uk-button-small" %></span>
         <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "uk-button uk-button-danger uk-button-small" %></span>
       </td>
