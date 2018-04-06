@@ -7,28 +7,26 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for author <- @authors do %>
     <tr>
-      <td><%= link author.name, to: author_path(@conn, :show, author), class: "a"  %></td>
-      <td><%= author.description %></td>
-
       <td class="text-right">
-
         <span>
-          <%= link "Edit", to: author_path(@conn, :edit, author), 
-            class: "uk-button uk-button-primary uk-button-small" %>
+          <%= link "", to: author_path(@conn, :edit, author), 
+            class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "Delete", to: author_path(@conn, :delete, author), 
+          <%= link "", to: author_path(@conn, :delete, author), 
             method: :delete, data: [confirm: "Are you sure?"], 
-            class: "uk-button uk-button-danger uk-button-small" %>
+            class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
+
+      <td><%= link author.name, to: author_path(@conn, :show, author), class: "a"  %></td>
+      <td><%= author.description %></td>
     </tr>
 <% end %>
   </tbody>
@@ -36,12 +34,13 @@
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: author_path(@conn, :index, page: @page_number - 1) %></span>
+    <span><%= link "", to: author_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: author_path(@conn, :index, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: author_path(@conn, :index, page: @page_number - 1) %></span>
+      <span><%= link "", to: author_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: author_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x"%></span>
+
   <% :first -> %>
-    <span><%= link "Next", to: author_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "", to: author_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 

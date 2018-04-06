@@ -1,18 +1,24 @@
-@import '../node_modules/flexboxgrid/dist/flexboxgrid';
-@import '../node_modules/uikit/dist/css/uikit.min';
-@import '_variables';
-@import '_navigation';
-@import '_post_card';
-@import '_post';
-@import '_administration';
+@import "../node_modules/flexboxgrid/dist/flexboxgrid";
+@import "../node_modules/uikit/dist/css/uikit.min";
+@import "_variables";
+@import "_navigation";
+@import "_post_card";
+@import "_post";
+@import "_administration";
 
 .row {
-    margin-left:0;
-    margin-right:0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.el-menu-icon {
+  color: #2b2628;
+}
+
+.el-arrow-icon {
+  color: #7d7779;
 }
 
 .no-link-decoration:hover {
   text-decoration: none;
 }
-
-
