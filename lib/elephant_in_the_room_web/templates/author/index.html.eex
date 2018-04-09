@@ -4,9 +4,9 @@
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
-    <tr>
-      <th>Menu</th>
+    <tr>      
       <th>Name</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
