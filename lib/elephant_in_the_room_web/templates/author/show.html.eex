@@ -1,23 +1,30 @@
-<h2>Author</h2>
+<h2>Authors</h2>
 
-<ul>
+<div class="uk-card uk-card-default uk-width-1-2@m">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+                <img class="uk-border-circle" width="40" height="40" src="<%= @author.image %>">
+            </div>
+            <div class="uk-width-expand">
+                <center>
+                  <h3 class="uk-card-title uk-margin-remove-bottom">
+                    <strong><%= @author.name %></strong>
+                  </h3>
+                  <p>Posts: <%= number_of_published_posts(@author)%> </p>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="uk-card-body">
+        <p><%= @author.description %></p>
+    </div>
+    <div class="uk-card-footer">
+      <span><%= link "Edit", to: author_path(@conn, :edit, @author), class: "uk-button" %></span>
+      <span><%= link "Back", to: author_path(@conn, :index), class: "uk-button" %></span>
+    </div>
+</div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @author.name %>
-  </li>
 
-  <li>
-    <strong>Image:</strong>
-    <%= @author.image %>
-  </li>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @author.description %>
-  </li>
 
-</ul>
-
-<span><%= link "Edit", to: author_path(@conn, :edit, @author) %></span>
-<span><%= link "Back", to: author_path(@conn, :index) %></span>

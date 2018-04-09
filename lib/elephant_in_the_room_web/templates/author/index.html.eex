@@ -7,12 +7,15 @@
     <tr>
       <th>Menu</th>
       <th>Name</th>
-      <th>Description</th>
     </tr>
   </thead>
   <tbody>
 <%= for author <- @authors do %>
     <tr>
+      <td>
+        <%= link author.name, to: author_path(@conn, :show, author), 
+          class: "a"  %>
+      </td>
       <td class="text-right">
         <span>
           <%= link "", to: author_path(@conn, :edit, author), 
@@ -24,11 +27,6 @@
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
-      <td>
-        <%= link author.name, to: author_path(@conn, :show, author), 
-          class: "a"  %>
-      </td>
-      <td><%= author.description %></td>
     </tr>
 <% end %>
   </tbody>
