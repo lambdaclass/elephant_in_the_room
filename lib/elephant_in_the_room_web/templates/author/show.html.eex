@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="uk-card-body">
-        <p><%= @author.description %></p>
+        <center><p><%= @author.description %></p></center>
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
