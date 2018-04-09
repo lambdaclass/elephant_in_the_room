@@ -9,13 +9,20 @@
                   <h3 class="uk-card-title uk-margin-remove-bottom">
                     <strong><%= @category.name %></strong>
                   </h3>
-                  <p>Posts: <%= number_of_posts(@category)%> </p>
+                  <center><p><%= @category.description %></p></center>
+                  
                 </center>
             </div>
         </div>
     </div>
     <div class="uk-card-body">
-        <center><p><%= @category.description %></p></center>
+        <center><p>Posts: <%= number_of_posts(@category)%> </p></center>
+        Latest posts in this category:
+        <%= for post <- latest_posts(@category) do %>
+            <p>
+              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %>
+            </p>
+        <% end %>
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">

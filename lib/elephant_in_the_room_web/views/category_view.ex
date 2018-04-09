@@ -3,7 +3,6 @@ defmodule ElephantInTheRoomWeb.CategoryView do
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites.Post
   import Ecto.Query
-  import Ecto.Query.API
 
   def get_top_featured_post(_conn, posts) do
     case posts do
@@ -39,5 +38,10 @@ defmodule ElephantInTheRoomWeb.CategoryView do
       select: count(p.post_id)
     )
     |> Repo.one()
+  end
+
+  def latest_posts(category, amount \\ 4) do
+    cat_with_posts = Repo.preload(category, :posts)
+    Enum.take(cat_with_posts.posts, amount)
   end
 end
