@@ -5,17 +5,21 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Menu</th>
       <th>Username</th>
       <th>Role</th>
-      <th>Firstname</th>
-      <th>Lastname</th>
       <th>Email</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
 <%= for user <- @users do %>
     <tr>
+      <td>
+        <%= link user.username, to: user_path(@conn, :show, user), 
+        class: "a" %>
+      </td>
+      <td><%= get_rolename(user.role) %></td>
+      <td><%= user.email %></td>
       <td class="text-right">
         <span>
           <%= link "", to: user_path(@conn, :edit, user), 
@@ -27,14 +31,7 @@
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
-      <td>
-        <%= link user.username, to: user_path(@conn, :show, user), 
-        class: "a" %>
-      </td>
-      <td><%= get_rolename(user.role) %></td>
-      <td><%= user.firstname %></td>
-      <td><%= user.lastname %></td>
-      <td><%= user.email %></td>
+
     </tr>
 <% end %>
   </tbody>

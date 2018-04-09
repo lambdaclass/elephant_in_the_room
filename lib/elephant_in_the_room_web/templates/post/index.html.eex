@@ -5,16 +5,14 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Menu</th>
       <th>Title</th>
-      <th>Categories</th>
-      <th>Abstract</th>
-      <th>Tags</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
     <%= for post <- @posts do %>
         <tr>
+          <td><%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %></td>
           <td class="text-right">
             <span>
               <%= link "", to: site_post_path(@conn, :edit, @site, post), 
@@ -26,10 +24,6 @@
                 class: "el-menu-icon fa fa-trash-alt" %>
             </span>
           </td>
-          <td><%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %></td>
-          <td><%= put_commas(post, :categories) %></td>
-          <td><%= post.abstract %></td>
-          <td><%= put_commas(post, :tags) %></td>
         </tr>
     <% end %>
   </tbody>

@@ -5,13 +5,17 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Menu</th>
       <th>Name</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
     <%= for site <- @sites do %>
       <tr>
+        <td>
+          <%= link site.name,
+          to: site_path(@conn, :show, site) %>
+        </td>
         <td class="text-right">
           <span>
             <%= link "",
@@ -25,10 +29,6 @@
             data: [confirm: "Are you sure?"],
             class: "el-menu-icon fa fa-trash-alt" %>
           </span>
-        </td>
-        <td>
-          <%= link site.name,
-          to: site_path(@conn, :show, site) %>
         </td>
       </tr>
     <% end %>

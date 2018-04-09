@@ -5,13 +5,17 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Menu</th>
       <th>Name</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
 <%= for role <- @roles do %>
     <tr>
+      <td>
+        <%= link role.name, to: role_path(@conn, :show, role), 
+          class: "a" %>
+      </td>
       <td class="text-right">
         <span>
           <%= link "", to: role_path(@conn, :edit, role), 
@@ -22,10 +26,6 @@
             method: :delete, data: [confirm: "Are you sure?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
-      </td>
-      <td>
-        <%= link role.name, to: role_path(@conn, :show, role), 
-          class: "a" %>
       </td>
     </tr>
 <% end %>
