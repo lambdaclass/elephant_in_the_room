@@ -5,15 +5,18 @@
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Menu</th>
       <th>Name</th>
-      <th>Description</th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
 <%= for category <- @categories do %>
     <tr>
-      <td class="text-right">
+      <td>
+        <%= link category.name, to: site_category_path(@conn, :show, @site, category), 
+          class: "a" %>
+      </td>
+       <td class="text-right">
         <span>
           <%= link "", to: site_category_path(@conn, :edit, @site, category), 
             class: "el-menu-icon fa fa-edit" %>
@@ -24,11 +27,6 @@
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
-      <td>
-        <%= link category.name, to: site_category_path(@conn, :show, @site, category), 
-          class: "a" %>
-      </td>
-      <td><%= category.description %></td>
     </tr>
 <% end %>
   </tbody>

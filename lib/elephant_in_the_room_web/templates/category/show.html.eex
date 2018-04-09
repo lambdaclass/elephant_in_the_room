@@ -1,13 +1,29 @@
-<h2><%= @category.name %></h2>
+<h2><%= @site.name %>>Categories</h2>
 
-<ul>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @category.description %>
-  </li>
+<div class="uk-card uk-card-default uk-width-1-2@m">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-expand">
+                <center>
+                  <h3 class="uk-card-title uk-margin-remove-bottom">
+                    <strong><%= @category.name %></strong>
+                  </h3>
+                  <p>Posts: <%= number_of_posts(@category)%> </p>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="uk-card-body">
+        <p><%= @category.description %></p>
+    </div>
+    <div class="uk-card-footer">
+      <div class="uk-align-right">
+        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category), class: "uk-button" %></span>
+        <span><%= link "Back", to: site_category_path(@conn, :index, @site), class: "uk-button" %></span>
+      </div>
+    </div>
+</div>
 
-</ul>
 
-<span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category) %></span>
-<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
+
