@@ -1,29 +1,33 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
-  </div>
+  <fieldset class="uk-fieldset">
+    <div class="uk-margin">
+      <%= label f, :name, class: "uk-form-label" %>
+      <%= text_input f, :name, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :name %>
+    </div>
 
-  <div class="form-group">
-    <%= label f, :image, class: "control-label" %>
-    <%= text_input f, :image, class: "form-control" %>
-    <%= error_tag f, :image %>
-  </div>
+    <div class="uk-margin">
+      <%= label f, :image, class: "uk-form-label" %>
+      <%= text_input f, :image, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :image %>
+    </div>
 
-  <div class="form-group">
-    <%= label f, :description, class: "control-label" %>
-    <%= text_input f, :description, class: "form-control" %>
-    <%= error_tag f, :description %>
-  </div>
+    <div class="uk-margin">
+      <%= label f, :description, class: "uk-form-label" %>
+      <%= text_input f, :description, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :description %>
+    </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
+    <div class="uk-margin">
+      <center>
+        <%= submit "Submit", class: "uk-button uk-button-primary" %>
+      </center>
+    </div>
+  </fieldset>
 <% end %>
