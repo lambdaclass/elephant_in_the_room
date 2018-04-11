@@ -35,3 +35,46 @@
     width: 100%;
   }
 }
+
+.el-title {
+  text-align: center;
+  h2 {
+    a {
+      color: white;
+    }
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .sign-out-tooltiptext {
+  visibility: hidden;
+  width: 100px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  top: 125%;
+  left: 50%;
+  margin-left: -60px;
+  z-index: 1;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+
+  border-color: #555 transparent transparent transparent;
+}
+.tooltip:hover .sign-out-tooltiptext {
+  visibility: visible;
+}
