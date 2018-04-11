@@ -27,7 +27,13 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   defp login_reply({:ok, user}, conn) do
     {:ok, conn, user} = Auth.sign_in_user(conn, user)
-    render(conn, "login.html", user: user)
+    IO.inspect(user.role)
+
+    if user.role.name == "admin" do
+      redirect(conn, to: "/admin", user: user)
+    else
+      redirect(conn, to: "/", user: user)
+    end
   end
 
   def logout(conn, _) do
