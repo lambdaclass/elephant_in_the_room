@@ -1,21 +1,32 @@
 <h2>
   <% link "Admin:", to: admin_path(@conn, :index) %>
 </h2>
-<ul>
-  <li>
-    <%= link "Sites",
-    to: site_path(@conn, :index) %>
-  </li>
-  <li>
-    <%= link "Authors",
-    to: author_path(@conn, :index) %>
-  </li>
-  <li>
-    <%= link "Users",
-    to: user_path(@conn, :index) %>
-  </li>
-  <li>
-    <%= link "Roles",
-    to: role_path(@conn, :index) %>
-  </li>
-</ul>
+<div class="row">
+  <div class="col-xs-0 col-md-1 col-lg-4"></div>
+  <div class="col-xs-12 col-md-10 col-lg-4">
+    <table class="el-menu-table uk-table uk-table-divider uk-table-hover">
+        <tbody>
+            <tr>
+              <td>
+                <%= link "Sites", to: site_path(@conn, :index) %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <%= link "Authors", to: author_path(@conn, :index) %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <%= link "Users", to: user_path(@conn, :index) %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <%= link "Roles", to: role_path(@conn, :index) %>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
