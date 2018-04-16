@@ -4,7 +4,7 @@
     <div class="uk-card-header">
         <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-auto">
-                <img class="uk-border-circle" width="40" height="40" src="<%= @author.image %>">
+                <img class="uk-border-circle" width="40" height="40" src="<%= ElephantInTheRoomWeb.Uploaders.Image.url({@author.image, @author}) %>">
             </div>
             <div class="uk-width-expand">
                 <center>
