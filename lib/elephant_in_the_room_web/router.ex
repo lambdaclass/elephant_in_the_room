@@ -34,12 +34,16 @@ defmodule ElephantInTheRoomWeb.Router do
     resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
 
-    scope "/site" do
-      pipe_through(:load_site_info)
-      get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
-      get("/:site_id/category/:category_id", CategoryController, :public_show)
-      get("/:site_id/tag/:tag_id", TagController, :public_show)
-    end
+    # scope "/site" do
+    #   pipe_through(:load_site_info)
+    #   get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
+    #   get("/:site_id/category/:category_id", CategoryController, :public_show)
+    #   get("/:site_id/tag/:tag_id", TagController, :public_show)
+    # end
+
+    get("/post/:year/:month/:day/:slug", PostController, :public_show)
+    get("/category/:category_id", CategoryController, :public_show)
+    get("/tag/:tag_id", TagController, :public_show)
 
     scope "/admin" do
       pipe_through([:on_admin_page, :ensure_auth])

@@ -49,13 +49,13 @@
             
             posted <%= show_date(@post.updated_at) %>
             in
-            <a href="<%= site_path @conn, :public_show, @site.id %>">
+            <a href="<%= site_path @conn, :public_show %>">
               <%= @site.name %>
             </a>
             under categories:
             <%= for category <- @site.categories do %>
               <a href="<%= category_path @conn, :public_show,
-                      @site.id, category.id %>">
+                       category.id %>">
                 <%= category.name %>
               </a>
             <% end %>

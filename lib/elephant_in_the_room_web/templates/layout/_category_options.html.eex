@@ -3,7 +3,7 @@
     
   <li>
     <a href="<%= category_path(@conn, :public_show,
-             @site.id, category_id) %>">
+             category_id) %>">
       <%= category_name %>
     </a>
   </li>

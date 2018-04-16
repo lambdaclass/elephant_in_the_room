@@ -7,6 +7,6 @@ defmodule ElephantInTheRoomWeb.SharedPostCardView do
     month = site.inserted_at.month
     day = site.inserted_at.day
 
-    post_path(conn, :public_show, site.id, year, month, day, post.slug)
+    post_path(conn, :public_show, year, month, day, post.slug)
   end
 end

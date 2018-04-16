@@ -33,7 +33,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
     month = post.inserted_at.month
     day = post.inserted_at.day
 
-    post_path(conn, :public_show, site.id, year, month, day, post.slug)
+    post_path(conn, :public_show, year, month, day, post.slug)
   end
 
   def number_of_entries(entries, entries_per_page) do

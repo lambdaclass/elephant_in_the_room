@@ -2,8 +2,11 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
   alias ElephantInTheRoom.Sites
 
   defp default_attrs do
+    site_number = to_string(:rand.uniform(100_000_000))
+
     %{
-      "name" => "Site " <> to_string(:rand.uniform(100_000_000))
+      "name" => "Site " <> site_number,
+      "url" => "site-" <> site_number <> ".com"
     }
   end
 

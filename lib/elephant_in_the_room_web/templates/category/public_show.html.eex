@@ -35,5 +35,5 @@
 
     </div>
   </div>
-  <span><%= link "Back", to: site_path(@conn, :public_show, @site.id) %></span>
+  <span><%= link "Back", to: site_path(@conn, :public_show) %></span>
 </div>
