@@ -27,6 +27,7 @@ defmodule ElephantInTheRoomWeb.Router do
     # Use the default browser stack
     pipe_through([:browser, :auth])
 
+    # get("/", SiteController, :show_default_site)
     get("/", SiteController, :public_show)
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
