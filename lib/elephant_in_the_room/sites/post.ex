@@ -3,7 +3,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites}
 
   schema "posts" do
     field(:title, :string)
@@ -75,7 +75,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     slug = get_field(changeset, :slug)
 
     if slug == nil || String.length(slug) == 0 do
-      slug = get_field(changeset, :title) |> slugified_title()
+      slug = get_field(changeset, :title) |> Sites.to_slug()
 
       case calculate_occurrences(0, slug, "") do
         0 -> put_change(changeset, :slug, slug)
@@ -102,15 +102,15 @@ defmodule ElephantInTheRoom.Sites.Post do
   defp get_category(name, site_id) do
     Repo.get_by!(Category, name: name, site_id: site_id)
   end
-  
+
   defp parse_tags(params) do
     site_id = params["site_id"]
-    
+
     (params["tags_separated_by_comma"] || "")
     |> String.split(",")
     |> Enum.map(&String.trim/1)
     |> Enum.reject(fn s -> s == "" end)
-    |> Enum.uniq
+    |> Enum.uniq()
     |> Enum.map(fn name -> get_or_insert_tag(name, site_id) end)
   end
 
@@ -120,12 +120,5 @@ defmodule ElephantInTheRoom.Sites.Post do
       on_conflict: [set: [name: name, site_id: site_id]],
       conflict_target: :name
     )
-  end
-
-  def slugified_title(title) do
-    title
-    |> String.downcase()
-    |> String.replace(~r/[^a-z0-9\s-]/, "")
-    |> String.replace(~r/(\s|-)+/, "-")
   end
 end

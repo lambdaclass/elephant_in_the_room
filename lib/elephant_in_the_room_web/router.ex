@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Router do
   use ElephantInTheRoomWeb, :router
+  import ElephantInTheRoomWeb.Plugs.DomainInspector
 
   pipeline :auth do
     plug(ElephantInTheRoom.Auth.Pipeline)
@@ -15,6 +16,7 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+    plug(:inspectConn)
   end
 
   pipeline :api do
