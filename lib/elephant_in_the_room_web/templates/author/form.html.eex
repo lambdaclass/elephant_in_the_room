@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
+<%= form_for @changeset, @action, [class: "uk-form-stacked", multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -14,7 +14,7 @@
 
     <div class="uk-margin">
       <%= label f, :image, class: "uk-form-label" %>
-      <%= text_input f, :image, class: "uk-form-controls uk-input" %>
+      <%= file_input f, :image, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :image %>
     </div>
 

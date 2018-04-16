@@ -52,7 +52,11 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # pagination
       {:scrivener_ecto, "~> 1.0"},
-      {:scrivener_list, "~> 1.0"}
+      {:scrivener_list, "~> 1.0"},
+
+      # image uploads
+      {:arc, "~> 0.8.0"},
+      {:arc_ecto, "~> 0.3.1"}
     ]
   end
 
