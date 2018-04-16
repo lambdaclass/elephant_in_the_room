@@ -27,7 +27,7 @@ defmodule ElephantInTheRoomWeb.Router do
     # Use the default browser stack
     pipe_through([:browser, :auth])
 
-    get("/", SiteController, :show_default_site)
+    get("/", SiteController, :public_show)
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
@@ -36,7 +36,6 @@ defmodule ElephantInTheRoomWeb.Router do
 
     scope "/site" do
       pipe_through(:load_site_info)
-      get("/:site_id", SiteController, :public_show)
       get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
       get("/:site_id/category/:category_id", CategoryController, :public_show)
       get("/:site_id/tag/:tag_id", TagController, :public_show)

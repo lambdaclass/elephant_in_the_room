@@ -96,9 +96,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
     )
   end
 
-  def public_show(conn, %{"site_id" => id}) do
+  def public_show(conn, params) do
+    id = conn.assigns.site.id
     site = Sites.get_site!(id)
-    render(conn, "public_show.html", site: site)
+    render(conn, "public_show.html")
   end
 
   def show_default_site(conn, _params) do

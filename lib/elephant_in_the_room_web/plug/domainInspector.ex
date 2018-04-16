@@ -1,9 +1,10 @@
 defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
+  use Phoenix.Router
   alias Plug.Conn
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoomWeb.Router.Helpers
-  use Phoenix.Router
+  alias ElephantInTheRoom.Repo
 
   def inspectConn(%Conn{} = conn, _options) do
     case Repo.get_by(Site, url: conn.host) do
@@ -11,9 +12,20 @@ defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
         halt(conn)
 
       %Site{:id => site_id} = site ->
+        site = Repo.preload(site, [:categories, :posts, :tags])
+
+        conn =
+          conn
+          |> Conn.assign(:assigns, %{"site_id" => site.id})
+          |> Conn.assign(:site, site)
+
+        new_route = Helpers.site_path(conn, :public_show)
+
+        conn =
+          conn
+          |> Conn.assign(:request_path, new_route)
+
         conn
-        |> Conn.assign(:request_path, Helpers.site_path(conn, :public_show, site))
-        |> Conn.assign(:assigns, %{site: site})
     end
   end
 end

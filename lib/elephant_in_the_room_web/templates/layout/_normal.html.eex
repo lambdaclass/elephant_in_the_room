@@ -58,7 +58,7 @@
               <li class="<%= if in_current_site(@conn, site_id), 
                          do: "uk-active" %>">
                 <a class="uk-link-text"
-                   href="<%= site_path(@conn, :public_show, site_id) %>">
+                   href="<%= site_path(@conn, :public_show) %>">
                   <%= site_name %>
                 </a>
               </li>

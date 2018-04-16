@@ -46,7 +46,7 @@ defmodule ElephantInTheRoomWeb.LayoutView do
         "/"
 
       site ->
-        Helpers.site_path(conn, :public_show, site.id)
+        Helpers.site_path(conn, :public_show)
     end
   end
 
