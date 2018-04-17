@@ -13,9 +13,9 @@
     </div>
 
     <div class="uk-margin">
-      <%= label f, :url, class: "uk-form-label" %>
-      <%= text_input f, :url, class: "uk-form-controls uk-input" %>
-      <%= error_tag f, :url %>
+      <%= label f, :host, class: "uk-form-label" %>
+      <%= text_input f, :host, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :host %>
     </div>
 
 

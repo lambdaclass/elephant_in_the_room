@@ -23,24 +23,29 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  scope "/local", ElephantInTheRoomWeb do
+    pipe_through([:browser, :auth])
+
+    get("/", SiteController, :show_default_site)
+
+    scope "/site" do
+      pipe_through(:load_site_info)
+      get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
+      get("/:site_id/category/:category_id", CategoryController, :public_show)
+      get("/:site_id/tag/:tag_id", TagController, :public_show)
+    end
+  end
+
   scope "/", ElephantInTheRoomWeb do
     # Use the default browser stack
     pipe_through([:browser, :auth])
 
-    # get("/", SiteController, :show_default_site)
     get("/", SiteController, :public_show)
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
     resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
-
-    # scope "/site" do
-    #   pipe_through(:load_site_info)
-    #   get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
-    #   get("/:site_id/category/:category_id", CategoryController, :public_show)
-    #   get("/:site_id/tag/:tag_id", TagController, :public_show)
-    # end
 
     get("/post/:year/:month/:day/:slug", PostController, :public_show)
     get("/category/:category_id", CategoryController, :public_show)
