@@ -1,3 +1,5 @@
+<% alias ElephantInTheRoomWeb.Uploaders.Image %>
+
 <div class="el-sites">
   <div class="el-title">
     <div class="uk-tile uk-tile-primary">
@@ -8,7 +10,7 @@
   <div class="row">
     <div class="col-xs-1"> </div>
     <div class="col-xs-10">
-      <p> Image: <%= @author.image %> </p>
+      <p> Image: <%= Image.url({@author.image, @author}) %> </p>
       <%= @author.description %>
     </div>
   </div>
