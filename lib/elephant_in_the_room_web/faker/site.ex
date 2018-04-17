@@ -6,7 +6,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
 
     %{
       "name" => "Site " <> site_number,
-      "url" => "site-" <> site_number <> ".com"
+      "hostname" => "site-" <> site_number <> ".com"
     }
   end
 
