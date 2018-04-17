@@ -26,6 +26,29 @@ defmodule ElephantInTheRoomWeb.SiteController do
     )
   end
 
+  def public_index(conn, _params) do
+    page =
+      case params do
+        %{"page" => page_number} ->
+          Site
+          |> Repo.paginate(page: page_number)
+
+        %{} ->
+          Site
+          |> Repo.paginate(page: 1)
+      end
+
+    render(
+      conn,
+      "public_index.html",
+      sites: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
+  end
+
   def new(conn, _params) do
     changeset = Sites.change_site(%Site{})
     render(conn, "new.html", changeset: changeset)
