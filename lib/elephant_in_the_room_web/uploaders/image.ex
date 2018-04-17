@@ -2,10 +2,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Image do
   use Arc.Definition
   use Arc.Ecto.Definition
 
-  # Include ecto support (requires package arc_ecto installed):
-  # use Arc.Ecto.Definition
-
-  @versions [:original]
+  @versions [:original, :thumb]
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]

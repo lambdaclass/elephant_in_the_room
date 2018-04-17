@@ -1,3 +1,4 @@
+<% alias ElephantInTheRoomWeb.Uploaders.Image %>
 <div class="row post-card">
   <%= for post <- @posts do %>
     <% link_post =
@@ -10,7 +11,7 @@
            onclick="window.location.href = '<%= link_post %>'">
         <div class="columns col-xs-12 col-sm-7">
           <div class="media"
-               style="background: url(<%= post.image %>);">
+               style="background: url(<%= Image.url({post.image, post}) %>);">
           </div>
         </div>
         <div class="columns col-xs-12 col-sm-5 body">

@@ -1,4 +1,7 @@
-<% alias ElephantInTheRoom.Sites.Author %>
+<% 
+alias ElephantInTheRoom.Sites.Author 
+alias ElephantInTheRoomWeb.Uploaders.Image
+%>
 
 <div class="el-post">
   <div class="feature-image-container">
@@ -7,9 +10,9 @@
       <div>
         <a id="feature-image-lightbox"
            class="uk-inline featured-image"
-           href="<%= @post.image %>"
+           href="<%= Image.url({@post.image, @post}) %>"
            caption="<%= @post.title %>">
-          <img src="<%= @post.image %>" alt="">
+          <img src="<%= Image.url({@post.image, @post}) %>" alt="">
         </a>
       </div>
     </div>

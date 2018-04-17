@@ -1,3 +1,4 @@
+<% alias ElephantInTheRoomWeb.Uploaders.Image %>
 <h2><%= @post.title %></h2>
 
 <ul>
@@ -24,7 +25,7 @@
 
   <li>
     <strong>Image:</strong>
-    <%= @post.image %>
+    <%=  Image.url({@post.image, @post}) %>
   </li>
 
   <li>
