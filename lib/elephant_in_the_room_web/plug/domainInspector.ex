@@ -7,7 +7,7 @@ defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
   alias ElephantInTheRoom.Repo
 
   def inspectConn(%Conn{} = conn, _options) do
-    case Repo.get_by(Site, url: conn.host) do
+    case Repo.get_by(Site, host: conn.host) do
       nil ->
         halt(conn)
 
