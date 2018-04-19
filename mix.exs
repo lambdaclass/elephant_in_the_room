@@ -20,7 +20,7 @@ defmodule ElephantInTheRoom.Mixfile do
   def application do
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :faker, :scrivener_ecto]
+      extra_applications: [:logger, :runtime_tools, :faker, :scrivener_ecto, :arc_ecto]
     ]
   end
 
@@ -52,7 +52,11 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # pagination
       {:scrivener_ecto, "~> 1.0"},
-      {:scrivener_list, "~> 1.0"}
+      {:scrivener_list, "~> 1.0"},
+
+      # image uploads
+      {:arc, "~> 0.8.0"},
+      {:arc_ecto, "~> 0.7.0"}
     ]
   end
 

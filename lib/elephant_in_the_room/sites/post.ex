@@ -1,9 +1,11 @@
 defmodule ElephantInTheRoom.Sites.Post do
   use Ecto.Schema
+  use Arc.Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
     field(:title, :string)
@@ -11,7 +13,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:abstract, :string)
     field(:content, :string)
     field(:rendered_content, :string)
-    field(:image, :string)
+    field(:image, Image.Type)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -38,10 +40,11 @@ defmodule ElephantInTheRoom.Sites.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:title, :content, :image, :slug, :abstract, :site_id, :author_id])
+    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
+    |> cast_attachments(attrs, [:image], [])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :image, :site_id])
+    |> validate_required([:title, :content, :site_id])
     |> put_rendered_content
     |> put_slugified_title
   end
