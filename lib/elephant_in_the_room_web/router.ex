@@ -16,24 +16,11 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-    plug(:inspectConn)
+    plug(:set_site)
   end
 
   pipeline :api do
     plug(:accepts, ["json"])
-  end
-
-  scope "/local", ElephantInTheRoomWeb do
-    pipe_through([:browser, :auth])
-
-    get("/", SiteController, :show_default_site)
-
-    scope "/site" do
-      pipe_through(:load_site_info)
-      get("/:site_id/post/:year/:month/:day/:slug", PostController, :public_show)
-      get("/:site_id/category/:category_id", CategoryController, :public_show)
-      get("/:site_id/tag/:tag_id", TagController, :public_show)
-    end
   end
 
   scope "/", ElephantInTheRoomWeb do

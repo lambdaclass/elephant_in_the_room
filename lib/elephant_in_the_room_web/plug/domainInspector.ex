@@ -1,15 +1,17 @@
 defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
   use Phoenix.Router
   alias Plug.Conn
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoomWeb.Router.Helpers
-  alias ElephantInTheRoom.Repo
 
-  def inspectConn(%Conn{} = conn, _options) do
+  def set_site(%Conn{} = conn, _options) do
     if conn.host == "localhost" do
       # take this path if you are running elephant locally
+      default_site = Sites.get_site!(1)
+
       conn
+      |> Conn.assign(:site, default_site)
     else
       case Repo.get_by(Site, host: conn.host) do
         nil ->
@@ -20,13 +22,13 @@ defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
 
           conn =
             conn
-            |> Conn.assign(:assigns, %{"site_id" => site.id})
+            |> Map.put(:assigns, %{"site_id" => site.id})
             |> Conn.assign(:site, site)
 
           new_route = Helpers.site_path(conn, :public_show)
 
           conn
-          |> Conn.assign(:request_path, new_route)
+          |> Map.put(:request_path, new_route)
       end
     end
   end

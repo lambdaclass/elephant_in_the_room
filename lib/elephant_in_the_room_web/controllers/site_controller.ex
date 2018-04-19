@@ -26,7 +26,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
     )
   end
 
-  def public_index(conn, _params) do
+  def public_index(conn, params) do
     page =
       case params do
         %{"page" => page_number} ->
