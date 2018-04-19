@@ -26,6 +26,8 @@ config :elephant_in_the_room, ElephantInTheRoom.Auth.Guardian,
   # Don't use this secret in production!
   secret_key: "UipYx0z54wtvC8EZ0bavPWkaCk5gFvu/9caWXb/fwiALISfAVDrvlIq5JPGMuE8J"
 
+config :arc, storage: Arc.Storage.Local
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

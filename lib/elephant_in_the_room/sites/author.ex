@@ -1,11 +1,13 @@
 defmodule ElephantInTheRoom.Sites.Author do
   use Ecto.Schema
+  use Arc.Ecto.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Author, Post}
+  alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "authors" do
     field(:description, :string)
-    field(:image, :string)
+    field(:image, Image.Type)
     field(:name, :string)
 
     has_many(:posts, Post, on_delete: :nilify_all)
@@ -16,8 +18,9 @@ defmodule ElephantInTheRoom.Sites.Author do
   @doc false
   def changeset(%Author{} = author, attrs) do
     author
-    |> cast(attrs, [:name, :image, :description])
-    |> validate_required([:name, :image, :description])
+    |> cast(attrs, [:name, :description])
+    |> cast_attachments(attrs, [:image], [])
+    |> validate_required([:name, :description])
     |> unique_constraint(:name)
   end
 end
