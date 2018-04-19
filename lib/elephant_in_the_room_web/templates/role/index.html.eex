@@ -1,24 +1,31 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Listing Roles</h2>
+<h2>Roles</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Name</th>
-
-      <th></th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
 <%= for role <- @roles do %>
     <tr>
-      <td><%= role.name %></td>
-
+      <td>
+        <%= link role.name, to: role_path(@conn, :show, role), 
+          class: "a" %>
+      </td>
       <td class="text-right">
-        <span><%= link "Show", to: role_path(@conn, :show, role), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: role_path(@conn, :edit, role), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: role_path(@conn, :delete, role), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span>
+          <%= link "", to: role_path(@conn, :edit, role), 
+            class: "el-menu-icon fa fa-edit" %>
+        </span>
+        <span>
+          <%= link "", to: role_path(@conn, :delete, role), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "el-menu-icon fa fa-trash-alt" %>
+        </span>
       </td>
     </tr>
 <% end %>
@@ -27,12 +34,12 @@
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+    <span><%= link "", to: role_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: role_path(@conn, :index, page: @page_number - 1) %></span>
+    <span><%= link "", to: role_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: role_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% :first -> %>
-    <span><%= link "Next", to: role_path(@conn, :index, page: @page_number + 1) %></span>
+    <span><%= link "", to: role_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 

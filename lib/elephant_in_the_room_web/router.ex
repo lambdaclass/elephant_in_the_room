@@ -45,8 +45,6 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/", AdminController, :index)
       resources("/roles", RoleController)
       resources("/users", UserController, except: [:new, :create])
-
-      get("/secret", LoginController, :secret)
       resources("/authors", AuthorController)
 
       resources "/sites", SiteController do

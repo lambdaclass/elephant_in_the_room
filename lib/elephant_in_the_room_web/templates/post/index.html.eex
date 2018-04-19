@@ -1,44 +1,42 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Listing Posts</h2>
+<h2><%= @site.name %>>Posts</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Title</th>
-      <th>Categories</th>
-      <th>Abstract</th>
-      <th>Image</th>
-      <th>Tags</th>
-      <th></th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
-<%= for post <- @posts do %>
-    <tr>
-      <td><%= post.title %></td>
-      <td><%= put_commas(post, :categories) %></td>
-      <td><%= post.abstract %></td>
-      <td><%= post.image %></td>
-      <td><%= put_commas(post, :tags) %></td>
-      <td class="text-right">
-        <span><%= link "Show", to: site_post_path(@conn, :show, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: site_post_path(@conn, :edit, @site, post), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: site_post_path(@conn, :delete, @site, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
+    <%= for post <- @posts do %>
+        <tr>
+          <td><%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %></td>
+          <td class="text-right">
+            <span>
+              <%= link "", to: site_post_path(@conn, :edit, @site, post), 
+                class: "el-menu-icon fa fa-edit" %>
+            </span>
+            <span>
+              <%= link "", to: site_post_path(@conn, :delete, @site, post), 
+                method: :delete, data: [confirm: "Are you sure?"], 
+                class: "el-menu-icon fa fa-trash-alt" %>
+            </span>
+          </td>
+        </tr>
+    <% end %>
   </tbody>
 </table>
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: site_post_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "Next", to: site_post_path(@conn, :index, @site, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: site_post_path(@conn, :index, @site, page: @page_number - 1) %></span>
+    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% :first -> %>
-    <span><%= link "Next", to: site_post_path(@conn, :index, @site, page: @page_number + 1) %></span>
+    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 

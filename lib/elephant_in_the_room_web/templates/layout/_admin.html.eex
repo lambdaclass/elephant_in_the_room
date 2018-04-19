@@ -1,21 +1,77 @@
-<div class="el-sites-nav">
-  <div class="uk-flex uk-flex-center">
-    <ul class="uk-subnav uk-subnav-divider" uk-margin>
-      <%= for {site_id, site_name} <- get_nav_sites() do %>
-      <li class="<%= if in_current_site(@conn, site_id), do: "uk-active" %>">
-        <a href="<%= site_path(@conn, :public_show, site_id) %>">
-          <%= site_name %>
-        </a>
-      </li>
-      <% end %>
-    </ul>
-  </div>
+<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
+  <nav class="uk-navbar-container uk-navbar-sticky">
+    <div class="uk-container uk-container-expand">
+      <div uk-navbar="" class="uk-navbar">
+
+        <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <button class="uk-button uk-button-default uk-margin-small-right"
+              type="button" uk-toggle="target: #offcanvas-nav-primary">
+                <i class="fas fa-bars"></i>
+            </button>
+          </ul>
+        </div>
+
+        <div class="uk-navbar-center">
+          <ul class="uk-navbar-nav">
+            <li class="uk-active">
+                <%= link "Elephant", to: site_path(@conn, :show_default_site) %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="uk-navbar-right">
+          <ul class="uk-navbar-nav">
+          <div class="tooltip">
+            <button data-method="get" data-to="<%= login_path(@conn, :logout)%>" 
+              class="uk-button uk-button-default uk-margin-small-right"
+              type="button" uk-toggle="target: #offcanvas-nav-secondary">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="sign-out-tooltiptext">Sign out</span>
+                
+            </button>
+             </div>
+          </ul>
+        </div>
+          
+      </div>
+    </div>
+  </nav>
 </div>
 
-<div class="uk-tile uk-tile-secondary">
-  <p class="uk-h4">ADMINISTRATION</p>
-</div>
+<!-- NAVIGATION BAR -->
 
- <div role="main">
-   <%= render @view_module, @view_template, assigns %>
- </div>
+<div class="el-administration-wrapper row">
+    <div class="navigation-side-panel col-xs-3 col-md-2">
+
+      <div class="administration-title">
+        <h3><%= link "Administration", to: admin_path(@conn, :index) %></h3>
+      </div>
+
+      <ul class="administation-items">
+        <li>
+          <%= link "Sites",
+          to: site_path(@conn, :index) %>
+        </li>
+        <li>
+          <%= link "Authors",
+          to: author_path(@conn, :index) %>
+        </li>
+        <li>
+          <%= link "Users",
+          to: user_path(@conn, :index) %>
+        </li>
+        <li>
+          <%= link "Roles",
+          to: role_path(@conn, :index) %>
+        </li>
+      </ul>
+      
+    </div>
+
+    <div class="administation-content col-xs-9 col-md-10">
+      <div role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </div>
+    </div>
+</div>

@@ -1,5 +1,8 @@
 defmodule ElephantInTheRoomWeb.CategoryView do
   use ElephantInTheRoomWeb, :view
+  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites.Post
+  import Ecto.Query
 
   def get_top_featured_post(_conn, posts) do
     case posts do
@@ -26,5 +29,19 @@ defmodule ElephantInTheRoomWeb.CategoryView do
       _ ->
         {:error, :no_normal_posts}
     end
+  end
+
+  def number_of_posts(category) do
+    from(
+      p in "posts_categories",
+      where: p.category_id == ^category.id,
+      select: count(p.post_id)
+    )
+    |> Repo.one()
+  end
+
+  def latest_posts(category, amount \\ 4) do
+    cat_with_posts = Repo.preload(category, :posts)
+    Enum.take(cat_with_posts.posts, amount)
   end
 end

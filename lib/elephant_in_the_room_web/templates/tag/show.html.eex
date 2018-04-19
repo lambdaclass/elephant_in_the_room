@@ -1,13 +1,32 @@
-<h2>Show Tag</h2>
+<h2><%= @tag.name %></h2>
 
-<ul>
+<div class="uk-card uk-card-default uk-width-1-2@m">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-expand">
+                <center>
+                  <h3 class="uk-card-title uk-margin-remove-bottom">
+                    <strong><%= @tag.name %></strong>
+                  </h3>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="uk-card-body">
+        <center><p>Posts: <%= number_of_posts(@tag)%> </p></center>
+        Latest posts with this tag:
+        <%= for post <- latest_posts(@tag) do %>
+            <p>
+              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %>
+            </p>
+        <% end %>
+    </div>
+    <div class="uk-card-footer">
+      <div class="uk-align-right">
+        <span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, @tag) %></span>
+        <span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>
+      </div>
+    </div>
+</div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @tag.name %>
-  </li>
 
-</ul>
-
-<span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, @tag) %></span>
-<span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>

@@ -1,33 +1,37 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Listing Users</h2>
+<h2>Users</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="table">
+<table class="uk-table uk-table-striped">
   <thead>
     <tr>
       <th>Username</th>
       <th>Role</th>
-      <th>Firstname</th>
-      <th>Lastname</th>
       <th>Email</th>
-
-      <th></th>
+      <th>Menu</th>
     </tr>
   </thead>
   <tbody>
 <%= for user <- @users do %>
     <tr>
-      <td><%= user.username %></td>
-      <td><%= get_rolename(user.role) %></td>
-      <td><%= user.firstname %></td>
-      <td><%= user.lastname %></td>
-      <td><%= user.email %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      <td>
+        <%= link user.username, to: user_path(@conn, :show, user), 
+        class: "a" %>
       </td>
+      <td><%= get_rolename(user.role) %></td>
+      <td><%= user.email %></td>
+      <td class="text-right">
+        <span>
+          <%= link "", to: user_path(@conn, :edit, user), 
+            class: "el-menu-icon fa fa-edit" %>
+        </span>
+        <span>
+          <%= link "", to: user_path(@conn, :delete, user), 
+            method: :delete, data: [confirm: "Are you sure?"], 
+            class: "el-menu-icon fa fa-trash-alt" %>
+        </span>
+      </td>
+
     </tr>
 <% end %>
   </tbody>
@@ -35,12 +39,24 @@
 
 <%= case compare(@page_number, @total_pages) do %>
   <% :equal -> %>
-    <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
+    <span>
+      <%= link "", to: user_path(@conn, :index, page: @page_number - 1),
+        class: "el-arrow-icon fa fa-arrow-left fa-2x" %>
+    </span>
   <% :lesser -> %>
-    <span><%= link "Next", to: user_path(@conn, :index, page: @page_number + 1) %></span>
-    <span><%= link "Back", to: user_path(@conn, :index, page: @page_number - 1) %></span>
+    <span>
+      <%= link "", to: user_path(@conn, :index, page: @page_number + 1),
+        class: "el-arrow-icon fa fa-arrow-left fa-2x" %>
+    </span>
+    <span>
+      <%= link "", to: user_path(@conn, :index, page: @page_number - 1),
+        class: "el-arrow-icon fa fa-arrow-right fa-2x" %>
+    </span>
   <% :first -> %>
-    <span><%= link "Next", to: user_path(@conn, :index, page: @page_number + 1) %></span>
+    <span>
+      <%= link "", to: user_path(@conn, :index, page: @page_number + 1),
+        class: "el-arrow-icon fa fa-arrow-right fa-2x" %>
+    </span>
   <% _ -> %>
 <% end %>
 

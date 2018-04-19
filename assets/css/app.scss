@@ -1,17 +1,86 @@
-@import '../node_modules/flexboxgrid/dist/flexboxgrid';
-@import '../node_modules/uikit/dist/css/uikit.min';
-@import '_variables';
-@import '_navigation';
-@import '_post_card';
-@import '_post';
+@import "../node_modules/flexboxgrid/dist/flexboxgrid";
+@import "../node_modules/uikit/dist/css/uikit.min";
+@import "_variables";
+@import "_navigation";
+@import "_post_card";
+@import "_post";
+@import "_administration";
 
 .row {
-    margin-left:0;
-    margin-right:0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.el-menu-icon {
+  color: #2b2628;
+}
+
+.el-arrow-icon {
+  color: #7d7779;
 }
 
 .no-link-decoration:hover {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
+.el-menu-card {
+  width: 300px;
+  max-width: 400px;
+}
 
+.el-form {
+  padding-top: 15vh;
+  width: 100%;
+  .uk-card {
+    width: 100%;
+  }
+}
+
+.el-title {
+  text-align: center;
+  h2 {
+    a {
+      color: white;
+    }
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .sign-out-tooltiptext {
+  visibility: hidden;
+  width: 100px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  top: 125%;
+  left: 50%;
+  margin-left: -60px;
+  z-index: 1;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .sign-out-tooltiptext {
+  visibility: visible;
+}
+
+.el-menu-table {
+  border: 2px solid black;
+  margin-top: 15vh;
+}

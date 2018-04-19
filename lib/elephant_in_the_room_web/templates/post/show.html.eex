@@ -1,11 +1,6 @@
-<h2>Show Post</h2>
+<h2><%= @post.title %></h2>
 
 <ul>
-
-  <li>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </li>
 
   <li>
     <strong>Slug:</strong>

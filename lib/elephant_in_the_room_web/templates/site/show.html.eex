@@ -1,21 +1,13 @@
 <% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
-<h2>Show Site</h2>
+<h2>Site: <%= @site.name %> </h2>
 
-<ul>
+<% cat_page_number = @pages.cat_page.page_number %>
+<% tag_page_number = @pages.tag_page.page_number %>
+<% post_page_number = @pages.post_page.page_number %>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @site.name %>
-  </li>
-
-</ul>
-
-  <% cat_page_number = @pages.cat_page.page_number %>
-  <% tag_page_number = @pages.tag_page.page_number %>
-  <% post_page_number = @pages.post_page.page_number %>
-
-<div>
+<div class="uk-flex uk-flex-around">
+<div class="el-menu-card">
   <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
   <p><%= "Page: #{@pages.cat_page.page_number}/#{@pages.cat_page.total_pages}" %></p>
   <ul>
@@ -29,25 +21,33 @@
   <%= case compare(@pages.cat_page.page_number, @pages.cat_page.total_pages) do %>
     <% :equal -> %>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number - 1, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number - 1, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
     <% :lesser -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number + 1, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number - 1, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number - 1, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number + 1, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% :first -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number + 1, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number + 1, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% _ -> %>
   <% end %>
 
 </div>
 
-<div>
+<div class="el-menu-card">
   <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
   <p><%= "Page: #{@pages.post_page.page_number}/#{@pages.post_page.total_pages}" %></p>
   <ul>
@@ -61,25 +61,32 @@
   <%= case compare(@pages.post_page.page_number, @pages.post_page.total_pages) do %>
     <% :equal -> %>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number - 1) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number, post_page: post_page_number - 1),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
     <% :lesser -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number + 1) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number,
+          cat_page: cat_page_number, post_page: post_page_number - 1),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number - 1) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number, 
+          cat_page: cat_page_number, post_page: post_page_number + 1),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% :first -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: tag_page_number, cat_page: cat_page_number, post_page: post_page_number + 1) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: tag_page_number,
+          cat_page: cat_page_number, post_page: post_page_number + 1),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% _ -> %>
   <% end %>
-
 </div>
 
-<div>
+<div class="el-menu-card">
   <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
   <p><%= "Page: #{@pages.tag_page.page_number}/#{@pages.tag_page.total_pages}" %></p>
   <ul>
@@ -95,23 +102,31 @@
   <%= case compare(@pages.tag_page.page_number, @pages.tag_page.total_pages) do %>
     <% :equal -> %>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), cat_page: cat_page_number, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), 
+          cat_page: cat_page_number, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
     <% :lesser -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1), cat_page: cat_page_number, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), 
+          cat_page: cat_page_number, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-left" %>
       </span>
       <span>
-        <%= link "Back", to: site_path(@conn, :show, @site, tag_page: (tag_page_number - 1), cat_page: cat_page_number, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1), 
+          cat_page: cat_page_number, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% :first -> %>
       <span>
-        <%= link "Next", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1), cat_page: cat_page_number, post_page: post_page_number) %>
+        <%= link "", to: site_path(@conn, :show, @site, tag_page: (tag_page_number + 1),
+          cat_page: cat_page_number, post_page: post_page_number),
+          class: "el-arrow-icon fa fa-arrow-right" %>
       </span>
     <% _ -> %>
   <% end %>
 
 </div>
-
+</div>
 <span><%= link "Edit", to: site_path(@conn, :edit, @site) %></span>
 <span><%= link "Back", to: site_path(@conn, :index) %></span>

@@ -6,10 +6,12 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   def index(conn, _params) do
     changeset = Auth.change_user(%User{})
-    user = case Auth.get_user(conn) do
-             {:ok, %User{} = user} -> user
-             {:error, reason} -> reason
-           end
+
+    user =
+      case Auth.get_user(conn) do
+        {:ok, %User{} = user} -> user
+        {:error, reason} -> reason
+      end
 
     render(conn, "login.html", changeset: changeset, user: user)
   end
@@ -25,16 +27,17 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   defp login_reply({:ok, user}, conn) do
     {:ok, conn, user} = Auth.sign_in_user(conn, user)
-    render(conn, "login.html", user: user)
+
+    if user.role.name == "admin" do
+      redirect(conn, to: "/admin", user: user)
+    else
+      redirect(conn, to: "/", user: user)
+    end
   end
 
   def logout(conn, _) do
     conn
     |> Auth.sign_out_user()
     |> redirect(to: login_path(conn, :login))
-  end
-
-  def secret(conn, _params) do
-    render(conn, "secret.html")
   end
 end
