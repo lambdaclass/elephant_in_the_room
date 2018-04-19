@@ -27,7 +27,6 @@ defmodule ElephantInTheRoomWeb.LoginController do
 
   defp login_reply({:ok, user}, conn) do
     {:ok, conn, user} = Auth.sign_in_user(conn, user)
-    IO.inspect(user.role)
 
     if user.role.name == "admin" do
       redirect(conn, to: "/admin", user: user)
