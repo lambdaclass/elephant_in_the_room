@@ -28,12 +28,16 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
-  def show_link_with_date(conn, _site, post) do
+  def show_link_with_date(conn, site, post) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
 
-    post_path(conn, :public_show, year, month, day, post.slug)
+    if conn.host != "localhost" do
+      post_path(conn, :public_show, year, month, day, post.slug)
+    else
+      post_path(conn, :public_show, site.id, year, month, day, post.slug)
+    end
   end
 
   def number_of_entries(entries, entries_per_page) do
