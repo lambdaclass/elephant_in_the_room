@@ -2,12 +2,16 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
-  alias Plug.Conn
   alias ElephantInTheRoomWeb.Router.Helpers
   alias ElephantInTheRoom.Auth.{User, Role}
 
-  def get_nav_sites() do
-    Sites.list_sites()
+  def get_nav_sites(conn) do
+    if conn.host != "localhost" do
+      Sites.list_sites()
+      |> Enum.filter(fn s -> s.host != "localhost" end)
+    else
+      Sites.list_sites()
+    end
   end
 
   def get_categories(conn) do
@@ -54,7 +58,7 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def show_site_link(conn) do
     if conn.host != "localhost" do
-      site_path(conn, :public_show)
+      "http://" <> conn.host <> ":4000"
     else
       site_path(conn, :public_index)
     end
@@ -74,8 +78,5 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     else
       category_path(conn, :public_show, site.id, category_id)
     end
-  end
-
-  def show_nav_title() do
   end
 end
