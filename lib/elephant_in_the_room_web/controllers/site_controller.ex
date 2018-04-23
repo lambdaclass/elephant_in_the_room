@@ -27,8 +27,6 @@ defmodule ElephantInTheRoomWeb.SiteController do
   end
 
   def public_index(conn, params) do
-    IO.inspect("PUBLIC INDEX")
-
     page =
       case params do
         %{"page" => page_number} ->
@@ -133,7 +131,6 @@ defmodule ElephantInTheRoomWeb.SiteController do
         Sites.get_site!(params["id"])
         |> Repo.preload([:posts, :categories])
 
-      IO.inspect(site, label: "site")
       render(conn, "public_show.html", site: site)
     end
   end
