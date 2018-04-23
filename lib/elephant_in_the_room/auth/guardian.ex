@@ -16,8 +16,6 @@ defmodule ElephantInTheRoom.Auth.Guardian do
 
   """
   def resource_from_claims(claims) do
-    user =
-      claims["sub"]
-      |> Auth.get_user()
+    Auth.get_user(claims["sub"])
   end
 end

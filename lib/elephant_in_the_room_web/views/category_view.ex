@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.CategoryView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Post
   import Ecto.Query
 
   def get_top_featured_post(_conn, posts) do

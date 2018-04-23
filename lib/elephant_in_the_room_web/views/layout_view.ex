@@ -2,14 +2,12 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
+  alias Plug.Conn
   alias ElephantInTheRoomWeb.Router.Helpers
   alias ElephantInTheRoom.Auth.{User, Role}
 
   def get_nav_sites() do
     Sites.list_sites()
-    |> Enum.map(fn x ->
-      {x.id, x.name}
-    end)
   end
 
   def get_categories(conn) do
@@ -45,12 +43,17 @@ defmodule ElephantInTheRoomWeb.LayoutView do
       nil ->
         "/"
 
-      site ->
+      _site ->
         Helpers.site_path(conn, :public_show)
     end
   end
 
   def current_site(conn) do
     conn.assigns[:site]
+  end
+
+  def put_site(conn, site) do
+    Conn.put_resp_header(conn, "site_host", site.id)
+    Conn.assign(conn, :site, site)
   end
 end

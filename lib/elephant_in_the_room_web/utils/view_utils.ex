@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
 
   def compare(x, x), do: :equal
 
-  def compare(1, y), do: :first
+  def compare(1, _y), do: :first
 
   def compare(x, y) when x > y, do: :greater
 

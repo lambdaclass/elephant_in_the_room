@@ -3,7 +3,6 @@ defmodule ElephantInTheRoomWeb.AuthorView do
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites.Post
   import Ecto.Query
-  import Ecto.Query.API
 
   def number_of_published_posts(author) do
     from(

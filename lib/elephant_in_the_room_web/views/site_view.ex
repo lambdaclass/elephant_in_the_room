@@ -28,7 +28,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
-  def show_link_with_date(conn, site, post) do
+  def show_link_with_date(conn, _site, post) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day

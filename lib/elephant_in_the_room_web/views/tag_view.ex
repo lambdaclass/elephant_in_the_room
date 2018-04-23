@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.TagView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Post
   import Ecto.Query
 
   def number_of_posts(tag) do
