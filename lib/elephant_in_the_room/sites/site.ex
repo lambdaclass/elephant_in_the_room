@@ -2,7 +2,6 @@ defmodule ElephantInTheRoom.Sites.Site do
   use Ecto.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag}
-  alias ElephantInTheRoom.Sites
 
   schema "sites" do
     field(:name, :string)

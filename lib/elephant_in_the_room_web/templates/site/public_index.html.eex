@@ -17,9 +17,9 @@
 </div>
 <div class="uk-grid-small uk-child-width-1-4@s uk-flex-center uk-text-center" uk-grid>
     <div>
-          <%= for site <- @sites do %>
+      <%= for site <- @sites do %>
         <div class="uk-card uk-card-default uk-card-body">
-        <%= link site.name, to: site_path(@conn, :public_show, site) %>
+        <%= show_site_link(site, @conn) %>
         </div>
       <% end %>  
 

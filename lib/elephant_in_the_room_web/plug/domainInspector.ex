@@ -8,16 +8,26 @@ defmodule ElephantInTheRoomWeb.Plugs.DomainInspector do
   def set_site(%Conn{} = conn, _options) do
     if conn.host == "localhost" do
       # take this path if you are running elephant locally
-      default_site = Sites.get_site!(1)
+      IO.inspect(Map.get(conn.assigns, :site), label: "CONN")
+
+      site =
+        if Map.get(conn.assigns, :site) == nil do
+          IO.inspect("default site")
+          Sites.get_site!(1)
+        else
+          Map.get(conn.assigns, :site)
+        end
 
       conn
-      |> Conn.assign(:site, default_site)
+      |> Conn.assign(:site, site)
     else
       case Repo.get_by(Site, host: conn.host) do
         nil ->
+          IO.inspect("HALT")
           halt(conn)
 
         %Site{:id => site_id} = site ->
+          IO.inspect("Known site")
           site = Repo.preload(site, [:categories, :posts, :tags])
 
           conn =

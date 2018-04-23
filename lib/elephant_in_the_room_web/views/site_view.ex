@@ -39,4 +39,12 @@ defmodule ElephantInTheRoomWeb.SiteView do
   def number_of_entries(entries, entries_per_page) do
     max(entries_per_page - entries, entries)
   end
+
+  def show_site_link(site, conn) do
+    if conn.host != "localhost" do
+      link(site.name, to: site_path(conn, :public_show))
+    else
+      link(site.name, to: site_path(conn, :public_show, site.id))
+    end
+  end
 end

@@ -2,8 +2,7 @@
   <%= for {category_id, category_name} <- get_categories(@conn) do %>
     
   <li>
-    <a href="<%= category_path(@conn, :public_show,
-             category_id) %>">
+    <a href="<%= show_category_link(category_id, @site, @conn) %>">
       <%= category_name %>
     </a>
   </li>

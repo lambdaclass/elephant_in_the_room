@@ -43,8 +43,8 @@ defmodule ElephantInTheRoomWeb.LayoutView do
       nil ->
         "/"
 
-      _site ->
-        Helpers.site_path(conn, :public_show)
+      site ->
+        Helpers.site_path(conn, :public_show, site)
     end
   end
 
@@ -52,8 +52,27 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     conn.assigns[:site]
   end
 
-  def put_site(conn, site) do
-    Conn.put_resp_header(conn, "site_host", site.id)
-    Conn.assign(conn, :site, site)
+  # def put_site(conn, site) do
+  #   Conn.put_resp_header(conn, "site_host", site.id)
+  #   Conn.assign(conn, :site, site)
+  # end
+
+  def show_site_link(site, conn) do
+    if conn.host != "localhost" do
+      "http://" <> site.host <> ":4000"
+    else
+      site_path(conn, :public_show, site.id)
+    end
+  end
+
+  def show_category_link(category_id, site, conn) do
+    if conn.host != "localhost" do
+      category_path(conn, :public_show, category_id)
+    else
+      category_path(conn, :public_show, site.id, category_id)
+    end
+  end
+
+  def show_nav_title() do
   end
 end
