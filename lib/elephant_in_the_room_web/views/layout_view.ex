@@ -52,10 +52,13 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     conn.assigns[:site]
   end
 
-  # def put_site(conn, site) do
-  #   Conn.put_resp_header(conn, "site_host", site.id)
-  #   Conn.assign(conn, :site, site)
-  # end
+  def show_site_link(conn) do
+    if conn.host != "localhost" do
+      site_path(conn, :public_show)
+    else
+      site_path(conn, :public_index)
+    end
+  end
 
   def show_site_link(site, conn) do
     if conn.host != "localhost" do

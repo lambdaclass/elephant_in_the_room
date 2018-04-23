@@ -15,7 +15,7 @@
         <div class="uk-navbar-center">
           <ul class="uk-navbar-nav">
             <li class="uk-active">
-                <%= link "Elephant", to: site_path(@conn, :public_show) %>
+                <%= link "Elephant", to: show_site_link(@conn) %>
             </li>
           </ul>
         </div>
