@@ -43,4 +43,10 @@ defmodule ElephantInTheRoomWeb.CategoryView do
     cat_with_posts = Repo.preload(category, :posts)
     Enum.take(cat_with_posts.posts, amount)
   end
+
+  def show_site_link(conn, site) do
+    choose_route(conn, fn -> site_path(conn, :public_show) end, fn ->
+      site_path(conn, :public_show, site.id)
+    end)
+  end
 end

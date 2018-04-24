@@ -28,7 +28,6 @@
               type="button" uk-toggle="target: #offcanvas-nav-secondary">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="sign-out-tooltiptext">Sign out</span>
-                
             </button>
              </div>
           </ul>
