@@ -1,4 +1,7 @@
 defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
+  alias Phoenix.View
+  alias ElephantInTheRoomWeb.SharedPostCardView
+
   def compare(1, 1), do: :unique_page
 
   def compare(x, x), do: :equal
@@ -8,4 +11,22 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
   def compare(x, y) when x > y, do: :greater
 
   def compare(x, y) when x < y, do: :lesser
+
+  def shared_render_posts_card(conn, posts, assigns) do
+    all_assigns = Enum.concat([posts: posts, conn: conn], assigns)
+
+    View.render(
+      SharedPostCardView,
+      "_shared_post_card.html",
+      all_assigns
+    )
+  end
+
+  def choose_route(conn, route1, route2) do
+    if conn.host != "localhost" do
+      route1.()
+    else
+      route2.()
+    end
+  end
 end

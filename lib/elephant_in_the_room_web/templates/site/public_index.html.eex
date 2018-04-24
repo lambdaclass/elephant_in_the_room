@@ -1,5 +1,3 @@
-<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
-
 <h2>Sites</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 
@@ -19,7 +17,7 @@
     <div>
       <%= for site <- @sites do %>
         <div class="uk-card uk-card-default uk-card-body">
-        <%= show_site_link(site, @conn) %>
+        <a href="<%= show_site_link(site, @conn) %>"><%= site.name %></a>
         </div>
       <% end %>  
 

@@ -57,26 +57,20 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   end
 
   def show_site_link(conn) do
-    if conn.host != "localhost" do
-      "http://" <> conn.host <> ":4000"
-    else
+    choose_route(conn, fn -> "http://" <> conn.host <> ":4000" end, fn ->
       site_path(conn, :public_index)
-    end
+    end)
   end
 
   def show_site_link(site, conn) do
-    if conn.host != "localhost" do
-      "http://" <> site.host <> ":4000"
-    else
+    choose_route(conn, fn -> "http://" <> site.host <> ":4000" end, fn ->
       site_path(conn, :public_show, site.id)
-    end
+    end)
   end
 
-  def show_category_link(category_id, site, conn) do
-    if conn.host != "localhost" do
-      category_path(conn, :public_show, category_id)
-    else
+  def show_category_link(conn, category_id, site) do
+    choose_route(conn, fn -> category_path(conn, :public_show, category_id) end, fn ->
       category_path(conn, :public_show, site.id, category_id)
-    end
+    end)
   end
 end
