@@ -2,9 +2,7 @@
   <%= for {category_id, category_name} <- get_categories(@conn) do %>
     
   <li>
-    <a href="<%= show_category_link(@conn, category_id, @site) %>">
-      <%= category_name %>
-    </a>
+    <%= link category_name, to: show_category_link(@conn, category_id, @site) %>
   </li>
 
   <% end %>

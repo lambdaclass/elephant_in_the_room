@@ -2,7 +2,6 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoomWeb.Router.Helpers
   alias ElephantInTheRoom.Auth.{User, Role}
 
   def get_nav_sites(conn) do
@@ -48,7 +47,9 @@ defmodule ElephantInTheRoomWeb.LayoutView do
         "/"
 
       site ->
-        Helpers.site_path(conn, :public_show, site)
+        choose_route(conn, fn -> site_path(conn, :public_index) end, fn ->
+          site_path(conn, :public_index, site)
+        end)
     end
   end
 
@@ -69,8 +70,8 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   end
 
   def show_category_link(conn, category_id, site) do
-    choose_route(conn, fn -> category_path(conn, :public_show, category_id) end, fn ->
-      category_path(conn, :public_show, site.id, category_id)
-    end)
+    route1 = fn -> category_path(conn, :public_show, category_id) end
+    route2 = fn -> category_path(conn, :public_show, site.id, category_id) end
+    choose_route(conn, route1, route2)
   end
 end

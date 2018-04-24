@@ -53,7 +53,6 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  #  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => id}) do
   def public_show(conn, %{"category_id" => category_id, "id" => site_id}) do
     site = Sites.get_site!(site_id)
 
