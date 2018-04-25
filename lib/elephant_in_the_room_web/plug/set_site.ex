@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.Plugs.SetSite do
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites.Site
+  alias Plug.Conn
 
   def set_site(conn, params) do
     if conn.host != "localhost" do
@@ -10,7 +11,9 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
 
         site ->
           site = site |> Repo.preload([:categories, :posts, :tags])
-          Map.put(conn, :site, site)
+
+          conn
+          |> Conn.assign(:assigns, %{site: site})
       end
     else
       conn

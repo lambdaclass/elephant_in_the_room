@@ -64,7 +64,7 @@ alias ElephantInTheRoomWeb.Uploaders.Image
             <% end %>
             with tags:
             <%= for tag <- @post.tags do %>
-              <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
+              <a href="<%= show_tag_link(@conn, @site, tag) %>">
                 <%= tag.name %>
               </a>
             <% end %>

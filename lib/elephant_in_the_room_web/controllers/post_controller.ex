@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.Sites.{Site, Post}
 
   def index(conn, params) do
     page =
@@ -61,8 +60,14 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
-    post = Post |> Repo.get_by!(slug: slug) |> Repo.preload([:author, :tags, :categories])
+  def public_show(conn, %{"slug" => slug, "id" => id} = params) do
+    IO.inspect(conn, label: "conn")
+
+    site = Sites.get_site!(id)
+
+    post =
+      Post |> Repo.get_by!(slug: params["slug"]) |> Repo.preload([:author, :tags, :categories])
+
     render(conn, "public_show.html", site: site, post: post)
   end
 

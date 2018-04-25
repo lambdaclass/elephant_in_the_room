@@ -89,4 +89,12 @@ defmodule ElephantInTheRoomWeb.PostView do
     {_res, msg} = format_diff(NaiveDateTime.diff(now, date), date)
     msg
   end
+
+  def show_tag_link(conn, site, tag) do
+    if conn.host != "localhost" do
+      tag_path(conn, :public_show, tag.id)
+    else
+      local_tag_path(conn, :public_show, site.id, tag.id)
+    end
+  end
 end

@@ -53,9 +53,9 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"tag_id" => id}) do
+  def public_show(%{assigns: %{site: site}} = conn, %{"tag_id" => tag_id} = params) do
     tag =
-      Sites.get_tag!(id)
+      Sites.get_tag!(tag_id)
       |> Repo.preload(:posts)
 
     render(conn, "public_show.html", tag: tag, site: site)

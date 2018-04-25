@@ -53,11 +53,11 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(conn, %{"category_id" => category_id} = params) do
-    site =
-      if conn.host != "localhost",
-        do: conn.site,
-        else: Sites.get_site!(params["id"])
+  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => category_id} = params) do
+    # site =
+    #   if conn.host != "localhost",
+    #     do: conn.site,
+    #     else: Sites.get_site!(params["id"])
 
     category =
       Sites.get_category!(category_id)
