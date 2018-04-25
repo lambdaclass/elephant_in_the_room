@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Router do
   use ElephantInTheRoomWeb, :router
+  import ElephantInTheRoomWeb.Plugs.SetSite
 
   pipeline :auth do
     plug(ElephantInTheRoom.Auth.Pipeline)
@@ -15,6 +16,7 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+    plug(:set_site)
   end
 
   pipeline :api do
@@ -32,10 +34,10 @@ defmodule ElephantInTheRoomWeb.Router do
     resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
 
-    get("/site/:id", SiteController, :public_show)
-    get("/site/:id/post/:year/:month/:day/:slug", PostController, :public_show)
-    get("/site/:id/category/:category_id", CategoryController, :public_show)
-    get("/site/:id/tag/:tag_id", TagController, :public_show)
+    get("/site/:id", SiteController, :public_show, as: "local_site")
+    get("/site/:id/post/:year/:month/:day/:slug", PostController, :public_show, as: "local_post")
+    get("/site/:id/category/:category_id", CategoryController, :public_show, as: "local_category")
+    get("/site/:id/tag/:tag_id", TagController, :public_show, as: "local_tag")
 
     scope "/admin" do
       pipe_through([:on_admin_page, :ensure_auth])

@@ -42,14 +42,18 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   end
 
   def get_site_path(conn) do
-    case conn && conn.assigns[:site] do
-      nil ->
-        "/"
+    if Map.has_key?(conn.assigns, :site) do
+      case conn && conn.assigns.site do
+        nil ->
+          "/"
 
-      site ->
-        choose_route(conn, fn -> site_path(conn, :public_index) end, fn ->
-          site_path(conn, :public_index, site)
-        end)
+        site ->
+          choose_route(conn, fn -> site_path(conn, :public_show) end, fn ->
+            local_site_path(conn, :public_show, site.id)
+          end)
+      end
+    else
+      site_path(conn, :public_index)
     end
   end
 
@@ -65,13 +69,13 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def show_site_link(site, conn) do
     choose_route(conn, fn -> "http://" <> site.host <> ":4000" end, fn ->
-      site_path(conn, :public_show, site.id)
+      local_site_path(conn, :public_show, site.id)
     end)
   end
 
   def show_category_link(conn, category_id, site) do
     route1 = fn -> category_path(conn, :public_show, category_id) end
-    route2 = fn -> category_path(conn, :public_show, site.id, category_id) end
+    route2 = fn -> local_category_path(conn, :public_show, site.id, category_id) end
     choose_route(conn, route1, route2)
   end
 end

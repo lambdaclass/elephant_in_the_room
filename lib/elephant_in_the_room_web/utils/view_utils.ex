@@ -23,10 +23,8 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
   end
 
   def choose_route(conn, route1, route2) do
-    if conn.host != "localhost" do
-      route1.()
-    else
-      route2.()
-    end
+    if conn.host != "localhost",
+      do: route1.(),
+      else: route2.()
   end
 end
