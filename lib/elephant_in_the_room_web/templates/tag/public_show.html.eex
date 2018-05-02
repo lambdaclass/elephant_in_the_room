@@ -1,3 +1,5 @@
+<% alias ElephantInTheRoomWeb.SiteView %>
+
 <div class="el-sites">
   <div class="el-title">
     <div class="uk-tile uk-tile-primary">
@@ -6,10 +8,29 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-1"> </div>
-    <div class="col-xs-10">
-      <%= shared_render_posts_card @conn, @tag.posts, assigns %>
-    </div>
+    <%= case SiteView.get_top_featured_post(@conn, @tag.posts) do %>
+      <% {:error, _} -> %>
+      <% {:ok, top_post } -> %>
+        <%= shared_render_posts_card @conn, 
+        [top_post],
+        Map.put(assigns, :type, :featured) %>
+    <% end %>
+
+    <%= case SiteView.get_important_posts(@conn, @tag.posts) do %>
+      <% {:error, _} -> %> 
+      <% {:ok, important_posts} -> %>
+        <%= shared_render_posts_card @conn,
+        important_posts,
+        Map.put(assigns, :type, :important)%>
+    <% end %>
+
+    <%= case SiteView.get_normal_posts(@conn, @tag.posts) do %>
+      <% {:error, _} -> %> 
+      <% {:ok, normal_posts } -> %>
+        <%= shared_render_posts_card @conn, 
+        normal_posts,
+        Map.put(assigns, :type, :normal) %>
+    <% end %>
   </div>
   <span><%= link "Back", to: site_path(@conn, :index) %></span>
 </div>

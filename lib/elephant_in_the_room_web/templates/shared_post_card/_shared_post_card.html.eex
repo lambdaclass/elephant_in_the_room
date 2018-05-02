@@ -6,7 +6,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
 <div class="row post-card">
   <%= for post <- @posts do %>
     <% link_post = SiteView.show_link_with_date @conn, @site, post %>
-    
+    <%= IO.inspect(assigns[:type]) %>
     <%= case assigns[:type] do %>
       <% :featured ->  %>
       <div class="row featured-post"

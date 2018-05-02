@@ -4,7 +4,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
 
-  def index(conn, params) do
+  def index(%{assigns: %{site: site}} = conn, params) do
     page =
       case params do
         %{"page" => page_number} ->
@@ -19,7 +19,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(
       conn,
       "index.html",
-      posts: page.entries,
+      posts: Enum.filter(page.entries, fn p -> p.site_id == site.id end),
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
@@ -60,11 +60,13 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  def public_show(conn, %{"slug" => slug, "id" => id} = params) do
-    site = Sites.get_site!(id)
+  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug} = params) do
+    site = Sites.get_site!(site.id)
 
     post =
-      Post |> Repo.get_by!(slug: params["slug"]) |> Repo.preload([:author, :tags, :categories])
+      Post
+      |> Repo.get_by!(slug: params["slug"])
+      |> Repo.preload([:author, :tags, :categories])
 
     render(conn, "public_show.html", site: site, post: post)
   end
