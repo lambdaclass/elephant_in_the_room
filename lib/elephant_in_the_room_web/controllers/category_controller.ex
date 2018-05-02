@@ -3,23 +3,26 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
   alias ElephantInTheRoom.Repo
+  import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =
       case params do
         %{"page" => page_number} ->
           Category
+          |> where([c], c.site_id == ^site.id)
           |> Repo.paginate(page: page_number)
 
         %{} ->
           Category
+          |> where([c], c.site_id == ^site.id)
           |> Repo.paginate(page: 1)
       end
 
     render(
       conn,
       "index.html",
-      categories: Enum.filter(page.entries, fn c -> c.site_id == site.id end),
+      categories: page.entries,
       site: site,
       page_number: page.page_number,
       page_size: page.page_size,
@@ -53,11 +56,13 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => category_id}) do
-    # site =
-    #   if conn.host != "localhost",
-    #     do: conn.site,
-    #     else: Sites.get_site!(params["id"])
+  def public_show(conn, %{"category_id" => category_id} = params) do
+    site_id =
+      if conn.host != "localhost",
+        do: conn.assigns.site.id,
+        else: params["id"]
+
+    site = Sites.get_site!(site_id)
 
     category =
       Sites.get_category!(category_id)

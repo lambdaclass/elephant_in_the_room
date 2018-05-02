@@ -4,16 +4,19 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Repo
+  import Ecto.Query
 
-  def index(conn, params) do
+  def index(%{assigns: %{site: site}} = conn, params) do
     page =
       case params do
         %{"page" => page_number} ->
           Tag
+          |> where([t], t.site_id == ^site.id)
           |> Repo.paginate(page: page_number)
 
         %{} ->
           Tag
+          |> where([t], t.site_id == ^site.id)
           |> Repo.paginate(page: 1)
       end
 
@@ -53,7 +56,14 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"tag_id" => tag_id} = params) do
+  def public_show(conn, %{"tag_id" => tag_id} = params) do
+    site_id =
+      if conn.host != "localhost",
+        do: conn.assigns.site.id,
+        else: params["id"]
+
+    site = Sites.get_site!(site_id)
+
     tag =
       Sites.get_tag!(tag_id)
       |> Repo.preload(:posts)
