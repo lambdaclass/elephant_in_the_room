@@ -48,9 +48,9 @@ defmodule ElephantInTheRoomWeb.LayoutView do
           "/"
 
         site ->
-          choose_route(conn, fn -> site_path(conn, :public_show) end, fn ->
-            local_site_path(conn, :public_show, site.id)
-          end)
+          if conn.host != "localhost",
+            do: site_path(conn, :public_show),
+            else: local_site_path(conn, :public_show, site.id)
       end
     else
       site_path(conn, :public_index)
@@ -62,20 +62,20 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   end
 
   def show_site_link(conn) do
-    choose_route(conn, fn -> "http://" <> conn.host <> ":4000" end, fn ->
-      site_path(conn, :public_index)
-    end)
+    if conn.host != "localhost",
+      do: "http://" <> conn.host <> ":4000",
+      else: site_path(conn, :public_index)
   end
 
   def show_site_link(site, conn) do
-    choose_route(conn, fn -> "http://" <> site.host <> ":4000" end, fn ->
-      local_site_path(conn, :public_show, site.id)
-    end)
+    if conn.host != "localhost",
+      do: "http://" <> site.host <> ":4000",
+      else: local_site_path(conn, :public_show, site.id)
   end
 
   def show_category_link(conn, category_id, site) do
-    route1 = fn -> category_path(conn, :public_show, category_id) end
-    route2 = fn -> local_category_path(conn, :public_show, site.id, category_id) end
-    choose_route(conn, route1, route2)
+    if conn.host != "localhost",
+      do: category_path(conn, :public_show, category_id),
+      else: local_category_path(conn, :public_show, site.id, category_id)
   end
 end

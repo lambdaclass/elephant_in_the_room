@@ -45,8 +45,8 @@ defmodule ElephantInTheRoomWeb.CategoryView do
   end
 
   def show_site_link(conn, site) do
-    choose_route(conn, fn -> site_path(conn, :public_show) end, fn ->
-      local_site_path(conn, :public_show, site.id)
-    end)
+    if conn.host != "localhost",
+      do: site_path(conn, :public_show),
+      else: local_site_path(conn, :public_show, site.id)
   end
 end

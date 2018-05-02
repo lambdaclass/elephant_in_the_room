@@ -61,8 +61,6 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def public_show(conn, %{"slug" => slug, "id" => id} = params) do
-    IO.inspect(conn, label: "conn")
-
     site = Sites.get_site!(id)
 
     post =
