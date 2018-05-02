@@ -2,7 +2,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
   alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.{Site, Post}
+  alias ElephantInTheRoom.Sites.Post
 
   def index(conn, params) do
     page =

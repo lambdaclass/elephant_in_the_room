@@ -91,10 +91,20 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_tag_link(conn, site, tag) do
-    if conn.host != "localhost" do
-      tag_path(conn, :public_show, tag.id)
-    else
-      local_tag_path(conn, :public_show, site.id, tag.id)
-    end
+    if conn.host != "localhost",
+      do: tag_path(conn, :public_show, tag.id),
+      else: local_tag_path(conn, :public_show, site.id, tag.id)
+  end
+
+  def show_site_link(conn, site) do
+    if conn.host != "localhost",
+      do: site_path(conn, :public_show),
+      else: local_site_path(conn, :public_show, site)
+  end
+
+  def show_category_link(conn, site, category) do
+    if conn.host != "localhost",
+      do: category_path(conn, :public_show, category.id),
+      else: local_category_path(conn, :public_show, site, category.id)
   end
 end

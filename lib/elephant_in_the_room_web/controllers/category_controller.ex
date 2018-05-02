@@ -19,7 +19,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(
       conn,
       "index.html",
-      categories: page.entries,
+      categories: Enum.filter(page.entries, fn c -> c.site_id == site.id end),
       site: site,
       page_number: page.page_number,
       page_size: page.page_size,
@@ -53,7 +53,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => category_id} = params) do
+  def public_show(%{assigns: %{site: site}} = conn, %{"category_id" => category_id}) do
     # site =
     #   if conn.host != "localhost",
     #     do: conn.site,
