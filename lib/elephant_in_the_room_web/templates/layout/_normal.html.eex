@@ -4,7 +4,7 @@
   <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
     <nav class="uk-navbar-container uk-navbar-sticky">
       <div class="uk-container uk-container-expand">
-        <div uk-navbar="" class="uk-navbar">
+        <div uk-navbar="ss" class="uk-navbar">
 
           <div class="uk-navbar-left">
             <ul class="uk-navbar-nav">
@@ -22,6 +22,7 @@
                  <a href="<%= get_site_path(@conn) %>">
                    Elephant
                  </a>
+              </li>
             </ul>
           </div>
 

@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.Faker.Utils
 
   # author 1
   # site 1
@@ -8,7 +9,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       "content" => generate_content(),
-      "image" => gen_image_link(),
+      "image" => Utils.download_image(gen_image_link()),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
       "slug" => ""
@@ -29,9 +30,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    [gen_text(50),
-     gen_md_image(),
-     gen_text(40)] |> Enum.join(" ")    
+    [gen_text(50), gen_md_image(), gen_text(40)] |> Enum.join(" ")
   end
 
   defp gen_image_link() do
@@ -47,5 +46,4 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     image = gen_image_link()
     "![#{description}](#{image})"
   end
-  
 end

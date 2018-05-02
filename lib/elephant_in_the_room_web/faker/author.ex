@@ -1,10 +1,11 @@
 defmodule ElephantInTheRoomWeb.Faker.Author do
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.Faker.Utils
 
   defp default_attrs do
     %{
       "description" => Faker.Lorem.paragraph(2),
-      "image" => Faker.Avatar.image_url(),
+      "image" => Utils.download_image(Faker.Avatar.image_url()),
       "name" => Faker.Name.name()
     }
   end
