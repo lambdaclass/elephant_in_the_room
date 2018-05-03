@@ -9,7 +9,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       "content" => generate_content(),
-      "image" => Utils.download_image(gen_image_link()),
+      "image" => gen_image_link(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
       "slug" => ""
@@ -18,8 +18,8 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
-
-    {:ok, post} = Sites.create_post(attrs["site"], changes)
+    new_changes = Utils.fake_image_upload(changes)
+    {:ok, post} = Sites.create_post(attrs["site"], new_changes)
 
     post
   end
