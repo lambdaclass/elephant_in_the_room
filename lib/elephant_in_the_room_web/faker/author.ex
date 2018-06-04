@@ -5,15 +5,15 @@ defmodule ElephantInTheRoomWeb.Faker.Author do
   defp default_attrs do
     %{
       "description" => Faker.Lorem.paragraph(2),
-      "image" => Utils.download_image(Faker.Avatar.image_url()),
+      "image" => Faker.Avatar.image_url(),
       "name" => Faker.Name.name()
     }
   end
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
-
-    {:ok, author} = Sites.create_author(changes)
+    new_changes = Utils.fake_image_upload(changes, "jpg")
+    {:ok, author} = Sites.create_author(new_changes)
     author
   end
 
