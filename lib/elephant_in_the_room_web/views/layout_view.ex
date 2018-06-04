@@ -2,14 +2,15 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoomWeb.Router.Helpers
   alias ElephantInTheRoom.Auth.{User, Role}
 
-  def get_nav_sites() do
-    Sites.list_sites()
-    |> Enum.map(fn x ->
-      {x.id, x.name}
-    end)
+  def get_nav_sites(conn) do
+    if conn.host != "localhost" do
+      Sites.list_sites()
+      |> Enum.filter(fn s -> s.host != "localhost" end)
+    else
+      Sites.list_sites()
+    end
   end
 
   def get_categories(conn) do
@@ -41,16 +42,40 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   end
 
   def get_site_path(conn) do
-    case conn && conn.assigns[:site] do
-      nil ->
-        "/"
+    if Map.has_key?(conn.assigns, :site) do
+      case conn && conn.assigns.site do
+        nil ->
+          "/"
 
-      site ->
-        Helpers.site_path(conn, :public_show, site.id)
+        site ->
+          if conn.host != "localhost",
+            do: site_path(conn, :public_show),
+            else: local_site_path(conn, :public_show, site.id)
+      end
+    else
+      site_path(conn, :public_index)
     end
   end
 
   def current_site(conn) do
     conn.assigns[:site]
+  end
+
+  def show_site_link(conn) do
+    if conn.host != "localhost",
+      do: "http://" <> conn.host <> ":4000",
+      else: site_path(conn, :public_index)
+  end
+
+  def show_site_link(site, conn) do
+    if conn.host != "localhost",
+      do: "http://" <> site.host <> ":4000",
+      else: local_site_path(conn, :public_show, site.id)
+  end
+
+  def show_category_link(conn, category_id, site) do
+    if conn.host != "localhost",
+      do: category_path(conn, :public_show, category_id),
+      else: local_category_path(conn, :public_show, site.id, category_id)
   end
 end

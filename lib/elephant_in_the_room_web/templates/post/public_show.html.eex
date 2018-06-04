@@ -52,19 +52,18 @@ alias ElephantInTheRoomWeb.Uploaders.Image
             
             posted <%= show_date(@post.updated_at) %>
             in
-            <a href="<%= site_path @conn, :public_show, @site.id %>">
+            <a href="<%= show_site_link(@conn, @site) %>"> 
               <%= @site.name %>
             </a>
             under categories:
             <%= for category <- @site.categories do %>
-              <a href="<%= category_path @conn, :public_show,
-                      @site.id, category.id %>">
+              <a href="<%= show_category_link(@conn, @site, category) %>">
                 <%= category.name %>
               </a>
             <% end %>
             with tags:
             <%= for tag <- @post.tags do %>
-              <a href="<%= tag_path @conn, :public_show, @site.id, tag.id %>">
+              <a href="<%= show_tag_link(@conn, @site, tag) %>">
                 <%= tag.name %>
               </a>
             <% end %>

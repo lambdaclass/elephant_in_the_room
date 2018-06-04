@@ -4,6 +4,8 @@ defmodule ElephantInTheRoom.Sites do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Changeset
+  alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
@@ -555,5 +557,28 @@ defmodule ElephantInTheRoom.Sites do
     author
     |> Author.changeset(attrs)
     |> Repo.update()
+  end
+
+  def to_slug(name) do
+    name
+    |> String.downcase()
+    |> String.replace(~r/[^a-z0-9\s-]/, "")
+    |> String.replace(~r/(\s|-)+/, "-")
+  end
+
+  def put_slugified_title(%Changeset{valid?: valid?} = changeset)
+      when not valid? do
+    changeset
+  end
+
+  def put_slugified_field(%Changeset{} = changeset, field) when is_atom(field) do
+    slug = get_field(changeset, :slug)
+
+    if slug == nil || String.length(slug) == 0 do
+      slug = get_field(changeset, field) |> to_slug()
+      put_change(changeset, :slug, slug)
+    else
+      changeset
+    end
   end
 end

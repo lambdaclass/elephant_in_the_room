@@ -41,5 +41,5 @@ case length(Sites.list_sites()) == 0 do
   true ->
     # create a site 
     IO.puts("Creating a new site!")
-    Sites.create_site(%{name: "default site"})
+    Sites.create_site(%{name: "default site", host: "default-site.com"})
 end

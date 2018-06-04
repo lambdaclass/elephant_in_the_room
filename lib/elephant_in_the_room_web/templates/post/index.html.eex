@@ -1,4 +1,3 @@
-<% import ElephantInTheRoomWeb.Utils.ViewUtils %>
 
 <h2><%= @site.name %>>Posts</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>

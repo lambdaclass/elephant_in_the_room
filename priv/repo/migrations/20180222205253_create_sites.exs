@@ -4,7 +4,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
   def change do
     create table(:sites) do
       add(:name, :string)
-
+      add(:host, :string)
       timestamps()
     end
 

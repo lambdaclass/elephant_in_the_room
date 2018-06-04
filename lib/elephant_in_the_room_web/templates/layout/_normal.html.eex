@@ -54,12 +54,12 @@
         <li class="uk-parent">
           <a href="">Sites</a>
           <ul class="uk-nav-sub">
-            <%= for {site_id, site_name} <- get_nav_sites() do %>
-              <li class="<%= if in_current_site(@conn, site_id), 
+            <%= for site <- get_nav_sites(@conn) do %>
+              <li class="<%= if in_current_site(@conn, site.id), 
                          do: "uk-active" %>">
                 <a class="uk-link-text"
-                   href="<%= site_path(@conn, :public_show, site_id) %>">
-                  <%= site_name %>
+                   href="<%= show_site_link(site, @conn) %>">
+                  <%= site.name %>
                 </a>
               </li>
             <% end %>

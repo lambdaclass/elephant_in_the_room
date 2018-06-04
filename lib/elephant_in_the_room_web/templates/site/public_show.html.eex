@@ -3,25 +3,25 @@
   <%= case get_top_featured_post(@conn, @site.posts) do %>
     <% {:error, _} -> %>
     <% {:ok, top_post } -> %>
-    <%= shared_render_posts_card @conn, 
-    [top_post],
-    Map.put(assigns, :type, :featured) %>
+      <%= shared_render_posts_card @conn, 
+      [top_post],
+      Map.put(assigns, :type, :featured) %>
   <% end %>
 
   <%= case get_important_posts(@conn, @site.posts) do %>
     <% {:error, _} -> %> 
     <% {:ok, important_posts} -> %>
-    <%= shared_render_posts_card @conn,
-    important_posts,
-    Map.put(assigns, :type, :important)%>
+      <%= shared_render_posts_card @conn,
+      important_posts,
+      Map.put(assigns, :type, :important)%>
   <% end %>
 
   <%= case get_normal_posts(@conn, @site.posts) do %>
     <% {:error, _} -> %> 
     <% {:ok, normal_posts } -> %>
-    <%= shared_render_posts_card @conn, 
-    normal_posts,
-    Map.put(assigns, :type, :normal) %>
+      <%= shared_render_posts_card @conn, 
+      normal_posts,
+      Map.put(assigns, :type, :normal) %>
   <% end %>
 
 </div>

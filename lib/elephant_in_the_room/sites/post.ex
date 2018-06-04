@@ -4,7 +4,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
@@ -78,7 +78,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     slug = get_field(changeset, :slug)
 
     if slug == nil || String.length(slug) == 0 do
-      slug = get_field(changeset, :title) |> slugified_title()
+      slug = get_field(changeset, :title) |> Sites.to_slug()
 
       case calculate_occurrences(0, slug, "") do
         0 -> put_change(changeset, :slug, slug)
@@ -123,12 +123,5 @@ defmodule ElephantInTheRoom.Sites.Post do
       on_conflict: [set: [name: name, site_id: site_id]],
       conflict_target: :name
     )
-  end
-
-  def slugified_title(title) do
-    title
-    |> String.downcase()
-    |> String.replace(~r/[^a-z0-9\s-]/, "")
-    |> String.replace(~r/(\s|-)+/, "-")
   end
 end

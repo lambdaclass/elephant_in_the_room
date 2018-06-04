@@ -1,19 +1,21 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
 
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Repo
+  import Ecto.Query
 
-  def index(conn, params) do
+  def index(%{assigns: %{site: site}} = conn, params) do
     page =
       case params do
         %{"page" => page_number} ->
           Post
+          |> where([p], p.site_id == ^site.id)
           |> Repo.paginate(page: page_number)
 
         %{} ->
           Post
+          |> where([p], p.site_id == ^site.id)
           |> Repo.paginate(page: 1)
       end
 
@@ -61,8 +63,19 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post)
   end
 
-  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
-    post = Post |> Repo.get_by!(slug: slug) |> Repo.preload([:author, :tags, :categories])
+  def public_show(conn, %{"slug" => slug} = params) do
+    site_id =
+      if conn.host != "localhost",
+        do: conn.assigns.site.id,
+        else: params["id"]
+
+    site = Sites.get_site!(site_id)
+
+    post =
+      Post
+      |> Repo.get_by!(slug: slug)
+      |> Repo.preload([:author, :tags, :categories])
+
     render(conn, "public_show.html", site: site, post: post)
   end
 

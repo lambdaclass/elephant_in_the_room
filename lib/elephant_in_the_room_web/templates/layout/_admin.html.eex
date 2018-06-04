@@ -15,7 +15,7 @@
         <div class="uk-navbar-center">
           <ul class="uk-navbar-nav">
             <li class="uk-active">
-                <%= link "Elephant", to: site_path(@conn, :show_default_site) %>
+                <%= link "Elephant", to: show_site_link(@conn) %>
             </li>
           </ul>
         </div>
@@ -28,7 +28,6 @@
               type="button" uk-toggle="target: #offcanvas-nav-secondary">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="sign-out-tooltiptext">Sign out</span>
-                
             </button>
              </div>
           </ul>

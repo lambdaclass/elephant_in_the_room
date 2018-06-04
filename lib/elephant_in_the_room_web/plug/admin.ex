@@ -10,7 +10,7 @@ defmodule ElephantInTheRoomWeb.Plugs.Admin do
       |> Conn.assign(:admin, true)
     else
       conn
-      |> Phoenix.Controller.redirect(to: Helpers.site_path(conn, :show_default_site))
+      |> Phoenix.Controller.redirect(to: Helpers.site_path(conn, :public_show))
       |> halt()
     end
   end

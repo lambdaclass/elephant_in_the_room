@@ -32,8 +32,7 @@
        normal_posts,
        Map.put(assigns, :type, :normal) %>
     <% end %>
-
     </div>
   </div>
-  <span><%= link "Back", to: site_path(@conn, :public_show, @site.id) %></span>
+  <span><%= link "Back", to: show_site_link(@conn, @site) %></span>
 </div>

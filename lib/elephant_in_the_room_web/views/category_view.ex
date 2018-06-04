@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.CategoryView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Post
   import Ecto.Query
 
   def get_top_featured_post(_conn, posts) do
@@ -43,5 +42,11 @@ defmodule ElephantInTheRoomWeb.CategoryView do
   def latest_posts(category, amount \\ 4) do
     cat_with_posts = Repo.preload(category, :posts)
     Enum.take(cat_with_posts.posts, amount)
+  end
+
+  def show_site_link(conn, site) do
+    if conn.host != "localhost",
+      do: site_path(conn, :public_show),
+      else: local_site_path(conn, :public_show, site.id)
   end
 end
