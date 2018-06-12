@@ -10,8 +10,8 @@
   <div class="row">
     <div class="col-xs-1"> </div>
     <div class="col-xs-10">
-      <p> Image: <%= Image.url({@author.image, @author}) %> </p>
-      <%= @author.description %>
+      <img src="<%= Image.url({@author.image, @author}) %>" alt="">
+      <p><%= @author.description %></p>
     </div>
   </div>
   <span><%= link "Back", to: site_path(@conn, :index) %></span>

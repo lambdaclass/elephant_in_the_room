@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.Faker.Utils do
   # download the image from source
   def download_image(source) do
-    {:ok, resp} = HTTPoison.get(source)
+    {:ok, resp} = HTTPoison.request(:get, source, "", [], [hackney: [{:follow_redirect, true}]])
     %{body: body} = resp
     body
   end
