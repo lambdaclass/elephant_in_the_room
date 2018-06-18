@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.Faker.Utils
 
   # author 1
   # site 1
@@ -17,8 +18,8 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
-
-    {:ok, post} = Sites.create_post(attrs["site"], changes)
+    new_changes = Utils.fake_image_upload(changes)
+    {:ok, post} = Sites.create_post(attrs["site"], new_changes)
 
     post
   end
@@ -29,9 +30,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    [gen_text(50),
-     gen_md_image(),
-     gen_text(40)] |> Enum.join(" ")    
+    [gen_text(50), gen_md_image(), gen_text(40)] |> Enum.join(" ")
   end
 
   defp gen_image_link() do
@@ -47,5 +46,4 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     image = gen_image_link()
     "![#{description}](#{image})"
   end
-  
 end

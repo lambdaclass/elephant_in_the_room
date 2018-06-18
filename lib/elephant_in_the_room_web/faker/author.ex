@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Faker.Author do
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.Faker.Utils
 
   defp default_attrs do
     %{
@@ -11,8 +12,8 @@ defmodule ElephantInTheRoomWeb.Faker.Author do
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
-
-    {:ok, author} = Sites.create_author(changes)
+    new_changes = Utils.fake_image_upload(changes, "jpg")
+    {:ok, author} = Sites.create_author(new_changes)
     author
   end
 
