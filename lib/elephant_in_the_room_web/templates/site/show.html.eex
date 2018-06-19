@@ -1,13 +1,13 @@
 <h2>Site: <%= @site.name %> </h2>
 
-<% cat_page_number = @pages.cat_page.page_number %>
-<% tag_page_number = @pages.tag_page.page_number %>
-<% post_page_number = @pages.post_page.page_number %>
+<% cat_page_number = max(@pages.cat_page.page_number,1) %>
+<% tag_page_number = max(@pages.tag_page.page_number, 1) %>
+<% post_page_number = max(@pages.post_page.page_number, 1) %>
 
 <div class="uk-flex uk-flex-around">
 <div class="el-menu-card">
   <h3><span><%= link "Categories", to: site_category_path(@conn, :index, @site), class: "a" %></span></h3>
-  <p><%= "Page: #{@pages.cat_page.page_number}/#{@pages.cat_page.total_pages}" %></p>
+  <p><%= "Page: #{max(@pages.cat_page.page_number, 1)}/#{max(@pages.cat_page.total_pages, 1)}" %></p>
   <ul>
     <%= for category <- @pages.cat_page.entries do %>
       <li>
@@ -47,7 +47,7 @@
 
 <div class="el-menu-card">
   <h3><span><%= link "Posts", to: site_post_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
-  <p><%= "Page: #{@pages.post_page.page_number}/#{@pages.post_page.total_pages}" %></p>
+  <p><%= "Page: #{max(@pages.post_page.page_number, 1)}/#{max(@pages.post_page.total_pages, 1)}" %></p>
   <ul>
     <%= for post <- @pages.post_page.entries do %>
       <li>
@@ -86,7 +86,7 @@
 
 <div class="el-menu-card">
   <h3><span><%= link "Tags", to: site_tag_path(@conn, :index, @site, page: 1), class: "a" %></span></h3>
-  <p><%= "Page: #{@pages.tag_page.page_number}/#{@pages.tag_page.total_pages}" %></p>
+  <p><%= "Page: #{max(@pages.tag_page.page_number, 1)}/#{max(@pages.tag_page.total_pages, 1)}" %></p>
   <ul>
     <%= for tag <- @pages.tag_page.entries do %>
       <li>

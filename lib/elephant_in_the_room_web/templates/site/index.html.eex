@@ -1,5 +1,5 @@
 <h2>Sites</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
+<p><%= "Page: #{max(@page_number,1)}/#{max(@total_pages,1)}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
