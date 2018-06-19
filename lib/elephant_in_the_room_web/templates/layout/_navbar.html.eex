@@ -1,28 +1,22 @@
 <!-- NAVIGATION BAR -->
 <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom;">
-  <nav class="uk-navbar-container" uk-navbar>
+  <nav class="uk-navbar-container uk-light" uk-navbar>
     <div class="uk-navbar-left">
-      <ul class="uk-navbar-nav">
-        <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">
-          <i class="fas fa-bars"></i>
-        </button>
-      </ul>
+      <button class="uk-button uk-button-default uk-margin-top uk-margin-bottom uk-margin-left" type="button" uk-toggle="target: #offcanvas-nav-primary">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
 
     <div class="uk-navbar-center">
-      <ul class="uk-navbar-nav">
-        <li class="uk-active">
-          <%= link "Elephant", to: get_site_path(@conn) %>
-        </li>
-      </ul>
+      <%= link to: get_site_path(@conn) do %>
+        <h1 class="heading-primary uk-margin-auto-vertical">Elephant</h1>
+      <% end %>
     </div>
 
     <div class="uk-navbar-right">
-      <ul class="uk-navbar-nav">
-        <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-secondary">
-          Sites
-        </button>
-      </ul>
+      <button class="uk-button uk-button-default uk-margin-top uk-margin-bottom uk-margin-right" type="button" uk-toggle="target: #offcanvas-nav-secondary">
+        Sites
+      </button>
     </div>
   </nav>
 </div>
