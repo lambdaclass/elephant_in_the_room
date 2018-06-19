@@ -1,11 +1,13 @@
-<nav class="uk-navbar-container" uk-navbar>
+<nav class="uk-navbar-container uk-light" uk-navbar>
   <div class="uk-navbar-center">
-    <a href="" class="uk-navbar-item uk-logo"><%= @site.name %></a>
+    <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
+      <h1 class="uk-heading-primary uk-text-capitalize uk-margin-remove"><%= @site.name %></h1>
+    <% end %>
   </div>
 </nav>
 
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom;">
-  <nav class="uk-navbar-container" uk-navbar="mode: click">
+<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
+  <nav class="uk-navbar-container uk-light" uk-navbar="mode: click">
     <div class="uk-navbar-left">
       <div class="uk-navbar-item">
         <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">
@@ -30,8 +32,8 @@
           <div class="uk-navbar-dropdown uk-width-1-1">
             <ul class="uk-nav uk-navbar-dropdown-nav" uk-grid>
               <%= for {category_id, category_name} <- more_categories++categories do %>
-                <li class="uk-width-1-5">
-                  <%= link category_name, to: show_category_link(@conn, category_id, @site) %>
+                <li class="uk-width-1-4">
+                  <%= link category_name, to: show_category_link(@conn, category_id, @site), class: "uk-text-capitalize"%>
                 </li>
               <% end %>
             </ul>

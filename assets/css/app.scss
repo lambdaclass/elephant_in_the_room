@@ -88,3 +88,12 @@
 .hide {
   display: none;
 }
+
+.uk-navbar-container.uk-navbar, .uk-navbar-container.uk-navbar li > .uk-navbar-dropdown {
+  background-color: #222;
+}
+
+.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a {
+  color: #fff;
+  font-weight: bold;
+}
