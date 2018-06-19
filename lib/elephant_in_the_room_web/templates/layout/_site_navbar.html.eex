@@ -1,7 +1,7 @@
 <nav class="uk-navbar-container uk-light" uk-navbar>
   <div class="uk-navbar-center">
     <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
-      <h1 class="uk-heading-primary uk-text-capitalize uk-margin-remove"><%= @site.name %></h1>
+      <h1 class="uk-heading-primary uk-text-capitalize uk-margin-auto-vertical"><%= @site.name %></h1>
     <% end %>
   </div>
 </nav>
