@@ -1,3 +1,5 @@
+<% {categories, more_categories} = get_categories(@conn, 5) %>
+
 <nav class="uk-navbar-container uk-light" uk-navbar>
   <div class="uk-navbar-center">
     <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
@@ -10,15 +12,14 @@
   <nav class="uk-navbar-container uk-light" uk-navbar="mode: click">
     <div class="uk-navbar-left">
       <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-primary">
+        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-user-menu">
           <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
 
     <div class="uk-navbar-center">
-      <ul class="uk-navbar-nav">
-        <% {categories, more_categories} = get_categories(@conn, 5) %>
+      <ul class="uk-navbar-nav uk-visible@m">
         <%= for {category_id, category_name} <- categories do %>
           <li><%= link category_name, to: show_category_link(@conn, category_id, @site) %></li>
         <% end %>
@@ -31,7 +32,7 @@
           </a>
           <div class="uk-navbar-dropdown uk-width-1-1">
             <ul class="uk-nav uk-navbar-dropdown-nav" uk-grid>
-              <%= for {category_id, category_name} <- more_categories++categories do %>
+              <%= for {category_id, category_name} <- more_categories do %>
                 <li class="uk-width-1-4">
                   <%= link category_name, to: show_category_link(@conn, category_id, @site), class: "uk-text-capitalize"%>
                 </li>
@@ -44,7 +45,7 @@
 
     <div class="uk-navbar-right">
       <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav-secondary">
+        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-sites">
           Sites
         </button>
       </div>
@@ -52,9 +53,9 @@
   </nav>
 </div>
 
-<!-- LEFT OFFCANVAS -->
-<div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+<!-- OFFCANVAS USER MENU -->
+<div id="offcanvas-user-menu" uk-offcanvas="overlay: true">
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
     <button class="uk-offcanvas-close close-left" type="button" uk-close></button>
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
       <li class="uk-parent">
@@ -63,14 +64,24 @@
           <%= render "_user_options.html", assigns %>
         </ul>
       </li>
+      <li class="uk-parent uk-hidden@m">
+        <a href="#">Categories</a>
+        <ul class="uk-nav-sub">
+          <%= for {category_id, category_name} <- categories++more_categories do %>
+            <li>
+              <%= link category_name, to: show_category_link(@conn, category_id, @site), class: "uk-text-capitalize" %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
     </ul>
   </div>
 </div>
-<!-- LEFT OFFCANVAS -->
+<!-- OFFCANVAS USER MENU -->
 
-<!-- RIGHT OFFCANVAS -->
-<div id="offcanvas-nav-secondary" uk-offcanvas="flip: true; overlay: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
+<!-- OFFCANVAS SITES -->
+<div id="offcanvas-sites" uk-offcanvas="flip: true; overlay: true">
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
     <button class="uk-offcanvas-close close-right"type="button" uk-close></button>
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
       <li class="uk-parent">
@@ -86,4 +97,4 @@
     </ul>
   </div>
 </div>
-<!-- RIGHT OFFCANVAS -->
+<!-- OFFCANVAS SITES -->

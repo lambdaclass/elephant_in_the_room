@@ -2,7 +2,7 @@
 <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; bottom: #bottom;">
   <nav class="uk-navbar-container uk-light" uk-navbar>
     <div class="uk-navbar-left">
-      <button class="uk-button uk-button-default uk-margin-top uk-margin-bottom uk-margin-left" type="button" uk-toggle="target: #offcanvas-nav-primary">
+      <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-sites">
         <i class="fas fa-bars"></i>
       </button>
     </div>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="uk-navbar-right">
-      <button class="uk-button uk-button-default uk-margin-top uk-margin-bottom uk-margin-right" type="button" uk-toggle="target: #offcanvas-nav-secondary">
+      <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-user-menu">
         Sites
       </button>
     </div>
@@ -22,8 +22,8 @@
 </div>
 <!-- NAVIGATION BAR -->
 
-<!-- RIGHT OFFCANVAS -->
-<div id="offcanvas-nav-secondary" uk-offcanvas="flip: true; overlay: true">
+<!-- OFFCANVAS USER MENU -->
+<div id="offcanvas-user-menu" uk-offcanvas="flip: true; overlay: true">
   <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
     <button class="uk-offcanvas-close close-right" type="button" uk-close></button>
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
@@ -40,10 +40,10 @@
     </ul>
   </div>
 </div>
-<!-- RIGHT OFFCANVAS -->
+<!-- OFFCANVAS USER MENU -->
 
-<!-- LEFT OFFCANVAS -->
-<div id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+<!-- OFFCANVAS SITES -->
+<div id="offcanvas-sites" uk-offcanvas="overlay: true">
   <div class="uk-offcanvas-bar uk-flex uk-flex-column ">
     <button class="uk-offcanvas-close close-left" type="button" uk-close></button>
     <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
@@ -56,4 +56,4 @@
     </ul>
   </div>
 </div>
-<!-- LEFT OFFCANVAS -->
+<!-- OFFCANVAS SITES -->

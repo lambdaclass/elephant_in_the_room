@@ -93,7 +93,12 @@
   background-color: #222;
 }
 
-.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a {
+.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a, .uk-offcanvas .uk-nav > li > a, .uk-offcanvas .uk-nav .uk-nav-sub > li > a {
   color: #fff;
   font-weight: bold;
+}
+
+.uk-navbar .uk-button {
+  margin: 20px;
+  padding: 0 15px;
 }
