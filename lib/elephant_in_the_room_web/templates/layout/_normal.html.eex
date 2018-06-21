@@ -3,7 +3,3 @@
 <% else %>
   <%= render "_navbar.html", assigns %>
 <% end %>
-
-<div role="main">
-  <%= render @view_module, @view_template, assigns %>
-</div>
