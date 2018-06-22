@@ -1,21 +1,13 @@
 <% {categories, more_categories} = get_categories(@conn, 5) %>
 
-<nav class="uk-navbar-container uk-light" uk-navbar>
-  <div class="uk-navbar-center">
-    <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
-      <h1 class="uk-heading-primary uk-text-capitalize uk-margin-auto-vertical"><%= @site.name %></h1>
-    <% end %>
-  </div>
-</nav>
 
 <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
-  <nav class="uk-navbar-container uk-light" uk-navbar="mode: click">
+  <nav class="uk-navbar-container uk-light" uk-navbar="dropbar: true; mode: click">
     <div class="uk-navbar-left">
-      <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-user-menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+      <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
+        <h1 class="uk-text-uppercase uk-margin-auto-vertical"><%= @site.name %></h1>
+      <% end %>
+
     </div>
 
     <div class="uk-navbar-center">
@@ -45,19 +37,20 @@
 
     <div class="uk-navbar-right">
       <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-sites">
-          Sites
+        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-side-menu">
+          <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
 </div>
 
-<!-- OFFCANVAS USER MENU -->
-<div id="offcanvas-user-menu" uk-offcanvas="overlay: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-    <button class="uk-offcanvas-close close-left" type="button" uk-close></button>
-    <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+<!-- OFFCANVAS SIDE MENU -->
+<div id="offcanvas-side-menu" uk-offcanvas="overlay: true; flip: true">
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column uk-padding-remove-horizontal">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+    <ul class="uk-nav-parent-icon uk-nav-center uk-margin-auto-vertical" uk-nav="multiple: true">
       <li class="uk-parent">
         <a href="#">User options</a>
         <ul class="uk-nav-sub">
@@ -74,18 +67,8 @@
           <% end %>
         </ul>
       </li>
-    </ul>
-  </div>
-</div>
-<!-- OFFCANVAS USER MENU -->
-
-<!-- OFFCANVAS SITES -->
-<div id="offcanvas-sites" uk-offcanvas="flip: true; overlay: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-    <button class="uk-offcanvas-close close-right"type="button" uk-close></button>
-    <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
       <li class="uk-parent">
-        <a href="">Sites</a>
+        <a href="#">Sites</a>
         <ul class="uk-nav-sub">
           <%= for site <- get_nav_sites(@conn) do %>
             <li class="<%= if in_current_site(@conn, site.id), do: "uk-active" %>">
@@ -97,4 +80,4 @@
     </ul>
   </div>
 </div>
-<!-- OFFCANVAS SITES -->
+<!-- OFFCANVAS SIDE MENU -->

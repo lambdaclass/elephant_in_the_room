@@ -15,14 +15,16 @@
   </head>
 
   <body>
-    <%= if assigns[:admin] do %>
-      <%= render "_admin.html", assigns %>
-    <%= else %>
-      <%= render "_normal.html", assigns %>
+    <div class="uk-offcanvas-content">
+      <%= if assigns[:admin] do %>
+        <%= render "_admin.html", assigns %>
+      <%= else %>
+        <%= render "_normal.html", assigns %>
 
-      <div role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </div>
-    <% end %>
+        <div role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </div>
+      <% end %>
+    </div>
   </body>
 </html>
