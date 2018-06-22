@@ -1,18 +1,31 @@
-<% alias ElephantInTheRoomWeb.Uploaders.Image %>
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+%>
 
-<div class="el-sites">
-  <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"><h1><%= @author.name %></h1></p>
+<div class="uk-container">
+  <div class="uk-margin-top" uk-grid>
+    <div class="uk-width-1-3@m uk-text-center">
+      <img class="uk-border-circle" src="<%= Image.url({@author.image, @author}) %>" width="200" height="200" alt="<%= @author.name %>">
+      <h1><%= @author.name %></h1>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-1"> </div>
-    <div class="col-xs-10">
-      <img src="<%= Image.url({@author.image, @author}) %>" alt="">
+    <div class="uk-width-1-2@m uk-flex uk-flex-middle">
       <p><%= @author.description %></p>
     </div>
   </div>
-  <span><%= link "Back", to: site_path(@conn, :index) %></span>
+
+  <div uk-grid="masonry: true">
+    <%= for post <- @author.posts do %>
+      <div class="uk-width-1-3@m">
+        <%= link to: show_link_with_date(@conn, post) do %>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+            <div class="uk-card-media-top">
+              <img src="<%= Image.url({post.image, post}) %>">
+            </div>
+            <h2 class="uk-card-title uk-text-capitalize uk-text-center"><%= post.title %></h2>
+            <p class="uk-text-justify"><%= post.abstract %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

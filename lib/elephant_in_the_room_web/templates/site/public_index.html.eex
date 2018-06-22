@@ -10,16 +10,16 @@
       <span><%= link "", to: site_path(@conn, :public_index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
     <% :first -> %>
       <span><%= link "", to: site_path(@conn, :public_index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <% _ -> %> 
+    <% _ -> %>
   <% end %>
 </div>
 <div class="uk-grid-small uk-child-width-1-4@s uk-flex-center uk-text-center" uk-grid>
     <div>
       <%= for site <- @sites do %>
-        <div class="uk-card uk-card-default uk-card-body">
+        <div class="uk-card uk-card-default uk-card-body uk-margin-medium">
         <a href="<%= show_site_link(site, @conn) %>"><%= site.name %></a>
         </div>
-      <% end %>  
+      <% end %>
 
     </div>
 </div>
