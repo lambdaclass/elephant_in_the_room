@@ -21,7 +21,6 @@ defmodule ElephantInTheRoom.Auth.Guardian do
   def resource_from_claims(claims) do
     token = claims["sub"]
     [id | _] = String.split(token, ",")
-    IO.inspect(claims)
     Auth.get_user(id)
   end
 end
