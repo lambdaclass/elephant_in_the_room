@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class="uk-card uk-card-default">
+        <div class="uk-card-body">
           <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :create, @site)) %>
         </div>
       </div>
