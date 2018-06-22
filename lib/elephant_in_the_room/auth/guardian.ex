@@ -8,7 +8,10 @@ defmodule ElephantInTheRoom.Auth.Guardian do
 
   """
   def subject_for_token(user, _claims) do
-    {:ok, to_string(user.id)}
+    inserted_at = to_string(user.inserted_at)
+    id = to_string(user.id)
+    token = "#{id},#{inserted_at}"
+    {:ok, token}
   end
 
   @doc """
@@ -16,6 +19,8 @@ defmodule ElephantInTheRoom.Auth.Guardian do
 
   """
   def resource_from_claims(claims) do
-    Auth.get_user(claims["sub"])
+    token = claims["sub"]
+    [id | _] = String.split(token, ",")
+    Auth.get_user(id)
   end
 end
