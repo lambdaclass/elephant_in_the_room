@@ -22,7 +22,9 @@ defmodule ElephantInTheRoomWeb.LoginController do
   end
 
   defp login_reply({:error, _}, conn) do
-    render(conn, "login.html", user: :login_failed)
+    changeset = Auth.change_user(%User{})
+    new_conn = put_flash(conn, :login_failed, "Usuario o contraseña incorrectos!!1")
+    render(new_conn, "login.html", changeset: changeset, user: :login_failed)
   end
 
   defp login_reply({:ok, user}, conn) do
