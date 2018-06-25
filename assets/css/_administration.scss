@@ -1,8 +1,31 @@
-.admin-page{
-    #sidebar {
-        background: red;
+#admin-page-main-content {
+    padding: 0;
+}
+
+#sidebar-admin-menu {
+    border-right: black;
+    border-right-style: solid;
+    border-width: 1px;
+    padding-right: 1em;
+    padding-left: 0.4em;
+
+    h1 {
+        margin: 0;
     }
-    #admin-page-main-content {
-        padding: 0;
+
+    .administration-items {
+       margin: 0;
+    }
+}
+
+#offcanvas-admin-menu {
+    h1 {
+        color: #dedede
+    }
+    li {
+        list-style: none;
+        &:hover {
+            background-color: $black-light;
+        }
     }
 }

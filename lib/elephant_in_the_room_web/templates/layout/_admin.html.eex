@@ -1,9 +1,8 @@
 <% admin_vertical_menu = render ElephantInTheRoomWeb.AdminView, "_admin_vertical_menu.html", assigns %>
 
 <div class="uk-offcanvas-content">
-
   <!-- The whole page content goes here -->
-  <div class="admin-page" role="main">
+  <div role="main">
     <!-- navbar start -->
     <nav class="uk-navbar-container" uk-navbar="mode: click">
       <div class="uk-navbar-left">
@@ -28,7 +27,7 @@
     <!-- sidebar start -->
     <div uk-grid>
       <div class="uk-width-auto">
-        <div id="sidebar" class="uk-visible@s">
+        <div id="sidebar-admin-menu" class="uk-visible@s">
           <%= admin_vertical_menu %>
         </div>
       </div>

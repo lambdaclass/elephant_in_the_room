@@ -1,4 +1,4 @@
-
+<h1>Settings</h1>
 <ul class="administation-items">
   <li>
     <%= link "Sites",
