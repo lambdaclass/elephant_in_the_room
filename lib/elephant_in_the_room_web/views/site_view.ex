@@ -8,12 +8,22 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
-  def get_important_posts(_conn, posts) do
+  def get_important_posts_left(_conn, posts) do
     case posts do
       [_top | rest] ->
-        {:ok, Enum.take(rest, 3)}
+        {:ok, Enum.take(rest, 2)}
 
       [] ->
+        {:error, :no_important_posts}
+    end
+  end
+
+  def get_important_posts_right(_conn, posts) do
+    case posts do
+      [_ | rest] ->
+        {:ok, rest |> Enum.drop(2) |> Enum.take(4)}
+
+      _ ->
         {:error, :no_important_posts}
     end
   end
@@ -21,7 +31,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
   def get_normal_posts(_conn, posts) do
     case posts do
       [_ | normal_posts] ->
-        {:ok, Enum.drop(normal_posts, 4)}
+        {:ok, Enum.drop(normal_posts, 6)}
 
       _ ->
         {:error, :no_normal_posts}
