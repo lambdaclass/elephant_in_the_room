@@ -1,22 +1,102 @@
-<!-- NAVIGATION BAR -->
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
-  <nav class="uk-navbar-container uk-light" uk-navbar>
-    <div class="uk-navbar-left">
-      <%= link to: get_site_path(@conn), class: "uk-navbar-item uk-logo" do %>
-        <h1 class="uk-margin-auto-vertical">Elephant</h1>
-      <% end %>
-    </div>
+<% {site_name1, site_name2} = get_site_name(@conn) %>
 
-    <div class="uk-navbar-right">
-      <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-side-menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+<nav class="uk-navbar-container navbar-container" uk-navbar>
+
+  <div class="uk-navbar-left">
+    <ul class="uk-navbar-nav ul-reduced">
+      <li class="uk-active">
+        <a href="<%= get_site_path(@conn) %>" class="navbar-title a-reduced">
+          <div class="first"><%= site_name1  %></div>
+          <div class="second"><%= site_name2  %></div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="uk-navbar-right">
+    <ul class="uk-navbar-nav ul-reduced">
+
+      <li><a href="#" class="a-reduced hide-on-small">Popular</a></li>
+
+      <li><a href="#" class="a-reduced hide-on-small">Latest</a></li>
+
+      <li>
+        <a href="#" class="a-reduced hide-on-small">
+          <span class="with-dropwdown">Sections</span>
+          <i class="fas fa-angle-down"></i>
+        </a>
+        <div class="uk-navbar-dropdown">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li class="uk-active"><a href="#">Active</a></li>
+            <li><a href="#">Item</a></li>
+            <li><a href="#">Item</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a href="#" class="a-reduced hide-on-small">
+          <span class="with-dropwdown">Magazine</span>
+          <i class="fas fa-angle-down"></i>
+        </a>
+        <div class="uk-navbar-dropdown">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li class="uk-active"><a href="#">Active</a></li>
+            <li><a href="#">Item</a></li>
+            <li><a href="#">Item</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a href="#" class="a-reduced hide-on-small"
+           uk-toggle="target: #offcanvas-side-menu">
+          <span class="with-dropwdown">More</span>
+        </a>
+      </li>
+
+      <li><a href="#" class="a-reduced subscribe">Subscribe</a></li>
+
+      <li><a href="#" class="a-reduced"><i class="fas fa-search"></i></a></li>
+
+    </ul>
+  </div>
+
+</nav>
+
+<div class="mini-navbar-container" uk-grid>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-chart-line fa-2x"></i></div>
+      <div class="mini-description">Popular</div>
     </div>
-  </nav>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-clock fa-2x"></i></div>
+      <div class="mini-description">Latest</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
+      <div class="mini-description">Section</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-book fa-2x"></i></div>
+      <div class="mini-description">Magazine</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element" uk-toggle="target: #offcanvas-side-menu">
+      <div class="mini-icon"><i class="fas fa-plus fa-2x"></i></div>
+      <div class="mini-description">More</div>
+    </div>
+  </div>
 </div>
-<!-- NAVIGATION BAR -->
 
 <!-- OFFCANVAS SIDE MENU -->
 <div id="offcanvas-side-menu" uk-offcanvas="overlay: true; flip: true">
