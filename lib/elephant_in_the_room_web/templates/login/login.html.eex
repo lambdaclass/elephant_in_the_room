@@ -20,13 +20,13 @@
                   uk-width-1-1 uk-margin-small-bottom"%>
         </div>
 
-    <% reason -> %>
-      <%= if reason == :login_failed do %>
-        <div class="uk-alert-danger" uk-alert>
-          <a class="uk-alert-close" uk-close></a>
-          <p><%= get_flash(@conn, :error) %></p>
-        </div>
-      <% end %>
+      <% reason -> %>
+        <%= if reason == :login_failed do %>
+          <div class="uk-alert-danger uk-animation-toggle uk-animation-slide-top" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p><%= get_flash(@conn, :error) %></p>
+          </div>
+        <% end %>
 
       <%= form_for @changeset, login_path(@conn, :login), fn f -> %>
         <fieldset class="uk-fieldset">
