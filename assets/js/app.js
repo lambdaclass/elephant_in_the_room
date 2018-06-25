@@ -13,7 +13,7 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 import "jquery"
-import "uikit"
+import UIkit from 'uikit';
 
 // Import local files
 //
@@ -21,3 +21,4 @@ import "uikit"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+window.UIkit = UIkit

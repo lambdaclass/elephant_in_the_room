@@ -1,39 +1,8 @@
-.el-administration-wrapper {
-  height: 100vh;
-  width: 100vw;
-
-  > .row {
-    height: 100%;
-    padding: 0;
-  }
-
-  .navigation-side-panel {
-    color: white;
-    background: #2b2628;
-    height: 100%;
-    padding: 0;
-    text-align: center;
-
-    .administration-title {
-      padding-left: 0.3em;
-      background: #393235;
-      h3 {
-        a {
-          color: #ffba00;
-        }
-      }
+.admin-page{
+    #sidebar {
+        background: red;
     }
-
-    .administation-items {
-      list-style-type: none;
-      li a {
-        color: #7d7779;
-      }
+    #admin-page-main-content {
+        padding: 0;
     }
-  }
-
-  .administation-content {
-    background: whitesmoke;
-    height: 100%;
-  }
 }

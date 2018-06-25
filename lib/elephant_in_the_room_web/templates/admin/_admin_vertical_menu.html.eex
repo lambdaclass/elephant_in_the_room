@@ -1,0 +1,19 @@
+
+<ul class="administation-items">
+  <li>
+    <%= link "Sites",
+    to: site_path(@conn, :index) %>
+  </li>
+  <li>
+    <%= link "Authors",
+    to: author_path(@conn, :index) %>
+  </li>
+  <li>
+    <%= link "Users",
+    to: user_path(@conn, :index) %>
+  </li>
+  <li>
+    <%= link "Roles",
+    to: role_path(@conn, :index) %>
+  </li>
+</ul>
