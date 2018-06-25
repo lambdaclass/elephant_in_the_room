@@ -7,14 +7,14 @@
         <div class="uk-card-header">
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-expand">
-              <h3 class="uk-card-title uk-margin-remove-bottom">           
+              <h3 class="uk-card-title uk-margin-remove-bottom">
                 <div><center><legend class="uk-legend">New Tag</legend></center></div>
               </h3>
             </div>
           </div>
         </div>
 
-        <div class="uk-card uk-card-default">
+        <div class="uk-card-body">
           <%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :create, @site)) %>
         </div>
       </div>

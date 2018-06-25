@@ -46,7 +46,9 @@ defmodule ElephantInTheRoomWeb.AuthorController do
   end
 
   def public_show(conn, %{"author_id" => id}) do
-    author = Sites.get_author!(id)
+    author =
+      Sites.get_author!(id)
+      |> Repo.preload([posts: [:site]])
     render(conn, "public_show.html", author: author)
   end
 

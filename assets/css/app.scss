@@ -84,3 +84,37 @@
   border: 2px solid black;
   margin-top: 15vh;
 }
+
+.hide {
+  display: none;
+}
+
+body > div.uk-offcanvas-content > div > div > nav > div.uk-navbar-left > ul > li > a {
+    color: #fff
+}
+
+.uk-navbar-container.uk-navbar, .uk-navbar-container.uk-navbar li > .uk-navbar-dropdown, .uk-navbar-dropbar {
+  background-color: $black;
+}
+
+.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a, .uk-offcanvas .uk-nav > li > a, , .uk-offcanvas .uk-nav .uk-nav-sub > li > a:hover {
+  color: #fff;
+  font-weight: bold;
+}
+
+.uk-offcanvas .uk-nav .uk-nav-sub > li > a {
+  color: #fff;
+}
+
+.uk-navbar .uk-button {
+  margin: 20px;
+  padding: 0 15px;
+}
+
+#offcanvas-side-menu .uk-parent {
+  border-top: 1px solid $black-light;
+  border-bottom: 1px solid $black-light;
+}
+#offcanvas-side-menu .uk-parent > ul {
+  background-color: $black-light;
+}

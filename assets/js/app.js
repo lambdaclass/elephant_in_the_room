@@ -21,4 +21,7 @@ import UIkit from 'uikit';
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
 window.UIkit = UIkit
+import "./navbar"
+
