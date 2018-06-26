@@ -13,7 +13,7 @@ In order to run this project you need to have already installed:
 * [npm](https://docs.npmjs.com/cli/install)
 
 ### How to run the server locally
-Run the website the following commands:
+Run the website with the following commands:
 
 - `make deps`: install project dependencies.
 - `make ops`: starts the database.
