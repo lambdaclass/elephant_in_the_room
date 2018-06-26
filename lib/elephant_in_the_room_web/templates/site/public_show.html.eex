@@ -1,29 +1,24 @@
 <div class="container">
-
-  <%= case get_top_featured_post(@conn, @site.posts) do %>
-    <% {:error, _} -> %>
-    <% {:ok, top_post } -> %>
-      <%= shared_render_posts_card @conn, 
-      [top_post],
-      Map.put(assigns, :type, :featured) %>
-  <% end %>
-
-  <%= case get_important_posts_right(@conn, @site.posts) do %>
-    <% {:error, _} -> %> 
-    <% {:ok, right_posts} -> %>
-      <%= shared_render_posts_card @conn,
-      right_posts,
-      Map.put(assigns, :type, :important)%>
-  <% end %>
-
-  <%= case get_important_posts_left(@conn, @site.posts) do %>
-    <% {:error, _} -> %> 
-    <% {:ok, left_posts} -> %>
-      <%= shared_render_posts_card @conn,
-      left_posts,
-      Map.put(assigns, :type, :important)%>
-  <% end %>
-
+  <div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
+    <div class="uk-flex uk-flex-left">
+      <div class="uk-flex uk-flex-column uk-width-1-3">
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body">Item 1</div>
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 2</div>
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 3</div>
+      </div>
+    </div>
+    <div class="uk-flex uk-flex-center">
+      <div class="uk-card uk-background-secondary uk-card-default uk-flex-1">Item 4</div>
+    </div>
+    <div class="uk-flex uk-flex-right">
+      <div class="uk-flex uk-flex-column uk-flex-right">
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body">Item 1</div>
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 2</div>
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 3</div>
+        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 4</div>
+      </div>
+    </div>
+  </div>
   <%= case get_normal_posts(@conn, @site.posts) do %>
     <% {:error, _} -> %> 
     <% {:ok, normal_posts } -> %>
