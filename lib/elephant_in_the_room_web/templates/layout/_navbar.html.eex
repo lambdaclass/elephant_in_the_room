@@ -24,13 +24,16 @@
       <li>
         <a href="#" class="a-reduced hide-on-small">
           <span class="with-dropwdown">Sections</span>
-          <i class="fas fa-angle-down"></i>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
         </a>
-        <div class="uk-navbar-dropdown">
+        <div uk-dropdown="pos: bottom-center; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li class="uk-active"><a href="#">Active</a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
+            <%= render "_category_options.html", assigns %>
           </ul>
         </div>
       </li>
@@ -38,13 +41,19 @@
       <li>
         <a href="#" class="a-reduced hide-on-small">
           <span class="with-dropwdown">Magazine</span>
-          <i class="fas fa-angle-down"></i>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
         </a>
-        <div class="uk-navbar-dropdown">
+        <div uk-dropdown="pos: bottom-center; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li class="uk-active"><a href="#">Active</a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
+            <li><a href="#">Current issue</a></li>
+            <li><a href="#">All issue</a></li>
+            <li><a href="#">Manage subscriptions</a></li>
+            <li><a href="#">Subscribe</a></li>
           </ul>
         </div>
       </li>

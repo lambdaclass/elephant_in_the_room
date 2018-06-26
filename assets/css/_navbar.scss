@@ -44,6 +44,40 @@ $navbar-break-m: 800px;
         .with-dropwdown {
             padding-right: 4px;
         }
+        .dropdown-arrow-up {
+            width: 0;
+            height: 0;
+            border-left: 0.5em solid transparent;
+            border-right: 0.5em solid transparent;
+            border-bottom: 0.5em solid white;
+            display:none;
+            position: absolute;
+            top: 3em;
+        }
+        .text-icons{
+            position: relative;
+            margin-top: 3px;
+        }
+        .icon-up, icon-down {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .icon-up{
+            visibility: hidden;
+            top: 3px;
+        }
+        &[aria-expanded="true"] {
+            .dropdown-arrow-up {
+                display:block;
+            }
+            .icon-up {
+                visibility: visible;
+            }
+            .icon-down {
+                visibility: hidden;
+            }
+        }
     }
     .subscribe {
         @media screen and (min-width: 0) and (max-width: $navbar-break-s) {
@@ -56,6 +90,16 @@ $navbar-break-m: 800px;
     .hide-on-small {
         @media screen and (max-width: $navbar-break-s - 1) {
             display: none;
+        }
+    }
+    .dropwdown-container {
+        background-color: white !important;
+        a {
+            text-transform: capitalize;
+            color: black !important;
+            &:hover{
+                color: #666 !important;
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
-<%= if current_site(@conn) do %>
-  <%= for {category_id, category_name} <- get_categories(@conn) do %>
-    
-  <li>
-    <%= link category_name, to: show_category_link(@conn, category_id, @site) %>
-  </li>
+<% {categories, more_categories} = get_categories(@conn, 10) %>
 
+<%= if current_site(@conn) do %>
+  <%= for {category_id, category_name} <- categories do %>
+  <li>
+    <%= link category_name,
+        to: show_category_link(@conn, category_id, @site) %>
+  </li>
   <% end %>
 <% end %>
