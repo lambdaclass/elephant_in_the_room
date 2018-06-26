@@ -1,5 +1,5 @@
 .PHONY: help demo_server create_db populate_db install_frontend \
-        ops ops_reset ops_backup_db
+        ops ops_reset ops_backup_db deps
 
 help:
 	@echo "To start a demo sever run in two separated shells:"
@@ -10,6 +10,7 @@ help:
 	@echo "- ops: runs the database"
 
 deps:
+	mix local.hex --force
 	mix deps.get
 	cd assets/ && npm install
 
