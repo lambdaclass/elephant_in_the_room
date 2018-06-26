@@ -1,82 +1,37 @@
-<% 
-alias ElephantInTheRoom.Sites.Author 
-alias ElephantInTheRoomWeb.Uploaders.Image
+<%
+  alias ElephantInTheRoom.Sites.Author
+  alias ElephantInTheRoomWeb.Uploaders.Image
 %>
 
-<div class="el-post">
-  <div class="feature-image-container">
+<div class="uk-cover-container" uk-height-viewport>
+    <img src="<%= Image.url({@post.image, @post}) %>" alt="" uk-cover>
+</div>
 
-    <div uk-grid uk-lightbox="animation: slide">
-      <div>
-        <a id="feature-image-lightbox"
-           class="uk-inline featured-image"
-           href="<%= Image.url({@post.image, @post}) %>"
-           caption="<%= @post.title %>">
-          <img src="<%= Image.url({@post.image, @post}) %>" alt="">
-        </a>
-      </div>
-    </div>
+<div class="uk-container uk-container-small article">
+  <h1 class="uk-text-uppercase uk-text-bold"><%= @post.title %></h1>
+  <div class="uk-text-meta">
+    <p>
+      <%= case @post.author do %>
+        <% nil -> %>
+        <% %Author{:id => id, :name => name} -> %>
+          By <%= link name, to: author_path @conn, :public_show, id %> |
+      <% end %>
+      <%= show_date(@post.updated_at) %>
+    </p>
+    <p>
+      Categories:
+      <%= for category <- @site.categories do %>
+        <%= link category.name, to: show_category_link(@conn, @site, category) %>
+      <% end %>
+    </p2>
+    <p>
+      Tags:
+      <%= for tag <- @post.tags do %>
+        <%= link tag.name, to: show_tag_link(@conn, @site, tag) %>
+      <% end %>
+    </p>
   </div>
-
-  
-    <div class="container title-container">
-      <div class="row">
-        <div class="col-xs-0"></div>
-        <div class="col-xs-12">
-          <h1 class="post-title">
-            <%= @post.title %>
-          </h1>
-        </div>
-      </div>
-    </div>
-  
-
-  <div class="container">
-    
-    <div class="row">      
-      <div class="col-xs-0  col-md-2"> </div>
-      <div class="col-xs-12 col-md-8">
-
-        <article class="uk-article">
-
-          <p class="uk-article-meta">
-            <%= case @post.author do %>
-              <% nil -> %>
-
-              <% %Author{:id => id, :name => name} -> %>
-              Written by
-              <%= link name,
-              to: author_path @conn, :public_show, id %>
-            <% end %>
-
-            
-            posted <%= show_date(@post.updated_at) %>
-            in
-            <a href="<%= show_site_link(@conn, @site) %>"> 
-              <%= @site.name %>
-            </a>
-            under categories:
-            <%= for category <- @site.categories do %>
-              <a href="<%= show_category_link(@conn, @site, category) %>">
-                <%= category.name %>
-              </a>
-            <% end %>
-            with tags:
-            <%= for tag <- @post.tags do %>
-              <a href="<%= show_tag_link(@conn, @site, tag) %>">
-                <%= tag.name %>
-              </a>
-            <% end %>
-          </p>
-
-          <p class="uk-text-lead"><%= @post.abstract %></p>
-
-          <div class="post-content">
-            <%= raw show_content @post %>
-          </div>
-        </article>
-
-      </div>
-    </div>
+  <div class="uk-dropcap">
+    <%= raw show_content @post %>
   </div>
 </div>
