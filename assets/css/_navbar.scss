@@ -92,6 +92,18 @@ $navbar-break-m: 800px;
             display: none;
         }
     }
+    .show-only-on-small {
+        display: none;
+        @media screen and (max-width: $navbar-break-s - 1) {
+            display: inline-flex;
+        }
+    }
+    .show-only-on-bigger-than-small {
+        display: none;
+        @media screen and (min-width: $navbar-break-s) {
+            display: inline-flex;
+        }
+    }
     .dropwdown-container {
         background-color: white !important;
         a {
@@ -101,6 +113,9 @@ $navbar-break-m: 800px;
                 color: #666 !important;
             }
         }
+    }
+    .search-inline-bar {
+        margin-left: 1em;
     }
 }
 
