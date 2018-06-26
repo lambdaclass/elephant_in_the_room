@@ -1,9 +1,10 @@
 # ElephantInTheRoom
 
-Run the website with two commands:
+To run the development version of the site please do the following in separated terminals:
 
-- `make demo_db` to create the local database. After is completes run:
-- `make demo_server` to populate the database and start the web server.
+- `make ops`: runs the database
+- `make clean_db_init`: fills the database with random data
+- `make dev`:runs the web server
 
 In order to run this project you need to have already installed:
 
