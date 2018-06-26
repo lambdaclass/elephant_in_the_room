@@ -118,3 +118,34 @@ $navbar-break-m: 800px;
         padding-top: 4px;
     }
 }
+
+.mini-navbar-offcanvas{
+    width: 100vw;
+    .uk-offcanvas-bar{
+        width: 100vw;
+        background: white;
+        color: black;
+        h3,.uk-offcanvas-close, a {
+            color: black !important;
+        }
+        .nav-divider{
+            background: #dedede;
+            height: 2px;
+            margin-bottom: 1em;
+        }
+        a {
+            text-transform: capitalize;
+            font-weight: normal !important;
+            font-size: 1.6em;
+            font-family: $navbar-items-font;
+            line-height: 2em;
+        }
+        h3 {
+            text-transform: uppercase;
+            font-weight: bolder;
+            font-size: 1.6em;
+            margin-bottom: 0.3em;
+            margin-top: 0.3em;
+        }
+    }
+}

@@ -79,7 +79,6 @@
           </ul>
         </div>
       </li>
-     
 
       <li><a href="#" class="a-reduced subscribe">Subscribe</a></li>
 
@@ -104,48 +103,72 @@
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
-    <div class="element">
+    <div class="element" uk-toggle="target: #offcanvas-section">
       <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
       <div class="mini-description">Section</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
-    <div class="element">
+    <div class="element" uk-toggle="target: #offcanvas-magazine">
       <div class="mini-icon"><i class="fas fa-book fa-2x"></i></div>
       <div class="mini-description">Magazine</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
-    <div class="element" uk-toggle="target: #offcanvas-side-menu">
+    <div class="element" uk-toggle="target: #offcanvas-more">
       <div class="mini-icon"><i class="fas fa-plus fa-2x"></i></div>
       <div class="mini-description">More</div>
     </div>
   </div>
 </div>
 
-<!-- OFFCANVAS SIDE MENU -->
-<div id="offcanvas-side-menu" uk-offcanvas="overlay: true; flip: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column uk-padding-remove-horizontal">
-    <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-    <ul class="uk-nav-parent-icon uk-nav-center uk-margin-auto-vertical" uk-nav="multiple: true">
-      <li class="uk-parent">
-        <a href="#">User options</a>
-        <ul class="uk-nav-sub">
-          <%= render "_user_options.html", assigns %>
-        </ul>
-      </li>
-      <li class="uk-parent">
-        <a href="#">Sites</a>
-        <ul class="uk-nav-sub">
-          <%= for site <- get_nav_sites(@conn) do %>
-            <li>
-              <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
+<!-- OFFCANVAS -->
+
+<div id="offcanvas-section"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <h3>Sections</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_category_options.html", assigns %>
     </ul>
   </div>
 </div>
-<!-- OFFCANVAS SIDE MENU -->
+
+
+<div id="offcanvas-magazine"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <h3>Magazine</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <li><a href="#">Current issue</a></li>
+      <li><a href="#">All issue</a></li>
+      <li><a href="#">Manage subscriptions</a></li>
+      <li><a href="#">Subscribe</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="offcanvas-more"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <h3>More</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_user_options.html", assigns %>
+    </ul>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_category_options.html", assigns %>
+    </ul>
+  </div>
+</div>
