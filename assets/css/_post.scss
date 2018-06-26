@@ -1,6 +1,15 @@
 .article {
+  .uk-text-meta {
+    a {
+      color: #e5127d;
+    }
+    a:hover {
+      color: #b60e63;
+    }
+  }
   .uk-dropcap {
     p {
+      color: $black;
       font-size: 18px;
     }
   }
