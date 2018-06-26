@@ -14,6 +14,7 @@ demo_server: install_frontend create_db populate_db dev
 demo_db: ops_reset ops
 
 create_db:
+	mix deps.get
 	mix ecto.reset
 	mix ecto.migrate
 
