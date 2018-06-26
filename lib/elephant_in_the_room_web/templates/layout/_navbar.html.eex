@@ -58,12 +58,28 @@
         </div>
       </li>
 
-      <li>
-        <a href="#" class="a-reduced hide-on-small"
-           uk-toggle="target: #offcanvas-side-menu">
+       <li>
+        <a href="#" class="a-reduced hide-on-small">
           <span class="with-dropwdown">More</span>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
         </a>
+        <div uk-dropdown="pos: bottom-center; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li class="uk-nav-header">User</li>
+            <li class="uk-nav-divider"></li>
+            <%= render "_user_options.html", assigns %>
+            <li class="uk-nav-header">Sites</li>
+            <li class="uk-nav-divider"></li>
+            <%= render "_site_options.html", assigns %>
+          </ul>
+        </div>
       </li>
+     
 
       <li><a href="#" class="a-reduced subscribe">Subscribe</a></li>
 
