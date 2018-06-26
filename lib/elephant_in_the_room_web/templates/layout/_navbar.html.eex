@@ -67,7 +67,7 @@
           </span>
           <div class="dropdown-arrow-up"> </div>
         </a>
-        <div uk-dropdown="pos: bottom-center; offset: 0"
+        <div uk-dropdown="pos: bottom-right; offset: 0"
              class="uk-navbar-dropdown dropwdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li class="uk-nav-header">User</li>
