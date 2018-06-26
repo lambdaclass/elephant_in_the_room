@@ -28,7 +28,7 @@ populate_db:
 #   create users, and random posts
 	mix run priv/repo/data_generator.ex
 
-clean_init: create_db populate_db
+clean_init_db: create_db populate_db
 
 dev:
 	mix compile
