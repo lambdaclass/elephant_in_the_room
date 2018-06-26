@@ -9,12 +9,15 @@ help:
 	@echo "- dev: runs the phoenix server"
 	@echo "- ops: runs the database"
 
+deps:
+	mix deps.get
+	cd assets/ && npm install
+
 demo_server: install_frontend create_db populate_db dev
 
 demo_db: ops_reset ops
 
 create_db:
-	mix deps.get
 	mix ecto.reset
 	mix ecto.migrate
 
@@ -24,10 +27,9 @@ populate_db:
 #   create users, and random posts
 	mix run priv/repo/data_generator.ex
 
-clean_db_init: create_db populate_db
+clean_init: create_db populate_db
 
 dev:
-	mix deps.get
 	mix compile
 	mix phx.server
 
