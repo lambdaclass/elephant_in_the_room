@@ -14,7 +14,7 @@
       <%= case @post.author do %>
         <% nil -> %>
         <% %Author{:id => id, :name => name} -> %>
-          By <%= link name, to: author_path(@conn, :public_show, id), class: "author" %> |
+          By <%= link name, to: author_path(@conn, :public_show, id) %> |
       <% end %>
       <%= show_date(@post.updated_at) %>
     </p>
