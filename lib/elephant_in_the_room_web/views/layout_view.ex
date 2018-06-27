@@ -51,6 +51,13 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     end
   end
 
+  def get_logger_user_name! (conn) do
+    case get_logged_user(conn) do
+      {error, reason} -> raise "no user name found: #{reason}"
+      {:ok, user, _} -> user.username
+    end
+  end
+
   def get_site_path(conn) do
     if Map.has_key?(conn.assigns, :site) do
       case conn && conn.assigns.site do

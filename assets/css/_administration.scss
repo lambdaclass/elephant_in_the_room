@@ -130,3 +130,35 @@ $admin-background-color: #ECF0F3;
     }
 }
 
+
+.admin-panel-greetings {
+    background: linear-gradient(270deg, #c95be5, #37d0dd);
+    background-size: 400% 400%;
+
+    animation: admin-panel-greetings-animation 8s ease infinite;
+
+    @keyframes admin-panel-greetings-animation {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+
+    font-family: $admin-side-bar-font;
+
+    h3, p {
+        margin: 0;
+        padding: 0;
+        padding-left: 20px;
+        color: white;
+    }
+    h3{
+        padding-top: 10px;
+        font-size: 2.1em;
+        text-transform: capitalize;
+    }
+
+    p{
+        font-size: 1.1em;
+        padding-bottom: 17px;
+    }
+}
