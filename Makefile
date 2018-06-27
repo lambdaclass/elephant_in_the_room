@@ -1,5 +1,5 @@
 .PHONY: help demo_server create_db populate_db install_frontend \
-        ops ops_reset ops_backup_db
+        ops ops_reset ops_backup_db deps
 
 help:
 	@echo "To start a demo sever run in two separated shells:"
@@ -8,6 +8,11 @@ help:
 	@echo "For development:"
 	@echo "- dev: runs the phoenix server"
 	@echo "- ops: runs the database"
+
+deps:
+	mix local.hex --force
+	mix deps.get
+	cd assets/ && npm install
 
 demo_server: install_frontend create_db populate_db dev
 
@@ -23,8 +28,9 @@ populate_db:
 #   create users, and random posts
 	mix run priv/repo/data_generator.ex
 
+clean_init_db: create_db populate_db
+
 dev:
-	mix deps.get
 	mix compile
 	mix phx.server
 

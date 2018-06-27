@@ -1,13 +1,24 @@
-# ElephantInTheRoom
+# Elephant In The Room
+**Elephant In The Room** is an opensource multi-site news page project.
 
-Run the website with two commands:
+## Run the elephant!
 
-- `make demo_db` to create the local database. After is completes run:
-- `make demo_server` to populate the database and start the web server.
-
+### First, the dependencies
 In order to run this project you need to have already installed:
 
-* [Elixir](https://elixir-lang.org/)
-* [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
-* [npm](https://www.npmjs.com/)
+* [Erlang](http://erlang.org/doc/installation_guide/INSTALL.html)
+* [Elixir](https://elixir-lang.org/install.html)
+* [Docker](https://docs.docker.com/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+* [npm](https://docs.npmjs.com/cli/install)
+
+### How to run the server locally
+Run the website with the following commands:
+
+- `make deps`: install project dependencies.
+- `make ops`: starts the database.
+- `make clean_init_db`: fills the database with random data.
+- `make dev`: starts the web server.
+
+
 
