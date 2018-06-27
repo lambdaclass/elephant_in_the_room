@@ -31,7 +31,7 @@
       <% end %>
     </p>
   </div>
-  <div class="uk-dropcap">
+  <div class="article-content uk-dropcap">
     <%= raw show_content @post %>
   </div>
 </div>
