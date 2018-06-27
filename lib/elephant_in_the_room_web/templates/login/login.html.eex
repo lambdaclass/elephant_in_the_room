@@ -28,7 +28,7 @@
           </div>
         <% end %>
 
-      <%= form_for @changeset, login_path(@conn, :login), fn f -> %>
+      <%= form_for @changeset, login_path(@conn, :login), [class: "uk-form-stacked uk-margin-top"], fn f -> %>
         <fieldset class="uk-fieldset">
           <legend class="uk-legend">Login</legend>
           <div class="uk-margin">
