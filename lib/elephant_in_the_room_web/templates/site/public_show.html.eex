@@ -13,12 +13,27 @@
     </div>
   </div>
   <div class="uk-grid-collapse" uk-grid>
-      <div class="uk-width-1-4@s uk-height-small card4"></div>
-      <div class="uk-width-1-4@s uk-height-small card4"></div>
-      <div class="uk-width-1-4@s uk-height-small card4"></div>
-      <div class="uk-width-1-4@s uk-height-small card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
   </div>
   <div class="uk-grid-collapse" uk-grid>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- author's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- latest's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- popular's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+  </div>
+  <div class="" uk-grid>
+    <!-- footer -->
   </div>
 </div>
 
@@ -38,5 +53,9 @@
 .card4 {
   border: 1px solid black;
   background-color: orange;
+}
+.card5 {
+  border: 1px solid black;
+  background-color: green;
 }
 </style>
