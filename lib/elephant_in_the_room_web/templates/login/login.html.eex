@@ -5,53 +5,48 @@
   <div class="col-xs-12 col-sm-8 col-md-4">
 
     <%= case @user do %>
-      <%= :no_user -> %>
-        <%= form_for @changeset, login_path(@conn, :login), fn f -> %>
-          <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Login</legend>
-            <div class="uk-margin">
-              <%= label f, :username, class: "uk-form-label" %>
-              <%= text_input f, :username, class: "uk-input" %>
-            </div>
+      <% %User{username: name, role: role} -> %>
+        <h1>Hello <%= name%>!</h1>
+        <div class="uk-margin">
+          <%= if role.name == "admin" do %>
+            <%= link "Admin",
+            to: admin_path(@conn, :index),
+            class: "uk-button uk-button-danger
+                  uk-width-1-1 uk-margin-small-bottom"%>
+          <% end %>
+          <%= link "Logout",
+          to: login_path(@conn, :logout),
+          class: "uk-button uk-button-primary
+                  uk-width-1-1 uk-margin-small-bottom"%>
+        </div>
 
-            <div class="uk-margin">
-              <%= label f, :password, class: "uk-form-label" %>
-              <%= password_input f, :password, class: "uk-input" %>
-            </div>
+      <% reason -> %>
+        <%= if reason == :login_failed do %>
+          <div class="uk-alert-danger uk-animation-toggle uk-animation-slide-top" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p><%= get_flash(@conn, :error) %></p>
+          </div>
+        <% end %>
 
-            <div class="form-group">
-              <%= submit "Login", class: "uk-button uk-button-primary" %>
-              <%= link "or register", to: user_path(@conn, :new) %>
-            </div>
-          </fieldset>
-         <% end %>
+      <%= form_for @changeset, login_path(@conn, :login), [class: "uk-form-stacked uk-margin-top"], fn f -> %>
+        <fieldset class="uk-fieldset">
+          <legend class="uk-legend">Login</legend>
+          <div class="uk-margin">
+            <%= label f, :username, class: "uk-form-label" %>
+            <%= text_input f, :username, class: "uk-input" %>
+          </div>
 
-         <% %User{username: name, role: role} -> %>
-           <h1>Hello <%= name%>!</h1>
-           <div class="uk-margin">
-             <%= if role.name == "admin" do %>
-               <%= link "Admin",
-               to: admin_path(@conn, :index),
-               class: "uk-button uk-button-danger
-                     uk-width-1-1 uk-margin-small-bottom"%>
-             <% end %>
-             <%= link "Logout",
-             to: login_path(@conn, :logout),
-             class: "uk-button uk-button-primary
-                     uk-width-1-1 uk-margin-small-bottom"%>
-           </div>
+          <div class="uk-margin">
+            <%= label f, :password, class: "uk-form-label" %>
+            <%= password_input f, :password, class: "uk-input" %>
+          </div>
 
-         <% :login_failed -> %>
-           <div class="uk-alert-danger" uk-alert>
-             <a class="uk-alert-close"></a>
-             Wrong user name or password.
-             <%= link "Try it again",
-             to: login_path(@conn, :index),
-             class: "uk-link-muted"%>
-           </div>
-
-     <% end %>
+          <div class="form-group">
+            <%= submit "Login", class: "uk-button uk-button-primary" %>
+            <%= link "or register", to: user_path(@conn, :new) %>
+          </div>
+        </fieldset>
+      <% end %>
+    <% end %>
   </div>
 </div>
-
-
