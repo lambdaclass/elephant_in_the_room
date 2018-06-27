@@ -89,6 +89,10 @@
   display: none;
 }
 
+body > div.uk-offcanvas-content > div > div > nav > div.uk-navbar-left > ul > li > a {
+    color: #fff
+}
+
 .uk-navbar-container.uk-navbar, .uk-navbar-container.uk-navbar li > .uk-navbar-dropdown, .uk-navbar-dropbar {
   background-color: $black;
 }

@@ -1,76 +1,46 @@
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
-  <nav class="uk-navbar-container uk-navbar-sticky">
-    <div class="uk-container uk-container-expand">
-      <div uk-navbar="" class="uk-navbar">
+<% admin_vertical_menu = render ElephantInTheRoomWeb.AdminView, "_admin_vertical_menu.html", assigns %>
 
-        <div class="uk-navbar-left">
-          <ul class="uk-navbar-nav">
-            <button class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-primary">
-                <i class="fas fa-bars"></i>
-            </button>
-          </ul>
-        </div>
-
-        <div class="uk-navbar-center">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active">
-                <%= link "Elephant", to: show_site_link(@conn) %>
-            </li>
-          </ul>
-        </div>
-
-        <div class="uk-navbar-right">
-          <ul class="uk-navbar-nav">
-          <div class="tooltip">
-            <button data-method="get" data-to="<%= login_path(@conn, :logout)%>" 
-              class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-secondary">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="sign-out-tooltiptext">Sign out</span>
-            </button>
-             </div>
-          </ul>
-        </div>
-          
+<div class="uk-offcanvas-content">
+  <!-- The whole page content goes here -->
+  <div role="main">
+    <!-- navbar start -->
+    <nav class="uk-navbar-container" uk-navbar="mode: click">
+      <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+          <li class="uk-active">
+            <%= link "Administration", to: admin_path(@conn, :index) %>
+          </li>
+        </ul>
       </div>
-    </div>
-  </nav>
-</div>
-
-<!-- NAVIGATION BAR -->
-
-<div class="el-administration-wrapper row">
-    <div class="navigation-side-panel col-xs-3 col-md-2">
-
-      <div class="administration-title">
-        <h3><%= link "Administration", to: admin_path(@conn, :index) %></h3>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+          <li class="uk-hidden@s">
+            <a href="#offcanvas-admin-menu" uk-toggle>
+              <i class="fas fa-bars fa-lg"></i>
+            </a>
+          </li>
+        </ul>
       </div>
+    </nav>
+    <!-- navbar end -->
 
-      <ul class="administation-items">
-        <li>
-          <%= link "Sites",
-          to: site_path(@conn, :index) %>
-        </li>
-        <li>
-          <%= link "Authors",
-          to: author_path(@conn, :index) %>
-        </li>
-        <li>
-          <%= link "Users",
-          to: user_path(@conn, :index) %>
-        </li>
-        <li>
-          <%= link "Roles",
-          to: role_path(@conn, :index) %>
-        </li>
-      </ul>
-      
-    </div>
-
-    <div class="administation-content col-xs-9 col-md-10">
-      <div role="main">
+    <!-- sidebar start -->
+    <div uk-grid>
+      <div class="uk-width-auto">
+        <div id="sidebar-admin-menu" class="uk-visible@s">
+          <%= admin_vertical_menu %>
+        </div>
+      </div>
+      <div id="admin-page-main-content" class="uk-width-expand">
         <%= render @view_module, @view_template, assigns %>
       </div>
     </div>
+  </div>
+
+  <div id="offcanvas-admin-menu" uk-offcanvas="mode: slide">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <%= admin_vertical_menu %>
+    </div>
+  </div>
 </div>
