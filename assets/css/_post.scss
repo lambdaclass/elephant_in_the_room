@@ -1,55 +1,16 @@
-.el-post {
-  .post-title {
-    padding-top: 25px;
-  }
-
-  feature-image-container .uk-first-column {
-    padding: 0 !important;
-  }
-
-  .featured-image {
-    display: block;
-    width: 100% !important;
-    height: 60vh !important;
-    @media (max-width: $break-xs) {
-      height: 30vh !important;
+.article {
+  .uk-text-meta {
+    a {
+      color: #e5127d;
     }
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow: hidden;
-
-    img {
-      width: 100vw;
-      position: relative;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    a:hover {
+      color: #b60e63;
     }
   }
-
-  .title-container {
-    position: relative;
-    top: -10vh;
-    margin-bottom: -10vh;
-    background: white;
-
-    h1 {
-      font-family: $caption-font;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-align: center;
+  .uk-dropcap {
+    p {
+      color: $black;
+      font-size: 18px;
     }
-  }
-
-  .uk-article {
-    font-family: $default-font;
-  }
-
-  .post-content {
-    color: #242424;
-  }
-
-  .uk-text-lead {
-    line-height: 1.1em;
   }
 }
