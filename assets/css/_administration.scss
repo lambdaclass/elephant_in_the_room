@@ -1,7 +1,70 @@
+$admin-navbar-height: 3.25em;
+$admin-navbar-small: 600px;
+$admin-navbar-medium: 1000px;
+
 .admin-top-bar-line {
     width: 100vw;
     background-color: #276cda;
     height: 4px;
+}
+
+.admin-nav-options {
+    background-color: white;
+    a {
+        text-transform: capitalize !important;
+        font-weight: bold;
+        color: black !important;
+        &:hover {
+            background: #efeded;
+        }
+    }
+    li {
+        list-style: none;
+    }
+}
+
+.small-admin-nav-options {
+    ul {
+        padding: 0.5em 0 0.5em 1em;
+        margin: 0;
+    }
+    li {
+        margin-bottom: 0.8em;
+    }
+    a {
+        color: #616161 !important;
+    }
+    z-index: -200;
+    box-shadow: inset 0px -13px 30px -16px #8c8c8c;
+}
+
+.admin-nav-bar {
+    z-index: 0;
+    background-color: white !important;
+    &, ul, li {
+        height: $admin-navbar-height !important;
+    }
+    a {
+        height: 100% !important;
+    }
+    .nav-title a {
+        font-family: $admin-nav-title-font;
+        font-weight: 300;
+    }
+    .show-only-on-small {
+        display:none;
+        background-color: red !important;
+        @media screen and (max-width: $admin-navbar-small - 1) {
+            display: inline-flex !important;
+            background-color: black !important;
+        }
+    }
+    .show-only-on-bigger-than-small {
+        display:none;
+        @media screen and (min-width: $admin-navbar-small) {
+            display: inline-flex;
+        }
+    }
 }
 
 .el-administration-wrapper {

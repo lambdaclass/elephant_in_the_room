@@ -1,43 +1,38 @@
 <div class="admin-top-bar-line"></div>
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
-  <nav class="uk-navbar-container uk-navbar-sticky">
-    <div class="uk-container uk-container-expand">
-      <div uk-navbar="" class="uk-navbar">
+<nav class="uk-navbar-container admin-nav-bar" uk-navbar>
+  <div class="uk-navbar-left">
+    <ul class="uk-navbar-nav admin-nav-options">
+      <li class="uk-active nav-title">
+        <a href="<%= admin_path(@conn, :index) %>">
+          Elephant Admin
+        </a>
+      </li>
+    </ul>
+    <ul class="uk-navbar-nav admin-nav-options show-only-on-bigger-than-small">
+      <li><a href="/">Home</a></li>
+      <li><a href="#">Payments</a></li>
+    </ul>
+  </div>
 
-        <div class="uk-navbar-left">
-          <ul class="uk-navbar-nav">
-            <button class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-primary">
-                <i class="fas fa-bars"></i>
-            </button>
-          </ul>
-        </div>
-
-        <div class="uk-navbar-center">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active">
-                <%= link "Elephant", to: show_site_link(@conn) %>
-            </li>
-          </ul>
-        </div>
-
-        <div class="uk-navbar-right">
-          <ul class="uk-navbar-nav">
-          <div class="tooltip">
-            <button data-method="get" data-to="<%= login_path(@conn, :logout)%>" 
-              class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-secondary">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="sign-out-tooltiptext">Sign out</span>
-            </button>
-             </div>
-          </ul>
-        </div>
-          
-      </div>
+    <div class="uk-navbar-right show-only-on-small">
+        <ul class="uk-navbar-nav admin-nav-options">
+          <li>
+            <a href="#" uk-toggle="target: #admin-navbar-small" >
+              <i class="fas fa-bars fa-lg"></i>
+            </a>
+          </li>
+        </ul>
     </div>
-  </nav>
+</nav>
+<div id="admin-navbar-small"
+     class="admin-nav-options small-admin-nav-options" aria-hidden="true" hidden>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Payments</a></li>
+  </ul>
+  <div class="shadow"></div>
 </div>
+
 
 <!-- NAVIGATION BAR -->
 
