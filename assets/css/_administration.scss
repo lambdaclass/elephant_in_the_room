@@ -73,7 +73,60 @@ $admin-background-color: #ECF0F3;
 }
 
 .admin-body-root {
-    background-color: $admin-background-color !important;
+    background-color: $admin-background-color;
     min-height: 100vh;
+}
+
+.admin-body-container {
+    margin-top: 0.8em;
+    padding-left: 0em;
+    padding-right: 0.2em;
+    .side-bar {
+        h3 {
+            color: grey;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        ul {
+            margin-top: 0.5em;
+            padding-left: 0;
+        }
+        li {
+            padding-top: 0;
+            list-style: none;
+            margin-top: 0.5em;
+            padding-left: 0.9em;
+        }
+        a {
+            color: black;
+            font-weight: bold;
+            font-size: 14px !important;
+            font-family: $admin-side-bar-font;
+            &:hover {
+                color: #276cda;
+                text-decoration: none;
+            }
+        }
+    }
+    .administration-side {
+        .admin-route{
+            font-family: $admin-nav-title-font;
+            .divider {
+                color: #adadad;
+                font-weight: 300;
+            }
+            .path {
+                display: inline-block;
+                text-transform: lowercase;
+                &.target {
+                    color: black;
+                }
+            }
+            .path::first-letter {
+                text-transform: uppercase;
+            }
+        }
+    }
 }
 

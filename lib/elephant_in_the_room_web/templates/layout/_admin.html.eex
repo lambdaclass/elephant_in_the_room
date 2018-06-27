@@ -41,14 +41,12 @@
 
 
 
-<div class="uk-container uk-container-large admin-body-container">
+<div class="uk-container  admin-body-container">
 
-<div class="el-administration-wrapper row">
-    <div class="navigation-side-panel col-xs-3 col-md-2">
+  <div uk-grid>
+    <div class="uk-width-5-5 uk-width-auto@s side-bar">
 
-      <div class="administration-title">
-        <h3><%= link "Administration", to: admin_path(@conn, :index) %></h3>
-      </div>
+      <h3> Administration </h3>
 
       <ul class="administation-items">
         <li>
@@ -70,19 +68,22 @@
       </ul>
     </div>
 
-    <div class="administation-content col-xs-9 col-md-10">
+    <div class="uk-width-5-5 uk-width-expand@s administration-side">
+      <div class="admin-route">
+        <a class="path" href="#">PATH</a>
+        <span class="divider">/</span>
+        <a class="path" href="#">PATH</a>
+        <span class="divider">/</span>
+        <span class="path target">TARGET</span>
+      </div>
       <div role="main">
         <%= render @view_module, @view_template, assigns %>
       </div>
     </div>
-</div>
+  </div>
 
-
-
-  
 
 </div>
-
 </body>
 
 
