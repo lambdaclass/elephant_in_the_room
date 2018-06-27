@@ -1,0 +1,46 @@
+<!-- NAVIGATION BAR -->
+<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
+  <nav class="uk-navbar-container uk-light" uk-navbar>
+    <div class="uk-navbar-left">
+      <%= link to: get_site_path(@conn), class: "uk-navbar-item uk-logo" do %>
+        <h1 class="uk-margin-auto-vertical">Elephant</h1>
+      <% end %>
+    </div>
+
+    <div class="uk-navbar-right">
+      <div class="uk-navbar-item">
+        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-side-menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+<!-- NAVIGATION BAR -->
+
+<!-- OFFCANVAS SIDE MENU -->
+<div id="offcanvas-side-menu" uk-offcanvas="overlay: true; flip: true">
+  <div class="uk-offcanvas-bar uk-flex uk-flex-column uk-padding-remove-horizontal">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+    <ul class="uk-nav-parent-icon uk-nav-center uk-margin-auto-vertical" uk-nav="multiple: true">
+      <li class="uk-parent">
+        <a href="#">User options</a>
+        <ul class="uk-nav-sub">
+          <%= render "_user_options.html", assigns %>
+        </ul>
+      </li>
+      <li class="uk-parent">
+        <a href="#">Sites</a>
+        <ul class="uk-nav-sub">
+          <%= for site <- get_nav_sites(@conn) do %>
+            <li>
+              <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- OFFCANVAS SIDE MENU -->

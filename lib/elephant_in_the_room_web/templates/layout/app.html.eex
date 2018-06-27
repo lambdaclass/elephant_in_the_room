@@ -13,16 +13,18 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  
-  <body>
 
-    <%= if assigns[:admin] != true do %>
-      <%= render "_normal.html", assigns %>
-    <% end %>
-    
-    <%= if assigns[:admin] do %>
-      <%= render "_admin.html", assigns %>
-    <% end %>
-        
+  <body>
+    <div class="uk-offcanvas-content">
+      <%= if assigns[:admin] do %>
+        <%= render "_admin.html", assigns %>
+      <%= else %>
+        <%= render "_normal.html", assigns %>
+
+        <div role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </div>
+      <% end %>
+    </div>
   </body>
 </html>

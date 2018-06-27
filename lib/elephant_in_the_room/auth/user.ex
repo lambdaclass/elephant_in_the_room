@@ -23,7 +23,7 @@ defmodule ElephantInTheRoom.Auth.User do
     |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id])
     |> unique_constraint(:username)
     |> unique_constraint(:email)
-    |> validate_format(:email, ~r/@/)
+    |> validate_format(:email, ~r/.+@.+\..+/i)
     |> validate_length(:password, min: 6)
     |> validate_length(:username, min: 4)
     |> put_pass_hash()

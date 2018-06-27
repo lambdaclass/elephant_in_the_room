@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :elephant_in_the_room
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_env: 2]
 
   socket("/socket", ElephantInTheRoomWeb.UserSocket)
 
@@ -45,7 +46,8 @@ defmodule ElephantInTheRoomWeb.Endpoint do
     Plug.Session,
     store: :cookie,
     key: "_elephant_in_the_room_key",
-    signing_salt: "72pHfE4g"
+    signing_salt: get_env(__MODULE__, :signing_salt),
+    encryption_salt: get_env(__MODULE__, :encryption_salt)
   )
 
   plug(ElephantInTheRoomWeb.Router)
