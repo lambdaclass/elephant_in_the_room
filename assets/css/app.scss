@@ -7,6 +7,14 @@
 @import "_post";
 @import "_administration";
 
+html {
+font-family: $default-font;
+}
+
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+  font-family: $caption-font;
+}
+
 .row {
   margin-left: 0;
   margin-right: 0;
