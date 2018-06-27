@@ -116,6 +116,9 @@ $navbar-break-m: 800px;
     }
     .search-inline-bar {
         margin-left: 1em;
+        &, .uk-navbar-item, .uk-navbar-toggle {
+            height: $navbar-height;
+        }
     }
 }
 
