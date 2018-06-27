@@ -1,4 +1,8 @@
+<body class="admin-body-root">
+
 <div class="admin-top-bar-line"></div>
+
+<!-- NAVIGATION BAR-->
 <nav class="uk-navbar-container admin-nav-bar" uk-navbar>
   <div class="uk-navbar-left">
     <ul class="uk-navbar-nav admin-nav-options">
@@ -33,8 +37,11 @@
   <div class="shadow"></div>
 </div>
 
-
 <!-- NAVIGATION BAR -->
+
+
+
+<div class="uk-container uk-container-large admin-body-container">
 
 <div class="el-administration-wrapper row">
     <div class="navigation-side-panel col-xs-3 col-md-2">
@@ -61,7 +68,6 @@
           to: role_path(@conn, :index) %>
         </li>
       </ul>
-      
     </div>
 
     <div class="administation-content col-xs-9 col-md-10">
@@ -70,3 +76,14 @@
       </div>
     </div>
 </div>
+
+
+
+  
+
+</div>
+
+</body>
+
+
+

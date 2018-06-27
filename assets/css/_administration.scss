@@ -1,6 +1,7 @@
 $admin-navbar-height: 3.25em;
-$admin-navbar-small: 600px;
+$admin-navbar-small: 770px;
 $admin-navbar-medium: 1000px;
+$admin-background-color: #ECF0F3;
 
 .admin-top-bar-line {
     width: 100vw;
@@ -34,8 +35,12 @@ $admin-navbar-medium: 1000px;
     a {
         color: #616161 !important;
     }
-    z-index: -200;
-    box-shadow: inset 0px -13px 30px -16px #8c8c8c;
+    .shadow {
+        height: 1em;
+        background-color: $admin-background-color;
+        box-shadow: inset 0px 17px 30px -16px rgba(36,36,36,0.39);
+    }
+
 }
 
 .admin-nav-bar {
@@ -67,42 +72,8 @@ $admin-navbar-medium: 1000px;
     }
 }
 
-.el-administration-wrapper {
-  height: 100vh;
-  width: 100vw;
-
-  > .row {
-    height: 100%;
-    padding: 0;
-  }
-
-  .navigation-side-panel {
-    color: white;
-    background: #2b2628;
-    height: 100%;
-    padding: 0;
-    text-align: center;
-
-    .administration-title {
-      padding-left: 0.3em;
-      background: #393235;
-      h3 {
-        a {
-          color: #ffba00;
-        }
-      }
-    }
-
-    .administation-items {
-      list-style-type: none;
-      li a {
-        color: #7d7779;
-      }
-    }
-  }
-
-  .administation-content {
-    background: whitesmoke;
-    height: 100%;
-  }
+.admin-body-root {
+    background-color: $admin-background-color !important;
+    min-height: 100vh;
 }
+
