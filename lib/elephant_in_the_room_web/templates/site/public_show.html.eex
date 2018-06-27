@@ -1,30 +1,28 @@
-<div class="container">
-  <div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
-    <div class="uk-flex uk-flex-left">
-      <div class="uk-flex uk-flex-column uk-width-1-3">
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body">Item 1</div>
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 2</div>
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 3</div>
-      </div>
-    </div>
-    <div class="uk-flex uk-flex-center">
-      <div class="uk-card uk-background-secondary uk-card-default uk-flex-1">Item 4</div>
-    </div>
-    <div class="uk-flex uk-flex-right">
-      <div class="uk-flex uk-flex-column uk-flex-right">
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body">Item 1</div>
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 2</div>
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 3</div>
-        <div class="uk-card uk-background-primary uk-card-default uk-card-body uk-margin-top">Item 4</div>
-      </div>
-    </div>
+<div class="uk-grid-collapse uk-flex" uk-height-match="> *" uk-grid>
+  <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1"></div>
+  <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap">
+    <div class="uk-height-small card3"></div>
+    <div class="uk-height-small card3"></div>
+    <div class="uk-height-small card3"></div>
+    <div class="uk-height-small card3"></div>
   </div>
-  <%= case get_normal_posts(@conn, @site.posts) do %>
-    <% {:error, _} -> %> 
-    <% {:ok, normal_posts } -> %>
-      <%= shared_render_posts_card @conn, 
-      normal_posts,
-      Map.put(assigns, :type, :normal) %>
-  <% end %>
-
+  <div class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" uk-grid>
+    <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
+    <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
+  </div>
 </div>
+
+<style type="text/css">
+.card1 {
+  border: 1px solid black;
+  background-color: blue;
+}
+.card2 {
+  border: 1px solid black;
+  background-color: red;
+}
+.card3 {
+  border: 1px solid black;
+  background-color: yellow;
+}
+</style>
