@@ -15,15 +15,18 @@
     img {
       margin: 20px 0;
     }
-    .img-left {
-      width: 50%;
-      margin-left: -2%;
-      margin-right: 2%;
+    @media screen and (min-width: $break-s) {
+      .img-left {
+        width: 50%;
+        margin-left: -2%;
+        margin-right: 2%;
+      }
+      .img-right {
+        width: 50%;
+        margin-left: 2%;
+        margin-right: -2%;
+      }
     }
-    .img-right {
-      width: 50%;
-      margin-left: 2%;
-      margin-right: -2%;
-    }
+
   }
 }
