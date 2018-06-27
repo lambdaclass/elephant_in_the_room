@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Sites, Site}
+  alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.{User, Role}
 
@@ -13,8 +13,8 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     end
   end
 
-  def get_categories(%{assigns: %{site: %{categories: categories}}},
-                     amount \\ 5) do
+  def get_categories(assigns, amount \\ 5)
+  def get_categories(%{assigns: %{site: %{categories: categories}}}, amount) do
     categories
     |> Enum.map(&{&1.id, &1.name})
     |> Enum.split(amount)

@@ -1,4 +1,4 @@
-<% {categories, more_categories} = get_categories(@conn, 10) %>
+<% {categories, _more_categories} = get_categories(@conn, 10) %>
 
 <%= if current_site(@conn) do %>
   <%= for {category_id, category_name} <- categories do %>
