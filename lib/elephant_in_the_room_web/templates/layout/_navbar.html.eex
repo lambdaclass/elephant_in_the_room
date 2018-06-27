@@ -1,46 +1,203 @@
-<!-- NAVIGATION BAR -->
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
-  <nav class="uk-navbar-container uk-light" uk-navbar>
-    <div class="uk-navbar-left">
-      <%= link to: get_site_path(@conn), class: "uk-navbar-item uk-logo" do %>
-        <h1 class="uk-margin-auto-vertical">Elephant</h1>
-      <% end %>
-    </div>
+<% {site_name1, site_name2} = get_site_name(@conn) %>
 
-    <div class="uk-navbar-right">
-      <div class="uk-navbar-item">
-        <button class="uk-button uk-button-default uk-border-rounded" type="button" uk-toggle="target: #offcanvas-side-menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+<nav class="uk-navbar-container navbar-container" uk-navbar>
+
+  <div class="uk-navbar-left">
+    <ul class="uk-navbar-nav ul-reduced">
+      <li class="uk-active">
+        <a href="<%= get_site_path(@conn) %>" class="navbar-title a-reduced">
+          <div class="first"><%= site_name1  %></div>
+          <div class="second"><%= site_name2  %></div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="nav-overlay uk-navbar-right">
+    <ul class="uk-navbar-nav ul-reduced">
+
+      <li><a href="#" class="a-reduced hide-on-small">Popular</a></li>
+
+      <li><a href="#" class="a-reduced hide-on-small">Latest</a></li>
+
+      <li>
+        <a href="#" class="a-reduced hide-on-small">
+          <span class="with-dropwdown">Sections</span>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
+        </a>
+        <div uk-dropdown="pos: bottom-center; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <%= render "_category_options.html", assigns %>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a href="#" class="a-reduced hide-on-small">
+          <span class="with-dropwdown">Magazine</span>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
+        </a>
+        <div uk-dropdown="pos: bottom-center; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li><a href="#">Current issue</a></li>
+            <li><a href="#">All issue</a></li>
+            <li><a href="#">Manage subscriptions</a></li>
+            <li><a href="#">Subscribe</a></li>
+          </ul>
+        </div>
+      </li>
+
+       <li>
+        <a href="#" class="a-reduced hide-on-small">
+          <span class="with-dropwdown">More</span>
+          <span class="text-icons">
+            <i class="fas fa-angle-down icon-down"></i>
+            <i class="fas fa-angle-up icon-up"></i>
+          </span>
+          <div class="dropdown-arrow-up"> </div>
+        </a>
+        <div uk-dropdown="pos: bottom-right; offset: 0"
+             class="uk-navbar-dropdown dropwdown-container">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li class="uk-nav-header">User</li>
+            <li class="uk-nav-divider"></li>
+            <%= render "_user_options.html", assigns %>
+            <li class="uk-nav-header">Sites</li>
+            <li class="uk-nav-divider"></li>
+            <%= render "_site_options.html", assigns %>
+          </ul>
+        </div>
+      </li>
+
+      <li><a href="#" class="a-reduced subscribe" >Subscribe</a></li>
+
+      <li class="show-only-on-bigger-than-small">
+        <a href="#" class="a-reduced" uk-toggle="target: .nav-overlay; animation: uk-animation-fade">
+          <i class="fas fa-search"></i>
+        </a>
+      </li>
+
+      <li class="show-only-on-small">
+        <a class="a-reduced uk-navbar-toggle" href="#modal-full" uk-toggle>
+          <i class="fas fa-search"></i>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+
+  <div class="nav-overlay uk-navbar-left uk-flex-1 search-inline-bar" hidden>
+    <div class="uk-navbar-item uk-width-expand">
+      <form class="uk-search uk-search-navbar uk-width-1-1">
+        <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+      </form>
     </div>
-  </nav>
+    <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+  </div>
+
+  <div id="modal-full" class="uk-modal-full uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
+        <button class="uk-modal-close-full" type="button" uk-close></button>
+        <form class="uk-search uk-search-large">
+            <input class="uk-search-input uk-text-center" type="search" placeholder="Search..." autofocus>
+        </form>
+    </div>
+  </div>
+
+</nav>
+
+<div class="mini-navbar-container" uk-grid>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-chart-line fa-2x"></i></div>
+      <div class="mini-description">Popular</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element">
+      <div class="mini-icon"><i class="fas fa-clock fa-2x"></i></div>
+      <div class="mini-description">Latest</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element" uk-toggle="target: #offcanvas-section">
+      <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
+      <div class="mini-description">Section</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element" uk-toggle="target: #offcanvas-magazine">
+      <div class="mini-icon"><i class="fas fa-book fa-2x"></i></div>
+      <div class="mini-description">Magazine</div>
+    </div>
+  </div>
+  <div class="uk-width-1-5 uk-text-center">
+    <div class="element" uk-toggle="target: #offcanvas-more">
+      <div class="mini-icon"><i class="fas fa-plus fa-2x"></i></div>
+      <div class="mini-description">More</div>
+    </div>
+  </div>
 </div>
-<!-- NAVIGATION BAR -->
 
-<!-- OFFCANVAS SIDE MENU -->
-<div id="offcanvas-side-menu" uk-offcanvas="overlay: true; flip: true">
-  <div class="uk-offcanvas-bar uk-flex uk-flex-column uk-padding-remove-horizontal">
+
+<!-- OFFCANVAS -->
+
+<div id="offcanvas-section"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
-
-    <ul class="uk-nav-parent-icon uk-nav-center uk-margin-auto-vertical" uk-nav="multiple: true">
-      <li class="uk-parent">
-        <a href="#">User options</a>
-        <ul class="uk-nav-sub">
-          <%= render "_user_options.html", assigns %>
-        </ul>
-      </li>
-      <li class="uk-parent">
-        <a href="#">Sites</a>
-        <ul class="uk-nav-sub">
-          <%= for site <- get_nav_sites(@conn) do %>
-            <li>
-              <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
+    <h3>Sections</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_category_options.html", assigns %>
     </ul>
   </div>
 </div>
-<!-- OFFCANVAS SIDE MENU -->
+
+
+<div id="offcanvas-magazine"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <h3>Magazine</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <li><a href="#">Current issue</a></li>
+      <li><a href="#">All issue</a></li>
+      <li><a href="#">Manage subscriptions</a></li>
+      <li><a href="#">Subscribe</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="offcanvas-more"
+     class="mini-navbar-offcanvas"
+     uk-offcanvas="mode: none; overlay: true">
+  <div class="uk-offcanvas-bar">
+    <button class="uk-offcanvas-close" type="button" uk-close></button>
+    <h3>More</h3>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_user_options.html", assigns %>
+    </ul>
+    <div class="nav-divider"></div>
+    <ul class="uk-nav uk-nav-default">
+      <%= render "_category_options.html", assigns %>
+    </ul>
+  </div>
+</div>
