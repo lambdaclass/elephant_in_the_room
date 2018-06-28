@@ -94,13 +94,13 @@
   background-color: $black;
 }
 
-.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a, .uk-offcanvas .uk-nav > li > a, , .uk-offcanvas .uk-nav .uk-nav-sub > li > a:hover {
+.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a, .uk-offcanvas .uk-nav > li > a, .uk-offcanvas .uk-nav .uk-nav-sub > li > a {
   color: #fff;
   font-weight: bold;
 }
 
-.uk-offcanvas .uk-nav .uk-nav-sub > li > a {
-  color: #fff;
+.uk-offcanvas .uk-nav .uk-nav-sub > li > a:hover {
+  font-weight: bold;
 }
 
 .uk-navbar .uk-button {
