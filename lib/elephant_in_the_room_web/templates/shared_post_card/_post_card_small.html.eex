@@ -1,0 +1,13 @@
+<div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
+  <div class="uk-grid-collapse" uk-grid>
+    <div class="uk-card-body">
+      <h3 class="uk-card-title"><strong>The title</strong></h3>
+      <p>Author Name</p>
+    </div>
+  </div>
+  <div class="uk-card-media-right uk-cover-container uk-height-small">
+    <img height="40px" width="40px" src="https://cdn.theatlantic.com/assets/media/img/mt/2018/06/RTS1U526/86x86.jpg?mod=1530178178" alt="" uk-cover>
+    <canvas width="86" height="86"></canvas>
+  </div>
+</div>
+

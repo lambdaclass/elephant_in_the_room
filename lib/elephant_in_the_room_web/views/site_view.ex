@@ -1,6 +1,8 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
 
+  alias ElephantInTheRoomWeb.SharedPostCardView
+
   def get_top_featured_post(_conn, posts) do
     case posts do
       [top | _] -> {:ok, top}
@@ -66,5 +68,9 @@ defmodule ElephantInTheRoomWeb.SiteView do
     if conn.host != "localhost",
       do: site_path(conn, :public_show),
       else: local_site_path(conn, :public_show, site.id)
+  end
+
+  def render_shared(template, assigns \\ []) do
+    render(SharedPostCardView, template, assigns)
   end
 end

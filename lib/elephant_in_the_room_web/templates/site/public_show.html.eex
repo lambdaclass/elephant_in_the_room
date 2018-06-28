@@ -2,10 +2,16 @@
   <div class="uk-grid-collapse uk-flex" uk-height-match="> *" uk-grid>
     <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1"></div>
     <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap">
+      <!-- 
       <div class="uk-height-small card3"></div>
       <div class="uk-height-small card3"></div>
       <div class="uk-height-small card3"></div>
       <div class="uk-height-small card3"></div>
+      -->
+      <%= render_shared("_post_card_small.html", assigns) %>
+      <%= render_shared("_post_card_small.html", assigns) %>
+      <%= render_shared("_post_card_small.html", assigns) %>
+      <%= render_shared("_post_card_small.html", assigns) %>
     </div>
     <div class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" uk-grid>
       <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
