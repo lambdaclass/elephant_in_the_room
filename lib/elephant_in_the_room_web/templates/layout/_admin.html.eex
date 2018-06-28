@@ -68,13 +68,23 @@
       </ul>
     </div>
 
+    <% {crumb_path, crumb_target} = ElephantInTheRoomWeb.AdminView.
+         bread_crumb(@conn, assigns[:bread_crumb]) %>
     <div class="uk-width-5-5 uk-width-expand@s administration-side">
       <div class="admin-route">
-        <a class="path" href="#">PATH</a>
-        <span class="divider">/</span>
-        <a class="path" href="#">PATH</a>
-        <span class="divider">/</span>
-        <span class="path target">TARGET</span>
+        <a class="path" href="<%= admin_path(@conn, :index) %>">
+          <i class="fas fa-cogs"></i>
+        </a>
+        <%= for {title, url} <- crumb_path do %>
+          <span class="divider">/</span>
+          <a class="path" href="<%= url %>"><%= title %></a>
+        <%= end %>
+        <%= case crumb_target do %>
+          <%= {title, _} -> %>
+          <span class="divider">/</span>
+          <span class="path target"><%= title %></span>
+          <%= _ -> %>
+        <% end %>
       </div>
       <div role="main">
         <%= render @view_module, @view_template, assigns %>

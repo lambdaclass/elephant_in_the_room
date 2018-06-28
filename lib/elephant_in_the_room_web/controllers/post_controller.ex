@@ -26,7 +26,8 @@ defmodule ElephantInTheRoomWeb.PostController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :posts]
     )
   end
 
@@ -60,7 +61,10 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     post = Sites.get_post!(id)
-    render(conn, "show.html", site: site, post: post)
+    render(conn, "show.html",
+      site: site,
+      post: post,
+      bread_crumb: [:sites, site, :posts, post])
   end
 
   def public_show(conn, %{"slug" => slug} = params) do
@@ -90,7 +94,8 @@ defmodule ElephantInTheRoomWeb.PostController do
       site: site,
       post: post,
       changeset: changeset,
-      categories: categories
+      categories: categories,
+      bread_crumb: [:sites, site, :posts, post, :post_edit]
     )
   end
 
