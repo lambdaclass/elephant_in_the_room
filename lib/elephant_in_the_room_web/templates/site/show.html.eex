@@ -34,7 +34,7 @@
          onclick="window.location='<%= site_post_path(@conn, :index, @site) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-word"></i>
-        Post
+        Posts
       </h3>
     </div>
   </div>

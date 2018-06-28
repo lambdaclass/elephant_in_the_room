@@ -1,45 +1,25 @@
+<div class="admin-title">
+  <span class="title-text"> Posts</span>
+  <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+     href="<%= site_post_path(@conn, :new, @site) %>">
+    create new
+  </a>
+  </span>
+</div>
 
-<h2><%= @site.name %>>Posts</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="uk-table uk-table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Menu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for post <- @posts do %>
-        <tr>
-          <td><%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %></td>
-          <td class="text-right">
-            <span>
-              <%= link "", to: site_post_path(@conn, :edit, @site, post), 
-                class: "el-menu-icon fa fa-edit" %>
-            </span>
-            <span>
-              <%= link "", to: site_post_path(@conn, :delete, @site, post), 
-                method: :delete, data: [confirm: "Are you sure?"], 
-                class: "el-menu-icon fa fa-trash-alt" %>
-            </span>
-          </td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+<ul class="uk-list uk-list-striped admin-site-list">
+  <%= for post <- @posts do %>
+      <li class="site-item"
+          onclick="window.location = '<%= site_post_path(@conn, :edit, @site, post) %>'">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
+        edit
+      </a>
+      <a class="site-link">
+        <%= post.title %>
+      </a>
+    </li>
+  <% end %>
+</ul>
 
-<%= case compare(@page_number, @total_pages) do %>
-  <% :equal -> %>
-    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-  <% :lesser -> %>
-    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
-  <% :first -> %>
-    <span><%= link "", to: site_post_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
-  <% _ -> %>
-<% end %>
-
-<br>
-
-<span><%= link "New Post", to: site_post_path(@conn, :new, @site) %></span>
-<span><%= link "Back", to: site_path(@conn, :index) %></span>
+<%= render ElephantInTheRoomWeb.AdminView,
+      "_bottom_pagination.html", assigns %>
