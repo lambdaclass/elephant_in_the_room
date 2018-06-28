@@ -3,11 +3,13 @@
   alias ElephantInTheRoomWeb.Uploaders.Image
 %>
 
-<div class="uk-cover-container" uk-height-viewport>
-    <img src="<%= Image.url({@post.image, @post}) %>" alt="" uk-cover>
-</div>
+<%= if @post.image do %>
+  <div class="uk-cover-container" uk-height-viewport>
+      <img src="<%= Image.url({@post.image, @post}) %>" alt="" uk-cover>
+  </div>
+<% end %>
 
-<div class="uk-container uk-container-small article">
+<div class="uk-container uk-container-small uk-margin-top article">
   <h1 class="uk-text-uppercase uk-text-bold"><%= @post.title %></h1>
   <div class="uk-text-meta">
     <p>
