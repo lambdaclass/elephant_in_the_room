@@ -6,3 +6,48 @@
     I hope you are having a great day!
   </p>
 </div>
+
+<div uk-grid class="admin-panel-indicator-grid">
+
+  <% indicators_class = "uk-width-1-2@s uk-width-1-4@m" %>
+
+  <div class="<%= indicators_class %>">
+    <div class="admin-panel-indicators">
+      <div class="indicator-container">
+        <div class="number">439k</div>
+        <div class="name">daily visits</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="<%= indicators_class %>">
+    <div class="admin-panel-indicators">
+      <div class="indicator-container">
+        <div class="number">12k</div>
+        <div class="name">subscribers</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="<%= indicators_class %>">
+    <div class="admin-panel-indicators">
+      <div class="indicator-container">
+        <div class="number">30k</div>
+        <div class="name">users</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="<%= indicators_class %>">
+    <div class="admin-panel-indicators">
+      <div class="indicator-container">
+        <div class="number">1.2k</div>
+        <div class="name">posts</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

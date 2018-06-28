@@ -2,6 +2,7 @@ $admin-navbar-height: 3.25em;
 $admin-navbar-small: 770px;
 $admin-navbar-medium: 1000px;
 $admin-background-color: #ECF0F3;
+$admin-light-grey: #cacaca;
 
 .admin-top-bar-line {
     width: 100vw;
@@ -75,6 +76,7 @@ $admin-background-color: #ECF0F3;
 .admin-body-root {
     background-color: $admin-background-color;
     min-height: 100vh;
+    font-family: $admin-side-bar-font;
 }
 
 .admin-body-container {
@@ -144,6 +146,7 @@ $admin-background-color: #ECF0F3;
     }
 
     font-family: $admin-side-bar-font;
+    margin-bottom: 1em;
 
     h3, p {
         margin: 0;
@@ -160,5 +163,35 @@ $admin-background-color: #ECF0F3;
     p{
         font-size: 1.1em;
         padding-bottom: 17px;
+    }
+}
+
+
+.admin-panel-indicator-grid {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    .uk-grid-margin {
+        margin-top: 1em;
+    }
+}
+
+.admin-panel-indicators {
+    background-color: white;
+    border-radius: 10px;
+    height: 8em;
+    border-width: 1px;
+    border-color: #cacaca;
+    border-style: solid;
+    text-align: center;
+    display:table;
+    width: 100%;
+    .indicator-container {
+        display: table-cell;
+        vertical-align: middle;
+        .number {
+            color: #363636;
+            font-size: 2rem;
+            font-weight: 600;
+        }
     }
 }
