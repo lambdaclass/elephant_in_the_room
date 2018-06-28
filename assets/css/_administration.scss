@@ -230,6 +230,10 @@ $admin-light-grey: #cacaca;
         text-transform: uppercase;
         color: black;
         font-size: 0.9em;
+        &:hover {
+            color: #004f9e;
+            text-decoration: none;
+        }
     }
 }
 
