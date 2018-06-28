@@ -195,3 +195,18 @@ $admin-light-grey: #cacaca;
         }
     }
 }
+
+.admin-title {
+    .title-text {
+        font-size: 1.4em;
+        color: black;
+    }
+    .uk-button-small {
+        font-size: 0.7em;
+        padding-left: 4px;
+        padding-right: 4px;
+        position: relative;
+        line-height: 1em;
+        top: -0.17em;
+    }
+}
