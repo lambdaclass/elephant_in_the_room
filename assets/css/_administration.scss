@@ -232,3 +232,13 @@ $admin-light-grey: #cacaca;
         font-size: 0.9em;
     }
 }
+
+.admin-change-options-cards{
+    .uk-card-body{
+        border-radius: 15px;
+        cursor: pointer;
+        &:hover {
+            background: #fafaff;
+        }
+    }
+}

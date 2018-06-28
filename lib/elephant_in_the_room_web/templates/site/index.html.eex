@@ -24,4 +24,3 @@
 
 <%= render ElephantInTheRoomWeb.AdminView,
       "_bottom_pagination.html", assigns %>
-
