@@ -4,7 +4,6 @@ config = %{
   :sites => 5,
   :empty_sites => 20,
   :categories => 20,
-  :empty_categories
   :authors => 10,
   :tags => 20,
   :users => 10,

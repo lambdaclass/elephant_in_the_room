@@ -196,17 +196,39 @@ $admin-light-grey: #cacaca;
     }
 }
 
-.admin-title {
-    .title-text {
-        font-size: 1.4em;
-        color: black;
-    }
-    .uk-button-small {
+.admin-mini-button {
         font-size: 0.7em;
         padding-left: 4px;
         padding-right: 4px;
         position: relative;
         line-height: 1em;
         top: -0.17em;
+    }
+
+.admin-title {
+    .title-text {
+        font-size: 1.4em;
+        color: black;
+    }
+}
+
+.admin-site-list {
+    .admin-mini-button {
+        background-color: #1ef0c9;
+        top: 0;
+    }
+    li {
+        cursor: pointer;
+        &:hover:nth-child(odd)  {
+            background-color: hsla(239, 100%, 66%, 0.1) !important;
+        }
+        &:hover:nth-child(even)  {
+            background-color: rgba(82, 255, 159, 0.1) !important;
+        }
+    }
+    .site-link {
+        text-transform: uppercase;
+        color: black;
+        font-size: 0.9em;
     }
 }
