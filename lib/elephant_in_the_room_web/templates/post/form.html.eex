@@ -1,25 +1,30 @@
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
+<fieldset class="uk-fieldset">
+
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :title, class: "control-label" %>
-    <%= text_input f, :title, class: "form-control" %>
+  <div class="no-uk-margin">
+    <%= label f, :title, class: "uk-form-label" %>
+    <%= text_input f, :title,
+          class: "uk-input uk-form-large",
+          placeholder: "Title" %>
     <%= error_tag f, :title %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :slug, class: "control-label" %>
-    <%= text_input f, :slug, class: "form-control" %>
+  <div class="no-uk-margin">
+    <%= label f, :slug, class: "uk-form-label" %>
+    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
     <%= error_tag f, :slug %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :author, class: "control-label" %>
-    <%= select f, :author_id, get_authors() %>
+  <div class="no-uk-margin">
+    <%= label f, :author, class: "uk-form-label" %>
+    <%= select f, :author_id, get_authors(), class: "uk-form-controls" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -60,4 +65,6 @@
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
+
+</fieldset>
 <% end %>
