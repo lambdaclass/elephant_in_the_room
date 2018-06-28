@@ -32,8 +32,9 @@
       <div class="uk-height-large card5"></div>
     </div>
   </div>
-  <div class="" uk-grid>
+  <div class="uk-grid-collapse uk-flex-row" uk-grid>
     <!-- footer -->
+    <div class="uk-width-1-1 uk-height-small footer-card"></div>
   </div>
 </div>
 
@@ -57,5 +58,9 @@
 .card5 {
   border: 1px solid black;
   background-color: green;
+}
+.footer-card {
+  border: 1px solid black;
+  background-color: purple;
 }
 </style>
