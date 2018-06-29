@@ -1,0 +1,27 @@
+.main-landing-page-container {
+    width: 100%;
+    text-align: center;
+
+    .main-landing-page-content {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media (max-width: $navbar-break-s) {
+            width: 100%;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+
+        @media (min-width: $navbar-break-s) {
+            margin-bottom: 64px;
+            padding-top: 32px;
+            width: calc(100% - 32px);
+        }
+
+        @media (min-width: 1376px){
+            width: 1280px;
+        }
+    }
+
+}

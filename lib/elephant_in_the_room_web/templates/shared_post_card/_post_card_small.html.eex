@@ -1,7 +1,7 @@
 <div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
   <div class="uk-grid-collapse" uk-grid>
-    <div class="uk-card-body">
-      <h3 class="post-small-title uk-card-title"><strong>The title</strong></h3>
+    <div class="post-small-body uk-card-body">
+      <h3 class="post-small-title uk-card-title">The title</h3>
       <p class="post-small-author">Author Name</p>
     </div>
   </div>
@@ -16,14 +16,18 @@
   border: 1px solid black;
   background-color: yellow;
 }
-
+.post-small-body {
+  overflow-wrap: break-word;
+}
 .post-small-title {
   font-weight: 900px;
   font-variant-numeric: lining-nums;
   letter-spacing: -.25px;
   font-size: 16px;
-  line-height: 1.125;
+  line-height: 18px;
   color: #000;
+  display: inline;
+  box-sizing: border-box;
 }
 
 .post-small-author {
@@ -31,8 +35,9 @@
   font-size: 12px;
   text-transform: uppercase;
   white-space: normal;
-  line-height: 1.125;
+  line-height: 13.5px;
   color: #000;
+  box-sizing: border-box;
 }
 
 .post-thumbnail-small {
