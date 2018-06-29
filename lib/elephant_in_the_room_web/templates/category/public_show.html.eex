@@ -1,38 +1,47 @@
-<div class="el-sites">
-  <div class="el-title">
-    <div class="uk-tile uk-tile-secondary">
-      <p class="uk-h4"><h1><%= @category.name %></h1></p>
-      <p><%= @category.description %></p>
-    </div>
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, SiteView}
+%>
+
+<div class="uk-container uk-container-small">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top"><%= @category.name %></h1>
+
+  <div class="uk-padding">
+    <%= unless Enum.empty?(@category.posts) do %>
+      <% [main_post | other_posts] = @category.posts %>
+      <div class="category-main-post">
+        <% link_main_post = SiteView.show_link_with_date @conn, @site, main_post %>
+        <div class="uk-width-1-1 uk-margin-bottom">
+          <%= link to: link_main_post do %>
+            <img data-src="<%= Image.url({main_post.image, main_post}) %>" uk-img>
+          <% end %>
+        </div>
+        <div class="uk-width-1-1 uk-text-center uk-text-left@s">
+          <h2><%= link main_post.title, to: link_main_post, class: "uk-margin-small-bottom uk-text-bold uk-text-capitalize" %></h2>
+          <p class="uk-visible@s"><%= main_post.abstract %></p>
+          <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-uppercase uk-text-bold" %>
+          <p><%= PostView.show_date(main_post.updated_at) %></p>
+        </div>
+      </div>
+      <hr>
+
+      <%= for post <- other_posts do %>
+        <% link_post = SiteView.show_link_with_date @conn, @site, post %>
+        <div class="category-posts" uk-grid>
+          <div class="uk-width-1-2">
+            <%= link to: link_post do %>
+              <img data-src="<%= Image.url({post.image, post}) %>" uk-img>
+            <% end %>
+          </div>
+          <div class="uk-width-1-2">
+            <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-capitalize" %></h2>
+            <p class="uk-visible@s"><%= post.abstract %></p>
+            <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-uppercase uk-text-bold" %>
+            <p><%= PostView.show_date(post.updated_at) %></p>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    <% end %>
   </div>
-
-  <div class="row">
-    <div class="col-xs-1"> </div>
-    <div class="col-xs-10">
-    <%= case get_top_featured_post(@conn, @category.posts) do %>
-      <% {:error, _} -> %>
-      <% {:ok, top_post } -> %>
-        <%= shared_render_posts_card @conn, 
-        [top_post],
-        Map.put(assigns, :type, :featured) %>
-    <% end %>
-
-    <%= case get_important_posts(@conn, @category.posts) do %>
-      <% {:error, _} -> %> 
-      <% {:ok, important_posts} -> %>
-        <%= shared_render_posts_card @conn,
-        important_posts,
-        Map.put(assigns, :type, :important)%>
-    <% end %>
-
-    <%= case get_normal_posts(@conn, @category.posts) do %>
-      <% {:error, _} -> %> 
-      <% {:ok, normal_posts } -> %>
-       <%= shared_render_posts_card @conn, 
-       normal_posts,
-       Map.put(assigns, :type, :normal) %>
-    <% end %>
-    </div>
-  </div>
-  <span><%= link "Back", to: show_site_link(@conn, @site) %></span>
 </div>
