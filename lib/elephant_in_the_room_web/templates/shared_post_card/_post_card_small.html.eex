@@ -1,7 +1,7 @@
 <div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
   <div class="uk-grid-collapse" uk-grid>
     <div class="post-small-body uk-card-body">
-      <h3 class="post-small-title uk-card-title">The title</h3>
+      <p class="post-small-title uk-card-title">The Titlasdasde</p>
       <p class="post-small-author">Author Name</p>
     </div>
   </div>
@@ -12,12 +12,11 @@
 </div>
 
 <style>
-.card3 {
-  border: 1px solid black;
-  background-color: yellow;
-}
 .post-small-body {
   overflow-wrap: break-word;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-top: 30px;
 }
 .post-small-title {
   font-weight: 900px;
@@ -43,7 +42,9 @@
 .post-thumbnail-small {
   width: 78px;
   height: 78px;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
 }
 </style>
 
