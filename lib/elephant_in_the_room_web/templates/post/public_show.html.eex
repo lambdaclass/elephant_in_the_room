@@ -4,8 +4,8 @@
 %>
 
 <%= if @post.image do %>
-  <div class="uk-cover-container" uk-height-viewport>
-      <img src="<%= Image.url({@post.image, @post}) %>" alt="" uk-cover>
+  <div class="uk-cover-container">
+      <img class="uk-height-1-1 uk-width-1-1" src="<%= Image.url({@post.image, @post}) %>" alt="">
   </div>
 <% end %>
 

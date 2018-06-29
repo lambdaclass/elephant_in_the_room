@@ -30,3 +30,14 @@
 
   }
 }
+
+.uk-cover-container {
+  box-sizing: border-box;
+  min-height: 30vh;
+  height: 30vh;
+
+  @media screen and (min-width: $break-s) {
+    min-height: 100vh;
+    height: 100vh;
+  }
+}
