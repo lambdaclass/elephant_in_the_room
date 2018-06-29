@@ -22,3 +22,4 @@ import "uikit"
 
 // import socket from "./socket"
 import "./navbar"
+import "./posts"

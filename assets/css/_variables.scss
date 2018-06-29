@@ -5,15 +5,10 @@ $break-m: 960px;
 $break-l: 1200px;
 $break-xl: 1600px;
 
-@import url('/fonts/equity.css');
-@import url('/fonts/1406-fonts.css');
-@import url('https://fonts.googleapis.com/css?family=Song+Myung');
-@import url('https://fonts.googleapis.com/css?family=Athiti');
-
-$caption-font: 'concourse-t3';
-$default-font: 'equity-text';
-$navbar-title-font: 'Song Myung', serif;
-$navbar-items-font: 'Athiti', sans-serif;
+$caption-font: 'Open Sans', sans-serif;
+$default-font: 'Roboto Slab', serif;
+$navbar-title-font: 'Roboto Slab', serif;
+$navbar-items-font: 'Open Sans', sans-serif;
 
 $black: #222;
 $black-light: #444;
