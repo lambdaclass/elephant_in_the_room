@@ -41,6 +41,14 @@ $landing-separator-decrease-space: 12px;
         border-bottom: $landing-separator-border;
     }
 
+    .individual-content.one.top-not {
+        @media (min-width: $landing-break-s), (max-width: $landing-break-m) {
+            height: calc(100% - #{$landing-separator-decrease-space});
+            border-top-style: solid;
+            border-top: $landing-separator-border;
+        }
+    }
+
     .individual-content.two {
         padding-top: $landing-separator-space;
         height: calc(100% - #{$landing-separator-decrease-space});
@@ -70,6 +78,58 @@ $landing-separator-decrease-space: 12px;
             border-left-style: solid;
             border-left: $landing-separator-border;
             padding-left: $landing-separator-space;
+        }
+    }
+
+    @mixin content-border-right() {
+        width: calc(100% - #{$landing-separator-decrease-space});
+        border-right-style: solid;
+        border-right: $landing-separator-border;
+        padding-right: $landing-separator-space;
+    }
+
+    @mixin content-border-bottom() {
+        height: calc(100% - #{$landing-separator-decrease-space});
+        border-bottom-style: solid;
+        border-bottom: $landing-separator-border;
+        padding-bottom: $landing-separator-space;
+    }
+
+    .group-content {
+        @include content-border-bottom();
+    }
+
+    .group-content-four {
+        @media (max-width: $landing-break-s) {
+            .four-one, .four-two, .four-three{
+                @include content-border-bottom();
+            }
+        }
+
+        @media (min-width: $landing-break-s) and (max-width: $landing-break-m) {
+            .four-one, .four-three {
+                @include content-border-right();
+            }
+        }
+
+        @media (min-width: $landing-break-m) {
+            .four-one, .four-two, .four-three {
+                @include content-border-right();
+            }
+        }
+    }
+
+    .group-content-three {
+        @media (min-width: $landing-break-m) {
+            .three-one, .three-two {
+                @include content-border-right();
+            }
+        }
+
+        @media (max-width: $landing-break-m) {
+            .three-one, .three-two {
+                @include content-border-bottom();
+            }
         }
     }
 
