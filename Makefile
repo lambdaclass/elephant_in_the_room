@@ -1,5 +1,5 @@
 .PHONY: help demo_server create_db populate_db install_frontend \
-        ops ops_reset ops_backup_db deps
+        ops ops_reset ops_backup_db deps lint_css
 
 help:
 	@echo "To start a demo sever run in two separated shells:"
