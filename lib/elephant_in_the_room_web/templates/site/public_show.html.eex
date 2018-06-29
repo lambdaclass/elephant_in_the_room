@@ -1,3 +1,7 @@
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+%>
+
 <div class="main-landing-page-container">
   <div class="main-landing-page-content">
   <div class="uk-grid-collapse">
@@ -21,9 +25,20 @@
       <div class="uk-width-1-4@s uk-height-medium card4"></div>
     </div>
     <div class="uk-grid-collapse" uk-grid>
-      <div class="uk-flex-column uk-width-1-3">
-        <!-- author's column -->
-        <div class="uk-height-large card5"></div>
+      <div class="uk-flex-column uk-width-1-3@s">
+        <h2 class="uk-text-bold uk-text-left">Writers<hr></h2>
+        <%= for author <- Enum.uniq(@site.authors) do %>
+          <div class="author" uk-grid>
+            <div class="uk-width-1-4">
+              <img class="uk-border-circle" src="<%= Image.url({author.image, author}) %>" width="40" height="40" alt="<%= author.name %>">
+            </div>
+            <div class="uk-width-expand">
+              <p><strong><%= link author.name, to: author_path(@conn, :public_show, author.id) %></strong></p>
+              <p><%= author.description %></p>
+              <hr class="uk-margin-remove">
+            </div>
+          </div>
+        <% end %>
       </div>
       <div class="uk-flex-column uk-width-1-3">
         <!-- latest's column -->

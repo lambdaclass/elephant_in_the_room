@@ -25,3 +25,21 @@
     }
 
 }
+
+
+.author > div:nth-child(2) {
+    padding: 0 10px 0 0;
+}
+
+.author p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.author p > strong > a {
+    color: #000;
+}
