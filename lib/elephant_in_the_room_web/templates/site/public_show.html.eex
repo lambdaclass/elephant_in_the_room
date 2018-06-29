@@ -3,15 +3,44 @@
   <div class="uk-grid-collapse">
     <div class="uk-grid-collapse uk-flex" uk-height-match="> *" uk-grid>
       <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1"></div>
+      
       <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap">
-        <div class="uk-height-small card3"></div>
-        <div class="uk-height-small card3"></div>
-        <div class="uk-height-small card3"></div>
-        <div class="uk-height-small card3"></div>
+        <div class="right-htop">
+          <div class="uk-height-small">
+            <div class="individual-content one">
+              RIGHT A
+            </div>
+          </div>
+          <div class="uk-height-small">
+            <div class="individual-content one">
+              RIGHT B
+            </div>
+          </div>
+          <div class="uk-height-small">
+            <div class="individual-content one">
+              RIGHT C
+            </div>
+          </div>
+          <div class="uk-height-small">
+            <div class="individual-content two">
+              RIGHT D
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" uk-grid>
-        <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
-        <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
+      <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" >
+        <div class="left-htop">
+          <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium">
+            <div class="individual-content one">
+              LEFT A
+            </div>
+          </div>
+          <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium">
+            <div class="individual-content two">
+              LEFT B
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="uk-grid-collapse" uk-grid>
@@ -47,10 +76,7 @@
   border: 1px solid black;
   background-color: blue;
 }
-.card2 {
-  border: 1px solid black;
-  background-color: red;
-}
+
 .card3 {
   border: 1px solid black;
   background-color: yellow;
