@@ -1,0 +1,17 @@
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+%>
+
+<h2 class="uk-text-bold uk-text-left">Writers<hr></h2>
+<%= for author <- Enum.uniq(@site.authors) do %>
+  <div class="author" uk-grid>
+    <div class="uk-width-1-4">
+      <img class="uk-border-circle" src="<%= Image.url({author.image, author}) %>" width="40" height="40" alt="<%= author.name %>">
+    </div>
+    <div class="uk-width-expand">
+      <p><strong><%= link author.name, to: author_path(@conn, :public_show, author.id) %></strong></p>
+      <p><%= author.description %></p>
+      <hr class="uk-margin-remove">
+    </div>
+  </div>
+<% end %>
