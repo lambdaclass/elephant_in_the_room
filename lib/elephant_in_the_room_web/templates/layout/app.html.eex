@@ -15,17 +15,17 @@
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
-  <body>
-    <div class="uk-offcanvas-content">
-      <%= if assigns[:admin] do %>
-        <%= render "_admin.html", assigns %>
-      <%= else %>
+  <%= if assigns[:admin] do %>
+    <%= render "_admin.html", assigns %>
+  <%= else %>
+  
+    <body>
+      <div class="uk-offcanvas-content">
         <%= render "_normal.html", assigns %>
-
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
         </div>
-      <% end %>
-    </div>
-  </body>
+      </div>
+    </body>
+  <% end %>
 </html>

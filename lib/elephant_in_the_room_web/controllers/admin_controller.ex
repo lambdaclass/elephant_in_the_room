@@ -4,6 +4,6 @@ defmodule ElephantInTheRoomWeb.AdminController do
 
   def index(conn, _params) do
     sites = Sites.list_sites()
-    render(conn, "index.html", sites: sites)
+    render(conn, "index.html", sites: sites, bread_crumb: [:root])
   end
 end
