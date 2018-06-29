@@ -13,24 +13,16 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     end
   end
 
-  def get_categories(conn) do
-    site = conn.assigns.site
-
-    site.categories
-    |> Enum.map(fn x ->
-      {x.id, x.name}
-    end)
-  end
-
-  def get_categories(conn, amount) do
-    site = conn.assigns.site
-
-    site.categories
-    |> Enum.map(fn x ->
-      {x.id, x.name}
-    end)
+  def get_categories(assigns, amount \\ 5)
+  def get_categories(%{assigns: %{site: %{categories: categories}}}, amount) do
+    categories
+    |> Enum.map(&{&1.id, &1.name})
     |> Enum.split(amount)
   end
+  def get_categories(_, _) do
+    {[],[]}
+  end
+
 
   def in_current_site(conn, site_id) do
     current_site = conn.assigns[:site]
@@ -76,6 +68,17 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def current_site(conn) do
     conn.assigns[:site]
+  end
+
+  def get_site_name(conn) do
+    site = conn.assigns[:site]
+    name = case site do
+      nil -> "Elephant in the room"
+      site -> site.name
+    end
+    [first | rest] = String.split(name, " ")
+    second = Enum.join(rest, " ")
+    {first, second}
   end
 
   def show_site_link(conn) do
