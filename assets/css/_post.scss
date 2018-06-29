@@ -7,10 +7,37 @@
       color: #b60e63;
     }
   }
-  .uk-dropcap {
+  .article-content {
     p {
       color: $black;
       font-size: 18px;
     }
+    img {
+      margin: 20px 0;
+    }
+    @media screen and (min-width: $break-s) {
+      .img-left {
+        width: 50%;
+        margin-left: -2%;
+        margin-right: 2%;
+      }
+      .img-right {
+        width: 50%;
+        margin-left: 2%;
+        margin-right: -2%;
+      }
+    }
+
+  }
+}
+
+.uk-cover-container {
+  box-sizing: border-box;
+  min-height: 30vh;
+  height: 30vh;
+
+  @media screen and (min-width: $break-s) {
+    min-height: 100vh;
+    height: 100vh;
   }
 }
