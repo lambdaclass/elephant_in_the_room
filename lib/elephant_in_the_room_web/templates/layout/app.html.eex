@@ -19,9 +19,8 @@
     <div class="uk-offcanvas-content">
       <%= if assigns[:admin] do %>
         <%= render "_admin.html", assigns %>
-      <%= else %>
+      <% else %>
         <%= render "_normal.html", assigns %>
-
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
         </div>

@@ -1,27 +1,66 @@
-<div class="container">
-
-  <%= case get_top_featured_post(@conn, @site.posts) do %>
-    <% {:error, _} -> %>
-    <% {:ok, top_post } -> %>
-      <%= shared_render_posts_card @conn, 
-      [top_post],
-      Map.put(assigns, :type, :featured) %>
-  <% end %>
-
-  <%= case get_important_posts(@conn, @site.posts) do %>
-    <% {:error, _} -> %> 
-    <% {:ok, important_posts} -> %>
-      <%= shared_render_posts_card @conn,
-      important_posts,
-      Map.put(assigns, :type, :important)%>
-  <% end %>
-
-  <%= case get_normal_posts(@conn, @site.posts) do %>
-    <% {:error, _} -> %> 
-    <% {:ok, normal_posts } -> %>
-      <%= shared_render_posts_card @conn, 
-      normal_posts,
-      Map.put(assigns, :type, :normal) %>
-  <% end %>
-
+<div class="uk-grid-collapse">
+  <div class="uk-grid-collapse uk-flex" uk-height-match="> *" uk-grid>
+    <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1"></div>
+    <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap">
+      <div class="uk-height-small card3"></div>
+      <div class="uk-height-small card3"></div>
+      <div class="uk-height-small card3"></div>
+      <div class="uk-height-small card3"></div>
+    </div>
+    <div class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" uk-grid>
+      <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
+      <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium card2"></div>
+    </div>
+  </div>
+  <div class="uk-grid-collapse" uk-grid>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+      <div class="uk-width-1-4@s uk-height-medium card4"></div>
+  </div>
+  <div class="uk-grid-collapse" uk-grid>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- author's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- latest's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+    <div class="uk-flex-column uk-width-1-3">
+      <!-- popular's column -->
+      <div class="uk-height-large card5"></div>
+    </div>
+  </div>
+  <div class="uk-grid-collapse uk-flex-row" uk-grid>
+    <!-- footer -->
+    <div class="uk-width-1-1 uk-height-small footer-card"></div>
+  </div>
 </div>
+
+<style type="text/css">
+.card1 {
+  border: 1px solid black;
+  background-color: blue;
+}
+.card2 {
+  border: 1px solid black;
+  background-color: red;
+}
+.card3 {
+  border: 1px solid black;
+  background-color: yellow;
+}
+.card4 {
+  border: 1px solid black;
+  background-color: orange;
+}
+.card5 {
+  border: 1px solid black;
+  background-color: green;
+}
+.footer-card {
+  border: 1px solid black;
+  background-color: purple;
+}
+</style>
