@@ -74,3 +74,20 @@ $landing-separator-decrease-space: 12px;
     }
 
 }
+
+.popular > a {
+    text-decoration: none;
+}
+
+.popular > a > p {
+    margin: 0;
+    color: #000;
+}
+
+.popular > a > p:last-child {
+    margin-bottom: 20px;
+}
+
+.popular > a > p span {
+    color: #F0204F;
+}
