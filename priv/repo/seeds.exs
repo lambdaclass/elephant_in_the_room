@@ -33,13 +33,13 @@ case Repo.get_by(Role, name: "user") do
     IO.puts("user role already created!")
 end
 
-case length(Sites.list_sites()) == 0 do
-  false ->
-    # do nothing
-    IO.puts("No need to create a new site")
+# case length(Sites.list_sites()) == 0 do
+#   false ->
+#     # do nothing
+#     IO.puts("No need to create a new site")
 
-  true ->
-    # create a site 
-    IO.puts("Creating a new site!")
-    Sites.create_site(%{name: "default site", host: "default-site.com"})
-end
+#   true ->
+#     # create a site 
+#     IO.puts("Creating a new site!")
+#     Sites.create_site(%{name: "default site", host: "default-site.com"})
+# end
