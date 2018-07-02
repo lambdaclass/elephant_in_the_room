@@ -70,10 +70,10 @@
       </div>
     </div>
     <div class="uk-grid-collapse group-content group-content-three" uk-grid>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m uk-height-large">
+      <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m">
         <!-- author's column -->
         <div class="individual-content three-one">
-          1/3 - Author
+          <%= render "_writers.html", assigns %>
         </div>
       </div>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m uk-height-large">

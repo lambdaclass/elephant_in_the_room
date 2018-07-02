@@ -66,7 +66,7 @@ $landing-separator-decrease-space: 12px;
             &, > * {
                 width: 100%;
             }
-    
+
             @media (min-width: $landing-break-m) {
                 @include content-border-right()
             }
@@ -137,4 +137,25 @@ $landing-separator-decrease-space: 12px;
         }
     }
 
+}
+
+.author > div:nth-child(2) {
+    padding: 0 10px 0 0;
+}
+
+.author p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.author p > strong > a {
+    color: #000;
+}
+
+.author:last-child hr {
+    display: none;
 }
