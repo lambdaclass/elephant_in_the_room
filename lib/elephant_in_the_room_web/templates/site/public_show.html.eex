@@ -85,7 +85,7 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m uk-height-large">
         <!-- popular's column -->
         <div class="individual-content three-three">
-          3/3 - Popular
+          <%= render "_popular.html", assigns %>
         </div>
       </div>
     </div>
