@@ -6,7 +6,7 @@
 
     <%= if pagination_left do %>
       <li>
-        <a href="<%= site_path(@conn, :index, page: @page_number - 1) %>">
+        <a href="<%= assigns.page.(@page_number - 1) %>">
           <span class="uk-margin-small-right" uk-pagination-previous></span>
           Previous
         </a>
@@ -21,7 +21,7 @@
     <%= end %>
     <%= if pagination_right do %>
       <li class="">
-        <a href="<%= site_path(@conn, :index, page: @page_number + 1) %>">
+        <a href="<%= assigns.page.(@page_number + 1) %>">
           Next
           <span class="uk-margin-small-left" uk-pagination-next></span>
         </a>

@@ -22,4 +22,4 @@
 </ul>
 
 <%= render ElephantInTheRoomWeb.AdminView,
-      "_bottom_pagination.html", assigns %>
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_post_path(@conn, :index, @site.id, page: &1)) %>
