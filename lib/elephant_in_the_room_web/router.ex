@@ -23,6 +23,11 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  scope path: "/images", alias: ElephantInTheRoomWeb do
+    get("/:id", ImageController, :get_image)
+    post("/", ImageController, :save_image)
+  end
+
   # local routes
   scope path: "/", host: "localhost", alias: ElephantInTheRoomWeb do
     pipe_through([:browser, :auth])
