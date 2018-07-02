@@ -8,39 +8,39 @@
         </div>
       </div>
 
-      <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap">
-        <div class="right-htop">
+      <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap group-content-right-four">
+        <div class="right-top-container">
           <div class="uk-height-small">
-            <div class="individual-content one top">
+            <div class="individual-content right-four-one">
               RIGHT A
             </div>
           </div>
           <div class="uk-height-small">
-            <div class="individual-content one">
+            <div class="individual-content right-four-two">
               RIGHT B
             </div>
           </div>
           <div class="uk-height-small">
-            <div class="individual-content one">
+            <div class="individual-content right-four-three">
               RIGHT C
             </div>
           </div>
           <div class="uk-height-small">
-            <div class="individual-content two">
+            <div class="individual-content right-four-four">
               RIGHT D
             </div>
           </div>
         </div>
       </div>
-      <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse" >
-        <div class="left-htop">
+      <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse group-content-left-top" >
+        <div class="left-top-container">
           <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium">
-            <div class="individual-content one top">
+            <div class="individual-content left-two-one">
               LEFT A
             </div>
           </div>
           <div class="uk-width-1-2@s uk-width-1-1@m uk-height-medium">
-            <div class="individual-content two">
+            <div class="individual-content left-two-two">
               LEFT B
             </div>
           </div>
