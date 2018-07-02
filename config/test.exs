@@ -17,3 +17,15 @@ config :elephant_in_the_room, ElephantInTheRoom.Repo,
   database: "elephant_in_the_room_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+##
+## Cookies & Auth
+##
+config :elephant_in_the_room, ElephantInTheRoomWeb.Endpoint,
+secret_key_base: "nzdAWjDdDu8NoQlv0Hhk3Q08LtZ/fLPUoyTR5j+wTN1kPPiGEDRCoKmI4Ftl65V1",
+signing_salt: "H8osk+zCmp8zhgxNjtoTuSDfj5T2rRV80uqhF6mOhEQF",
+encryption_salt: "LL0FHuwYWDy5uYsadZPSrYzdZdrUmmApt07Nl1sQ1wA2"
+
+config :elephant_in_the_room, ElephantInTheRoom.Auth.Guardian,
+issuer: "elephant_in_the_room",
+secret_key: "UipYx0z54wtvC8EZ0bavPWkaCk5gFvu/9caWXb/fwiALISfAVDrvlIq5JPGMuE8J"
