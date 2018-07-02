@@ -1,8 +1,41 @@
 defmodule ElephantInTheRoom.Backup do
+  use GenServer
+
+  def start_link do
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
+  end
+
+  def init(_) do
+    {:ok, %{working: false, 
+            result: {:error, :nothing_done}}}
+  end
+
+  def handle_call(:do_backup, %{working: false} = state) do
+     async_dump(self())
+    {:reply, :ok, %{state | working: true}}
+  end
   
+  def handle_call(:do_backup, %{working: false} = state) do
+    {:reply, :working, state}
+  end
+
+  def handle_call(:get_backup_result, %{result: result} = state) do
+    {:reply, result, state}
+  end
+
+  def handle_info({:dump_done, dump_result}, state) do
+    {:noreply, %{state | result: dump_result, working: false}}
+  end
+
+  defp async_dump(parent) do
+    spawn_link(fn ->
+      send parent, {:dump_done, dump()}
+    end)
+  end
+
   def dump do
     if check_if_pg_dump_is_installed() do
-      {:ok, call_pg_dump()}
+      call_pg_dump()
     else
       {:error, :no_pg_tools}
     end
@@ -26,13 +59,21 @@ defmodule ElephantInTheRoom.Backup do
 
   defp call_pg_dump() do
     config = Application.get_env(:elephant_in_the_room, ElephantInTheRoom.Repo)
-    call_pg_dump(%{
+    try_call_pg_dump(%{
       :username => Keyword.fetch!(config, :username),
       :password => Keyword.fetch!(config, :password),
       :database => Keyword.fetch!(config, :database),
       :hostname => Keyword.fetch!(config, :hostname),
       :path => get_path_to_dump()
     })
+  end
+
+  defp try_call_pg_dump(map_data) do
+    try do
+      {:ok, call_pg_dump(map_data)}
+    catch
+      _ -> {:error, :error}
+    end
   end
 
   defp call_pg_dump(%{:username => username, :password => password, :database => database,
