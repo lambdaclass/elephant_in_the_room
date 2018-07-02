@@ -45,6 +45,7 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/roles", RoleController)
       resources("/users", UserController, except: [:new, :create])
       resources("/authors", AuthorController)
+      get("/backup", BackupController, :index)
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)
