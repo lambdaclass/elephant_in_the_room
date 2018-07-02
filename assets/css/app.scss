@@ -55,6 +55,7 @@ font-family: $default-font;
   }
 }
 
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -93,6 +94,12 @@ font-family: $default-font;
 .el-menu-table {
   border: 2px solid black;
   margin-top: 15vh;
+}
+
+.el-title {
+  .tag-title {
+    background-color: #151515;
+  }
 }
 
 .hide {
