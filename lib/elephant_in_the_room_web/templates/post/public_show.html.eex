@@ -22,7 +22,7 @@
     </p>
     <p>
       Categories:
-      <%= for category <- @site.categories do %>
+      <%= for category <- @post.categories do %>
         <%= link category.name, to: show_category_link(@conn, @site, category) %>
       <% end %>
     </p2>
