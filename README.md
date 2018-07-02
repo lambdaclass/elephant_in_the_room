@@ -20,7 +20,7 @@ Run the website with the following commands:
 make deps
 ```
 
-* Starts the database server:
+* Start the database server:
 ```
 make ops
 ```
@@ -32,7 +32,7 @@ The following commands need to be executed in separate shells.
 make clean_init_db
 ```
 
-* Starts the web server:
+* Start the web server:
 ```
 make dev
 ```
