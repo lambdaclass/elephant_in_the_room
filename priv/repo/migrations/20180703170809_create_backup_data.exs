@@ -3,8 +3,6 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateBackupData do
 
   def change do
     create table(:backup_data) do
-      add :enabled, :boolean
-      add :interval, :integer
       add :last_backup_name, :string
       add :last_backup_moment, :utc_datetime
     end

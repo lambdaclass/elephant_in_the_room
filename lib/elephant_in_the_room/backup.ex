@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoom.Backup do
   use GenServer
+  alias ElephantInTheRoom.BackupData
 
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
@@ -10,10 +11,12 @@ defmodule ElephantInTheRoom.Backup do
   def set_inverval(interval), do: GenServer.call(__MODULE__, {:set_interval, interval})
 
   def init(_) do
+    %{last_backup_name: last_backup_name,
+      last_backup_moment: last_backup_moment} = BackupData.get_backup_data()
     {:ok, %{working: false,
             interval: 0,
-            last_backup_location: "",
-            last_backup_ready_at: nil,
+            last_backup_location: last_backup_name,
+            last_backup_ready_at: last_backup_moment,
             result: {:error, :nothing_done}}}
   end
 
@@ -31,8 +34,7 @@ defmodule ElephantInTheRoom.Backup do
     {:reply, :ok, %{state | interval: interval}}
   end
   
-  def handle_call(:get_status, _from, %{result: result, 
-                                        last_backup_location: location,
+  def handle_call(:get_status, _from, %{last_backup_location: location,
                                         last_backup_ready_at: ready_at} = state) do
     r = %{
       activated: true,
@@ -46,12 +48,16 @@ defmodule ElephantInTheRoom.Backup do
 
   def handle_info({:dump_done, dump_result}, state) do
     location = case dump_result do
-      {ok, result_location} -> result_location
+      {:ok, result_location} -> result_location
       _ -> ""
     end
+    ready_at = DateTime.utc_now()
+    BackupData.store_back_data(%BackupData{
+      last_backup_name: location,
+      last_backup_moment: ready_at})
     {:noreply, %{state | result: dump_result, 
                   working: false,
-                  last_backup_ready_at: DateTime.utc_now(),
+                  last_backup_ready_at: ready_at,
                   last_backup_location: location}}
   end
 
