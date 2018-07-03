@@ -1,1 +1,46 @@
-BACKUP INDEX
+<div class="backup-container">
+
+  <div class="admin-title">
+    <span class="title-text"> Sites </span>
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+      href="">
+      refresh
+    </a>
+    </span>
+  </div>
+
+  <div class="uk-margin">
+    <div>
+      <span>Activated: </span> 
+      <span id="backup-data-activated">
+        <%= @conn.assigns[:activated] %>
+      </span>
+    </div>
+    <div>
+      <span>Will run at:</span>
+      <span id="backup-data-will-run-at">
+        <%= @conn.assigns[:will_run_at] %>
+      </span>
+    </div>
+    <div>
+      <span>Status:</span>
+      <span id="backup-data-status">
+        <%= @conn.assigns[:status]%>
+      </span>
+    </div>
+  </div>
+
+  <div>
+    <a href="<%= backup_path(@conn, :get_modify_settings) %>">
+      <button class="uk-button uk-button-primary">
+        Modify settings
+      </button>
+    </a>
+    <a href="?run_backup_now=true">
+      <button class="uk-button uk-button-danger">
+        Run backup now
+      </button>
+    </a>
+  </div>
+
+</div>

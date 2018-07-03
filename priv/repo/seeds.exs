@@ -14,6 +14,7 @@ alias ElephantInTheRoom.Auth
 alias ElephantInTheRoom.Auth.Role
 alias ElephantInTheRoom.Repo
 alias ElephantInTheRoom.Sites
+alias ElephantInTheRoom.BackupData
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
