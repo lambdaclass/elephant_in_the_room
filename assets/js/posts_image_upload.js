@@ -1,37 +1,38 @@
-import $ from "jquery";
+const handleFileSelect = evt => {
+  evt.stopPropagation();
+  evt.preventDefault();
 
-$(() => {
-  $(".post-edit-content").on("dragover", event => {
-    event.preventDefault();
-    $(this).addClass("dragging");
-  });
+  var files = evt.dataTransfer.files;
 
-  $(".post-edit-content").on("dragleave", event => {
-    event.preventDefault();
-    $(this).removeClass("dragging");
-  });
+  var reader = new FileReader();
 
-  $(".post-edit-content").on("drop", event => {
-    event.preventDefault();
-    event.stopPropagation();
-    readfile(event.originalEvent);
-  });
-});
+  reader.onloadend = () => {
+    sendData(reader.result, files[0].type);
+  };
 
-const readfile = event => {
-  const imageUrl = event.dataTransfer.getData("text/html");
-  const rex = /src="?([^"\s]+)"?\s*/;
+  reader.readAsArrayBuffer(files[0]);
+};
 
-  const url = rex.exec(imageUrl);
+const sendData = (data, mime) => {
+  var XHR = new XMLHttpRequest();
+  const url = "http://localhost:4000/images/binary";
 
-  $.ajax({
-    url: "localhost:4000/images",
-    type: "post",
-    data: encodeURIComponent("url=" + url[1]),
-    async: true,
-    success: data => {
-      console.log(data);
-    },
-    contentType: "application/x-www-form-urlencoded"
-  });
+  XHR.open("POST", url);
+
+  XHR.setRequestHeader("Content-Type", mime);
+
+  XHR.send(data);
+};
+
+const handleDragOver = evt => {
+  evt.stopPropagation();
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = "copy";
+};
+
+window.onload = () => {
+  var postTextArea = document.getElementById("post-textarea");
+
+  postTextArea.addEventListener("dragover", handleDragOver, false);
+  postTextArea.addEventListener("drop", handleFileSelect, false);
 };
