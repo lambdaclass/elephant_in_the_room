@@ -5,7 +5,6 @@ defmodule ElephantInTheRoom.Sites.Image do
   schema "images" do
     field(:name, :string)
     field(:binary, :binary)
-    field(:type, :string)
 
     timestamps()
   end
@@ -13,7 +12,7 @@ defmodule ElephantInTheRoom.Sites.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:name, :binary, :type])
-    |> validate_required([:name, :binary, :type])
+    |> cast(attrs, [:name, :binary])
+    |> validate_required([:name, :binary])
   end
 end

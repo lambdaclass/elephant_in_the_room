@@ -58,7 +58,7 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> String.split(".")
       |> List.last()
 
-    %{upload | filename: Ecto.UUID.generate() <> "." <> extension}
+    %{upload | filename: Ecto.UUID.generate()}
   end
 
   def image_hash_name(image) do

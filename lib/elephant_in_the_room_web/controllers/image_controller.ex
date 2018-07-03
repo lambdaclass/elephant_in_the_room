@@ -6,19 +6,13 @@ defmodule ElephantInTheRoomWeb.ImageController do
     img = Sites.get_image!(img_id)
 
     conn
-    |> put_resp_content_type(img.type, "utf-8")
     |> send_resp(200, img.binary)
   end
 
-  def search_image(conn, %{"name" => full_img_name}) do
-    [name, _] =
-      full_img_name
-      |> String.split(".")
-
-    img = Sites.get_image_by_name!(name)
+  def search_image(conn, %{"name" => img_name}) do
+    img = Sites.get_image_by_name!(img_name)
 
     conn
-    |> put_resp_content_type(img.type, "utf-8")
     |> send_resp(200, img.binary)
   end
 

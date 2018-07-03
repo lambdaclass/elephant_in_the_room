@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Image do
   use Arc.Ecto.Definition
   def __storage, do: ElephantInTheRoomWeb.Uploaders.Postgresql
 
-  @versions [:original, :thumb]
+  @versions [:original]
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]

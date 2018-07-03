@@ -9,19 +9,15 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
         File.read!(file.path)
       end
 
-    [file_name, type] =
-      file.file_name
-      |> String.split(".")
-
     name =
       case version do
         :original ->
-          file_name
+          file.file_name
         :thumb ->
-          file_name <> "thumb"
+          file.file_name <> "thumb"
       end
 
-    {:ok, saved_image} = Sites.create_image(%{name: name, binary: binary, type: type})
+    {:ok, saved_image} = Sites.create_image(%{name: name, binary: binary})
   end
 
   def url(definition, version, file_and_scope, _options \\ []) do
