@@ -22,8 +22,6 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
       end
 
     {:ok, saved_image} = Sites.create_image(%{name: name, binary: binary, type: type})
-
-    {:ok, saved_image.id}
   end
 
   def url(definition, version, file_and_scope, _options \\ []) do
