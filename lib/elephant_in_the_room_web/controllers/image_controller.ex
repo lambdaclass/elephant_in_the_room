@@ -21,7 +21,7 @@ defmodule ElephantInTheRoomWeb.ImageController do
     {:ok, saved_image} = Sites.create_image(%{"binary" => raw_body, "type" => type})
 
     conn
-    |> send_resp(202, "Ok #{saved_image.id}")
+    |> send_resp(202, "#{saved_image.id}")
   end
 
   def save_image(conn, %{"url" => url}) do
@@ -35,6 +35,6 @@ defmodule ElephantInTheRoomWeb.ImageController do
     {:ok, saved_image} = Sites.create_image(%{"binary" => image.body, "type" => type})
 
     conn
-    |> send_resp(202, "Ok #{saved_image.id}")
+    |> send_resp(202, "#{saved_image.id}")
   end
 end

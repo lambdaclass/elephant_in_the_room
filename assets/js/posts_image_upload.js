@@ -2,27 +2,28 @@ const handleFileSelect = evt => {
   evt.stopPropagation();
   evt.preventDefault();
 
-  var files = evt.dataTransfer.files;
-  var type;
-  var reader = new FileReader();
+  const files = evt.dataTransfer.files;
 
-  reader.onloadend = () => {
-    sendData(reader.result, type);
-  };
+  Object.keys(files).forEach(i => {
+    const file = files[i];
+    const reader = new FileReader();
 
-  for (var i = 0, file; (file = files[i]); i++) {
-    type = file.type;
+    reader.onloadend = () => {
+      sendData(reader.result, file.type);
+    };
 
     reader.readAsArrayBuffer(file);
-  }
+  });
 };
 
 const sendData = (data, mime) => {
-  var XHR = new XMLHttpRequest();
-  const url = "http://localhost:4000/images/binary";
+  const XHR = new XMLHttpRequest();
+  const url = "/images/binary";
 
   XHR.onloadend = () => {
-    console.log(XHR.response);
+    const postTextArea = document.getElementById("post-textarea");
+    const markdownImage = "![image](/images/" + XHR.response + ")";
+    insertTextAtPos(postTextArea, markdownImage);
   };
 
   XHR.open("POST", url);
@@ -43,4 +44,15 @@ window.onload = () => {
 
   postTextArea.addEventListener("dragover", handleDragOver, false);
   postTextArea.addEventListener("drop", handleFileSelect, false);
+};
+
+const insertTextAtPos = (element, newText) => {
+  const start = element.selectionStart;
+  const end = element.selectionEnd;
+  const text = element.value;
+  const before = text.substring(0, start);
+  const after = text.substring(end, text.length);
+  element.value = before + newText + after;
+  element.selectionStart = element.selectionEnd = start + newText.length;
+  element.focus();
 };
