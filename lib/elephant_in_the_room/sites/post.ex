@@ -14,6 +14,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:content, :string)
     field(:rendered_content, :string)
     field(:image, Image.Type)
+    field(:cover, :boolean)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -39,14 +40,29 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
+    new_attrs = Map.put(attrs, "image", image_hash_name(attrs["image"]))
+
     post
-    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
-    |> cast_attachments(attrs, [:image], [])
-    |> put_assoc(:tags, parse_tags(attrs))
-    |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :site_id])
+    |> cast(new_attrs, [:title, :content, :slug, :abstract, :site_id, :author_id, :cover])
+    |> cast_attachments(new_attrs, [:image], [])
+    |> put_assoc(:tags, parse_tags(new_attrs))
+    |> put_assoc(:categories, parse_categories(new_attrs))
+    |> validate_required([:title, :content, :site_id, :image, :cover])
     |> put_rendered_content
     |> put_slugified_title
+  end
+
+  def image_hash_name(%Plug.Upload{filename: filename} = upload) do
+    extension =
+      filename
+      |> String.split(".")
+      |> List.last()
+
+    %{upload | filename: Ecto.UUID.generate() <> "." <> extension}
+  end
+
+  def image_hash_name(image) do
+    image
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
