@@ -25,6 +25,7 @@ defmodule ElephantInTheRoomWeb.Router do
 
   scope path: "/images", alias: ElephantInTheRoomWeb do
     get("/:id", ImageController, :get_image)
+    get("/search/:name", ImageController, :search_image)
     post("/", ImageController, :save_image)
   end
 

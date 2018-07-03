@@ -10,6 +10,18 @@ defmodule ElephantInTheRoomWeb.ImageController do
     |> send_resp(200, img.binary)
   end
 
+  def search_image(conn, %{"name" => full_img_name}) do
+    [name, _] =
+      full_img_name
+      |> String.split(".")
+
+    img = Sites.get_image_by_name!(name)
+
+    conn
+    |> put_resp_content_type(img.type, "utf-8")
+    |> send_resp(200, img.binary)
+  end
+
   def save_image(conn, %{"url" => url}) do
     image = HTTPoison.get!(url, [], hackney: [{:follow_redirect, true}])
 

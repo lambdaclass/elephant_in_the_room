@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.Uploaders.Image do
   use Arc.Definition
   use Arc.Ecto.Definition
+  def __storage, do: ElephantInTheRoomWeb.Uploaders.Postgresql
 
   @versions [:original, :thumb]
 
@@ -14,7 +15,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Image do
 
   # Define a thumbnail transformation:
   # def transform(:thumb, _) do
-  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
+  #  {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   # end
 
   # Override the persisted filenames:
