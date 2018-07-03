@@ -11,7 +11,7 @@ In order to run this project you need to have already installed:
 * [Docker](https://docs.docker.com/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [npm](https://docs.npmjs.com/cli/install)
-* pg_dump
+* [postgresql:10.4](https://www.postgresql.org/download/linux/ubuntu/), in both the database server and in the client.
 
 ### How to run the server locally
 Run the website with the following commands:

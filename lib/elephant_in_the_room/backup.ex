@@ -43,6 +43,7 @@ defmodule ElephantInTheRoom.Backup do
 
   defp get_path_to_dump do
     directory = "/tmp/elephant/ecto_dump/"
+    File.mkdir_p(directory)
     time = DateTime.utc_now() |> DateTime.to_string |> String.replace(" ", "_")
     "#{directory}dump_#{time}"
   end
@@ -52,8 +53,7 @@ defmodule ElephantInTheRoom.Backup do
       System.cmd("pg_dump", ["--version"]) 
       true
     catch
-      :error, :enoent -> 
-        false
+      _, _ -> false
     end
   end
 
@@ -70,7 +70,7 @@ defmodule ElephantInTheRoom.Backup do
 
   defp try_call_pg_dump(map_data) do
     try do
-      {:ok, call_pg_dump(map_data)}
+      call_pg_dump(map_data)
     catch
       _ -> {:error, :error}
     end
@@ -81,8 +81,11 @@ defmodule ElephantInTheRoom.Backup do
     file = "#{path}.sql"
     env = [{"PGPASSWORD", password}]
     command = ["-U", username, "-F", "p", "-f", file, "-h", hostname, database]
-    System.cmd("pg_dump", command, env: env)
-    file
+    {_, status_code} = System.cmd("pg_dump", command, env: env)
+    case status_code do
+      0 -> {:ok, file}
+      _ -> {:error, {:exit_code, status_code}}
+    end
   end
 
 end
