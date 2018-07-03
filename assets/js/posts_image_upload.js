@@ -3,38 +3,35 @@ import $ from "jquery";
 $(() => {
   $(".post-edit-content").on("dragover", event => {
     event.preventDefault();
-    event.stopPropagation();
     $(this).addClass("dragging");
   });
 
   $(".post-edit-content").on("dragleave", event => {
     event.preventDefault();
-    event.stopPropagation();
     $(this).removeClass("dragging");
   });
 
   $(".post-edit-content").on("drop", event => {
     event.preventDefault();
     event.stopPropagation();
-    readfile(event.data);
+    readfile(event.originalEvent);
   });
 });
 
-readfile = file => {
-  var formData = new FormData();
+const readfile = event => {
+  const imageUrl = event.dataTransfer.getData("text/html");
+  const rex = /src="?([^"\s]+)"?\s*/;
 
-  formData.append("file", file);
+  const url = rex.exec(imageUrl);
 
   $.ajax({
-    url: "./path_to_file_handler.php",
-    type: "POST",
-    data: formData,
+    url: "localhost:4000/images",
+    type: "post",
+    data: encodeURIComponent("url=" + url[1]),
     async: true,
     success: data => {
       console.log(data);
     },
-    cache: false,
-    contentType: false,
-    processData: false
+    contentType: "application/x-www-form-urlencoded"
   });
 };
