@@ -1,6 +1,6 @@
-<% 
-alias ElephantInTheRoomWeb.Uploaders.Image 
-alias ElephantInTheRoomWeb.{PostView, SiteView}
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, SiteView}
 %>
 
 <div class="row post-card">
@@ -48,10 +48,10 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
         </div>
 
       <% :normal -> %>
-      
+
       <div class="col-xs-12 col-sm-6 col-md-3">
-        <a href="<%= 
-                 ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
+        <a href="<%=
+                 ElephantInTheRoomWeb.SiteView.show_link_with_date @conn,
                  @site, post%>"
            class="no-link-decoration">
           <div class="clickeable-card uk-card uk-card-default">
@@ -70,7 +70,6 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
           </div>
         </a>
       </div>
-      
     <%  end %>
   <% end %>
 </div>
