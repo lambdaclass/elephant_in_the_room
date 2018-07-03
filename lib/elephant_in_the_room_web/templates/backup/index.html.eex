@@ -17,28 +17,39 @@
       </span>
     </div>
     <div>
-      <span>Will run at:</span>
+      <span>Status:</span>
       <span id="backup-data-will-run-at">
-        <%= @conn.assigns[:will_run_at] %>
+        <%= @conn.assigns[:status] %>
       </span>
     </div>
     <div>
-      <span>Status:</span>
+      <span>Last backup location:</span>
+      <span id="backup-data-will-run-at">
+        <%= @conn.assigns[:last_backup_location] %>
+      </span>
+    </div>
+    <div>
+      <span>Last backup generated at:</span>
       <span id="backup-data-status">
-        <%= @conn.assigns[:status]%>
+        <%= @conn.assigns[:last_backup_ready_at]%> UTC
       </span>
     </div>
   </div>
 
   <div>
     <a href="<%= backup_path(@conn, :get_modify_settings) %>">
-      <button class="uk-button uk-button-primary">
-        Modify settings
+      <button class="uk-button uk-button-primary uk-button-small">
+        settings
       </button>
     </a>
     <a href="?run_backup_now=true">
-      <button class="uk-button uk-button-danger">
-        Run backup now
+      <button class="uk-button uk-button-danger uk-button-small">
+        backup now
+      </button>
+    </a>
+    <a href="<%= backup_path(@conn, :download_latest)%>">
+      <button class="uk-button uk-button-primary uk-button-small">
+        download latest backup
       </button>
     </a>
   </div>

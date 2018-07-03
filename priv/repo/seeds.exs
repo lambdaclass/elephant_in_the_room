@@ -34,6 +34,13 @@ case Repo.get_by(Role, name: "user") do
     IO.puts("user role already created!")
 end
 
+case Repo.get_by(BackupData, id: 1) do
+  nil ->
+    Bac
+  _ ->
+    IO.puts("BackupData already created")
+end
+
 # case length(Sites.list_sites()) == 0 do
 #   false ->
 #     # do nothing

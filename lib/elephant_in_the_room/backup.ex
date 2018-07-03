@@ -12,6 +12,8 @@ defmodule ElephantInTheRoom.Backup do
   def init(_) do
     {:ok, %{working: false,
             interval: 0,
+            last_backup_location: "",
+            last_backup_ready_at: nil,
             result: {:error, :nothing_done}}}
   end
 
@@ -29,18 +31,28 @@ defmodule ElephantInTheRoom.Backup do
     {:reply, :ok, %{state | interval: interval}}
   end
   
-  def handle_call(:get_status, _from, %{result: result} = state) do
+  def handle_call(:get_status, _from, %{result: result, 
+                                        last_backup_location: location,
+                                        last_backup_ready_at: ready_at} = state) do
     r = %{
       activated: true,
       will_run_at: 231321,
+      last_backup_location: location,
+      last_backup_ready_at: ready_at,
       status: status_string(state)
     }
     {:reply, r, state}
   end
 
   def handle_info({:dump_done, dump_result}, state) do
-    IO.inspect("IO DUMP DONE!!!")
-    {:noreply, %{state | result: dump_result, working: false}}
+    location = case dump_result do
+      {ok, result_location} -> result_location
+      _ -> ""
+    end
+    {:noreply, %{state | result: dump_result, 
+                  working: false,
+                  last_backup_ready_at: DateTime.utc_now(),
+                  last_backup_location: location}}
   end
 
   defp async_dump(parent) do
