@@ -41,6 +41,9 @@ $navbar-break-m: 9600px;
         height: 100%;
         text-transform: capitalize !important;
         color: white !important;
+        &.top-link {
+            font-size: 1em !important;
+        }
         .with-dropwdown {
             padding-right: 4px;
         }
