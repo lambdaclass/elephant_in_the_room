@@ -127,6 +127,7 @@ $landing-separator-decrease-space: 12px;
         @media (min-width: $landing-break-m) {
             .three-one, .three-two {
                 @include content-border-right();
+                border: none;
             }
         }
 
@@ -192,7 +193,7 @@ $landing-separator-decrease-space: 12px;
 }
 
 .popular {
-    overflow: hidden;
+    padding: 10px;
 }
 
 .popular > a {
@@ -212,6 +213,10 @@ $landing-separator-decrease-space: 12px;
     color: #F0204F;
 }
 
+.authors {
+    padding: 10px;
+}
+
 .author > div:nth-child(2) {
     padding: 0 10px 0 0;
 }
@@ -229,6 +234,32 @@ $landing-separator-decrease-space: 12px;
     color: #000;
 }
 
-.author:last-child hr {
+.author:last-child hr, .latest hr:last-child {
     display: none;
+}
+
+.latest {
+    padding: 10px;
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+
+    a {
+        color: #000;
+    }
+
+    @media (min-width: $landing-break-m) {
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
 }
