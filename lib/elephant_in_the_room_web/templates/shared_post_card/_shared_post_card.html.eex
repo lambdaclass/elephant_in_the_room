@@ -12,7 +12,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
            onclick="window.location.href = '<%= link_post %>'">
         <div class="columns col-xs-12 col-sm-7">
           <div class="media"
-               style="background: url(<%= Image.url({post.image, post}) %>);">
+               style="background: url('<%= Image.url({post.image, post})%>');">
           </div>
         </div>
         <div class="columns col-xs-12 col-sm-5 body">
@@ -35,7 +35,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
              onclick="window.location.href = '<%= link_post %>'">
           <div class="columns col-xs-12 col-sm-7">
             <div class="media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url('<%= Image.url({post.image, post}) %>');">
             </div>
           </div>
           <div class="columns col-xs-12 col-sm-5 body">
@@ -63,7 +63,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
               <%= PostView.show_featured_category(post) %>
             </div>
             <div class="uk-card-media-top media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url('<%= Image.url({post.image, post}) %>');">
             </div>
             <div class="uk-card-body body">
               <h3 class="uk-card-title"><%= post.title %></h3>
