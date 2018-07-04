@@ -1,12 +1,12 @@
 <div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
   <div class="uk-grid-collapse" uk-grid>
     <div class="post-small-body uk-card-body">
-      <p class="post-small-title uk-card-title">Title</p>
-      <p class="post-small-author">Author Name</p>
+      <p class="post-small-title uk-card-title"><%= :proplists.get_value(:title, assigns.data) %></p>
+      <p class="post-small-author"><%= :proplists.get_value(:author, assigns.data) %></p>
     </div>
   </div>
   <div class="post-thumbnail-small uk-card-media-right uk-cover-container uk-height-small uk-align-center">
-    <img height="40px" width="40px" src="https://cdn.theatlantic.com/assets/media/img/mt/2018/06/RTS1U526/86x86.jpg?mod=1530178178" alt="" uk-cover>
+    <img height="40px" width="40px" src="<%= :proplists.get_value(:src, assigns.data) %>" alt="" uk-cover>
     <canvas width="86" height="86"></canvas>
   </div>
 </div>
