@@ -6,30 +6,37 @@
 ### First, the dependencies
 In order to run this project you need to have already installed:
 
-* [Erlang](http://erlang.org/doc/installation_guide/INSTALL.html)
-* [Elixir](https://elixir-lang.org/install.html)
-* [Docker](https://docs.docker.com/install/)
-* [Docker Compose](https://docs.docker.com/compose/install/)
-* [npm](https://docs.npmjs.com/cli/install)
+* [Erlang: 20.0](http://erlang.org/doc/installation_guide/INSTALL.html)
+* [Elixir: 1.6 ](https://elixir-lang.org/install.html)
+* [Docker: 17.12.1-ce](https://docs.docker.com/install/)
+* [Docker Compose: 1.21.2](https://docs.docker.com/compose/install/)
+* [npm: 6.1.0](https://docs.npmjs.com/cli/install)
 * [postgresql:10.4](https://www.postgresql.org/download/linux/ubuntu/), in both the database server and in the client.
 
 ### How to run the server locally
 Run the website with the following commands:
 
+* Install project dependencies:
 ```
 make deps
+```
+
+* Start the database server:
+```
 make ops
 ```
 
+The following commands need to be executed in separate shells.
+
+* Create elephant's database, run migrations, and fill with data:
 ```
 make clean_init_db
-make dev
 ```
 
-- `make deps`: install project dependencies
-- `make ops`: starts the database
-- `make clean_init_db`: fills the database with random data
-- `make dev`: starts the web server
+* Start the web server:
+```
+make dev
+```
 
 ### Backup
 
@@ -45,3 +52,4 @@ psql -h <db_host>  -U <db_user> -v ON_ERROR_STOP=1 <database_name> < \
 ```
 
 This will first destroy the database and **all** its data before it applies the backup.
+
