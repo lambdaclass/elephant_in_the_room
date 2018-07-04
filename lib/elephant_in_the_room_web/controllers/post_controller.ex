@@ -61,10 +61,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     post = Sites.get_post!(id)
-    render(conn, "show.html",
-      site: site,
-      post: post,
-      bread_crumb: [:sites, site, :posts, post])
+    render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
   def public_show(conn, %{"slug" => slug} = params) do
