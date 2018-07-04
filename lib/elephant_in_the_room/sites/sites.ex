@@ -39,10 +39,18 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
+  @default_site_preload [:categories, [posts: :author], [posts: :categories], :tags]
   def get_site!(id) do
     Site
     |> Repo.get!(id)
-    |> Repo.preload([:categories, [posts: :author], [posts: :categories], :tags])
+    |> Repo.preload(@default_site_preload)
+  end
+
+  def get_site(id, preload \\ @default_site_preload) do 
+    case Repo.get(Site, id) do
+      nil -> {:error, :no_site_found}
+      site -> {:ok, Repo.preload(site, preload)}
+    end
   end
 
   def get_site_by_name(site_name) do
@@ -259,17 +267,26 @@ defmodule ElephantInTheRoom.Sites do
   Gets a single post.
   Raises `Ecto.NoResultsError` if the Post does not exist.
   """
+  @default_post_preload [:author, :tags, :categories]
   def get_post!(site, id) do
     Post
     |> where([t], t.site_id == ^site.id)
     |> Repo.get!(id)
-    |> Repo.preload([:tags, :categories, :author])
+    |> Repo.preload(@default_post_preload )
   end
 
   def get_post!(id) do
     Post
     |> Repo.get!(id)
-    |> Repo.preload([:tags, :categories, :author])
+    |> Repo.preload(@default_post_preload )
+  end
+
+  def get_post_by_slug(site_id, slug, preload \\ @default_post_preload ) do
+    case Repo.get_by(Post, slug: slug, site_id: site_id) do
+      nil -> {:error, :no_post_found}
+      site -> 
+        {:ok, Repo.preload(site, preload)}
+    end
   end
 
   @doc """
