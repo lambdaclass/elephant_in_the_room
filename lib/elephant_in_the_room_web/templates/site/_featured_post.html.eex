@@ -1,8 +1,10 @@
 <%
   alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.PostView
 %>
 
 <div class="<%= assigns.featured_class %>">
+  <a href="<%= PostView.show_link(@conn, @site, assigns.post) %>">
   <div class="image" data-src="<%= Image.url(assigns.post.image, assigns.post) %>" uk-img> </div>
   <div class="sub-image-text">KCA/Reuter</div>
   <div class="title"><%= assigns.post.title %></div>
@@ -14,4 +16,5 @@
   <div class="author">
     Krishnadev Calamur
   </div>
+  </a>
 </div> 

@@ -107,4 +107,16 @@ defmodule ElephantInTheRoomWeb.PostView do
       do: category_path(conn, :public_show, category.id),
       else: local_category_path(conn, :public_show, site, category.id)
   end
+
+  def show_link(conn, site, post) do 
+    year = post.inserted_at.year
+    month = post.inserted_at.month
+    day = post.inserted_at.day
+
+    if conn.host != "localhost",
+      do: post_path(conn, :public_show, year, month, day, post.slug),
+      else: local_post_path(conn, :public_show, site.id, year, month, day, post.slug)
+
+  end
+
 end
