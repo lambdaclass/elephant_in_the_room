@@ -1,22 +1,32 @@
 <div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
-  <div class="uk-grid-collapse" uk-grid>
+  <div class="card uk-grid-collapse uk-flex" uk-grid>
     <div class="post-small-body uk-card-body">
       <p class="post-small-title uk-card-title"><%= :proplists.get_value(:title, assigns.data) %></p>
       <p class="post-small-author"><%= :proplists.get_value(:author, assigns.data) %></p>
     </div>
-  </div>
-  <div class="post-thumbnail-small uk-card-media-right uk-cover-container uk-height-small uk-align-center">
-    <img height="40px" width="40px" src="<%= :proplists.get_value(:src, assigns.data) %>" alt="" uk-cover>
-    <canvas width="86" height="86"></canvas>
+    <div class="post-thumbnail-small uk-card-media-right uk-cover-container uk-height-small ">
+      <img height="40px" width="40px" src="<%= :proplists.get_value(:src, assigns.data) %>" alt="" uk-cover>
+      <canvas width="86" height="86"></canvas>
+    </div>
   </div>
 </div>
 
 <style>
+.card {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .post-small-body {
+  display: flex;
+  flex: 0 130px;
+  flex-direction: column;
   overflow-wrap: break-word;
   padding-right: 0;
   padding-bottom: 0;
-  padding-top: 30px;
+  padding-left: 0;
+  padding-top: 0;
 }
 .post-small-title {
   font-weight: 900;
@@ -27,6 +37,7 @@
   color: #000;
   display: inline;
   box-sizing: border-box;
+    overflow-wrap: break-word;
 }
 
 .post-small-author {
@@ -37,14 +48,14 @@
   line-height: 13.5px;
   color: #000;
   box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 .post-thumbnail-small {
+  display: flex;
+  justify-content: flex-end;
   width: 78px;
   height: 78px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
 }
 </style>
 
