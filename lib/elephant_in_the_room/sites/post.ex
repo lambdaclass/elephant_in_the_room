@@ -90,8 +90,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def generate_markdown(input) do
-    {:safe, safe_input} = Phoenix.HTML.html_escape(input)
-    Cmark.to_html(safe_input)
+    Cmark.to_html(input, [:safe])
   end
 
   def parse_categories(params) do

@@ -1,39 +1,250 @@
-.el-administration-wrapper {
-  height: 100vh;
-  width: 100vw;
+$admin-navbar-height: 3.25em;
+$admin-navbar-small: 770px;
+$admin-navbar-medium: 1000px;
+$admin-background-color: #ECF0F3;
+$admin-light-grey: #cacaca;
 
-  > .row {
-    height: 100%;
-    padding: 0;
-  }
+.admin-top-bar-line {
+    width: 100vw;
+    background-color: #276cda;
+    height: 4px;
+}
 
-  .navigation-side-panel {
-    color: white;
-    background: #2b2628;
-    height: 100%;
-    padding: 0;
-    text-align: center;
-
-    .administration-title {
-      padding-left: 0.3em;
-      background: #393235;
-      h3 {
-        a {
-          color: #ffba00;
+.admin-nav-options {
+    background-color: white;
+    a {
+        text-transform: capitalize !important;
+        font-weight: bold;
+        color: black !important;
+        &:hover {
+            background: #efeded;
         }
-      }
+    }
+    li {
+        list-style: none;
+    }
+}
+
+.small-admin-nav-options {
+    ul {
+        padding: 0.5em 0 0.5em 1em;
+        margin: 0;
+    }
+    li {
+        margin-bottom: 0.8em;
+    }
+    a {
+        color: #616161 !important;
+    }
+    .shadow {
+        height: 1em;
+        background-color: $admin-background-color;
+        box-shadow: inset 0px 17px 30px -16px rgba(36,36,36,0.39);
     }
 
-    .administation-items {
-      list-style-type: none;
-      li a {
-        color: #7d7779;
-      }
-    }
-  }
+}
 
-  .administation-content {
-    background: whitesmoke;
-    height: 100%;
-  }
+.admin-nav-bar {
+    z-index: 0;
+    background-color: white !important;
+    &, ul, li {
+        height: $admin-navbar-height !important;
+    }
+    a {
+        height: 100% !important;
+    }
+    .nav-title a {
+        font-family: $admin-nav-title-font;
+        font-weight: 300;
+    }
+    .show-only-on-small {
+        display:none;
+        background-color: red !important;
+        @media screen and (max-width: $admin-navbar-small - 1) {
+            display: inline-flex !important;
+            background-color: black !important;
+        }
+    }
+    .show-only-on-bigger-than-small {
+        display:none;
+        @media screen and (min-width: $admin-navbar-small) {
+            display: inline-flex;
+        }
+    }
+}
+
+.admin-body-root {
+    background-color: $admin-background-color;
+    min-height: 100vh;
+    font-family: $admin-side-bar-font;
+}
+
+.admin-body-container {
+    margin-top: 0.8em;
+    padding-left: 0em;
+    padding-right: 0.2em;
+    .side-bar {
+        h3 {
+            color: grey;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        ul {
+            margin-top: 0.5em;
+            padding-left: 0;
+        }
+        li {
+            padding-top: 0;
+            list-style: none;
+            margin-top: 0.5em;
+            padding-left: 0.9em;
+        }
+        a {
+            color: black;
+            font-weight: bold;
+            font-size: 14px !important;
+            font-family: $admin-side-bar-font;
+            &:hover {
+                color: #276cda;
+                text-decoration: none;
+            }
+        }
+    }
+    .administration-side {
+        .admin-route{
+            font-family: $admin-nav-title-font;
+            .divider {
+                color: #adadad;
+                font-weight: 300;
+            }
+            .path {
+                display: inline-block;
+                text-transform: lowercase;
+                &.target {
+                    color: black;
+                }
+            }
+            .path::first-letter {
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+
+.admin-panel-greetings {
+    background: linear-gradient(270deg, #c95be5, #37d0dd);
+    background-size: 400% 400%;
+
+    animation: admin-panel-greetings-animation 8s ease infinite;
+
+    @keyframes admin-panel-greetings-animation {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+
+    font-family: $admin-side-bar-font;
+    margin-bottom: 1em;
+
+    h3, p {
+        margin: 0;
+        padding: 0;
+        padding-left: 20px;
+        color: white;
+    }
+    h3{
+        padding-top: 10px;
+        font-size: 2.1em;
+        text-transform: capitalize;
+    }
+
+    p{
+        font-size: 1.1em;
+        padding-bottom: 17px;
+    }
+}
+
+
+.admin-panel-indicator-grid {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    .uk-grid-margin {
+        margin-top: 1em;
+    }
+}
+
+.admin-panel-indicators {
+    background-color: white;
+    border-radius: 10px;
+    height: 8em;
+    border-width: 1px;
+    border-color: #cacaca;
+    border-style: solid;
+    text-align: center;
+    display:table;
+    width: 100%;
+    .indicator-container {
+        display: table-cell;
+        vertical-align: middle;
+        .number {
+            color: #363636;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+    }
+}
+
+.admin-mini-button {
+        font-size: 0.7em;
+        padding-left: 4px;
+        padding-right: 4px;
+        position: relative;
+        line-height: 1em;
+        top: -0.17em;
+    }
+
+.admin-title {
+    .title-text {
+        font-size: 1.4em;
+        color: black;
+    }
+}
+
+.admin-site-list {
+    .admin-mini-button {
+        background-color: #1ef0c9;
+        top: 0;
+    }
+    li {
+        cursor: pointer;
+        &:hover:nth-child(odd)  {
+            background-color: hsla(239, 100%, 66%, 0.1) !important;
+        }
+        &:hover:nth-child(even)  {
+            background-color: rgba(82, 255, 159, 0.1) !important;
+        }
+    }
+    .site-link {
+        text-transform: uppercase;
+        color: black;
+        font-size: 0.9em;
+        &:hover {
+            color: #004f9e;
+            text-decoration: none;
+        }
+    }
+}
+
+.admin-change-options-cards{
+    padding-left: 1em;
+    padding-right: 1em;
+    .uk-card-body{
+        border-radius: 15px;
+        cursor: pointer;
+        &:hover {
+            background: #fafaff;
+        }
+    }
 }

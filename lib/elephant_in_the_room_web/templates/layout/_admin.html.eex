@@ -1,51 +1,52 @@
-<div uk-sticky="show-on-up: true; animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #scrollup-dropdown" class="uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 457px;">
-  <nav class="uk-navbar-container uk-navbar-sticky">
-    <div class="uk-container uk-container-expand">
-      <div uk-navbar="" class="uk-navbar">
+<body class="admin-body-root">
 
-        <div class="uk-navbar-left">
-          <ul class="uk-navbar-nav">
-            <button class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-primary">
-                <i class="fas fa-bars"></i>
-            </button>
-          </ul>
-        </div>
+<div class="admin-top-bar-line"></div>
 
-        <div class="uk-navbar-center">
-          <ul class="uk-navbar-nav">
-            <li class="uk-active">
-                <%= link "Elephant", to: show_site_link(@conn) %>
-            </li>
-          </ul>
-        </div>
+<!-- NAVIGATION BAR-->
+<nav class="uk-navbar-container admin-nav-bar" uk-navbar>
+  <div class="uk-navbar-left">
+    <ul class="uk-navbar-nav admin-nav-options">
+      <li class="uk-active nav-title">
+        <a href="<%= admin_path(@conn, :index) %>">
+          Elephant Admin
+        </a>
+      </li>
+    </ul>
+    <ul class="uk-navbar-nav admin-nav-options show-only-on-bigger-than-small">
+      <li><a href="/">Home</a></li>
+      <li><a href="#">Payments</a></li>
+    </ul>
+  </div>
 
-        <div class="uk-navbar-right">
-          <ul class="uk-navbar-nav">
-          <div class="tooltip">
-            <button data-method="get" data-to="<%= login_path(@conn, :logout)%>" 
-              class="uk-button uk-button-default uk-margin-small-right"
-              type="button" uk-toggle="target: #offcanvas-nav-secondary">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="sign-out-tooltiptext">Sign out</span>
-            </button>
-             </div>
-          </ul>
-        </div>
-          
-      </div>
+    <div class="uk-navbar-right show-only-on-small">
+        <ul class="uk-navbar-nav admin-nav-options">
+          <li>
+            <a href="#" uk-toggle="target: #admin-navbar-small" >
+              <i class="fas fa-bars fa-lg"></i>
+            </a>
+          </li>
+        </ul>
     </div>
-  </nav>
+</nav>
+<div id="admin-navbar-small"
+     class="admin-nav-options small-admin-nav-options" aria-hidden="true" hidden>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Payments</a></li>
+  </ul>
+  <div class="shadow"></div>
 </div>
 
 <!-- NAVIGATION BAR -->
 
-<div class="el-administration-wrapper row">
-    <div class="navigation-side-panel col-xs-3 col-md-2">
 
-      <div class="administration-title">
-        <h3><%= link "Administration", to: admin_path(@conn, :index) %></h3>
-      </div>
+
+<div class="uk-container  admin-body-container">
+
+  <div uk-grid>
+    <div class="uk-width-5-5 uk-width-auto@s side-bar">
+
+      <h3> Administration </h3>
 
       <ul class="administation-items">
         <li>
@@ -65,12 +66,35 @@
           to: role_path(@conn, :index) %>
         </li>
       </ul>
-      
     </div>
 
-    <div class="administation-content col-xs-9 col-md-10">
+    <% {crumb_path, crumb_target} = ElephantInTheRoomWeb.AdminView.
+         bread_crumb(@conn, assigns[:bread_crumb]) %>
+    <div class="uk-width-5-5 uk-width-expand@s administration-side">
+      <div class="admin-route">
+        <a class="path" href="<%= admin_path(@conn, :index) %>">
+          <i class="fas fa-cogs"></i>
+        </a>
+        <%= for {title, url} <- crumb_path do %>
+          <span class="divider">/</span>
+          <a class="path" href="<%= url %>"><%= title %></a>
+        <%= end %>
+        <%= case crumb_target do %>
+          <%= {title, _} -> %>
+          <span class="divider">/</span>
+          <span class="path target"><%= title %></span>
+          <%= _ -> %>
+        <% end %>
+      </div>
       <div role="main">
         <%= render @view_module, @view_template, assigns %>
       </div>
     </div>
+  </div>
+
+
 </div>
+</body>
+
+
+

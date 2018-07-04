@@ -2,6 +2,7 @@ alias ElephantInTheRoomWeb.Faker
 
 config = %{
   :sites => 5,
+  :empty_sites => 20,
   :categories => 3,
   :authors => 10,
   :tags => 20,
@@ -36,3 +37,6 @@ for site <- Faker.Site.insert_many(config[:sites]) do
     })
   end
 end
+
+
+Faker.Site.insert_many(config.empty_sites)

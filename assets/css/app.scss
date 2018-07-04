@@ -6,7 +6,16 @@
 @import "_post_card";
 @import "_post";
 @import "_landing_page";
+@import "_category";
 @import "_administration";
+
+html {
+font-family: $default-font;
+}
+
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+  font-family: $caption-font;
+}
 
 .row {
   margin-left: 0;
@@ -47,6 +56,7 @@
   }
 }
 
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -85,6 +95,12 @@
 .el-menu-table {
   border: 2px solid black;
   margin-top: 15vh;
+}
+
+.el-title {
+  .tag-title {
+    background-color: #151515;
+  }
 }
 
 .hide {

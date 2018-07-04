@@ -1,49 +1,26 @@
-<h2>Sites</h2>
-<p><%= "Page: #{max(@page_number,1)}/#{max(@total_pages,1)}" %></p>
-<table class="uk-table uk-table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Menu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for site <- @sites do %>
-      <tr>
-        <td>
-          <%= link site.name,
-          to: site_path(@conn, :show, site) %>
-        </td>
-        <td class="text-right">
-          <span>
-            <%= link "",
-            to: site_path(@conn, :edit, site),
-            class: "el-menu-icon fa fa-edit" %>
-          </span>
-          <span>
-            <%= link "",
-            to: site_path(@conn, :delete, site),
-            method: :delete,
-            data: [confirm: "Are you sure?"],
-            class: "el-menu-icon fa fa-trash-alt" %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="admin-title">
+  <span class="title-text"> Sites </span>
+  <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+     href="<%= site_path(@conn, :new) %>">
+    create new
+  </a>
+  </span>
+</div>
 
-<%= case compare(@page_number, @total_pages) do %>
-  <% :equal -> %>
-    <span><%= link "", to: site_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-  <% :lesser -> %>
-    <span><%= link "", to: site_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <span><%= link "", to: site_path(@conn, :index, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-  <% :first -> %>
-    <span><%= link "", to: site_path(@conn, :index, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-  <% _ -> %>
-<% end %>
 
-<br>
-<span><%= link "New Site", to: site_path(@conn, :new) %></span>
-<span><%= link "Back", to: admin_path(@conn, :index) %></span>
+<ul class="uk-list uk-list-striped admin-site-list">
+  <%= for site <- @sites do %>
+      <li class="site-item"
+          onclick="window.location = '<%= site_path(@conn, :show, site) %>'">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
+        edit
+      </a>
+      <a class="site-link">
+        <%= site.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+
+<%= render ElephantInTheRoomWeb.AdminView,
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_path(@conn, :index, page: &1)) %>

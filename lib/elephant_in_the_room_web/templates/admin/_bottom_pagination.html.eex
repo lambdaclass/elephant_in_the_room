@@ -1,0 +1,31 @@
+<div class="admin-pagination">
+  <ul class="uk-pagination uk-flex-center">
+
+    <% {pagination_left, show_middle, pagination_right} =
+    page_pagination_check(@page_number, @total_pages)  %>
+
+    <%= if pagination_left do %>
+      <li>
+        <a href="<%= assigns.page.(@page_number - 1) %>">
+          <span class="uk-margin-small-right" uk-pagination-previous></span>
+          Previous
+        </a>
+      </li>
+    <%= end %>
+    <%= if show_middle do %>
+      <li class="">
+        <span>
+          <%= "#{max(@page_number,1)}/#{max(@total_pages,1)}" %>
+        </span>
+      </li>
+    <%= end %>
+    <%= if pagination_right do %>
+      <li class="">
+        <a href="<%= assigns.page.(@page_number + 1) %>">
+          Next
+          <span class="uk-margin-small-left" uk-pagination-next></span>
+        </a>
+      </li>
+    <%= end %>
+  </ul>
+</div>

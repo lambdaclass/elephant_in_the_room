@@ -2,8 +2,8 @@
 
 <div class="el-sites">
   <div class="el-title">
-    <div class="uk-tile uk-tile-primary">
-      <p class="uk-h4"><h1>Tag: <%= @tag.name %></h1></p>
+    <div class="uk-tile uk-tile-primary tag-title">
+      <h2 class="uk-h2">Tag: <%= @tag.name %></h2>
     </div>
   </div>
 
