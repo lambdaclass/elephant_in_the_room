@@ -3,7 +3,7 @@
 %>
 
 <div class="authors">
-  <h2 class="uk-text-bold uk-text-left">Writers<hr></h2>
+  <h3 class="uk-text-bold uk-text-left">Writers<hr></h3>
   <%= for author <- Enum.uniq(@site.authors) do %>
     <div class="author" uk-grid>
       <div class="uk-width-1-4">

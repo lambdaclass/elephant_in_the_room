@@ -70,19 +70,19 @@
       </div>
     </div>
     <div class="uk-grid-collapse group-content group-content-three" uk-grid>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m">
+      <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- author's column -->
         <div class="individual-content three-one">
           <%= render "_writers.html", assigns %>
         </div>
       </div>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m uk-height-large">
+      <div class="uk-flex-column uk-width-1-1 uk-width-1-2@m">
         <!-- latest's column -->
         <div class="individual-content three-two">
-          2/3 - Latest
+          <%= render "_latest.html", assigns %>
         </div>
       </div>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-3@m uk-height-large">
+      <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- popular's column -->
         <div class="individual-content three-three">
           <%= render "_popular.html", assigns %>
