@@ -136,6 +136,50 @@ $landing-separator-decrease-space: 12px;
             }
         }
     }
+
+    .individual-content{
+        .four-one-content {
+            padding-top: 5px;
+            padding-bottom: 10px;
+            overflow: hidden;
+            height: calc(100% - 15px);
+
+            .image {
+                width: 100%;
+                min-height: 200px;
+                background-position: center;
+            }
+
+            .sub-image-text {
+                text-align: right;
+                font-size: 0.7em;
+                color: #a7a7a7;
+            }
+
+            .title {
+                line-height: 1em;
+                font-size: 1.6em;
+                font-weight: 800;
+                color: black;
+                text-align: left;
+            }
+
+            .description {
+                text-align: left;
+                padding-top: 0.6em;
+                padding-bottom: 0.6em;
+                color: grey;
+            }
+
+            .author {
+                text-transform: uppercase;
+                color: black;
+                text-align: left;
+                font-weight: 200;
+            }
+
+        }
+    }
 }
 
 .popular {

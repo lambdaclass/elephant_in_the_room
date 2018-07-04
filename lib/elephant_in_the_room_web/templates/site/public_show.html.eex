@@ -48,22 +48,32 @@
       </div>
     </div>
     <div class="uk-grid-collapse group-content group-content-four" uk-grid>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m uk-height-medium">
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-one">
-          SECOND 1/4
+          <div class="four-one-content">
+            <div class="image" data-src="/uploads/gen-1530710770-63453157662833-1.png?v=63697929971" uk-img> </div>
+            <div class="sub-image-text">KCA/Reuter</div>
+            <div class="title">No One Knows What Kim Jong Un Promised Trump</div>
+            <div class="description">
+              North Korea is reportedly continuing nuclear work. But it’s not clear that’s a violation of what it agreed to in Singapore.
+            </div>
+            <div author="author">
+              Krishnadev Calamur
+            </div>
+          </div>
         </div>
       </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m uk-height-medium">
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-two">
           SECOND 2/4
         </div>
       </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m uk-height-medium">
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-three">
           SECOND 3/4
         </div>
       </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m uk-height-medium">
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-four">
           SECOND 4/4
         </div>
