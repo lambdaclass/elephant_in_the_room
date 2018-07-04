@@ -1,20 +1,13 @@
+<% posts = Enum.take(@site.posts, 10) %>
+
 <div class="main-landing-page-container">
   <div class="main-landing-page-content">
   <div class="uk-grid-collapse">
     <div class="uk-grid-collapse uk-flex group-content" uk-height-match="> *" uk-grid>
       <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1">
         <div class="individual-content main">
-          <div class="main-content">
-            <div class="image" data-src="/uploads/gen-1530710770-63453157662833-1.png?v=63697929971" uk-img> </div>
-            <div class="sub-image-text">KCA/Reuter</div>
-            <div class="title">No One Knows What Kim Jong Un Promised Trump</div>
-            <div class="description">
-              North Korea is reportedly continuing nuclear work. But it’s not clear that’s a violation of what it agreed to in Singapore.
-            </div>
-            <div class="author">
-              Krishnadev Calamur
-            </div>
-          </div>
+          <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "main-content", post: Enum.at(posts, 0)}) %>
         </div>
       </div>
 
@@ -46,26 +39,16 @@
         <div class="left-top-container">
           <div class="uk-width-1-2@s uk-width-1-1@m">
             <div class="individual-content left-two-one">
-              <div class="left-two-one-content">
-                <div class="image" data-src="/uploads/gen-1530710809-215423091605467-1.png?v=63697930009" uk-img> </div>
-                <div class="sub-image-text">POOL/Router</div>
-                <div class="title">A Funeral for a Vision of Europe</div>
-                <div class="author">
-                  Krishnadev Calamur
-                </div>
-              </div>
+              <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 1),
+                      no_description: true}) %>
             </div>
           </div>
           <div class="uk-width-1-2@s uk-width-1-1@m">
             <div class="individual-content left-two-two">
-              <div class="left-two-one-content">
-                <div class="image" data-src="/uploads/gen-1530710840-905831459292069-1.png?v=63697930041" uk-img> </div>
-                <div class="sub-image-text">KCA/Reuter</div>
-                <div class="title">His Brother’s Keeper</div>
-                <div class="author">
-                  LUKE MULLINS
-                </div>
-              </div>
+              <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 2),
+                      no_description: true}) %>
             </div>
           </div>
         </div>
@@ -74,62 +57,26 @@
     <div class="uk-grid-collapse group-content group-content-four" uk-grid>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-one">
-          <div class="four-one-content">
-            <div class="image" data-src="/uploads/gen-1530710770-63453157662833-1.png?v=63697929971" uk-img> </div>
-            <div class="sub-image-text">KCA/Reuter</div>
-            <div class="title">No One Knows What Kim Jong Un Promised Trump</div>
-            <div class="description">
-              North Korea is reportedly continuing nuclear work. But it’s not clear that’s a violation of what it agreed to in Singapore.
-            </div>
-            <div class="author">
-              Krishnadev Calamur
-            </div>
-          </div>
+          <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 4)}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-two">
-          <div class="four-one-content">
-            <div class="image" data-src="/uploads/gen-1530710799-743852146511437-1.png?v=63697930002" uk-img> </div>
-            <div class="sub-image-text">Susan/Doners</div>
-            <div class="title">Arab Democracy Depends on Normalizing Islamist Parties</div>
-            <div class="description">
-              Even as war and authoritarianism seize the region, several countries have demonstrated the necessity of bringing these groups into the fold.
-            </div>
-            <div class="author">
-              SHADI HAMID
-            </div>
-          </div>
+          <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 5)}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-three">
-          <div class="four-one-content">
-            <div class="image" data-src="/uploads/gen-1530710790-209980421850852-1.png?v=63697929990" uk-img> </div>
-            <div class="sub-image-text">KCA/Reuter</div>
-            <div class="title">A Game-Changing AI Tool for Tracking Animal Movements</div>
-            <div class="description">
-              Scientists are already using it to study octopuses, electric fish, surgical robots, and racehorses.
-            </div>
-            <div class="author">
-              ED YONG
-            </div>
-          </div>
+          <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 6)}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-four">
-          <div class="four-one-content">
-            <div class="image" data-src="http://localhost:4000/uploads/gen-1530710788-211979130197155-1.png?v=63697929988" uk-img> </div>
-            <div class="sub-image-text">KCA/Reuter</div>
-            <div class="title">Drake’s Scorpion, as Explained by an Astrologer and an Entomologist</div>
-            <div class="description">
-              Who better to analyze the beleaguered rapper’s 25-track double album?
-            </div>
-            <div class="author">
-              HANNAH GIORGIS
-            </div>
-          </div>
+          <%= render "_featured_post.html", Map.merge(assigns, 
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 7)}) %>
         </div>
       </div>
     </div>
