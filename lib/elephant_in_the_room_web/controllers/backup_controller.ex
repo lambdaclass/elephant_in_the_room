@@ -5,7 +5,7 @@ defmodule ElephantInTheRoomWeb.BackupController do
   alias ElephantInTheRoom.Repo
 
 
-  def index(conn, %{"run_backup_now"  => "true"}) do
+  def do_backup(conn, _params) do
     Backup.run_backup_now()
     redirect conn, to: backup_path(conn, :index)
   end

@@ -30,3 +30,18 @@ make dev
 - `make ops`: starts the database
 - `make clean_init_db`: fills the database with random data
 - `make dev`: starts the web server
+
+### Backup
+
+The backup can be generated sending a POST request `/admin/backup/do_backup` or in the admin panel `/admin/backup` pressing the botton `backup now`. After the backup is generated it can be downloaded to pressing the `download latest backup` that will appear when the backup generation process ends.
+
+The restoration of the database is manual, it can be done this way:
+
+```bash
+export PGPASSWORD=<db_password> && \
+psql -h <db_host>  -U <db_user> -c "drop database <database_name>; create database <database_name>;" && \
+psql -h <db_host>  -U <db_user> -v ON_ERROR_STOP=1 <database_name> < \
+  <location_of_backup>.sql
+```
+
+This will first destroy the database and **all** its data before it applies the backup.
