@@ -1,6 +1,6 @@
 $landing-break-m: 960px;
 $landing-break-s: $navbar-break-s;
-$landing-separator-border: 1px solid #dbdbdb;
+$landing-separator-border: 1px hidden #dbdbdb;
 $landing-separator-space: 6px;
 $landing-separator-decrease-space: 12px;
 
@@ -138,7 +138,7 @@ $landing-separator-decrease-space: 12px;
     }
 
     .individual-content{
-        .four-one-content {
+        .four-one-content, .left-two-one-content, .main-content {
             padding-top: 5px;
             padding-bottom: 10px;
             overflow: hidden;
@@ -146,7 +146,7 @@ $landing-separator-decrease-space: 12px;
 
             .image {
                 width: 100%;
-                min-height: 200px;
+                min-height: 180px;
                 background-position: center;
             }
 
@@ -173,11 +173,20 @@ $landing-separator-decrease-space: 12px;
 
             .author {
                 text-transform: uppercase;
+                
                 color: black;
                 text-align: left;
                 font-weight: 200;
             }
+        }
 
+        .main-content {
+            .image {
+                height: 65%;
+            }
+            .title, .description, .author {
+                text-align: center;
+            }
         }
     }
 }
