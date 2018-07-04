@@ -1,3 +1,5 @@
+<% alias ElephantInTheRoomWeb.Uploaders.Image %>
+
 <div class="main-landing-page-container">
   <div class="main-landing-page-content">
   <div class="uk-grid-collapse">
@@ -17,29 +19,16 @@
           </div>
         </div>
       </div>
-
       <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap group-content-right-four">
         <div class="right-top-container">
+        <% {:ok, posts} = get_important_posts_right(@conn, @site.posts) %>
+        <%= for post <- posts do %>
           <div class="uk-height-small">
             <div class="individual-content right-four-one">
-              RIGHT A
+               <%= render_shared("_post_card_small.html", Map.put(assigns, :data, [author: post.author.name, title: post.title, src: Image.url({post.image, post})])) %>
             </div>
           </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-two">
-              RIGHT B
-            </div>
-          </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-three">
-              RIGHT C
-            </div>
-          </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-four">
-              RIGHT D
-            </div>
-          </div>
+        <% end %>
         </div>
       </div>
       <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse group-content-left-top" >
