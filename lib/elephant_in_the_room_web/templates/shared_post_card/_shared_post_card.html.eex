@@ -23,7 +23,9 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
           <h3 class="uk-card-title"><%= post.title %></h3>
           <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
           <p><%= post.abstract %></p>
-          <p class="author"><%= post.author.name %></p>
+          <%= if post.author do %>
+            <p class="author"><%= post.author.name %></p>
+          <%= end %>
         </div>
       </div>
       <div class="featured-bar-bottom"></div>
@@ -43,7 +45,9 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
             <h3 class="uk-card-title"><%= post.title %></h3>
             <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
             <p><%= post.abstract %></p>
-            <p class="author"><%= post.author.name %></p>
+            <%= if post.author do %>
+              <p class="author"><%= post.author.name %></p>
+            <%= end %>
           </div>
         </div>
 
@@ -65,7 +69,9 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
               <h3 class="uk-card-title"><%= post.title %></h3>
               <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
               <p><%= post.abstract %></p>
-              <p class="author"><%= post.author.name %></p>
+              <%= if post.author do %>
+                <p class="author"><%= post.author.name %></p>
+              <%= end %>
             </div>
           </div>
         </a>
