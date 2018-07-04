@@ -1,6 +1,6 @@
 $landing-break-m: 960px;
 $landing-break-s: $navbar-break-s;
-$landing-separator-border: 1px solid #dbdbdb;
+$landing-separator-border: 1px hidden #dbdbdb;
 $landing-separator-space: 6px;
 $landing-separator-decrease-space: 12px;
 
@@ -127,6 +127,7 @@ $landing-separator-decrease-space: 12px;
         @media (min-width: $landing-break-m) {
             .three-one, .three-two {
                 @include content-border-right();
+                border: none;
             }
         }
 
@@ -136,10 +137,63 @@ $landing-separator-decrease-space: 12px;
             }
         }
     }
+
+    .individual-content{
+        .four-one-content, .left-two-one-content, .main-content {
+            padding-top: 5px;
+            padding-bottom: 10px;
+            overflow: hidden;
+            height: calc(100% - 15px);
+
+            .image {
+                width: 100%;
+                min-height: 180px;
+                background-position: center;
+            }
+
+            .sub-image-text {
+                text-align: right;
+                font-size: 0.7em;
+                color: #a7a7a7;
+            }
+
+            .title {
+                line-height: 1em;
+                font-size: 1.6em;
+                font-weight: 800;
+                color: black;
+                text-align: left;
+            }
+
+            .description {
+                text-align: left;
+                padding-top: 0.6em;
+                padding-bottom: 0.6em;
+                color: grey;
+            }
+
+            .author {
+                text-transform: uppercase;
+                
+                color: black;
+                text-align: left;
+                font-weight: 200;
+            }
+        }
+
+        .main-content {
+            .image {
+                height: 65%;
+            }
+            .title, .description, .author {
+                text-align: center;
+            }
+        }
+    }
 }
 
 .popular {
-    overflow: hidden;
+    padding: 10px;
 }
 
 .popular > a {
@@ -159,6 +213,10 @@ $landing-separator-decrease-space: 12px;
     color: #F0204F;
 }
 
+.authors {
+    padding: 10px;
+}
+
 .author > div:nth-child(2) {
     padding: 0 10px 0 0;
 }
@@ -176,6 +234,32 @@ $landing-separator-decrease-space: 12px;
     color: #000;
 }
 
-.author:last-child hr {
+.author:last-child hr, .latest hr:last-child {
     display: none;
+}
+
+.latest {
+    padding: 10px;
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+
+    a {
+        color: #000;
+    }
+
+    @media (min-width: $landing-break-m) {
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
 }

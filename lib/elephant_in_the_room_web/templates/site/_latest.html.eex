@@ -1,0 +1,29 @@
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{SiteView, PostView}
+%>
+
+<div class="latest">
+  <h3 class="uk-text-bold uk-text-left">Latest<hr></h3>
+  <%= for post <- Enum.take(@site.posts, 5) do %>
+    <div class="post uk-flex" uk-grid>
+      <div class="uk-width-1-3">
+        <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
+          <img class="" src="<%= Image.url({post.image, post}) %>" alt="<%= post.title %>">
+        <% end %>
+      </div>
+      <div class="uk-width-expand uk-text-left">
+        <h3 class="uk-text-capitalize uk-margin-remove-bottom">
+          <strong>
+            <%= link post.title, to: SiteView.show_link_with_date(@conn, @site, post) %>
+          </strong>
+        </h3>
+        <p class="uk-margin-small-top">
+          <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-uppercase" %>
+          <%= PostView.show_date(post.updated_at) %>
+        </p>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
