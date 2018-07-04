@@ -174,7 +174,7 @@ $landing-separator-decrease-space: 12px;
 
             .author {
                 text-transform: uppercase;
-                
+
                 color: black;
                 text-align: left;
                 font-weight: 200;
@@ -261,5 +261,14 @@ $landing-separator-decrease-space: 12px;
         p {
             font-size: 1rem;
         }
+    }
+}
+
+.footer {
+    background-color: #000;
+    padding: 20px;
+
+    h1, div, .uk-nav-default > li.uk-active > a {
+        color: #FFF;
     }
 }
