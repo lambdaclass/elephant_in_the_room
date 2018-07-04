@@ -7,27 +7,26 @@
           MAIN
         </div>
       </div>
-
       <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap group-content-right-four">
         <div class="right-top-container">
           <div class="uk-height-small">
             <div class="individual-content right-four-one">
-              RIGHT A
+               <%= render_shared("_post_card_small.html", assigns) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-two">
-              RIGHT B
+              <%= render_shared("_post_card_small.html", assigns) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-three">
-              RIGHT C
+              <%= render_shared("_post_card_small.html", assigns) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-four">
-              RIGHT D
+              <%= render_shared("_post_card_small.html", assigns) %>
             </div>
           </div>
         </div>

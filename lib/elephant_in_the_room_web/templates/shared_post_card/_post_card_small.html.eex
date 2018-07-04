@@ -1,0 +1,50 @@
+<div class="uk-card uk-grid-collapse uk-height-small" uk-grid>
+  <div class="uk-grid-collapse" uk-grid>
+    <div class="post-small-body uk-card-body">
+      <p class="post-small-title uk-card-title">Title</p>
+      <p class="post-small-author">Author Name</p>
+    </div>
+  </div>
+  <div class="post-thumbnail-small uk-card-media-right uk-cover-container uk-height-small uk-align-center">
+    <img height="40px" width="40px" src="https://cdn.theatlantic.com/assets/media/img/mt/2018/06/RTS1U526/86x86.jpg?mod=1530178178" alt="" uk-cover>
+    <canvas width="86" height="86"></canvas>
+  </div>
+</div>
+
+<style>
+.post-small-body {
+  overflow-wrap: break-word;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-top: 30px;
+}
+.post-small-title {
+  font-weight: 900px;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.25px;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000;
+  display: inline;
+  box-sizing: border-box;
+}
+
+.post-small-author {
+  letter-spacing: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
+  white-space: normal;
+  line-height: 13.5px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.post-thumbnail-small {
+  width: 78px;
+  height: 78px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+</style>
+
