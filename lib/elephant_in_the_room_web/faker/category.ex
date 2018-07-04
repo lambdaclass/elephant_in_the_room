@@ -4,7 +4,7 @@ defmodule ElephantInTheRoomWeb.Faker.Category do
   # site 1 
   defp default_attrs do
     %{
-      "name" => Faker.Company.bullshit() <> to_string(:rand.uniform(10000)),
+      "name" => Faker.Company.bullshit(),
       "description" => Faker.Lorem.sentence(10)
     }
   end

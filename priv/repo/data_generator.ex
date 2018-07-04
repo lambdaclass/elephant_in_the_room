@@ -2,7 +2,7 @@ alias ElephantInTheRoomWeb.Faker
 
 config = %{
   :sites => 5,
-  :categories => 8,
+  :categories => 3,
   :authors => 10,
   :tags => 20,
   :users => 10,
