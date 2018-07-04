@@ -8,7 +8,7 @@
   <div class="title"><%= assigns.post.title %></div>
   <%= if !assigns[:no_description] do %>
     <div class="description">
-      <%= assigns.post.abstract %>
+      <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
     </div>
   <%= end%>
   <div class="author">

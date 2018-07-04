@@ -7,7 +7,8 @@
       <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1">
         <div class="individual-content main">
           <%= render "_featured_post.html", Map.merge(assigns, 
-                    %{featured_class: "main-content", post: Enum.at(posts, 0)}) %>
+                    %{featured_class: "main-content", post: Enum.at(posts, 0),
+                      description_limit: 200}) %>
         </div>
       </div>
       <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap group-content-right-four">
@@ -57,25 +58,29 @@
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-one">
           <%= render "_featured_post.html", Map.merge(assigns, 
-                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 4)}) %>
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 4),
+                      description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-two">
           <%= render "_featured_post.html", Map.merge(assigns, 
-                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 5)}) %>
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 5),
+                      description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-three">
           <%= render "_featured_post.html", Map.merge(assigns, 
-                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 6)}) %>
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 6),
+                      description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-four">
           <%= render "_featured_post.html", Map.merge(assigns, 
-                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 7)}) %>
+                    %{featured_class: "left-two-one-content", post: Enum.at(posts, 7),
+                      description_limit: 100}) %>
         </div>
       </div>
     </div>
