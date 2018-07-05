@@ -11,9 +11,10 @@ defmodule ElephantInTheRoom.Application do
       # Start the Ecto repository
       supervisor(ElephantInTheRoom.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(ElephantInTheRoomWeb.Endpoint, [])
+      supervisor(ElephantInTheRoomWeb.Endpoint, []),
       # Start your own worker by calling: ElephantInTheRoom.Worker.start_link(arg1, arg2, arg3)
       # worker(ElephantInTheRoom.Worker, [arg1, arg2, arg3]),
+      worker(ElephantInTheRoom.Backup, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

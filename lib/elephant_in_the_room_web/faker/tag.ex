@@ -3,15 +3,19 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
 
   defp default_attrs do
     %{
-      "name" => Faker.Pizza.cheese() <> to_string(:rand.uniform(1_000_000))
+      "name" => Faker.Beer.hop()
     }
   end
 
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    {:ok, tag} = Sites.create_tag(attrs["site"], changes)
-    tag
+    case Sites.create_tag(attrs["site"], changes) do
+      {:ok, tag} ->
+        tag
+      {:error, _} ->
+        insert_one(attrs)
+    end
   end
 
   def insert_many(n, attrs \\ %{}) do
