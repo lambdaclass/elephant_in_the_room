@@ -42,7 +42,7 @@
 
   <div class="form-group">
     <%= label f, :categories, class: "uk-form-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data),
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
         class: "uk-select uk-form-small", rows: "3"%>
     <%= error_tag f, :categories %>
   </div>
