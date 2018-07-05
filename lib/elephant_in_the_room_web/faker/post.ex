@@ -10,6 +10,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     %{
       "content" => generate_content(),
       "image" => gen_image_link(),
+      "cover" => Enum.random([true, false]),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
       "slug" => ""

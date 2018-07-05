@@ -55,6 +55,17 @@
     <%= error_tag f, :image %>
   </div>
 
+  <div class="form-group">
+    <div class="uk-form-label">Use as cover?</div>
+    <div class="uk-form-controls">
+      <%= label f, :cover_false, "No", class: "uk-form-label" %>
+      <%= radio_button f, :cover, "false", class: "uk-radio", checked: "true" %>
+      <%= label f, :cover_true, "Yes", class: "uk-form-label" %>
+      <%= radio_button f, :cover, "true", class: "uk-radio" %>
+    </div>
+    <%= error_tag f, :cover %>
+  </div>
+
   <div class="form-group" >
     <%= label f, "tags (separated by comma)", class: "uk-form-label" %>
     <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
