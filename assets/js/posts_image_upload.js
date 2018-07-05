@@ -12,7 +12,11 @@ const handleFileSelect = evt => {
       sendData(reader.result, file.type);
     };
 
-    reader.readAsArrayBuffer(file);
+    if (file.size > 10000000) {
+      alert("The file size must be lower than 10mb");
+    } else {
+      reader.readAsArrayBuffer(file);
+    }
   });
 };
 
