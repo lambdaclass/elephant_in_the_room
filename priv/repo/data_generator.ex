@@ -3,9 +3,9 @@ alias ElephantInTheRoomWeb.Faker
 config = %{
   :sites => 3,
   :empty_sites => 1,
-  :categories => 5,
+  :categories => 4,
   :authors => 5,
-  :tags => 5,
+  :tags => 3,
   :users => 6,
   :posts => 15
 }
