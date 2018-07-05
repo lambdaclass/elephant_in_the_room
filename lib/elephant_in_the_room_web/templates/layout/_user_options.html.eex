@@ -16,6 +16,17 @@
 <% end %>
 
 <%= case login do %>
+  <% {:ok, _, _} -> %>
+  <li>
+    <%= link to: login_path(@conn, :logout) do %>
+      <i class="fas fa-sign-out-alt"></i>
+      Logout
+    <% end %>
+  </li>
+  <% _ -> %>
+<% end %>
+
+<%= case login do %>
   <% {:ok, _user, :admin} -> %>
   <li>
     <a href="<%= admin_path(@conn, :index) %>">
