@@ -67,5 +67,6 @@ defmodule ElephantInTheRoomWeb.ImageController do
   defp is_image?("png"), do: true
   defp is_image?("bmp"), do: true
   defp is_image?("jpeg"), do: true
+  defp is_image?("jpg"), do: true
   defp is_image?(_type), do: false
 end
