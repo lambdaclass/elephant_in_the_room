@@ -17,12 +17,6 @@
   </div>
 
   <div class="no-uk-margin">
-    <%= label f, :slug, class: "uk-form-label" %>
-    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
-    <%= error_tag f, :slug %>
-  </div>
-
-  <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small" %>
     <%= error_tag f, :author %>
@@ -32,13 +26,6 @@
     <%= label f, :abstract, class: "uk-form-label" %>
     <%= textarea f, :abstract, class: "uk-textarea uk-form-small", rows: "3" %>
     <%= error_tag f, :abstract %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :categories, class: "uk-form-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data),
-        class: "uk-select uk-form-small", rows: "3"%>
-    <%= error_tag f, :categories %>
   </div>
 
   <div class="form-group">
@@ -71,6 +58,19 @@
     <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
         value: put_commas(@changeset.data, :tags) %>
     <%= error_tag f, :tags_separated_by_comma %>
+  </div>
+  
+  <div class="form-group">
+    <%= label f, :categories, class: "uk-form-label" %>
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(@changeset.data),
+        class: "uk-select uk-form-small", rows: "3"%>
+    <%= error_tag f, :categories %>
+  </div>
+
+  <div class="no-uk-margin">
+    <%= label f, :slug, class: "uk-form-label" %>
+    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
+    <%= error_tag f, :slug %>
   </div>
 
   <div class="uk-margin">
