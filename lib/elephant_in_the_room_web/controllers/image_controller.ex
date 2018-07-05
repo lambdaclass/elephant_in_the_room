@@ -12,7 +12,12 @@ defmodule ElephantInTheRoomWeb.ImageController do
   def save_binary_image(conn, _params) do
     {:ok, raw_body, conn} = read_body(conn)
 
-    name = generate_name()
+    type =
+      :proplists.get_value("content-type", conn.req_headers)
+      |> String.split("/")
+      |> List.last()
+
+    name = generate_name(type)
 
     {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
 
@@ -30,7 +35,12 @@ defmodule ElephantInTheRoomWeb.ImageController do
   def save_image(conn, %{"url" => url}) do
     image = HTTPoison.get!(url, [], hackney: [{:follow_redirect, true}])
 
-    name = generate_name()
+    type =
+      :proplists.get_value("content-type", conn.req_headers)
+      |> String.split("/")
+      |> List.last()
+
+    name = generate_name(type)
 
     {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => image.body})
 
@@ -38,7 +48,7 @@ defmodule ElephantInTheRoomWeb.ImageController do
     |> send_resp(202, "#{saved_image.id}")
   end
 
-  defp generate_name() do
-    :crypto.hash(:sha256, "image" <> to_string(:erlang.monotonic_time()))
+  defp generate_name(extension) do
+    Ecto.UUID.generate() <> "." <> extension
   end
 end

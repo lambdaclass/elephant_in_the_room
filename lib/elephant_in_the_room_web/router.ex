@@ -24,8 +24,6 @@ defmodule ElephantInTheRoomWeb.Router do
   end
 
   scope path: "/images", alias: ElephantInTheRoomWeb do
-    pipe_through([:auth, :ensure_auth])
-
     get("/:id", ImageController, :get_image)
     post("/", ImageController, :save_image)
     post("/binary", ImageController, :save_binary_image)
