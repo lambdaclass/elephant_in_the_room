@@ -2,11 +2,15 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
   alias ElephantInTheRoom.Sites
 
   defp default_attrs do
-    site_number = to_string(:rand.uniform(100_000_000))
+    name =
+      Faker.Commerce.product_name()
+      |> String.split()
+      |> Enum.take_random(Faker.random_between(1,2))
+      |> Enum.join(" ")
 
     %{
-      "name" => "Site " <> site_number,
-      "host" => "localhost"
+      name: name,
+      host: "localhost"
     }
   end
 
