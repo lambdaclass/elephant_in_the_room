@@ -3,8 +3,8 @@ defmodule ElephantInTheRoom.Sites.Image do
   import Ecto.Changeset
 
   schema "images" do
+    field(:name, :string)
     field(:binary, :binary)
-    field(:type, :string)
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule ElephantInTheRoom.Sites.Image do
   @doc false
   def changeset(image, attrs) do
     image
-    |> cast(attrs, [:binary, :type])
-    |> validate_required([:binary, :type])
+    |> cast(attrs, [:name, :binary])
+    |> validate_required([:name, :binary])
   end
 end

@@ -611,6 +611,8 @@ defmodule ElephantInTheRoom.Sites do
   """
   def get_image!(id), do: Repo.get!(Image, id)
 
+  def get_image_by_name!(name), do: Repo.get_by!(Image, name: name)
+
   @doc """
   Creates a image.
 

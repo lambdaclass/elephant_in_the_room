@@ -29,6 +29,7 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/:id", ImageController, :get_image)
     post("/", ImageController, :save_image)
     post("/binary", ImageController, :save_binary_image)
+    get("/search/:name", ImageController, :search_image)
   end
 
   # local routes
@@ -53,6 +54,10 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/roles", RoleController)
       resources("/users", UserController, except: [:new, :create])
       resources("/authors", AuthorController)
+      get("/backup", BackupController, :index)
+      post("/backup/do_backup", BackupController, :do_backup)
+      get("/backup/download_latest", BackupController, :download_latest)
+      get("/backup/modify_settings", BackupController, :get_modify_settings)
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)
@@ -83,6 +88,10 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/roles", RoleController)
       resources("/users", UserController, except: [:new, :create])
       resources("/authors", AuthorController)
+      get("/backup", BackupController, :index)
+      post("/backup/do_backup", BackupController, :do_backup)
+      get("/backup/download_latest", BackupController, :download_latest)
+      get("/backup/modify_settings", BackupController, :get_modify_settings)
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)
