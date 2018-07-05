@@ -1,3 +1,9 @@
+<script>
+  $(document).ready(function() { 
+    $("#post_author_id").select2(); 
+    $("#post_categories").select2();
+  });
+</script>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">

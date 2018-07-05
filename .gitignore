@@ -31,3 +31,4 @@ npm-debug.log
 
 pg_dump
 .vscode
+.DS_Store
