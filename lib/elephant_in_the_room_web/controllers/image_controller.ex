@@ -17,11 +17,10 @@ defmodule ElephantInTheRoomWeb.ImageController do
       |> String.split("/")
       |> List.last()
 
-    name = generate_name(type)
-
-    {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
-
     if is_image?(type) && is_small?(conn) do
+      name = generate_name(type)
+      {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
+
       conn
       |> send_resp(202, "#{saved_image.id}")
     else
