@@ -14,6 +14,7 @@ alias ElephantInTheRoom.Auth
 alias ElephantInTheRoom.Auth.Role
 alias ElephantInTheRoom.Repo
 alias ElephantInTheRoom.Sites
+alias ElephantInTheRoom.BackupData
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
@@ -31,6 +32,13 @@ case Repo.get_by(Role, name: "user") do
 
   _user_role ->
     IO.puts("user role already created!")
+end
+
+case Repo.get_by(BackupData, id: 1) do
+  nil ->
+    Bac
+  _ ->
+    IO.puts("BackupData already created")
 end
 
 # case length(Sites.list_sites()) == 0 do
