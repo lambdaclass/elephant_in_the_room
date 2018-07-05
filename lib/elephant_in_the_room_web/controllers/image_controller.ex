@@ -11,7 +11,6 @@ defmodule ElephantInTheRoomWeb.ImageController do
 
   def save_binary_image(conn, _params) do
     {:ok, raw_body, conn} = read_body(conn)
-    IO.inspect(conn)
 
     type =
       :proplists.get_value("content-type", conn.req_headers)
