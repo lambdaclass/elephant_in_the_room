@@ -13,9 +13,13 @@ const handleFileSelect = evt => {
     };
 
     if (file.size > 10000000) {
-      alert("The file size must be lower than 10mb");
+      alert("The file size must be smaller than 10mb.");
     } else {
-      reader.readAsArrayBuffer(file);
+      if (isImage(file)) {
+        reader.readAsArrayBuffer(file);
+      } else {
+        alert("The file must be an image.");
+      }
     }
   });
 };
@@ -44,11 +48,17 @@ const handleDragOver = evt => {
 };
 
 window.onload = () => {
-  var postTextArea = document.getElementById("post-textarea");
-
-  postTextArea.addEventListener("dragover", handleDragOver, false);
-  postTextArea.addEventListener("drop", handleFileSelect, false);
+  if (document.getElementById("post-textarea")) {
+    var postTextArea = document.getElementById("post-textarea");
+    postTextArea.addEventListener("dragover", handleDragOver, false);
+    postTextArea.addEventListener("drop", handleFileSelect, false);
+  }
 };
+
+const isImage = file =>
+  file.type == "image/bmp" ||
+  file.type == "image/png" ||
+  file.type == "image/jpeg";
 
 const insertTextAtPos = (element, newText) => {
   const start = element.selectionStart;
