@@ -10,6 +10,13 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(Guardian.Plug.EnsureAuthenticated)
   end
 
+  pipeline :image_uploading do
+    plug(:fetch_session)
+    plug(:put_secure_browser_headers)
+    plug(ElephantInTheRoom.Auth.Pipeline)
+    plug(Guardian.Plug.EnsureAuthenticated)
+  end
+
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)
@@ -24,6 +31,7 @@ defmodule ElephantInTheRoomWeb.Router do
   end
 
   scope path: "/images", alias: ElephantInTheRoomWeb do
+    pipe_through([:image_uploading])
     get("/:id", ImageController, :get_image)
     post("/", ImageController, :save_image)
     post("/binary", ImageController, :save_binary_image)
