@@ -1,4 +1,9 @@
 
+<%= if assigns[:post] do %>
+  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
+        target: "_blank"  %>
+<%= end %>
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
 
