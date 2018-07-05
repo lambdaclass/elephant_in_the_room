@@ -1,10 +1,9 @@
 defmodule ElephantInTheRoomWeb.Faker.Category do
   alias ElephantInTheRoom.Sites
 
-  # site 1 
   defp default_attrs do
     %{
-      "name" => Faker.Company.bullshit() <> to_string(:rand.uniform(10000)),
+      "name" => Faker.Industry.sub_sector(),
       "description" => Faker.Lorem.sentence(10)
     }
   end
