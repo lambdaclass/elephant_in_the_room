@@ -1,6 +1,10 @@
 <script>
   $(document).ready(function() { 
-    $("#post_author_id").select2(); 
+    $("#post_author_id").select2({
+      placeholder: "No author",
+      tags: true,
+      allowClear: true
+    }); 
     $("#post_categories").select2();
   });
 </script>
