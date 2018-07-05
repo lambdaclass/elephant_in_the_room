@@ -12,13 +12,13 @@ const handleFileSelect = evt => {
       sendData(reader.result, file.type);
     };
 
-    if (file.size > 10000000) {
-      alert("The file size must be smaller than 10mb.");
+    if (file.size > 8000000) {
+      alert("The file size must be smaller than 8mb.");
     } else {
       if (isImage(file)) {
         reader.readAsArrayBuffer(file);
       } else {
-        alert("The file must be an image.");
+        alert("The file must be an image smaller than 8mb.");
       }
     }
   });
@@ -30,7 +30,7 @@ const sendData = (data, mime) => {
 
   XHR.onloadend = () => {
     const postTextArea = document.getElementById("post_content");
-    if (XHR.status == 200) {
+    if (XHR.status == 202) {
       const markdownImage = "![image](/images/" + XHR.response + ")";
       insertTextAtPos(postTextArea, markdownImage);
     } else {
@@ -62,7 +62,8 @@ window.onload = () => {
 const isImage = file =>
   file.type == "image/bmp" ||
   file.type == "image/png" ||
-  file.type == "image/jpeg";
+  file.type == "image/jpeg" ||
+  file.type == "image/jpg";
 
 const insertTextAtPos = (element, newText) => {
   const start = element.selectionStart;

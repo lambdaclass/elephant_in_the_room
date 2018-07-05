@@ -11,6 +11,7 @@ defmodule ElephantInTheRoomWeb.ImageController do
 
   def save_binary_image(conn, _params) do
     {:ok, raw_body, conn} = read_body(conn)
+    IO.inspect(conn)
 
     type =
       :proplists.get_value("content-type", conn.req_headers)
@@ -21,12 +22,12 @@ defmodule ElephantInTheRoomWeb.ImageController do
 
     {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
 
-    if is_image?(type) do
+    if is_image?(type) && is_small?(conn) do
       conn
       |> send_resp(202, "#{saved_image.id}")
     else
       conn
-      |> send_resp(415, "The file is not an image.")
+      |> send_resp(415, "The file must be an image smaller than 8mb.")
     end
   end
 
@@ -55,6 +56,14 @@ defmodule ElephantInTheRoomWeb.ImageController do
 
   defp generate_name(extension) do
     Ecto.UUID.generate() <> "." <> extension
+  end
+
+  defp is_small?(conn) do
+    body_length =
+      :proplists.get_value("content-length", conn.req_headers)
+      |> String.to_integer()
+
+    body_length < 8_000_000
   end
 
   defp is_image?("png"), do: true
