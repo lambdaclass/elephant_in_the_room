@@ -21,8 +21,13 @@ defmodule ElephantInTheRoomWeb.ImageController do
 
     {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
 
-    conn
-    |> send_resp(202, "#{saved_image.id}")
+    if is_image?(type) do
+      conn
+      |> send_resp(202, "#{saved_image.id}")
+    else
+      conn
+      |> send_resp(415, "The file is not an image.")
+    end
   end
 
   def search_image(conn, %{"name" => img_name}) do
@@ -51,4 +56,9 @@ defmodule ElephantInTheRoomWeb.ImageController do
   defp generate_name(extension) do
     Ecto.UUID.generate() <> "." <> extension
   end
+
+  defp is_image?("png"), do: true
+  defp is_image?("bmp"), do: true
+  defp is_image?("jpeg"), do: true
+  defp is_image?(_type), do: false
 end

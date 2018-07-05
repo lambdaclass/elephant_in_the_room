@@ -30,8 +30,12 @@ const sendData = (data, mime) => {
 
   XHR.onloadend = () => {
     const postTextArea = document.getElementById("post_content");
-    const markdownImage = "![image](/images/" + XHR.response + ")";
-    insertTextAtPos(postTextArea, markdownImage);
+    if (XHR.status == 200) {
+      const markdownImage = "![image](/images/" + XHR.response + ")";
+      insertTextAtPos(postTextArea, markdownImage);
+    } else {
+      alert(XHR.response);
+    }
   };
 
   XHR.open("POST", url);
