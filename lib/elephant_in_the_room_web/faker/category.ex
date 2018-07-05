@@ -1,10 +1,9 @@
 defmodule ElephantInTheRoomWeb.Faker.Category do
   alias ElephantInTheRoom.Sites
 
-  # site 1 
   defp default_attrs do
     %{
-      "name" => Faker.Company.bullshit() <> to_string(:rand.uniform(10000)),
+      "name" => Faker.Industry.sub_sector(),
       "description" => Faker.Lorem.sentence(10)
     }
   end
@@ -12,8 +11,12 @@ defmodule ElephantInTheRoomWeb.Faker.Category do
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    {:ok, category} = Sites.create_category(attrs["site"], changes)
-    category
+    case Sites.create_category(attrs["site"], changes) do
+      {:ok, category} ->
+        category
+      {:error, _} ->
+        insert_one(attrs)
+    end
   end
 
   def insert_many(n, attrs \\ %{}) do
