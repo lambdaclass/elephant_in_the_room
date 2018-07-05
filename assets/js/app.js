@@ -11,9 +11,9 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
-import "jquery"
-import "uikit"
+import "phoenix_html";
+import "jquery";
+import "uikit";
 
 // Import local files
 //
@@ -21,5 +21,6 @@ import "uikit"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-import "./navbar"
-import "./posts"
+import "./navbar";
+import "./posts";
+import "./posts_image_upload";
