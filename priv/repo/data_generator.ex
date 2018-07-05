@@ -1,13 +1,13 @@
 alias ElephantInTheRoomWeb.Faker
 
 config = %{
-  :sites => 5,
-  :empty_sites => 20,
-  :categories => 20,
-  :authors => 10,
-  :tags => 20,
-  :users => 10,
-  :posts => 20
+  :sites => 3,
+  :empty_sites => 1,
+  :categories => 5,
+  :authors => 5,
+  :tags => 5,
+  :users => 6,
+  :posts => 15
 }
 
 authors = Faker.Author.insert_many(config[:authors])
