@@ -1,0 +1,48 @@
+<div class="backup-container">
+
+  <div class="admin-title">
+    <span class="title-text"> Sites </span>
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+      href="">
+      refresh
+    </a>
+    </span>
+  </div>
+
+  <div class="uk-margin">
+    <div>
+      <span>Status:</span>
+      <span id="backup-data-will-run-at">
+        <%= @conn.assigns[:status] %>
+      </span>
+    </div>
+    <%= if @conn.assigns[:last_backup_ready_at] do %>
+      <div>
+        <span>Last backup location:</span>
+        <span id="backup-data-will-run-at">
+          <%= @conn.assigns[:last_backup_location] %>
+        </span>
+      </div>
+      <div>
+        <span>Last backup generated at:</span>
+        <span id="backup-data-status">
+          <%= @conn.assigns[:last_backup_ready_at]%> UTC
+        </span>
+      </div>
+    <%= end %>
+  </div>
+
+  <div>
+    <%= form_for @conn, backup_path(@conn, :do_backup), fn f -> %>
+      <%= submit "backup now", class: "uk-button uk-button-danger uk-button-small" %>
+    <% end %>
+    <%= if @conn.assigns[:last_backup_ready_at] do %>
+      <a href="<%= backup_path(@conn, :download_latest)%>">
+        <button class="uk-button uk-button-primary uk-button-small">
+          download latest backup
+        </button>
+      </a>
+    <%= end %>
+  </div>
+
+</div>

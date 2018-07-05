@@ -1,5 +1,5 @@
 .PHONY: help demo_server create_db populate_db install_frontend \
-        ops ops_reset ops_backup_db deps
+        ops ops_reset ops_backup_db deps lint_css
 
 help:
 	@echo "To start a demo sever run in two separated shells:"
@@ -49,5 +49,5 @@ ops_backup_db:
 	docker exec elephant_in_the_room_db pg_dumpall -h localhost -U postgres \
 	 > pg_dump/backup_$$(date +"%Y%m%d%H%M%S").sql
 
-
-
+lint_css:
+	cd assets && node_modules/stylelint/bin/stylelint.js css/*

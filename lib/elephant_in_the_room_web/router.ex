@@ -23,6 +23,12 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  scope path: "/images", alias: ElephantInTheRoomWeb do
+    get("/:id", ImageController, :get_image)
+    get("/search/:name", ImageController, :search_image)
+    post("/", ImageController, :save_image)
+  end
+
   # local routes
   scope path: "/", host: "localhost", alias: ElephantInTheRoomWeb do
     pipe_through([:browser, :auth])
@@ -44,6 +50,10 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/roles", RoleController)
       resources("/users", UserController)
       resources("/authors", AuthorController)
+      get("/backup", BackupController, :index)
+      post("/backup/do_backup", BackupController, :do_backup)
+      get("/backup/download_latest", BackupController, :download_latest)
+      get("/backup/modify_settings", BackupController, :get_modify_settings)
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)
@@ -73,6 +83,10 @@ defmodule ElephantInTheRoomWeb.Router do
       resources("/roles", RoleController)
       resources("/users", UserController)
       resources("/authors", AuthorController)
+      get("/backup", BackupController, :index)
+      post("/backup/do_backup", BackupController, :do_backup)
+      get("/backup/download_latest", BackupController, :download_latest)
+      get("/backup/modify_settings", BackupController, :get_modify_settings)
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)

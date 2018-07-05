@@ -376,4 +376,66 @@ defmodule ElephantInTheRoom.SitesTest do
       assert %Ecto.Changeset{} = Sites.change_post(post)
     end
   end
+
+  describe "images" do
+    alias ElephantInTheRoom.Sites.Image
+
+    @valid_attrs %{binary: "some binary", type: "some type"}
+    @update_attrs %{binary: "some updated binary", type: "some updated type"}
+    @invalid_attrs %{binary: nil, type: nil}
+
+    def image_fixture(attrs \\ %{}) do
+      {:ok, image} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sites.create_image()
+
+      image
+    end
+
+    test "list_images/0 returns all images" do
+      image = image_fixture()
+      assert Sites.list_images() == [image]
+    end
+
+    test "get_image!/1 returns the image with given id" do
+      image = image_fixture()
+      assert Sites.get_image!(image.id) == image
+    end
+
+    test "create_image/1 with valid data creates a image" do
+      assert {:ok, %Image{} = image} = Sites.create_image(@valid_attrs)
+      assert image.binary == "some binary"
+      assert image.type == "some type"
+    end
+
+    test "create_image/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_image(@invalid_attrs)
+    end
+
+    test "update_image/2 with valid data updates the image" do
+      image = image_fixture()
+      assert {:ok, image} = Sites.update_image(image, @update_attrs)
+      assert %Image{} = image
+      assert image.binary == "some updated binary"
+      assert image.type == "some updated type"
+    end
+
+    test "update_image/2 with invalid data returns error changeset" do
+      image = image_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_image(image, @invalid_attrs)
+      assert image == Sites.get_image!(image.id)
+    end
+
+    test "delete_image/1 deletes the image" do
+      image = image_fixture()
+      assert {:ok, %Image{}} = Sites.delete_image(image)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_image!(image.id) end
+    end
+
+    test "change_image/1 returns a image changeset" do
+      image = image_fixture()
+      assert %Ecto.Changeset{} = Sites.change_image(image)
+    end
+  end
 end

@@ -3,7 +3,7 @@ version: '3.2'
 services:
   db:
     container_name: elephant_in_the_room_db
-    image: postgres:9.5
+    image: postgres:10.4
     ports:
       - "5432:5432"
     environment:

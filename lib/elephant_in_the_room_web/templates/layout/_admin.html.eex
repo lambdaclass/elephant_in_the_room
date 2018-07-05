@@ -65,6 +65,10 @@
           <%= link "Roles",
           to: role_path(@conn, :index) %>
         </li>
+        <li>
+          <%= link "Backup",
+          to: backup_path(@conn, :index) %>
+        </li>
       </ul>
     </div>
 
