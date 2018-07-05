@@ -29,7 +29,7 @@ const sendData = (data, mime) => {
   const url = "/images/binary";
 
   XHR.onloadend = () => {
-    const postTextArea = document.getElementById("post-textarea");
+    const postTextArea = document.getElementById("post_content");
     const markdownImage = "![image](/images/" + XHR.response + ")";
     insertTextAtPos(postTextArea, markdownImage);
   };
@@ -48,8 +48,8 @@ const handleDragOver = evt => {
 };
 
 window.onload = () => {
-  if (document.getElementById("post-textarea")) {
-    var postTextArea = document.getElementById("post-textarea");
+  if (document.getElementById("post_content")) {
+    var postTextArea = document.getElementById("post_content");
     postTextArea.addEventListener("dragover", handleDragOver, false);
     postTextArea.addEventListener("drop", handleFileSelect, false);
   }
