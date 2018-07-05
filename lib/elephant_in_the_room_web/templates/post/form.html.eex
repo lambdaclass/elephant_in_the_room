@@ -68,3 +68,9 @@
 
 </fieldset>
 <% end %>
+
+<%= link to: site_post_path(@conn, :delete, @site.id, @post.id), 
+        method: :delete, data: [confirm: "Are you sure your want to delete this post?"], 
+        class: "uk-button uk-button-danger uk-width-1-1" do %>
+  <i class="fas fa-trash"></i>
+<% end%>
