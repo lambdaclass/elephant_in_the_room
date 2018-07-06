@@ -364,7 +364,8 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def delete_cover(%Post{} = post) do
-    Ecto.Changeset.change(post, cover: nil)
+    post
+    |> Post.changeset(%{"cover" => nil})
     |> Repo.update()
   end
 

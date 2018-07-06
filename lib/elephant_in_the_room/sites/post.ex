@@ -55,6 +55,10 @@ defmodule ElephantInTheRoom.Sites.Post do
     changeset
   end
 
+  def store_cover(%Changeset{} = changeset, %{"cover" => nil}) do
+    put_change(changeset, :cover, nil)
+  end
+
   def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
     {:ok, cover_name} = Image.store(%{cover | filename: Ecto.UUID.generate()})
 
