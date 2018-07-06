@@ -4,6 +4,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoomWeb.DomainBased
+  alias Phoenix.Controller
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -88,6 +89,7 @@ defmodule ElephantInTheRoomWeb.PostController do
       post: post,
       changeset: changeset,
       categories: categories,
+      info: Controller.get_flash(conn, :info), 
       bread_crumb: [:sites, site, :posts, post, :post_edit]
     )
   end
@@ -99,8 +101,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
         conn
-        |> put_flash(:info, "Post updated successfully.")
-        |> redirect(to: site_post_path(conn, :show, site, post))
+        |> Controller.put_flash(:info, :update_success)
+        |> redirect(to: site_post_path(conn, :edit, site, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)

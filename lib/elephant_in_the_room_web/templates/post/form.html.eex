@@ -9,6 +9,12 @@
   });
 </script>
 
+<%= if assigns[:info] == :update_success do %>
+  <script>
+    UIkit.notification({message: 'Update sucess!', status: 'success'})
+  </script>
+<%= end %>
+
 <div class="admin-title">
   <span class="title-text"><%= assigns[:title] %></span>
   <%= if assigns[:post] do %>

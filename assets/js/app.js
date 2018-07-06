@@ -13,7 +13,8 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html";
 import "jquery";
-import "uikit";
+import UIkit from "uikit";
+window.UIkit = UIkit;
 
 // Import local files
 //
