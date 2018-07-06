@@ -1,5 +1,6 @@
-<h2>New Post</h2>
-
-<%= render "form.html", mk_assigns(@conn, assigns, @site) %>
+<%= render "form.html", Map.merge(assigns, %{
+  action: site_post_path(@conn, :create, @site),
+  title: "New Post"
+})%>
 
 <span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>

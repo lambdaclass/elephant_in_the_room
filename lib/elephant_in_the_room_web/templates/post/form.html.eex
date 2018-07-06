@@ -9,10 +9,24 @@
   });
 </script>
 
-<%= if assigns[:post] do %>
-  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
-        target: "_blank"  %>
+<%= if assigns[:info] == :update_success do %>
+  <script>
+    UIkit.notification({message: 'Update sucess!', status: 'success'})
+  </script>
 <%= end %>
+
+<div class="admin-title">
+  <span class="title-text"><%= assigns[:title] %></span>
+  <%= if assigns[:post] do %>
+    <div "admin-title-options">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+        href="<%= ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site) %>"
+        target="_blank">
+        see post
+      </a>
+    </div>
+  <%= end %>
+</div>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
@@ -32,15 +46,10 @@
   </div>
 
   <div class="no-uk-margin">
-    <%= label f, :slug, class: "uk-form-label" %>
-    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
-    <%= error_tag f, :slug %>
-  </div>
-
-  <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", 
-          selected: get_selected_author(assigns[:post]), prompt: "" %>
+          selected: get_selected_author(assigns[:post]), prompt: "",
+          style: "width: 100%" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -48,13 +57,6 @@
     <%= label f, :abstract, class: "uk-form-label" %>
     <%= textarea f, :abstract, class: "uk-textarea uk-form-small", rows: "3" %>
     <%= error_tag f, :abstract %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :categories, class: "uk-form-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
-        class: "uk-select uk-form-small", rows: "3"%>
-    <%= error_tag f, :categories %>
   </div>
 
   <div class="form-group">
@@ -87,6 +89,19 @@
     <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
         value: put_commas(@changeset.data, :tags) %>
     <%= error_tag f, :tags_separated_by_comma %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :categories, class: "uk-form-label" %>
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
+        class: "uk-select uk-form-small", rows: "3", style: "width: 100%" %>
+    <%= error_tag f, :categories %>
+  </div>
+
+  <div class="no-uk-margin">
+    <%= label f, :slug, class: "uk-form-label" %>
+    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
+    <%= error_tag f, :slug %>
   </div>
 
   <div class="uk-margin">

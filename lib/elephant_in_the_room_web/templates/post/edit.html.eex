@@ -1,5 +1,6 @@
-<h2>Edit Post</h2>
-
-<%= render "form.html", mk_assigns(@conn, assigns, @site, @post) %>
+<%= render "form.html", Map.merge(assigns, %{
+  action: site_post_path(@conn, :update, @site, @post),
+  title: "Edit post"
+})%>
 
 <span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>
