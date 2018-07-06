@@ -304,6 +304,7 @@ defmodule ElephantInTheRoom.Sites do
 
   def create_post(site, attrs) do
     post_attrs = Map.put(attrs, "site_id", site.id)
+      |> ensure_author_exists
 
     %Post{}
     |> Post.changeset(post_attrs)
@@ -312,8 +313,17 @@ defmodule ElephantInTheRoom.Sites do
 
   def create_post(attrs \\ %{}) do
     %Post{}
-    |> Post.changeset(attrs)
+    |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.insert()
+  end
+
+  def ensure_author_exists(attrs) do
+    case Author.ensure_author_exists(attrs["author_id"]) do
+      {:ok, %Author{id: author_id}} ->
+        %{attrs | "author_id" => author_id}
+      _ ->
+        attrs
+    end
   end
 
   @doc """
@@ -330,7 +340,7 @@ defmodule ElephantInTheRoom.Sites do
   """
   def update_post(%Post{} = post, attrs) do
     post
-    |> Post.changeset(attrs)
+    |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
   end
 
