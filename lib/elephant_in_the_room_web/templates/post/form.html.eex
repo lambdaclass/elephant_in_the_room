@@ -60,13 +60,6 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :categories, class: "uk-form-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
-        class: "uk-select uk-form-small", rows: "3", style: "width: 100%" %>
-    <%= error_tag f, :categories %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :content, class: "uk-form-label" %>
     <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
@@ -96,6 +89,13 @@
     <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
         value: put_commas(@changeset.data, :tags) %>
     <%= error_tag f, :tags_separated_by_comma %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :categories, class: "uk-form-label" %>
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
+        class: "uk-select uk-form-small", rows: "3", style: "width: 100%" %>
+    <%= error_tag f, :categories %>
   </div>
 
   <div class="no-uk-margin">
