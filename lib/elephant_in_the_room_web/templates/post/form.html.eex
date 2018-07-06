@@ -9,10 +9,18 @@
   });
 </script>
 
-<%= if assigns[:post] do %>
-  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
-        target: "_blank"  %>
-<%= end %>
+<div class="admin-title">
+  <span class="title-text"><%= assigns[:title] %></span>
+  <%= if assigns[:post] do %>
+    <div "admin-title-options">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+        href="<%= ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site) %>"
+        target="_blank">
+        see post
+      </a>
+    </div>
+  <%= end %>
+</div>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
