@@ -48,7 +48,8 @@
   <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", 
-          selected: get_selected_author(assigns[:post]), prompt: "" %>
+          selected: get_selected_author(assigns[:post]), prompt: "",
+          style: "width: 100%" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -61,7 +62,7 @@
   <div class="form-group">
     <%= label f, :categories, class: "uk-form-label" %>
     <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
-        class: "uk-select uk-form-small", rows: "3"%>
+        class: "uk-select uk-form-small", rows: "3", style: "width: 100%" %>
     <%= error_tag f, :categories %>
   </div>
 
