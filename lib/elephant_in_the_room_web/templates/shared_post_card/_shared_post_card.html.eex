@@ -1,6 +1,6 @@
-<% 
-alias ElephantInTheRoomWeb.Uploaders.Image 
-alias ElephantInTheRoomWeb.{PostView, SiteView}
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, SiteView}
 %>
 
 <div class="row post-card">
@@ -12,7 +12,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
            onclick="window.location.href = '<%= link_post %>'">
         <div class="columns col-xs-12 col-sm-7">
           <div class="media"
-               style="background: url(<%= Image.url({post.image, post}) %>);">
+               style="background: url('<%= Image.url({post.image, post})%>');">
           </div>
         </div>
         <div class="columns col-xs-12 col-sm-5 body">
@@ -23,7 +23,9 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
           <h3 class="uk-card-title"><%= post.title %></h3>
           <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
           <p><%= post.abstract %></p>
-          <p class="author"><%= post.author.name %></p>
+          <%= if post.author do %>
+            <p class="author"><%= post.author.name %></p>
+          <%= end %>
         </div>
       </div>
       <div class="featured-bar-bottom"></div>
@@ -73,7 +75,7 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
              onclick="window.location.href = '<%= link_post %>'">
           <div class="columns col-xs-12 col-sm-7">
             <div class="media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url('<%= Image.url({post.image, post}) %>');">
             </div>
           </div>
           <div class="columns col-xs-12 col-sm-5 body">
@@ -83,15 +85,17 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
             <h3 class="uk-card-title"><%= post.title %></h3>
             <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
             <p><%= post.abstract %></p>
-            <p class="author"><%= post.author.name %></p>
+            <%= if post.author do %>
+              <p class="author"><%= post.author.name %></p>
+            <%= end %>
           </div>
         </div>
 
       <% :normal -> %>
-      
+
       <div class="col-xs-12 col-sm-6 col-md-3">
-        <a href="<%= 
-                 ElephantInTheRoomWeb.SiteView.show_link_with_date @conn, 
+        <a href="<%=
+                 ElephantInTheRoomWeb.SiteView.show_link_with_date @conn,
                  @site, post%>"
            class="no-link-decoration">
           <div class="clickeable-card uk-card uk-card-default">
@@ -99,18 +103,19 @@ alias ElephantInTheRoomWeb.{PostView, SiteView}
               <%= PostView.show_featured_category(post) %>
             </div>
             <div class="uk-card-media-top media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url('<%= Image.url({post.image, post}) %>');">
             </div>
             <div class="uk-card-body body">
               <h3 class="uk-card-title"><%= post.title %></h3>
               <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
               <p><%= post.abstract %></p>
-              <p class="author"><%= post.author.name %></p>
+              <%= if post.author do %>
+                <p class="author"><%= post.author.name %></p>
+              <%= end %>
             </div>
           </div>
         </a>
       </div>
-      
     <%  end %>
   <% end %>
 </div>

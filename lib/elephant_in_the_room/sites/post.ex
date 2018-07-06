@@ -14,6 +14,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:content, :string)
     field(:rendered_content, :string)
     field(:image, Image.Type)
+    field(:cover, :boolean)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -39,14 +40,44 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
+    new_attrs = image_hash_name_in_attrs(attrs)
+
     post
-    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
-    |> cast_attachments(attrs, [:image], [])
-    |> put_assoc(:tags, parse_tags(attrs))
-    |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :site_id])
+    |> cast(new_attrs, [:title, :content, :slug, :abstract, :site_id, :author_id, :cover])
+    |> cast_attachments(new_attrs, [:image], [])
+    |> put_assoc(:tags, parse_tags(new_attrs))
+    |> put_assoc(:categories, parse_categories(new_attrs))
+    |> validate_required([:title, :content, :site_id, :image, :cover])
     |> put_rendered_content
     |> put_slugified_title
+    |> unique_constraint(:slug, name: :slug_unique_index)
+  end
+
+  def get_required(%Post{image: current_image}, attrs) do
+    required = [:title, :content, :site_id, :cover]
+
+    case current_image != nil do
+      true -> required
+      false -> [:image | required]
+    end
+  end
+
+  def image_hash_name_in_attrs(%{"image" => image} = attrs),
+    do: %{attrs | "image" => image_hash_name(image)}
+
+  def image_hash_name_in_attrs(attrs), do: attrs
+
+  def image_hash_name(%Plug.Upload{filename: filename} = upload) do
+    extension =
+      filename
+      |> String.split(".")
+      |> List.last()
+
+    %{upload | filename: Ecto.UUID.generate()}
+  end
+
+  def image_hash_name(image) do
+    image
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
@@ -62,11 +93,11 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> validate_length(:rendered_content, min: 1)
   end
 
-  defp calculate_occurrences(n, slug, suffix) do
-    case Repo.get_by(Post, slug: slug <> suffix) do
-      nil -> n
-      %Post{} -> calculate_occurrences(n + 1, slug, "-#{n + 1}")
-    end
+  defp calculate_occurrences(slug, site_id) do
+    site = Sites.get_site!(site_id)
+
+    site.posts
+    |> Enum.count(fn post -> post.slug == slug end)
   end
 
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
@@ -75,17 +106,16 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def put_slugified_title(%Changeset{} = changeset) do
+    site_id = get_field(changeset, :site_id)
     slug = get_field(changeset, :slug)
 
     if slug == nil || String.length(slug) == 0 do
       slug = get_field(changeset, :title) |> Sites.to_slug()
+    end
 
-      case calculate_occurrences(0, slug, "") do
-        0 -> put_change(changeset, :slug, slug)
-        n -> put_change(changeset, :slug, slug <> "-#{n}")
-      end
-    else
-      changeset
+    case calculate_occurrences(slug, site_id) do
+      0 -> put_change(changeset, :slug, slug)
+      n -> put_change(changeset, :slug, slug <> "-#{n}")
     end
   end
 

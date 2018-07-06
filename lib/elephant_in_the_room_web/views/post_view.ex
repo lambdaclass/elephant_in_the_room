@@ -23,8 +23,11 @@ defmodule ElephantInTheRoomWeb.PostView do
     |> Enum.map(fn category -> category.name end)
   end
 
-  def get_authors() do
-    Sites.list_authors() |> Enum.map(fn author -> {author.name, author.id} end)
+  def get_authors_options() do
+    authors = Sites.list_authors()
+    options = Enum.map(authors, &{&1.name, &1.id})
+    default_option = {"-", ""}
+    [default_option | options]
   end
 
   def show_selected_categories(post) do

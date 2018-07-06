@@ -1,4 +1,9 @@
 
+<%= if assigns[:post] do %>
+  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
+        target: "_blank"  %>
+<%= end %>
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
 
@@ -24,7 +29,7 @@
 
   <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
-    <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small" %>
+    <%= select f, :author_id, get_authors_options(), class: "uk-select uk-form-small" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -43,7 +48,7 @@
 
   <div class="form-group">
     <%= label f, :content, class: "uk-form-label" %>
-    <%= textarea f, :content, class: "uk-textarea uk-form-small", rows: "15"%>
+    <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
   </div>
 
@@ -53,6 +58,17 @@
     <input class="uk-input uk-form-small" type="text"
            placeholder="Select file" disabled>
     <%= error_tag f, :image %>
+  </div>
+
+  <div class="form-group">
+    <div class="uk-form-label">Use as cover?</div>
+    <div class="uk-form-controls">
+      <%= label f, :cover_false, "No", class: "uk-form-label" %>
+      <%= radio_button f, :cover, "false", class: "uk-radio", checked: "true" %>
+      <%= label f, :cover_true, "Yes", class: "uk-form-label" %>
+      <%= radio_button f, :cover, "true", class: "uk-radio" %>
+    </div>
+    <%= error_tag f, :cover %>
   </div>
 
   <div class="form-group" >
@@ -68,3 +84,11 @@
 
 </fieldset>
 <% end %>
+
+<%= if assigns[:post] do %>
+  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id), 
+          method: :delete, data: [confirm: "Are you sure your want to delete this post?"], 
+          class: "uk-button uk-button-danger uk-width-1-1" do %>
+    <i class="fas fa-trash"></i>
+  <% end%>
+<%= end %>

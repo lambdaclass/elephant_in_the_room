@@ -7,7 +7,7 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image}
 
   @doc """
   Returns the list of sites.
@@ -39,10 +39,18 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
+  @default_site_preload [:categories, [posts: :author], [posts: :categories], :tags]
   def get_site!(id) do
     Site
     |> Repo.get!(id)
-    |> Repo.preload([:categories, [posts: :author], [posts: :categories], :tags])
+    |> Repo.preload(@default_site_preload)
+  end
+
+  def get_site(id, preload \\ @default_site_preload) do 
+    case Repo.get(Site, id) do
+      nil -> {:error, :no_site_found}
+      site -> {:ok, Repo.preload(site, preload)}
+    end
   end
 
   def get_site_by_name(site_name) do
@@ -259,17 +267,26 @@ defmodule ElephantInTheRoom.Sites do
   Gets a single post.
   Raises `Ecto.NoResultsError` if the Post does not exist.
   """
+  @default_post_preload [:author, :tags, :categories]
   def get_post!(site, id) do
     Post
     |> where([t], t.site_id == ^site.id)
     |> Repo.get!(id)
-    |> Repo.preload([:tags, :categories, :author])
+    |> Repo.preload(@default_post_preload )
   end
 
   def get_post!(id) do
     Post
     |> Repo.get!(id)
-    |> Repo.preload([:tags, :categories, :author])
+    |> Repo.preload(@default_post_preload )
+  end
+
+  def get_post_by_slug(site_id, slug, preload \\ @default_post_preload ) do
+    case Repo.get_by(Post, slug: slug, site_id: site_id) do
+      nil -> {:error, :no_post_found}
+      site -> 
+        {:ok, Repo.preload(site, preload)}
+    end
   end
 
   @doc """
@@ -580,5 +597,101 @@ defmodule ElephantInTheRoom.Sites do
     else
       changeset
     end
+  end
+
+  @doc """
+  Returns the list of images.
+
+  ## Examples
+
+      iex> list_images()
+      [%Image{}, ...]
+
+  """
+  def list_images do
+    Repo.all(Image)
+  end
+
+  @doc """
+  Gets a single image.
+
+  Raises `Ecto.NoResultsError` if the Image does not exist.
+
+  ## Examples
+
+      iex> get_image!(123)
+      %Image{}
+
+      iex> get_image!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_image!(id), do: Repo.get!(Image, id)
+
+  def get_image_by_name!(name), do: Repo.get_by!(Image, name: name)
+
+  @doc """
+  Creates a image.
+
+  ## Examples
+
+      iex> create_image(%{field: value})
+      {:ok, %Image{}}
+
+      iex> create_image(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_image(attrs \\ %{}) do
+    %Image{}
+    |> Image.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a image.
+
+  ## Examples
+
+      iex> update_image(image, %{field: new_value})
+      {:ok, %Image{}}
+
+      iex> update_image(image, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_image(%Image{} = image, attrs) do
+    image
+    |> Image.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Image.
+
+  ## Examples
+
+      iex> delete_image(image)
+      {:ok, %Image{}}
+
+      iex> delete_image(image)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_image(%Image{} = image) do
+    Repo.delete(image)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking image changes.
+
+  ## Examples
+
+      iex> change_image(image)
+      %Ecto.Changeset{source: %Image{}}
+
+  """
+  def change_image(%Image{} = image) do
+    Image.changeset(image, %{})
   end
 end
