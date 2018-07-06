@@ -52,23 +52,15 @@
     <%= error_tag f, :content %>
   </div>
 
-  <div class="form-group uk-width-1-1" uk-form-custom="target: true">
-    <%= label f, :image, class: "uk-form-label" %>
-    <%= file_input f, :image, class: "form-control" %>
-    <input class="uk-input uk-form-small" type="text"
-           placeholder="Select file" disabled>
-    <%= error_tag f, :image %>
-  </div>
+  <div class="form-group uk-width-1-1">
+    <%= label f, :cover, "Cover Image", class: "uk-form-label"%>
+    <%= if @changeset.data.cover do %>
+      <img src="/images/search/<%= @changeset.data.cover %>" width="200">
+      <%= submit "Delete cover image", name: "cover_delete", value: "true" %>
+    <% end %>
+    <%= file_input f, :cover%>
 
-  <div class="form-group">
-    <div class="uk-form-label">Use as cover?</div>
-    <div class="uk-form-controls">
-      <%= label f, :cover_false, "No", class: "uk-form-label" %>
-      <%= radio_button f, :cover, "false", class: "uk-radio", checked: "true" %>
-      <%= label f, :cover_true, "Yes", class: "uk-form-label" %>
-      <%= radio_button f, :cover, "true", class: "uk-radio" %>
-    </div>
-    <%= error_tag f, :cover %>
+    <%= error_tag f, :image %>
   </div>
 
   <div class="form-group" >
@@ -86,8 +78,8 @@
 <% end %>
 
 <%= if assigns[:post] do %>
-  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id), 
-          method: :delete, data: [confirm: "Are you sure your want to delete this post?"], 
+  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id),
+          method: :delete, data: [confirm: "Are you sure your want to delete this post?"],
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>
   <% end%>
