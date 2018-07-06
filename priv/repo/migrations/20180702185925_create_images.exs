@@ -3,10 +3,9 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateImages do
 
   def change do
     create table(:images) do
-      add :binary, :binary
+      add(:binary, :binary)
 
       timestamps()
     end
-
   end
 end

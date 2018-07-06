@@ -13,8 +13,7 @@
 alias ElephantInTheRoom.Auth
 alias ElephantInTheRoom.Auth.Role
 alias ElephantInTheRoom.Repo
-alias ElephantInTheRoom.Sites
-alias ElephantInTheRoom.BackupData
+alias ElephantInTheRoom.Auth.User
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
@@ -24,6 +23,7 @@ case Repo.get_by(Role, name: "admin") do
   _admin_role ->
     IO.puts("admin role already created!")
 end
+admin_role_id = Repo.get_by(Role, name: "admin").id
 
 case Repo.get_by(Role, name: "user") do
   nil ->
@@ -34,20 +34,22 @@ case Repo.get_by(Role, name: "user") do
     IO.puts("user role already created!")
 end
 
-case Repo.get_by(BackupData, id: 1) do
-  nil ->
-    Bac
-  _ ->
-    IO.puts("BackupData already created")
+create_admin_user_data = fn () -> 
+  %{
+    username: "admin",
+    password:  to_string(Kernel.trunc(:rand.uniform()*1000000000)),
+    firstname: "admin",
+    lastname: "1",
+    email: "admin@lambdaclass.com",
+    role_id: admin_role_id
+  }
 end
 
-# case length(Sites.list_sites()) == 0 do
-#   false ->
-#     # do nothing
-#     IO.puts("No need to create a new site")
-
-#   true ->
-#     # create a site 
-#     IO.puts("Creating a new site!")
-#     Sites.create_site(%{name: "default site", host: "default-site.com"})
-# end
+if  Repo.get_by(User, id: 1) == nil do
+  admin = create_admin_user_data.()
+  Auth.create_user(admin)
+  inform_str = "user: #{admin.username}\npassword: #{admin.password}\n"
+  file_name = "admin_data.txt"
+  File.write!(file_name, inform_str, [:write])
+  IO.puts("Administration account data is inside #{file_name}, check it for logging")
+end

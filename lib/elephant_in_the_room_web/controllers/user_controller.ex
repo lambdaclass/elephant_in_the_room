@@ -39,7 +39,7 @@ defmodule ElephantInTheRoomWeb.UserController do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: login_path(conn, :index))
+        |> redirect(to: user_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

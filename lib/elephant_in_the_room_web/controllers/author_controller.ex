@@ -5,12 +5,14 @@ defmodule ElephantInTheRoomWeb.AuthorController do
   alias ElephantInTheRoom.Sites.Author
 
   def index(conn, params) do
-    page = case params do
-      %{"page" => page} ->
+    page =
+      case params do
+        %{"page" => page} ->
           Author |> Repo.paginate(page: page)
-      %{} ->
+
+        %{} ->
           Author |> Repo.paginate(page: 1)
-    end
+      end
 
     render(
       conn,
@@ -48,7 +50,8 @@ defmodule ElephantInTheRoomWeb.AuthorController do
   def public_show(conn, %{"author_id" => id}) do
     author =
       Sites.get_author!(id)
-      |> Repo.preload([posts: [:site]])
+      |> Repo.preload(posts: [:site])
+
     render(conn, "public_show.html", author: author)
   end
 
