@@ -19,7 +19,9 @@
           </strong>
         </h3>
         <p class="uk-margin-small-top">
-          <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-uppercase" %>
+          <%= if post.author do %>
+            <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-uppercase" %>
+          <% end %>
           <%= PostView.show_date(post.updated_at) %>
         </p>
       </div>

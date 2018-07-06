@@ -3,18 +3,20 @@
   alias ElephantInTheRoomWeb.PostView
 %>
 
-<div class="<%= assigns.featured_class %>">
-  <a href="<%= PostView.show_link(@conn, @site, assigns.post) %>">
-  <div class="image" data-src="<%= Image.url(assigns.post.image) %>" uk-img> </div>
-  <div class="sub-image-text">KCA/Reuter</div>
-  <div class="title"><%= assigns.post.title %></div>
-  <%= if !assigns[:no_description] do %>
-    <div class="description">
-      <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
+<%= if assigns.post do %>
+  <div class="<%= assigns.featured_class %>">
+    <a href="<%= PostView.show_link(@conn, @site, assigns.post) %>">
+    <div class="image" data-src="<%= Image.url(assigns.post.image) %>" uk-img> </div>
+    <div class="sub-image-text">KCA/Reuter</div>
+    <div class="title"><%= assigns.post.title %></div>
+    <%= if !assigns[:no_description] do %>
+      <div class="description">
+        <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
+      </div>
+    <%= end%>
+    <div class="author">
+      Krishnadev Calamur
     </div>
-  <%= end%>
-  <div class="author">
-    Krishnadev Calamur
-  </div>
-  </a>
-</div> 
+    </a>
+  </div> 
+<% end %>
