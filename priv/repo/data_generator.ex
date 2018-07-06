@@ -40,5 +40,4 @@ for site <- ElephantFaker.Site.insert_many(config[:sites]) do
   end
 end
 
-
 ElephantFaker.Site.insert_many(config.empty_sites)

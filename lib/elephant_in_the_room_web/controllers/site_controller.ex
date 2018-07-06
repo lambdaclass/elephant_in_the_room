@@ -125,13 +125,13 @@ defmodule ElephantInTheRoomWeb.SiteController do
     if conn.host != "localhost" do
       site =
         Repo.get_by!(Site, host: conn.host)
-        |> Repo.preload([:posts, :categories])
+        |> Repo.preload([:posts, :categories, :authors])
 
       render(conn, "public_show.html", site: site)
     else
       site =
         Sites.get_site!(params["id"])
-        |> Repo.preload([:posts, :categories])
+        |> Repo.preload([:posts, :categories, :authors])
 
       render(conn, "public_show.html", site: site)
     end

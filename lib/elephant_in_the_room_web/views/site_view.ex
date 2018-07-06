@@ -1,5 +1,8 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
+  alias ElephantInTheRoom.Sites.Post
+
+  alias ElephantInTheRoomWeb.SharedPostCardView
 
   def get_top_featured_post(_conn, posts) do
     case posts do
@@ -18,10 +21,30 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
+  def get_important_posts_left(_conn, posts) do
+    case posts do
+      [_top | rest] ->
+        {:ok, Enum.take(rest, 2)}
+
+      [] ->
+        {:error, :no_important_posts_left}
+    end
+  end
+
+  def get_important_posts_right(_conn, posts) do
+    case posts do
+      [_ | rest] ->
+        {:ok, rest |> Enum.drop(2) |> Enum.take(4)}
+
+      _ ->
+        {:error, :no_important_posts_right}
+    end
+  end
+
   def get_normal_posts(_conn, posts) do
     case posts do
       [_ | normal_posts] ->
-        {:ok, Enum.drop(normal_posts, 4)}
+        {:ok, Enum.drop(normal_posts, 6)}
 
       _ ->
         {:error, :no_normal_posts}
@@ -47,4 +70,18 @@ defmodule ElephantInTheRoomWeb.SiteView do
       do: site_path(conn, :public_show),
       else: local_site_path(conn, :public_show, site.id)
   end
+
+  def render_shared(template, assigns \\ []) do
+    render(SharedPostCardView, template, assigns)
+  end
+
+  def get_abstract_to_display(%Post{abstract: abstract}, count) when 
+    count < 0 or count==nil do
+    abstract
+  end
+  def get_abstract_to_display(%Post{abstract: abstract}, count) do
+    {split, _} = String.split_at(abstract, count) 
+    split
+  end
+
 end

@@ -1,0 +1,16 @@
+<%
+  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, SiteView}
+%>
+
+<div class="popular uk-text-left uk-height-1-1">
+  <h3 class="uk-text-bold uk-text-left">Popular<hr></h3>
+  <%= for {post, post_index} <- Enum.with_index(@site.posts, 1) |> Enum.take(5) do %>
+      <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
+        <p class="uk-text-capitalize"><strong><span><%= post_index %></span>&nbsp;<%= post.title %></strong></p>
+        <%= if post.author do %>
+          <p><%= post.author.name %></p>
+        <% end %>
+      <% end %>
+  <% end %>
+</div>

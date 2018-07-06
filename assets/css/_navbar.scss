@@ -1,7 +1,7 @@
 $navbar-height: 3em;
 $mini-navbar-height: 4em;
-$navbar-break-s: 600px;
-$navbar-break-m: 800px;
+$navbar-break-s: 640px;
+$navbar-break-m: 9600px;
 
 .navbar-title{
     height: auto;
@@ -41,6 +41,9 @@ $navbar-break-m: 800px;
         height: 100%;
         text-transform: capitalize !important;
         color: white !important;
+        &.top-link {
+            font-size: 1em !important;
+        }
         .with-dropwdown {
             padding-right: 4px;
         }

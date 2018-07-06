@@ -30,6 +30,46 @@
       </div>
       <div class="featured-bar-bottom"></div>
 
+      <% :important_right -> %>
+        <div class="row featured-post important"
+             onclick="window.location.href = '<%= link_post %>'">
+          <div class="columns col-xs-12 col-sm-7">
+            <div class="media"
+                 style="background: url(<%= Image.url({post.image, post}) %>);">
+            </div>
+          </div>
+          <div class="columns col-xs-12 col-sm-5 body">
+            <div class="featured-category">
+              <%= PostView.show_featured_category(post) %>
+            </div>
+            <h3 class="uk-card-title"><%= post.title %></h3>
+            <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+            <p><%= post.abstract %></p>
+            <p class="author"><%= post.author.name %></p>
+          </div>
+        </div>
+
+
+      <% :important_left -> %>
+        <div class="row featured-post important"
+             onclick="window.location.href = '<%= link_post %>'">
+          <div class="columns col-xs-12 col-sm-7">
+            <div class="media"
+                 style="background: url(<%= Image.url({post.image, post}) %>);">
+            </div>
+          </div>
+          <div class="columns col-xs-12 col-sm-5 body">
+            <div class="featured-category">
+              <%= PostView.show_featured_category(post) %>
+            </div>
+            <h3 class="uk-card-title"><%= post.title %></h3>
+            <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+            <p><%= post.abstract %></p>
+            <p class="author"><%= post.author.name %></p>
+          </div>
+        </div>
+
+
       <% :important -> %>
         <div class="row featured-post important"
              onclick="window.location.href = '<%= link_post %>'">
