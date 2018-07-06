@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoomWeb.DomainBased
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -65,19 +66,14 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def public_show(conn, %{"slug" => slug} = params) do
-    site_id =
-      if conn.host != "localhost",
-        do: conn.assigns.site.id,
-        else: params["id"]
-
-    site = Sites.get_site!(site_id)
-
-    post =
-      Post
-      |> Repo.get_by!(slug: slug)
-      |> Repo.preload([:author, :tags, :categories])
-
-    render(conn, "public_show.html", site: site, post: post)
+    with {:ok, site_id} <- DomainBased.get_site_id(conn, params),
+         {:ok, site} <- Sites.get_site(site_id),
+         {:ok, post} <- Sites.get_post_by_slug(site_id, slug)
+    do
+      render(conn, "public_show.html", site: site, post: post)
+    else
+      _ -> render(conn, "404.html")
+    end
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

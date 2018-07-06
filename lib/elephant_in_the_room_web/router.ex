@@ -46,7 +46,6 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
-    resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
 
     get("/site/:id", SiteController, :public_show, as: "local_site")
@@ -58,7 +57,7 @@ defmodule ElephantInTheRoomWeb.Router do
       pipe_through([:on_admin_page, :ensure_auth])
       get("/", AdminController, :index)
       resources("/roles", RoleController)
-      resources("/users", UserController, except: [:new, :create])
+      resources("/users", UserController)
       resources("/authors", AuthorController)
       get("/backup", BackupController, :index)
       post("/backup/do_backup", BackupController, :do_backup)
@@ -81,7 +80,6 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
-    resources("/users", UserController, only: [:new, :create])
     get("/author/:author_id", AuthorController, :public_show)
 
     get("/post/:year/:month/:day/:slug", PostController, :public_show)
@@ -92,7 +90,7 @@ defmodule ElephantInTheRoomWeb.Router do
       pipe_through([:on_admin_page, :ensure_auth])
       get("/", AdminController, :index)
       resources("/roles", RoleController)
-      resources("/users", UserController, except: [:new, :create])
+      resources("/users", UserController)
       resources("/authors", AuthorController)
       get("/backup", BackupController, :index)
       post("/backup/do_backup", BackupController, :do_backup)

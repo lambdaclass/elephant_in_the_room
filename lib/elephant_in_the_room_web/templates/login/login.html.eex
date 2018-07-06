@@ -43,7 +43,6 @@
 
           <div class="form-group">
             <%= submit "Login", class: "uk-button uk-button-primary" %>
-            <%= link "or register", to: user_path(@conn, :new) %>
           </div>
         </fieldset>
       <% end %>

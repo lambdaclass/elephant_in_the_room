@@ -1,4 +1,9 @@
 
+<%= if assigns[:post] do %>
+  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
+        target: "_blank"  %>
+<%= end %>
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
 
@@ -24,7 +29,7 @@
 
   <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
-    <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small" %>
+    <%= select f, :author_id, get_authors_options(), class: "uk-select uk-form-small" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -79,3 +84,11 @@
 
 </fieldset>
 <% end %>
+
+<%= if assigns[:post] do %>
+  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id), 
+          method: :delete, data: [confirm: "Are you sure your want to delete this post?"], 
+          class: "uk-button uk-button-danger uk-width-1-1" do %>
+    <i class="fas fa-trash"></i>
+  <% end%>
+<%= end %>
