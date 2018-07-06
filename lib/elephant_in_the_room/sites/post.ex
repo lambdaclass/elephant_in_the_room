@@ -47,21 +47,44 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_rendered_content
     |> put_slugified_title
     |> unique_constraint(:slug, name: :slug_unique_index)
-    |> store_images(attrs)
+    |> store_cover(attrs)
+    |> set_thumbnail
   end
 
-  def store_images(%Changeset{valid?: false} = changeset, _attrs) do
+  def store_cover(%Changeset{valid?: false} = changeset, _attrs) do
     changeset
   end
 
-  def store_images(%Changeset{} = changeset, %{"cover" => cover}) do
+  def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
     {:ok, cover_name} = Image.store(%{cover | filename: Ecto.UUID.generate()})
 
     put_change(changeset, :cover, cover_name)
   end
 
-  def store_images(%Changeset{} = changeset, _attrs) do
+  def store_cover(%Changeset{} = changeset, _attrs) do
     changeset
+  end
+
+  def set_thumbnail(%Changeset{valid?: false} = changeset) do
+    changeset
+  end
+
+  def set_thumbnail(%Changeset{} = changeset) do
+    url = case get_field(changeset, :cover) do
+      nil ->
+        case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
+          nil ->
+            "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+          [img] ->
+            img
+            |> String.split("\"")
+            |> Enum.at(1)
+        end
+      cover ->
+        cover
+    end
+
+    put_change(changeset, :thumbnail, url)
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
