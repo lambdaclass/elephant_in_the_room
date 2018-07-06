@@ -32,3 +32,4 @@ npm-debug.log
 pg_dump
 .vscode
 .DS_Store
+/admin_data.txt

@@ -31,9 +31,9 @@ defmodule ElephantInTheRoomWeb.PostView do
     Sites.list_authors() |> Enum.map(fn author -> {author.name, author.id} end)
   end
 
-  def get_selectd_author(%Post{author: author}) when author != nil, do:
-    {author.name, author.id}
-  def get_selected_author(_), do: ""
+  def get_selected_author(%Post{author: author}) when author != nil, do:
+    author.id
+  def get_selected_author(other), do: ""
 
   def show_content(%Post{rendered_content: content}), do: content
 
