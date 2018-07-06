@@ -13,7 +13,7 @@
         <% link_main_post = SiteView.show_link_with_date @conn, @site, main_post %>
         <div class="uk-width-1-1 uk-margin-bottom">
           <%= link to: link_main_post do %>
-            <img data-src="<%= Image.url({main_post.cover, main_post}) %>" uk-img>
+            <img data-src="<%= main_post.thumbnail %>" uk-img>
           <% end %>
         </div>
         <div class="uk-width-1-1 uk-text-center uk-text-left@s">
@@ -30,7 +30,7 @@
         <div class="category-posts" uk-grid>
           <div class="uk-width-1-2">
             <%= link to: link_post do %>
-              <img data-src="<%= Image.url({post.cover, post}) %>" uk-img>
+              <img data-src="<%= post.thumbnail %>" uk-img>
             <% end %>
           </div>
           <div class="uk-width-1-2">
