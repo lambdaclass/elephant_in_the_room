@@ -17,7 +17,6 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
     show_left = page_number > 1
     show_right = total_pages > 1 && page_number < total_pages
     show_middle = show_left && show_right
-    IO.inspect({show_left, show_right})
     {show_left, show_middle, show_right}
   end
 

@@ -1,7 +1,7 @@
 <script>
   $(document).ready(function() { 
     $("#post_author_id").select2({
-      placeholder: "No author",
+      placeholder: "Select author",
       tags: true,
       allowClear: true
     }); 
@@ -34,7 +34,8 @@
 
   <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
-    <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small" %>
+    <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", 
+          selected: get_selected_author(assigns[:post]), prompt: "" %>
     <%= error_tag f, :author %>
   </div>
 

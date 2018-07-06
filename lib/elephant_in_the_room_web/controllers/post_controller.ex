@@ -110,7 +110,6 @@ defmodule ElephantInTheRoomWeb.PostController do
         |> redirect(to: site_post_path(conn, :show, site, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         render(conn, "edit.html", post: post, changeset: changeset)
     end
   end
