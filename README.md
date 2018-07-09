@@ -51,5 +51,5 @@ psql -h <db_host>  -U <db_user> -v ON_ERROR_STOP=1 <database_name> < \
   <location_of_backup>.sql
 ```
 
-This will first destroy the database and **all** its data before it applies the backup.
+WARNING: This will first destroy the database and **all** its data before it recovers the backup.
 
