@@ -159,7 +159,7 @@
      uk-offcanvas="mode: none; overlay: true">
   <div class="uk-offcanvas-bar">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
-    <h3>Sections</h3>
+    <h3>Categories</h3>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
       <%= render "_category_options.html", assigns %>

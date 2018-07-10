@@ -45,6 +45,7 @@ defmodule ElephantInTheRoomWeb.PostController do
       "new.html",
       changeset: changeset,
       site: site,
+      info: Controller.get_flash(conn, :info),
       categories: categories
     )
   end
@@ -53,11 +54,16 @@ defmodule ElephantInTheRoomWeb.PostController do
     case Sites.create_post(site, post_params) do
       {:ok, post} ->
         conn
-        |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: site_post_path(conn, :show, site, post))
+        |> Controller.put_flash(:info, :creation_success)
+        |> redirect(to: site_post_path(conn, :edit, site, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, site: site)
+        render(
+          conn,
+          "new.html",
+          changeset: changeset,
+          site: site
+        )
     end
   end
 
@@ -69,8 +75,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   def public_show(conn, %{"slug" => slug} = params) do
     with {:ok, site_id} <- DomainBased.get_site_id(conn, params),
          {:ok, site} <- Sites.get_site(site_id),
-         {:ok, post} <- Sites.get_post_by_slug(site_id, slug)
-    do
+         {:ok, post} <- Sites.get_post_by_slug(site_id, slug) do
       render(conn, "public_show.html", site: site, post: post)
     else
       _ -> render(conn, "404.html")
@@ -89,7 +94,7 @@ defmodule ElephantInTheRoomWeb.PostController do
       post: post,
       changeset: changeset,
       categories: categories,
-      info: Controller.get_flash(conn, :info), 
+      info: Controller.get_flash(conn, :info),
       bread_crumb: [:sites, site, :posts, post, :post_edit]
     )
   end
