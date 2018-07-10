@@ -1,15 +1,18 @@
-<% posts = Enum.take(@site.posts, 10) %>
-<% %{
-  section1: [post_1_1, post_1_2, post_1_3],
-  section2: [post_2_1, post_2_2, post_2_3, post_2_4],
-  section3: [post_3_1, post_3_2, post_3_3, post_3_4],
-  section4: section_4_posts,
-  section5: section_5_posts
-} = get_posts(@site, %{section_1_amount: 3,
-                       section_2_amount: 4,
-                       section_3_amount: 4,
-                       section_4_amount: 5,
-                       section_5_amount: 5}) %>
+<% 
+  %{
+    section1: [post_1_1, post_1_2, post_1_3],
+    section2: [post_2_1, post_2_2, post_2_3, post_2_4],
+    section3: [post_3_1, post_3_2, post_3_3, post_3_4],
+    section4: section_4_posts,
+    section5: section_5_posts
+  } = get_posts(@site, %{section_1_amount: 3,
+                        section_2_amount: 4,
+                        section_3_amount: 4,
+                        section_4_amount: 5,
+                        section_5_amount: 5})
+  authors = get_authors(@site, 5)
+%>
+
 
 <div class="main-landing-page-container">
   <div class="main-landing-page-content">
@@ -107,7 +110,7 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- author's column -->
         <div class="individual-content three-one">
-          <%= render "_writers.html", assigns %>
+          <%= render "_authors.html", Map.merge(assigns, %{authors: authors}) %>
         </div>
       </div>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-2@m">

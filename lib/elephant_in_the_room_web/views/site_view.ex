@@ -85,6 +85,11 @@ defmodule ElephantInTheRoomWeb.SiteView do
     split
   end
 
+  def get_authors(%Site{authors: authors}, amount) do
+    Enum.take(authors, amount)
+    |> fill_with_nil(amount)
+  end
+
   # This is a 'place-holder' function, the intent is that later this
   # will be replaced for a function that can determine which post
   # belongs to each position/section in the landing page using
