@@ -6,24 +6,29 @@
 <%= if assigns.post do %>
   <% post = assigns.post %>
   <div class="<%= assigns.featured_class %>">
-    <a href="<%= PostView.show_link(@conn, @site, assigns.post) %>">
-    <div class="image" data-src="<%= post.thumbnail %>" uk-img> </div>
-    <div class="sub-image-text">
-      <%= if !assigns[:no_category] && post.categories && !Enum.empty?(post.categories) do %>
-        <%= (Enum.at post.categories, 0).name %>
-      <% else %>
-        &ensp;
-      <% end %>
+    <%= link to: PostView.show_link(@conn, @site, assigns.post) do %>
+      <div class="image" data-src="<%= assigns.post.thumbnail%>" uk-img> </div>
+      <div class="sub-image-text">
+        <%= if !assigns[:no_category] && post.categories && !Enum.empty?(post.categories) do %>
+          <%= (Enum.at post.categories, 0).name %>
+        <% else %>
+          &ensp;
+        <% end %>
+      </div>
+    <% end %>
+    <div class="title">
+      <strong>
+        <%= link assigns.post.title, to: PostView.show_link(@conn, @site, assigns.post) %>
+      </strong>
     </div>
-    <div class="title"><strong><%= assigns.post.title %></strong></div>
     <%= if !assigns[:no_description] do %>
       <div class="description">
         <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
       </div>
-    <%= end%>
+    <% end%>
     <div class="author">
       <%= if post.author do %>
-        post.author.name
+        <%= link assigns.post.author.name, to: author_path(@conn, :public_show, assigns.post.author.id) %>
       <% else %>
         &ensp;
       <% end %>
