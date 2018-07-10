@@ -75,13 +75,13 @@ defmodule ElephantInTheRoomWeb.SiteView do
     render(SharedPostCardView, template, assigns)
   end
 
-  def get_abstract_to_display(%Post{abstract: abstract}, count) when 
-    count < 0 or count==nil do
+  def get_abstract_to_display(%Post{abstract: abstract}, count)
+      when count < 0 or count == nil do
     abstract
   end
+
   def get_abstract_to_display(%Post{abstract: abstract}, count) do
-    {split, _} = String.split_at(abstract, count) 
+    {split, _} = String.split_at(abstract, count)
     split
   end
-
 end
