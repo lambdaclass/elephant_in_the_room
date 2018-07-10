@@ -10,11 +10,18 @@
       <%= if author != nil do %>
         <div class="author" uk-grid>
           <div class="uk-width-1-4">
-            <img class="uk-border-circle" src="<%= Image.url({author.image, author}) %>" width="40" height="40" alt="<%= author.name %>">
+            <img class="uk-border-circle" src="<%= Image.url({author.image, author}) %>" width="40" height="40">
           </div>
           <div class="uk-width-expand">
             <p><strong><%= link author.name, to: author_path(@conn, :public_show, author.id) %></strong></p>
-            <p><%= author.description %></p>
+            <p>
+              <%= case get_author_description_to_display(author) do %>
+               <% nil -> %>
+                 &nbsp;
+               <% description -> %>
+                 <%= description %>
+              <%= end %>
+            </p>
             <hr class="uk-margin-remove">
           </div>
         </div>

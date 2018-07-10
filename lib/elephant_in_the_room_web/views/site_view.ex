@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Sites.Site
+  alias ElephantInTheRoom.Sites.Author
 
   alias ElephantInTheRoomWeb.SharedPostCardView
 
@@ -84,6 +85,12 @@ defmodule ElephantInTheRoomWeb.SiteView do
     {split, _} = String.split_at(abstract, count) 
     split
   end
+
+  def get_author_description_to_display(%Author{description: description}) when description != nil do
+    {split, _} = String.split_at(description, 50)
+    split
+  end
+  def get_author_description_to_display(_), do: nil
 
   def get_authors(%Site{authors: authors}, amount) do
     Enum.take(authors, amount)

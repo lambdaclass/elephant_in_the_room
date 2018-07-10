@@ -21,7 +21,7 @@ defmodule ElephantInTheRoom.Sites.Author do
     author
     |> cast(attrs, [:name, :description])
     |> cast_attachments(attrs, [:image], [])
-    |> validate_required([:name, :description])
+    |> validate_required([:name])
     |> unique_constraint(:name)
   end
 
@@ -32,7 +32,7 @@ defmodule ElephantInTheRoom.Sites.Author do
       author
     else
       _ ->
-        %Author{name: author_id, description: author_id}
+        %Author{name: author_id}
         |> Author.changeset(%{})
         |> Repo.insert()
     end
