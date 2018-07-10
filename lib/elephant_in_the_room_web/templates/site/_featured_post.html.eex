@@ -23,7 +23,7 @@
     <%= end%>
     <div class="author">
       <%= if post.author do %>
-        post.author.name
+        <%= post.author.name %>
       <% else %>
         &ensp;
       <% end %>

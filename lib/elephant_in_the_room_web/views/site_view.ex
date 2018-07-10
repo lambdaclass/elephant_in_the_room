@@ -97,11 +97,11 @@ defmodule ElephantInTheRoomWeb.SiteView do
   def get_posts(%Site{posts: posts}, %{section_1_amount: amount1,
       section_2_amount: amount2, section_3_amount: amount3,
       section_4_amount: amount4, section_5_amount: amount5}) do
-    {s1_from, s1_to} = {0, amount1-1}
-    {s2_from, s2_to} = {s1_to, s1_to + amount2 - 1}
-    {s3_from, s3_to} = {s2_to, s2_to + amount3 - 1}
-    {s4_from, s4_to} = {s3_to, s3_to + amount4 - 1}
-    {s5_from, s5_to} = {s4_to, s4_to + amount5 - 1}
+    {s1_from, s1_to} = {0, amount1}
+    {s2_from, s2_to} = {s1_to, s1_to + amount2}
+    {s3_from, s3_to} = {s2_to, s2_to + amount3}
+    {s4_from, s4_to} = {s3_to, s3_to + amount4}
+    {s5_from, s5_to} = {s4_to, s4_to + amount5}
     %{section1: take_range_from_list(posts, s1_from, s1_to),
       section2: take_range_from_list(posts, s2_from, s2_to),
       section3: take_range_from_list(posts, s3_from, s3_to),
@@ -110,7 +110,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
 
   def take_range_from_list(list, from, to) do
-    amount = to - from + 1
+    amount = to - from
     range = take_range_from_list(list, [], 0, from, to)
       |> Enum.reverse
     fill_with_nil(range, amount)
@@ -118,7 +118,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
   defp take_range_from_list([h|t], acc, current, from, to) do
     cond do
       current < from -> take_range_from_list(t, acc, current + 1, from, to)
-      current > to -> acc
+      current >= to -> acc
       true -> take_range_from_list(t, [h|acc], current+1, from, to)
     end
   end
