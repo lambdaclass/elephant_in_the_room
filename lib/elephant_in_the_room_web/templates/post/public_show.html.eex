@@ -5,7 +5,7 @@
 
 <%= if @post.cover do %>
   <div class="uk-cover-container">
-      <img class="uk-height-1-1 uk-width-1-1" src="<%= Image.url({@post.image, @post}) %>" alt="">
+      <img class="uk-height-1-1 uk-width-1-1" src="<%= @post.cover %>" alt="">
   </div>
 <% end %>
 
@@ -34,9 +34,6 @@
     </p>
   </div>
   <div class="article-content uk-dropcap">
-    <%= unless @post.cover do %>
-      <img class="uk-width-1-1" src="<%= Image.url({@post.image, @post}) %>" alt="">
-    <% end %>
     <%= raw show_content @post %>
   </div>
 </div>

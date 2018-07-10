@@ -18,6 +18,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
       end
 
     {:ok, saved_image} = Sites.create_image(%{name: name, binary: binary})
+    {:ok, saved_image.name}
   end
 
   def url(definition, version, file_and_scope, _options \\ []) do
@@ -29,7 +30,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
           elem(file_and_scope, 0).file_name <> "thumb"
     end
 
-    "/images/search/" <> name
+    "/images/" <> name
     |> URI.encode()
   end
 

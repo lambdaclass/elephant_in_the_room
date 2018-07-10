@@ -35,7 +35,6 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/:id", ImageController, :get_image)
     post("/", ImageController, :save_image)
     post("/binary", ImageController, :save_binary_image)
-    get("/search/:name", ImageController, :search_image)
   end
 
   # local routes
