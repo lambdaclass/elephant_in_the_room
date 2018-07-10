@@ -9,8 +9,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       "content" => generate_content(),
-      "image" => gen_image_link(),
-      "cover" => Enum.random([true, false]),
+      "cover" => gen_image_link(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
       "slug" => ""
