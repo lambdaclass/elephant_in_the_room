@@ -4,10 +4,11 @@ defmodule ElephantInTheRoomWeb.PostView do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Repo
 
-  def mk_assigns(conn, assigns, site, post) do
+  def mk_assigns(conn, assigns, title, site, post) do
     assigns
     |> Map.put(:action, site_post_path(conn, :update, site, post))
     |> Map.put(:categories, site.categories)
+    |> Map.put(:title, title)
   end
 
   def mk_assigns(conn, assigns, site) do

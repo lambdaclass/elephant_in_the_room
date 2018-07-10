@@ -1,10 +1,11 @@
 <div class="admin-title">
   <span class="title-text"> Posts</span>
-  <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-     href="<%= site_post_path(@conn, :new, @site) %>">
-    create new
-  </a>
-  </span>
+  <div "admin-title-options">
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+      href="<%= site_post_path(@conn, :new, @site) %>">
+      create new
+    </a>
+  </div>
 </div>
 
 <ul class="uk-list uk-list-striped admin-site-list">

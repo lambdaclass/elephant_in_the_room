@@ -19,7 +19,7 @@
         <%= link to: show_link_with_date(@conn, post) do %>
           <div class="uk-card uk-card-default uk-card-hover uk-card-body">
             <div class="uk-card-media-top">
-              <img src="<%= Image.url({post.image, post}) %>">
+              <img src="<%= Image.url({post.cover, post}) %>">
             </div>
             <h2 class="uk-card-title uk-text-capitalize uk-text-center"><%= post.title %></h2>
             <p class="uk-text-justify"><%= post.abstract %></p>

@@ -6,12 +6,12 @@
 ### First, the dependencies
 In order to run this project you need to have already installed:
 
-* [Erlang: 20.0](http://erlang.org/doc/installation_guide/INSTALL.html)
-* [Elixir: 1.6 ](https://elixir-lang.org/install.html)
-* [Docker: 17.12.1-ce](https://docs.docker.com/install/)
-* [Docker Compose: 1.21.2](https://docs.docker.com/compose/install/)
-* [npm: 6.1.0](https://docs.npmjs.com/cli/install)
-* [postgresql:10.4](https://www.postgresql.org/download/linux/ubuntu/), in both the database server and in the client.
+* [Erlang](http://erlang.org/doc/installation_guide/INSTALL.html) 20.0
+* [Elixir](https://elixir-lang.org/install.html) 1.6 
+* [PostgreSQL](https://www.postgresql.org/download/linux/ubuntu/) 10.4
+* [Docker](https://docs.docker.com/install/) 17.12.1-ce
+* [Docker Compose](https://docs.docker.com/compose/install/) 1.21.2
+* [npm](https://docs.npmjs.com/cli/install) 6.1.0
 
 ### How to run the server locally
 Run the website with the following commands:
@@ -51,5 +51,5 @@ psql -h <db_host>  -U <db_user> -v ON_ERROR_STOP=1 <database_name> < \
   <location_of_backup>.sql
 ```
 
-This will first destroy the database and **all** its data before it applies the backup.
+WARNING: This will first destroy the database and **all** its data before it recovers the backup.
 

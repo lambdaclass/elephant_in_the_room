@@ -1,6 +1,5 @@
 defmodule ElephantInTheRoom.Sites.Post do
   use Ecto.Schema
-  use Arc.Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
@@ -13,8 +12,8 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:abstract, :string)
     field(:content, :string)
     field(:rendered_content, :string)
-    field(:image, Image.Type)
-    field(:cover, :boolean)
+    field(:cover, :string)
+    field(:thumbnail, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -40,44 +39,55 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    new_attrs = image_hash_name_in_attrs(attrs)
-
     post
-    |> cast(new_attrs, [:title, :content, :slug, :abstract, :site_id, :author_id, :cover])
-    |> cast_attachments(new_attrs, [:image], [])
-    |> put_assoc(:tags, parse_tags(new_attrs))
-    |> put_assoc(:categories, parse_categories(new_attrs))
-    |> validate_required([:title, :content, :site_id, :image, :cover])
+    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
+    |> put_assoc(:tags, parse_tags(attrs))
+    |> put_assoc(:categories, parse_categories(attrs))
+    |> validate_required([:title, :content, :site_id])
     |> put_rendered_content
     |> put_slugified_title
     |> unique_constraint(:slug, name: :slug_unique_index)
+    |> store_cover(attrs)
+    |> set_thumbnail
   end
 
-  def get_required(%Post{image: current_image}, attrs) do
-    required = [:title, :content, :site_id, :cover]
+  def store_cover(%Changeset{valid?: false} = changeset, _attrs) do
+    changeset
+  end
 
-    case current_image != nil do
-      true -> required
-      false -> [:image | required]
+  def store_cover(%Changeset{} = changeset, %{"cover" => nil}) do
+    put_change(changeset, :cover, nil)
+  end
+
+  def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
+    {:ok, cover_name} = Image.store(%{cover | filename: Ecto.UUID.generate()})
+
+    put_change(changeset, :cover, "/images/" <> cover_name)
+  end
+
+  def store_cover(%Changeset{} = changeset, _attrs) do
+    changeset
+  end
+
+  def set_thumbnail(%Changeset{valid?: false} = changeset) do
+    changeset
+  end
+
+  def set_thumbnail(%Changeset{} = changeset) do
+    url = case get_field(changeset, :cover) do
+      nil ->
+        case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
+          nil ->
+            "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+          [img] ->
+            img
+            |> String.split("\"")
+            |> Enum.at(1)
+        end
+      cover ->
+        cover
     end
-  end
-
-  def image_hash_name_in_attrs(%{"image" => image} = attrs),
-    do: %{attrs | "image" => image_hash_name(image)}
-
-  def image_hash_name_in_attrs(attrs), do: attrs
-
-  def image_hash_name(%Plug.Upload{filename: filename} = upload) do
-    extension =
-      filename
-      |> String.split(".")
-      |> List.last()
-
-    %{upload | filename: Ecto.UUID.generate()}
-  end
-
-  def image_hash_name(image) do
-    image
+    put_change(changeset, :thumbnail, url)
   end
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)

@@ -46,7 +46,7 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(@default_site_preload)
   end
 
-  def get_site(id, preload \\ @default_site_preload) do 
+  def get_site(id, preload \\ @default_site_preload) do
     case Repo.get(Site, id) do
       nil -> {:error, :no_site_found}
       site -> {:ok, Repo.preload(site, preload)}
@@ -284,7 +284,7 @@ defmodule ElephantInTheRoom.Sites do
   def get_post_by_slug(site_id, slug, preload \\ @default_post_preload ) do
     case Repo.get_by(Post, slug: slug, site_id: site_id) do
       nil -> {:error, :no_post_found}
-      site -> 
+      site ->
         {:ok, Repo.preload(site, preload)}
     end
   end
@@ -371,6 +371,12 @@ defmodule ElephantInTheRoom.Sites do
   """
   def change_post(%Post{} = post) do
     Post.changeset(post, %{})
+  end
+
+  def delete_cover(%Post{} = post) do
+    post
+    |> Post.changeset(%{"cover" => nil})
+    |> Repo.update()
   end
 
   @doc """

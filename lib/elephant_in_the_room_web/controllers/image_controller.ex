@@ -2,8 +2,8 @@ defmodule ElephantInTheRoomWeb.ImageController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.Sites
 
-  def get_image(conn, %{"id" => img_id}) do
-    img = Sites.get_image!(img_id)
+  def get_image(conn, %{"id" => img_name}) do
+    img = Sites.get_image_by_name!(img_name)
 
     conn
     |> send_resp(200, img.binary)
@@ -22,18 +22,11 @@ defmodule ElephantInTheRoomWeb.ImageController do
       {:ok, saved_image} = Sites.create_image(%{"name" => name, "binary" => raw_body})
 
       conn
-      |> send_resp(202, "#{saved_image.id}")
+      |> send_resp(202, "#{saved_image.name}")
     else
       conn
       |> send_resp(415, "The file must be an image smaller than 8mb.")
     end
-  end
-
-  def search_image(conn, %{"name" => img_name}) do
-    img = Sites.get_image_by_name!(img_name)
-
-    conn
-    |> send_resp(200, img.binary)
   end
 
   def save_image(conn, %{"url" => url}) do

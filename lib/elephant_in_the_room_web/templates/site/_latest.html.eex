@@ -4,7 +4,7 @@
   posts = assigns[:posts]
 %>
 
-<%= if posts != nil do %>
+<%= if posts != nil && Enum.at(posts, 0) != nil do %>
   <div class="latest">
     <h3 class="uk-text-bold uk-text-left">Latest<hr></h3>
     <%= for post <- posts do %>

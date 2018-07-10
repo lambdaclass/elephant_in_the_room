@@ -9,10 +9,30 @@
   });
 </script>
 
-<%= if assigns[:post] do %>
-  <%= link "view post", to: ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site),
-        target: "_blank"  %>
+<%= case assigns[:info] do %>
+  <%= :update_success -> %>
+    <script>
+      UIkit.notification({message: 'Update sucess!', status: 'success'})
+    </script>
+  <%= :creation_success -> %>
+    <script>
+      UIkit.notification({message: 'Creation sucess!', status: 'success'})
+    </script>
+  <%= _ -> %>
 <%= end %>
+
+<div class="admin-title">
+  <span class="title-text"><%= assigns[:title] %></span>
+  <%= if assigns[:post] do %>
+    <div "admin-title-options">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+        href="<%= ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site) %>"
+        target="_blank">
+        see post
+      </a>
+    </div>
+  <%= end %>
+</div>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
 <fieldset class="uk-fieldset">
@@ -32,15 +52,10 @@
   </div>
 
   <div class="no-uk-margin">
-    <%= label f, :slug, class: "uk-form-label" %>
-    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
-    <%= error_tag f, :slug %>
-  </div>
-
-  <div class="no-uk-margin">
     <%= label f, :author, class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", 
-          selected: get_selected_author(assigns[:post]), prompt: "" %>
+          selected: get_selected_author(assigns[:post]), prompt: "",
+          style: "width: 100%" %>
     <%= error_tag f, :author %>
   </div>
 
@@ -51,35 +66,20 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :categories, class: "uk-form-label" %>
-    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
-        class: "uk-select uk-form-small", rows: "3"%>
-    <%= error_tag f, :categories %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :content, class: "uk-form-label" %>
     <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
   </div>
 
-  <div class="form-group uk-width-1-1" uk-form-custom="target: true">
-    <%= label f, :image, class: "uk-form-label" %>
-    <%= file_input f, :image, class: "form-control" %>
-    <input class="uk-input uk-form-small" type="text"
-           placeholder="Select file" disabled>
-    <%= error_tag f, :image %>
-  </div>
+  <div class="form-group uk-width-1-1">
+    <%= label f, :cover, "Cover Image", class: "uk-form-label"%>
+    <%= if @changeset.data.cover do %>
+      <img src="<%= @changeset.data.cover %>" width="200">
+      <%= submit "Delete cover image", name: "cover_delete", value: "true" %>
+    <% end %>
+    <%= file_input f, :cover%>
 
-  <div class="form-group">
-    <div class="uk-form-label">Use as cover?</div>
-    <div class="uk-form-controls">
-      <%= label f, :cover_false, "No", class: "uk-form-label" %>
-      <%= radio_button f, :cover, "false", class: "uk-radio", checked: "true" %>
-      <%= label f, :cover_true, "Yes", class: "uk-form-label" %>
-      <%= radio_button f, :cover, "true", class: "uk-radio" %>
-    </div>
-    <%= error_tag f, :cover %>
+    <%= error_tag f, :image %>
   </div>
 
   <div class="form-group" >
@@ -87,6 +87,19 @@
     <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
         value: put_commas(@changeset.data, :tags) %>
     <%= error_tag f, :tags_separated_by_comma %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :categories, class: "uk-form-label" %>
+    <%= multiple_select f, :categories, show_categories(@site), selected: show_selected_categories(assigns[:post]),
+        class: "uk-select uk-form-small", rows: "3", style: "width: 100%" %>
+    <%= error_tag f, :categories %>
+  </div>
+
+  <div class="no-uk-margin">
+    <%= label f, :slug, class: "uk-form-label" %>
+    <%= text_input f, :slug, class: "uk-input uk-form-small" %>
+    <%= error_tag f, :slug %>
   </div>
 
   <div class="uk-margin">
@@ -97,8 +110,8 @@
 <% end %>
 
 <%= if assigns[:post] do %>
-  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id), 
-          method: :delete, data: [confirm: "Are you sure your want to delete this post?"], 
+  <%= link to: site_post_path(@conn, :delete, @site.id, @post.id),
+          method: :delete, data: [confirm: "Are you sure your want to delete this post?"],
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>
   <% end%>

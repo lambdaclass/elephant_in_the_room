@@ -5,7 +5,7 @@
 %>
 
 <div class="popular uk-text-left uk-height-1-1">
-  <%= if posts do %>
+  <%= if posts && Enum.at(posts,0) != nil do %>
     <h3 class="uk-text-bold uk-text-left">Popular<hr></h3>
     <%= for {post, post_index} <- Enum.with_index(posts, 1) do %>
       <%= if post do %>
