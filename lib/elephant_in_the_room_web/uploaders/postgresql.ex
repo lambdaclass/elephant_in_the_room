@@ -30,7 +30,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
           elem(file_and_scope, 0).file_name <> "thumb"
     end
 
-    "/images/search/" <> name
+    "/images/" <> name
     |> URI.encode()
   end
 
