@@ -23,13 +23,13 @@
     <p>
       Categories:
       <%= for category <- @post.categories do %>
-        <%= link category.name, to: show_category_link(@conn, @site, category) %>
+        <%= link category.name, to: show_category_link(@conn, category) %>
       <% end %>
     </p2>
     <p>
       Tags:
       <%= for tag <- @post.tags do %>
-        <%= link tag.name, to: show_tag_link(@conn, @site, tag) %>
+        <%= link tag.name, to: show_tag_link(@conn, tag) %>
       <% end %>
     </p>
   </div>

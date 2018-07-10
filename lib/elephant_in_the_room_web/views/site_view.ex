@@ -55,20 +55,16 @@ defmodule ElephantInTheRoomWeb.SiteView do
     max(entries_per_page - entries, entries)
   end
 
-  def show_link_with_date(conn, site, post) do
+  def show_link_with_date(conn, post) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
 
-    if conn.host != "localhost",
-      do: post_path(conn, :public_show, year, month, day, post.slug),
-      else: local_post_path(conn, :public_show, site.id, year, month, day, post.slug)
+    post_path(conn, :public_show, year, month, day, post.slug)
   end
 
-  def show_site_link(site, conn) do
-    if conn.host != "localhost",
-      do: site_path(conn, :public_show),
-      else: local_site_path(conn, :public_show, site.id)
+  def show_site_link(conn) do
+    site_path(conn, :public_show)
   end
 
   def render_shared(template, assigns \\ []) do

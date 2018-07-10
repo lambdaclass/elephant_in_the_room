@@ -3,7 +3,6 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoomWeb.DomainBased
   alias Phoenix.Controller
   import Ecto.Query
 
@@ -72,8 +71,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
-  def public_show(conn, %{"slug" => slug} = params) do
-    with {:ok, site_id} <- DomainBased.get_site_id(conn, params),
+  def public_show(conn, %{"slug" => slug}) do
+    with site_id <- conn.assigns.site.id,
          {:ok, site} <- Sites.get_site(site_id),
          {:ok, post} <- Sites.get_post_by_slug(site_id, slug) do
       render(conn, "public_show.html", site: site, post: post)
@@ -99,7 +98,11 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"cover_delete" => "true", "id" => id, "post" => post_params}) do
+  def update(%{assigns: %{site: site}} = conn, %{
+        "cover_delete" => "true",
+        "id" => id,
+        "post" => post_params
+      }) do
     post = Sites.get_post!(id)
 
     {:ok, post_no_cover} = Sites.delete_cover(post)
