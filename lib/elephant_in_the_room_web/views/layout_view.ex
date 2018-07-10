@@ -51,15 +51,11 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     if Map.has_key?(conn.assigns, :site) do
       case conn && conn.assigns.site do
         nil ->
-          "/"
+          login_path(conn, :login)
 
-        site ->
-          if conn.host != "localhost",
-            do: site_path(conn, :public_show),
-            else: local_site_path(conn, :public_show, site.id)
+        _site ->
+          site_path(conn, :public_show)
       end
-    else
-      site_path(conn, :public_index)
     end
   end
 

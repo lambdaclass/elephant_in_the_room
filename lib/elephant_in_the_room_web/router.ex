@@ -40,17 +40,9 @@ defmodule ElephantInTheRoomWeb.Router do
   # local routes
   scope path: "/", host: "localhost", alias: ElephantInTheRoomWeb do
     pipe_through([:browser, :auth])
-
-    get("/", SiteController, :public_index)
-    get("/login", LoginController, :index)
+    get("/", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
-    get("/author/:author_id", AuthorController, :public_show)
-
-    get("/site/:id", SiteController, :public_show, as: "local_site")
-    get("/site/:id/post/:year/:month/:day/:slug", PostController, :public_show, as: "local_post")
-    get("/site/:id/category/:category_id", CategoryController, :public_show, as: "local_category")
-    get("/site/:id/tag/:tag_id", TagController, :public_show, as: "local_tag")
 
     scope "/admin" do
       pipe_through([:on_admin_page, :ensure_auth])
@@ -62,13 +54,6 @@ defmodule ElephantInTheRoomWeb.Router do
       post("/backup/do_backup", BackupController, :do_backup)
       get("/backup/download_latest", BackupController, :download_latest)
       get("/backup/modify_settings", BackupController, :get_modify_settings)
-
-      resources "/sites", SiteController do
-        pipe_through(:load_site_info)
-        resources("/categories", CategoryController)
-        resources("/posts", PostController)
-        resources("/tags", TagController)
-      end
     end
   end
 
