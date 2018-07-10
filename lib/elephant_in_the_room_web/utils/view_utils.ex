@@ -36,17 +36,4 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
       all_assigns
     )
   end
-
-  def image_url(nil) do
-    ""
-  end
-
-  def image_url(url) do
-    case String.contains?(url, "http") || String.contains?(url, "/images/search") do
-      false ->
-        "/images/search/" <> url
-      true ->
-        url
-    end
-  end
 end

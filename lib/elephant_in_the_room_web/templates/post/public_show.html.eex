@@ -5,7 +5,7 @@
 
 <%= if @post.cover do %>
   <div class="uk-cover-container">
-      <img class="uk-height-1-1 uk-width-1-1" src="<%= image_url(@post.cover) %>" alt="">
+      <img class="uk-height-1-1 uk-width-1-1" src="<%= @post.cover %>" alt="">
   </div>
 <% end %>
 

@@ -25,7 +25,7 @@
 
   <li>
     <strong>Image:</strong>
-    <%=  image_url(@post.cover) %>
+    <%=  @post.cover %>
   </li>
 
   <li>

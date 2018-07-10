@@ -55,7 +55,7 @@
   <div class="form-group uk-width-1-1">
     <%= label f, :cover, "Cover Image", class: "uk-form-label"%>
     <%= if @changeset.data.cover do %>
-      <img src="/images/search/<%= @changeset.data.cover %>" width="200">
+      <img src="<%= @changeset.data.cover %>" width="200">
       <%= submit "Delete cover image", name: "cover_delete", value: "true" %>
     <% end %>
     <%= file_input f, :cover%>
