@@ -15,7 +15,7 @@
         &ensp;
       <% end %>
     </div>
-    <div class="title"><%= assigns.post.title %></div>
+    <div class="title"><strong><%= assigns.post.title %></strong></div>
     <%= if !assigns[:no_description] do %>
       <div class="description">
         <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
@@ -29,5 +29,5 @@
       <% end %>
     </div>
     </a>
-  </div> 
+  </div>
 <% end %>
