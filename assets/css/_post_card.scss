@@ -56,20 +56,20 @@ $card-padding-2: 0.7em;
     .featured-category {
         font-size: 0.8em;
         font-weight: bold;
-        font-family: $caption-font;
+        font-family: $title-font;
         text-transform: uppercase;
     }
     .author {
         font-size: 0.7em;
         color: black;
-        font-family: $default-font;
+        font-family: $text-font;
         text-transform: uppercase;
     }
     .body {
         padding: 0;
         padding-bottom: 5px;
         h3 {
-            font-family: $caption-font;
+            font-family: $title-font;
             font-size: 1.3em;
             line-height: 1.2em;
             text-transform: uppercase;
@@ -77,7 +77,7 @@ $card-padding-2: 0.7em;
             font-weight: bold;
         }
         p {
-            font-family: $default-font;
+            font-family: $text-font;
             line-height: 1.3em;
             margin-top: 0;
             margin-bottom: 0.3em;
