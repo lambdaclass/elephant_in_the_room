@@ -94,7 +94,6 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def update(%{assigns: %{site: site}} = conn, %{"cover_delete" => "true", "id" => id, "post" => post_params}) do
     post = Sites.get_post!(id)
-    post_params_with_site_id = Map.put(post_params, "site_id", site.id)
 
     {:ok, post_no_cover} = Sites.delete_cover(post)
 
