@@ -31,10 +31,13 @@ defmodule ElephantInTheRoomWeb.Router do
   end
 
   scope path: "/images", alias: ElephantInTheRoomWeb do
-    pipe_through([:image_uploading])
+    scope "/" do
+      pipe_through([:image_uploading])
+      post("/", ImageController, :save_image)
+      post("/binary", ImageController, :save_binary_image)
+    end
+
     get("/:id", ImageController, :get_image)
-    post("/", ImageController, :save_image)
-    post("/binary", ImageController, :save_binary_image)
   end
 
   # local routes
