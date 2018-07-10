@@ -9,7 +9,7 @@
     <div class="post uk-flex" uk-grid>
       <div class="uk-width-1-3">
         <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
-          <img class="" src="<%= Image.url({post.image, post}) %>" alt="<%= post.title %>">
+          <img class="" src="<%= post.thumbnail %>" alt="<%= post.title %>">
         <% end %>
       </div>
       <div class="uk-width-expand uk-text-left">
