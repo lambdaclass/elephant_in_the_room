@@ -55,30 +55,28 @@ $navbar-break-m: 9600px;
             border-bottom: 0.5em solid white;
             display:none;
             position: absolute;
-            top: 3em;
+            top: 2.5em;
         }
         .text-icons{
             position: relative;
             margin-top: 3px;
         }
         .icon-up, .icon-down {
-            position: absolute;
             top: 0;
             left: 0;
         }
         .icon-up{
-            visibility: hidden;
-            top: 3px;
+            display: none;
         }
         &[aria-expanded="true"] {
             .dropdown-arrow-up {
                 display:block;
             }
             .icon-up {
-                visibility: visible;
+                display: block;
             }
             .icon-down {
-                visibility: hidden;
+                display: none;;
             }
         }
     }
