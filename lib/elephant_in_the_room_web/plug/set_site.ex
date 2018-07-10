@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
   alias ElephantInTheRoom.Sites.Site
   alias Plug.Conn
 
-  def set_site(conn, params) do
+  def set_site(conn, _params) do
     case Repo.get_by(Site, host: conn.host) do
       nil ->
         conn
@@ -11,7 +11,11 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
       site ->
         site =
           site
-          |> Repo.preload(categories: [], posts: [:tags, :categories, :author], tags: [])
+          |> Repo.preload(
+            categories: [],
+            posts: [:tags, :categories, :author],
+            tags: []
+          )
 
         conn
         |> Conn.assign(:site, site)

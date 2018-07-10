@@ -35,7 +35,7 @@
              onclick="window.location.href = '<%= link_post %>'">
           <div class="columns col-xs-12 col-sm-7">
             <div class="media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url(<%= post.thumbnail %>);">
             </div>
           </div>
           <div class="columns col-xs-12 col-sm-5 body">
@@ -55,7 +55,7 @@
              onclick="window.location.href = '<%= link_post %>'">
           <div class="columns col-xs-12 col-sm-7">
             <div class="media"
-                 style="background: url(<%= Image.url({post.image, post}) %>);">
+                 style="background: url(<%= post.thumbnail %>);">
             </div>
           </div>
           <div class="columns col-xs-12 col-sm-5 body">
