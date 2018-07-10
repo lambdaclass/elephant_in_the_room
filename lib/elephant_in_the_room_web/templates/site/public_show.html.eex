@@ -6,10 +6,10 @@
     section4: section_4_posts,
     section5: section_5_posts
   } = get_posts(@site, %{section_1_amount: 3,
-                        section_2_amount: 4,
-                        section_3_amount: 4,
-                        section_4_amount: 5,
-                        section_5_amount: 5})
+                         section_2_amount: 4,
+                         section_3_amount: 4,
+                         section_4_amount: 5,
+                         section_5_amount: 5})
   authors = get_authors(@site, 5)
 %>
 

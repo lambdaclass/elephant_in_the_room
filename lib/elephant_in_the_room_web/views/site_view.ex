@@ -76,10 +76,10 @@ defmodule ElephantInTheRoomWeb.SiteView do
     render(SharedPostCardView, template, assigns)
   end
 
-  def get_abstract_to_display(%Post{abstract: abstract}, count) when 
-    count < 0 or count==nil do
-    abstract
-  end
+  def get_abstract_to_display(%Post{abstract: abstract}, count) when
+    abstract == nil, do: ""
+  def get_abstract_to_display(%Post{abstract: abstract}, count) when
+    count < 0 or count==nil, do: abstract
   def get_abstract_to_display(%Post{abstract: abstract}, count) do
     {split, _} = String.split_at(abstract, count) 
     split
@@ -110,7 +110,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
 
   def take_range_from_list(list, from, to) do
-    amount = to - from
+    amount = to - from + 1
     range = take_range_from_list(list, [], 0, from, to)
       |> Enum.reverse
     fill_with_nil(range, amount)
@@ -130,7 +130,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
     amount_to_fill = desired_size - length(list)
     fill =
       if amount_to_fill > 0 do
-        for _ <- 0 .. amount_to_fill, do: nil
+        for _ <- 0 .. amount_to_fill - 1, do: nil
       else
         []
       end
