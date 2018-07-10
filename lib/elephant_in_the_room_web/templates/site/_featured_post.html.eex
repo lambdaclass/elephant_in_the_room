@@ -4,10 +4,17 @@
 %>
 
 <%= if assigns.post do %>
+  <% post = assigns.post %>
   <div class="<%= assigns.featured_class %>">
     <a href="<%= PostView.show_link(@conn, @site, assigns.post) %>">
     <div class="image" data-src="<%= Image.url(assigns.post.image) %>" uk-img> </div>
-    <div class="sub-image-text">KCA/Reuter</div>
+    <div class="sub-image-text">
+      <%= if !assigns[:no_category] && post.categories && !Enum.empty?(post.categories) do %>
+        <%= (Enum.at post.categories, 0).name %>
+      <% else %>
+        &ensp;
+      <% end %>
+    </div>
     <div class="title"><%= assigns.post.title %></div>
     <%= if !assigns[:no_description] do %>
       <div class="description">
