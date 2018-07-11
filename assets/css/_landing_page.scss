@@ -142,7 +142,7 @@ $landing-separator-decrease-space: 12px;
         a {
             text-decoration: none;
         }
-        .four-one-content, .left-two-one-content, .main-content {
+        .four-one-content, .left-two-one-content, .main-content, .right-four-one-content {
             padding-top: 5px;
             padding-bottom: 10px;
             overflow: hidden;
@@ -161,27 +161,28 @@ $landing-separator-decrease-space: 12px;
             }
 
             .title {
-                line-height: 1em;
-                font-size: 1.3em;
-                font-weight: 800;
+                margin-bottom: 5px;
                 color: black;
+                line-height: 1em;
+                font-family: $title-font;
+                font-size: 1.3em;
                 text-align: left;
+                text-transform: uppercase;
             }
 
             .description {
-                text-align: left;
                 padding-top: 0.6em;
                 padding-bottom: 0.6em;
                 color: grey;
+                font-size: 1.2rem;
+                text-align: left;
             }
 
             .author {
-                text-transform: uppercase;
-
                 color: black;
                 text-align: left;
-                font-weight: 200;
-            }
+                text-transform: capitalize;
+                font-size: 1.2rem;            }
         }
 
         .main-content {
@@ -190,6 +191,24 @@ $landing-separator-decrease-space: 12px;
             }
             .title, .description, .author {
                 text-align: center;
+            }
+        }
+
+        .right-four-one-content {
+            padding-left: 1em;
+            .image {
+                background-size: cover;
+                width: 80px;
+                height: 80px !important;
+                min-height: 80px;
+                float: right;
+                margin-right: 0.5em;
+            }
+            .title {
+                font-size: 1em;
+            }
+            .sub-image-text {
+                display: none;
             }
         }
     }
@@ -244,26 +263,17 @@ $landing-separator-decrease-space: 12px;
 .latest {
     padding: 10px;
 
-    h3 {
-        font-size: 1.1rem;
+    p {
+        font-size: 1.2rem;
     }
 
-    p {
-        font-size: 0.8rem;
+    p:first-child {
+        font-family: $title-font;
+        font-size: 1.3rem;
     }
 
     a {
         color: #000;
-    }
-
-    @media (min-width: $landing-break-m) {
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        p {
-            font-size: 1rem;
-        }
     }
 }
 

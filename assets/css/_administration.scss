@@ -54,7 +54,7 @@ $admin-light-grey: #cacaca;
         height: 100% !important;
     }
     .nav-title a {
-        font-family: $admin-nav-title-font;
+        font-family: $title-font;
         font-weight: 300;
     }
     .show-only-on-small {
@@ -76,7 +76,7 @@ $admin-light-grey: #cacaca;
 .admin-body-root {
     background-color: $admin-background-color;
     min-height: 100vh;
-    font-family: $admin-side-bar-font;
+    font-family: $text-font;
 }
 
 .admin-body-container {
@@ -104,7 +104,7 @@ $admin-light-grey: #cacaca;
             color: black;
             font-weight: bold;
             font-size: 14px !important;
-            font-family: $admin-side-bar-font;
+            font-family: $text-font;
             &:hover {
                 color: #276cda;
                 text-decoration: none;
@@ -113,7 +113,7 @@ $admin-light-grey: #cacaca;
     }
     .administration-side {
         .admin-route{
-            font-family: $admin-nav-title-font;
+            font-family: $title-font;
             .divider {
                 color: #adadad;
                 font-weight: 300;
@@ -145,7 +145,7 @@ $admin-light-grey: #cacaca;
         100%{background-position:0% 50%}
     }
 
-    font-family: $admin-side-bar-font;
+    font-family: $text-font;
     margin-bottom: 1em;
 
     h3, p {

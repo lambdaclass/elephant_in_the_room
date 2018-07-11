@@ -20,6 +20,11 @@ defmodule ElephantInTheRoomWeb.Faker.Utils do
     download_image(source, 8)
   end
 
+  def fake_image_upload(%{"cover" => cover} = attrs) do
+    %{"image" => image} = fake_image_upload(%{"image" => cover})
+    %{attrs | "cover" => image}
+  end
+
   def fake_image_upload(attrs, format \\ "png") do
     {:ok, file} = Plug.Upload.random_file("gen")
     content = download_image(attrs["image"])
