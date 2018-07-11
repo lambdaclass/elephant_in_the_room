@@ -8,14 +8,14 @@
   <%= if posts && Enum.at(posts,0) != nil do %>
     <h3 class="uk-text-bold uk-text-left">Popular<hr></h3>
     <%= for {post, post_index} <- Enum.with_index(posts, 1) do %>
-      <%= if post do %>
-        <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
-          <p class="uk-text-capitalize"><strong><span><%= post_index %></span>&nbsp;<%= post.title %></strong></p>
-          <%= if post.author do %>
-            <p><%= post.author.name %></p>
-          <% end %>
+
+      <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
+        <p><strong><span><%= post_index %></span>&nbsp;<%= post.title %></strong></p>
+        <%= if post.author do %>
+          <p><%= post.author.name %></p>
         <% end %>
       <% end %>
+
     <% end %>
   <% end %>
 </div>

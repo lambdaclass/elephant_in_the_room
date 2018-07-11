@@ -11,7 +11,7 @@ $navbar-break-m: 9600px;
     .second, .first{
         text-transform: capitalize;
         color: white;
-        font-family: $navbar-title-font;
+        font-family: $title-font;
         white-space: nowrap;
     }
 
@@ -33,9 +33,6 @@ $navbar-break-m: 9600px;
     background: black !important;
     .ul-reduced {
         height: $navbar-height;
-    }
-    a {
-        font-family: $navbar-items-font !important;
     }
     .a-reduced {
         height: 100%;
@@ -125,7 +122,7 @@ $navbar-break-m: 9600px;
 
 .mini-navbar-container {
     height: $mini-navbar-height;
-    font-family: $navbar-items-font;
+    font-family: $text-font;
     color: black !important;
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -156,7 +153,7 @@ $navbar-break-m: 9600px;
             text-transform: capitalize;
             font-weight: normal !important;
             font-size: 1.6em;
-            font-family: $navbar-items-font;
+            font-family: $text-font;
             line-height: 2em;
         }
         h3 {
