@@ -109,10 +109,10 @@ defmodule ElephantInTheRoomWeb.PostView do
     day = post.inserted_at.day
 
     post_path(conn, :public_show, year, month, day, post.slug)
-    |> replace_host(conn.assigns.site.host)
+    |> replace_host(conn)
   end
 
-  defp replace_host(relative_path, host) do
-    "http://" <> host <> relative_path
+  defp replace_host(relative_path, conn) do
+    "http://#{conn.assigns.site.host}:#{conn.port}#{relative_path}"
   end
 end
