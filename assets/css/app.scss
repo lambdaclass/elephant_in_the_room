@@ -10,7 +10,7 @@
 @import "_administration";
 
 html {
-font-family: $default-font;
+font-family: $text-font;
 }
 
 a {
@@ -23,7 +23,7 @@ a:hover {
 }
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
-  font-family: $caption-font;
+  font-family: $title-font;
 }
 
 .row {
@@ -114,6 +114,10 @@ a:hover {
 
 .hide {
   display: none;
+}
+
+.uk-navbar-nav > li > a {
+  font-family: $title-font;
 }
 
 .uk-navbar-container.uk-navbar, .uk-navbar-container.uk-navbar li > .uk-navbar-dropdown, .uk-navbar-dropbar {
