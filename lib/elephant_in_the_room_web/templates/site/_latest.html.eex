@@ -16,13 +16,11 @@
           </div>
           <div class="uk-width-expand uk-text-left">
             <p class="uk-text-uppercase uk-margin-remove-bottom">
-              <strong>
-                <%= link post.title, to: SiteView.show_link_with_date(@conn, @site, post) %>
-              </strong>
+              <%= link post.title, to: SiteView.show_link_with_date(@conn, @site, post) %>
             </p>
             <p class="uk-margin-small-top">
               <%= if post.author do %>
-                <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-uppercase" %>
+                <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize" %>
               <% end %>
               <%= PostView.show_date(post.updated_at) %>
             </p>
