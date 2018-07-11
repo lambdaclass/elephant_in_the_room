@@ -13,12 +13,7 @@
         <div class="uk-width-expand">
           <p><strong><%= link author.name, to: author_path(@conn, :public_show, author.id) %></strong></p>
           <p>
-            <%= case get_author_description_to_display(author) do %>
-              <% nil -> %>
-                &nbsp;
-              <% description -> %>
-                <%= description %>
-            <%= end %>
+            <%= get_author_description_to_display(author) || raw("&nbsp;") %>
           </p>
           <hr class="uk-margin-remove">
         </div>
