@@ -3,21 +3,34 @@
   alias ElephantInTheRoomWeb.PostView
 %>
 
-<%= if assigns.post do %>
+<%= if assigns[:post] do %>
   <div class="<%= assigns.featured_class %>">
-    <%= link to: PostView.show_link(@conn, @site, assigns.post) do %>
-      <div class="image" data-src="<%= assigns.post.thumbnail%>" uk-img> </div>
-      <div class="sub-image-text">KCA/Reuter</div>
+
+    <%= link to: PostView.show_link(@conn, @site, @post) do %>
+      <div class="image" data-src="<%= @post.thumbnail %>" uk-img> </div>
+      <div class="sub-image-text">
+        <%= if !assigns[:no_category] && @post.categories && !Enum.empty?(@post.categories) do %>
+          <%= (Enum.at @post.categories, 0).name %>
+        <% else %>
+          &ensp;
+        <% end %>
+      </div>
     <% end %>
-    <div class="title"><%= link assigns.post.title, to: PostView.show_link(@conn, @site, assigns.post) %></div>
+    <div class="title"><%= link @post.title, to: PostView.show_link(@conn, @site, @post) %></div>
+
     <%= if !assigns[:no_description] do %>
       <div class="description">
-        <%= get_abstract_to_display(assigns.post, assigns[:description_limit]) %>
+        <%= get_abstract_to_display(@post, assigns[:description_limit]) %>
       </div>
     <%= end%>
+
     <div class="author">
-      <%= link assigns.post.author.name, to: author_path(@conn, :public_show, assigns.post.author.id) %>
+      <%= if @post.author do %>
+        <%= link @post.author.name, to: author_path(@conn, :public_show, @post.author.id) %>
+      <% else %>
+        &ensp;
+      <% end %>
     </div>
-    </a>
+
   </div>
 <% end %>

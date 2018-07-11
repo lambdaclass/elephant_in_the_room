@@ -129,10 +129,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
       render(conn, "public_show.html", site: site)
     else
-      site =
-        Sites.get_site!(params["id"])
-        |> Repo.preload([:posts, :categories, :authors])
-
+      site = Sites.get_site!(params["id"])
       render(conn, "public_show.html", site: site)
     end
   end

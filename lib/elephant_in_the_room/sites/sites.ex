@@ -39,7 +39,13 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
-  @default_site_preload [:categories, [posts: :author], [posts: :categories], :tags]
+  @default_site_preload [:categories,
+    {:posts, (from p in Post, order_by: p.inserted_at)},
+    [posts: :author],
+    [posts: :categories],
+    :authors,
+    :tags]
+
   def get_site!(id) do
     Site
     |> Repo.get!(id)

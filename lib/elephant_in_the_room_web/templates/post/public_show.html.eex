@@ -1,6 +1,8 @@
 <%
   alias ElephantInTheRoom.Sites.Author
   alias ElephantInTheRoomWeb.Uploaders.Image
+  import ElephantInTheRoomWeb.LayoutView, only: [get_logged_user: 1]
+  login = get_logged_user(@conn)
 %>
 
 <%= if @post.cover do %>
@@ -12,6 +14,11 @@
 <div class="uk-container uk-container-small uk-margin-top article">
   <h1 class="uk-text-uppercase uk-text-bold"><%= @post.title %></h1>
   <div class="uk-text-meta">
+    <%= case login do %>
+      <%= {:ok, _user, _} -> %>
+        <%= link "Edit", to: site_post_path(@conn, :edit, @site.id, @post.id)%>
+      <%= _ -> %>
+    <% end %>
     <p>
       <%= case @post.author do %>
         <% nil -> %>
@@ -20,18 +27,22 @@
       <% end %>
       <%= show_date(@post.updated_at) %>
     </p>
-    <p>
-      Categories:
-      <%= for category <- @post.categories do %>
-        <%= link category.name, to: show_category_link(@conn, @site, category) %>
-      <% end %>
-    </p2>
-    <p>
-      Tags:
-      <%= for tag <- @post.tags do %>
-        <%= link tag.name, to: show_tag_link(@conn, @site, tag) %>
-      <% end %>
-    </p>
+    <%= if length(@post.categories) > 0 do %>
+      <p>
+        Categories:
+        <%= for category <- @post.categories do %>
+          <%= link category.name, to: show_category_link(@conn, @site, category) %>
+        <% end %>
+      </p2>
+    <% end %>
+    <%= if length(@post.tags) > 0 do %>
+      <p>
+        Tags:
+        <%= for tag <- @post.tags do %>
+          <%= link tag.name, to: show_tag_link(@conn, @site, tag) %>
+        <% end %>
+      </p>
+    <%= end %>
   </div>
   <div class="article-content uk-dropcap">
     <%= raw show_content @post %>
