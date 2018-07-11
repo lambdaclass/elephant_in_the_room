@@ -94,7 +94,6 @@ defmodule ElephantInTheRoomWeb.SiteView do
 
   def get_authors(%Site{authors: authors}, amount) do
     Enum.take(authors, amount)
-    |> fill_with_nil(amount)
   end
 
   # This is a 'place-holder' function, the intent is that later this
@@ -120,7 +119,6 @@ defmodule ElephantInTheRoomWeb.SiteView do
     amount = to - from
     range = take_range_from_list(list, [], 0, from, to)
       |> Enum.reverse
-    fill_with_nil(range, amount)
   end
   defp take_range_from_list([h|t], acc, current, from, to) do
     cond do
@@ -131,17 +129,6 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
   defp take_range_from_list([], acc, current, from, to) do
     acc
-  end
-
-  defp fill_with_nil(list, desired_size) do
-    amount_to_fill = desired_size - length(list)
-    fill =
-      if amount_to_fill > 0 do
-        for _ <- 0 .. amount_to_fill - 1, do: nil
-      else
-        []
-      end
-    list ++ fill
   end
 
 end
