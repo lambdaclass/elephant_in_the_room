@@ -31,7 +31,7 @@
       <p>
         Categories:
         <%= for category <- @post.categories do %>
-          <%= link category.name, to: show_category_link(@conn, @site, category) %>
+          <%= link category.name, to: show_category_link(@conn, @site, category) %> |
         <% end %>
       </p2>
     <% end %>
@@ -39,12 +39,12 @@
       <p>
         Tags:
         <%= for tag <- @post.tags do %>
-          <%= link tag.name, to: show_tag_link(@conn, @site, tag) %>
+          <%= link tag.name, to: show_tag_link(@conn, @site, tag) %> |
         <% end %>
       </p>
     <%= end %>
   </div>
-  <div class="article-content uk-dropcap">
+  <div class="article-content uk-dropcap uk-text-justify">
     <%= raw show_content @post %>
   </div>
 </div>
