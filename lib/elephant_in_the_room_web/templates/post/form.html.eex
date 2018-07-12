@@ -7,7 +7,8 @@
     });
     $("#post_tags").select2({
       placeholder: "Select tags",
-      tags: []
+      tags: [],
+      tokenSeparators: [","]
     });
     $("#post_categories").select2();
   });
@@ -88,7 +89,6 @@
 
   <div class="form-group" >
     <% selected_tags = get_selected_tags(assigns[:post]) %>
-    <% IO.inspect(selected_tags, tag: "selected tag" ) %>
     <%= label f, "tags", class: "uk-form-label" %>
     <%= multiple_select f, :tags, selected_tags, class: "uk-input uk-form-small",
         selected: selected_tags %>
