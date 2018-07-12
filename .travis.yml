@@ -9,4 +9,4 @@ script:
   - cd assets && npx brunch build --production && cd ..
   - MIX_ENV=prod
   - mix compile
-  - mix digest
+  - mix phx.digest
