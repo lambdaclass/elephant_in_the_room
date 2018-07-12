@@ -143,10 +143,13 @@ $landing-separator-decrease-space: 12px;
             text-decoration: none;
         }
         .four-one-content, .left-two-one-content, .main-content, .right-four-one-content {
-            padding-top: 5px;
             padding-bottom: 10px;
             overflow: hidden;
             height: calc(100% - 15px);
+
+            > div {
+                padding: 0 10px;
+            }
 
             .image {
                 width: 100%;
@@ -195,14 +198,13 @@ $landing-separator-decrease-space: 12px;
         }
 
         .right-four-one-content {
-            padding-left: 1em;
             .image {
                 background-size: cover;
                 width: 80px;
                 height: 80px !important;
                 min-height: 80px;
                 float: right;
-                margin-right: 0.5em;
+                margin-right: 10px;
             }
             .title {
                 font-size: 1em;
