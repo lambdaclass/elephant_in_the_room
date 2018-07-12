@@ -148,12 +148,10 @@ defmodule ElephantInTheRoom.Sites.Post do
   defp parse_tags(params) do
     site_id = params["site_id"]
 
-    (params["tags_separated_by_comma"] || "")
-    |> String.split(",")
-    |> Enum.map(&String.trim/1)
+    (params["tags"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.uniq()
-    |> Enum.map(fn name -> get_or_insert_tag(name, site_id) end)
+    |> Enum.map(&get_or_insert_tag(&, site_id))
   end
 
   defp get_or_insert_tag(name, site_id) do
