@@ -5,7 +5,7 @@ services:
     container_name: elephant_in_the_room_db
     image: postgres:10.4
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     environment:
       - DB_USER="postgres"
       - DB_PASS="postgres"
@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     ports:
-      - 5050:5050
+      - "127.0.0.1:5050:5050"
 
 volumes:
   elephant_in_the_room_db_data:

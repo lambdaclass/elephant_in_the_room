@@ -18,9 +18,14 @@ defmodule ElephantInTheRoom.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
+    extra_app_dev = case Mix.env() do
+                      :prod -> []
+                      _ -> [:faker]
+                    end
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :faker, :scrivener_ecto, :arc_ecto]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto] ++
+        extra_app_dev
     ]
   end
 
