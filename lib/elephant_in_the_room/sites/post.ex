@@ -151,7 +151,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     (params["tags"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.uniq()
-    |> Enum.map(&get_or_insert_tag(&, site_id))
+    |> Enum.map(&get_or_insert_tag(&1, site_id))
   end
 
   defp get_or_insert_tag(name, site_id) do
