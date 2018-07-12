@@ -127,10 +127,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
         Repo.get_by!(Site, host: conn.host)
         |> Repo.preload([:posts, :categories, :authors])
 
-      render(conn, "public_show.html", site: site)
+      render(conn, "public_show.html", site: site, popular_posts: Sites.get_popular_posts(site, 5))
     else
       site = Sites.get_site!(params["id"])
-      render(conn, "public_show.html", site: site)
+      render(conn, "public_show.html", site: site, popular_posts: Sites.get_popular_posts(site, 5))
     end
   end
 

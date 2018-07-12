@@ -295,6 +295,14 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_popular_posts(%Site{id: site_id}, amount) do
+    {:ok, posts} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount])
+    Post
+    |> where([post], post.id in ^posts)
+    |> Repo.all
+    |> Repo.preload(:author)
+  end
+
   @doc """
   Creates a post.
 
