@@ -6,7 +6,7 @@ before_script:
   - sudo apt-get install -y build-essential nodejs
 script:
   - make deps
-  - cd assets && npx brunch build --production
+  - cd assets && npx brunch build --production && cd ..
   - MIX_ENV=prod
   - mix compile
   - mix digest
