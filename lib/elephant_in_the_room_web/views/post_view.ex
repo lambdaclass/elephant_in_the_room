@@ -24,17 +24,17 @@ defmodule ElephantInTheRoomWeb.PostView do
     |> Enum.map(fn category -> category.name end)
   end
 
-  def show_selected_categories(%Post{categories: categories} = post), 
-    do: Enum.map categories, &(&1.name)
+  def show_selected_categories(%Post{categories: categories}),
+    do: Enum.map(categories, & &1.name)
+
   def show_selected_categories(_), do: []
 
   def get_authors() do
     Sites.list_authors() |> Enum.map(fn author -> {author.name, author.id} end)
   end
 
-  def get_selected_author(%Post{author: author}) when author != nil, do:
-    author.id
-  def get_selected_author(other), do: ""
+  def get_selected_author(%Post{author: author}) when author != nil, do: author.id
+  def get_selected_author(_other), do: ""
 
   def show_content(%Post{rendered_content: content}), do: content
 
@@ -91,33 +91,28 @@ defmodule ElephantInTheRoomWeb.PostView do
     msg
   end
 
-  def show_tag_link(conn, site, tag) do
-    if conn.host != "localhost",
-      do: tag_path(conn, :public_show, tag.id),
-      else: local_tag_path(conn, :public_show, site.id, tag.id)
+  def show_tag_link(conn, tag) do
+    tag_path(conn, :public_show, tag.id)
   end
 
-  def show_site_link(conn, site) do
-    if conn.host != "localhost",
-      do: site_path(conn, :public_show),
-      else: local_site_path(conn, :public_show, site)
+  def show_site_link(conn) do
+    site_path(conn, :public_show)
   end
 
-  def show_category_link(conn, site, category) do
-    if conn.host != "localhost",
-      do: category_path(conn, :public_show, category.id),
-      else: local_category_path(conn, :public_show, site, category.id)
+  def show_category_link(conn, category) do
+    category_path(conn, :public_show, category.id)
   end
 
-  def show_link(conn, site, post) do 
+  def show_link(conn, post) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
 
-    if conn.host != "localhost",
-      do: post_path(conn, :public_show, year, month, day, post.slug),
-      else: local_post_path(conn, :public_show, site.id, year, month, day, post.slug)
-
+    post_path(conn, :public_show, year, month, day, post.slug)
+    |> replace_host(conn)
   end
 
+  defp replace_host(relative_path, conn) do
+    "http://#{conn.assigns.site.host}:#{conn.port}#{relative_path}"
+  end
 end

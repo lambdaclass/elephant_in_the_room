@@ -4,7 +4,7 @@
   <%= for {category_id, category_name} <- categories do %>
   <li>
     <%= link category_name,
-        to: show_category_link(@conn, category_id, @site) %>
+        to: show_category_link(@conn, category_id) %>
   </li>
   <% end %>
 <% end %>

@@ -44,9 +44,7 @@ defmodule ElephantInTheRoomWeb.CategoryView do
     Enum.take(cat_with_posts.posts, amount)
   end
 
-  def show_site_link(conn, site) do
-    if conn.host != "localhost",
-      do: site_path(conn, :public_show),
-      else: local_site_path(conn, :public_show, site.id)
+  def show_site_link(conn) do
+    site_path(conn, :public_show)
   end
 end

@@ -39,17 +39,30 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
-  @default_site_preload [:categories,
-    {:posts, (from p in Post, order_by: p.inserted_at)},
+  def default_site_preload() do
+    [
+      :categories,
+      {:posts, from(p in Post, order_by: p.inserted_at)},
+      [posts: :author],
+      [posts: :categories],
+      :authors,
+      :tags
+    ]
+  end
+
+  @default_site_preload [
+    :categories,
+    {:posts, from(p in Post, order_by: p.inserted_at)},
     [posts: :author],
     [posts: :categories],
     :authors,
-    :tags]
+    :tags
+  ]
 
   def get_site!(id) do
     Site
     |> Repo.get!(id)
-    |> Repo.preload(@default_site_preload)
+    |> Repo.preload(default_site_preload())
   end
 
   def get_site(id, preload \\ @default_site_preload) do
@@ -278,18 +291,20 @@ defmodule ElephantInTheRoom.Sites do
     Post
     |> where([t], t.site_id == ^site.id)
     |> Repo.get!(id)
-    |> Repo.preload(@default_post_preload )
+    |> Repo.preload(@default_post_preload)
   end
 
   def get_post!(id) do
     Post
     |> Repo.get!(id)
-    |> Repo.preload(@default_post_preload )
+    |> Repo.preload(@default_post_preload)
   end
 
-  def get_post_by_slug(site_id, slug, preload \\ @default_post_preload ) do
+  def get_post_by_slug(site_id, slug, preload \\ @default_post_preload) do
     case Repo.get_by(Post, slug: slug, site_id: site_id) do
-      nil -> {:error, :no_post_found}
+      nil ->
+        {:error, :no_post_found}
+
       site ->
         {:ok, Repo.preload(site, preload)}
     end
@@ -309,7 +324,8 @@ defmodule ElephantInTheRoom.Sites do
   """
 
   def create_post(site, attrs) do
-    post_attrs = Map.put(attrs, "site_id", site.id)
+    post_attrs =
+      Map.put(attrs, "site_id", site.id)
       |> ensure_author_exists
 
     %Post{}
@@ -327,6 +343,7 @@ defmodule ElephantInTheRoom.Sites do
     case Author.ensure_author_exists(attrs["author_id"]) do
       {:ok, %Author{id: author_id}} ->
         %{attrs | "author_id" => author_id}
+
       _ ->
         attrs
     end

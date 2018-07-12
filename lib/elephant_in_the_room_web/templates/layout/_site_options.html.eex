@@ -1,4 +1,4 @@
-<%= for site <- get_nav_sites(@conn) do %>
+<%= for site <- get_nav_sites() do %>
   <li>
     <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
   </li>
