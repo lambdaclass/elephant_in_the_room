@@ -23,6 +23,9 @@ defmodule ElephantInTheRoomWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+  end
+
+  pipeline :site_required do
     plug(:set_site)
   end
 
@@ -40,38 +43,21 @@ defmodule ElephantInTheRoomWeb.Router do
     get("/:id", ImageController, :get_image)
   end
 
-  # local routes
-  scope path: "/", host: "localhost", alias: ElephantInTheRoomWeb do
-    pipe_through([:browser, :auth])
-    get("/", LoginController, :index)
-    post("/login", LoginController, :login)
-    get("/logout", LoginController, :logout)
-
-    scope "/admin" do
-      pipe_through([:on_admin_page, :ensure_auth])
-      get("/", AdminController, :index)
-      resources("/roles", RoleController)
-      resources("/users", UserController)
-      resources("/authors", AuthorController)
-      get("/backup", BackupController, :index)
-      post("/backup/do_backup", BackupController, :do_backup)
-      get("/backup/download_latest", BackupController, :download_latest)
-      get("/backup/modify_settings", BackupController, :get_modify_settings)
-    end
-  end
-
   scope "/", ElephantInTheRoomWeb do
     pipe_through([:browser, :auth])
 
-    get("/", SiteController, :public_show)
     get("/login", LoginController, :index)
     post("/login", LoginController, :login)
     get("/logout", LoginController, :logout)
-    get("/author/:author_id", AuthorController, :public_show)
 
-    get("/post/:year/:month/:day/:slug", PostController, :public_show)
-    get("/category/:category_id", CategoryController, :public_show)
-    get("/tag/:tag_id", TagController, :public_show)
+    scope "/" do
+      pipe_through([:site_required])
+      get("/", SiteController, :public_show)
+      get("/author/:author_id", AuthorController, :public_show)
+      get("/post/:year/:month/:day/:slug", PostController, :public_show)
+      get("/category/:category_id", CategoryController, :public_show)
+      get("/tag/:tag_id", TagController, :public_show)
+    end
 
     scope "/admin" do
       pipe_through([:on_admin_page, :ensure_auth])
