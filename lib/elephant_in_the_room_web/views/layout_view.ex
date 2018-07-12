@@ -1,28 +1,24 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Sites, Sites.Site}
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.{User, Role}
 
-  def get_nav_sites(conn) do
-    if conn.host != "localhost" do
-      Sites.list_sites()
-      |> Enum.filter(fn s -> s.host != "localhost" end)
-    else
-      Sites.list_sites()
-    end
+  def get_nav_sites() do
+    Sites.list_sites()
   end
 
   def get_categories(assigns, amount \\ 5)
+
   def get_categories(%{assigns: %{site: %{categories: categories}}}, amount) do
     categories
     |> Enum.map(&{&1.id, &1.name})
     |> Enum.split(amount)
   end
-  def get_categories(_, _) do
-    {[],[]}
-  end
 
+  def get_categories(_, _) do
+    {[], []}
+  end
 
   def in_current_site(conn, site_id) do
     current_site = conn.assigns[:site]
@@ -43,9 +39,9 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     end
   end
 
-  def get_logger_user_name! (conn) do
+  def get_logger_user_name!(conn) do
     case get_logged_user(conn) do
-      {error, reason} -> raise "no user name found: #{reason}"
+      {_error, reason} -> raise "no user name found: #{reason}"
       {:ok, user, _} -> user.username
     end
   end
@@ -54,15 +50,11 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     if Map.has_key?(conn.assigns, :site) do
       case conn && conn.assigns.site do
         nil ->
-          "/"
+          login_path(conn, :login)
 
-        site ->
-          if conn.host != "localhost",
-            do: site_path(conn, :public_show),
-            else: local_site_path(conn, :public_show, site.id)
+        _site ->
+          site_path(conn, :public_show)
       end
-    else
-      site_path(conn, :public_index)
     end
   end
 
@@ -72,30 +64,25 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def get_site_name(conn) do
     site = conn.assigns[:site]
-    name = case site do
-      nil -> "Elephant in the room"
-      site -> site.name
-    end
+
+    name =
+      case site do
+        nil -> "Elephant in the room"
+        site -> site.name
+      end
+
     [first | rest] = String.split(name, " ")
     second = Enum.join(rest, " ")
     {first, second}
   end
 
-  def show_site_link(conn) do
-    if conn.host != "localhost",
-      do: "http://" <> conn.host <> ":4000",
-      else: site_path(conn, :public_index)
+  def show_site_link(%Site{} = site, conn) do
+    "#{to_string(conn.scheme)}://#{site.host}:#{to_string(conn.port)}"
   end
 
-  def show_site_link(site, conn) do
-    if conn.host != "localhost",
-      do: "http://" <> site.host <> ":4000",
-      else: local_site_path(conn, :public_show, site.id)
-  end
+  def show_site_link(conn), do: "http://" <> conn.host
 
-  def show_category_link(conn, category_id, site) do
-    if conn.host != "localhost",
-      do: category_path(conn, :public_show, category_id),
-      else: local_category_path(conn, :public_show, site.id, category_id)
+  def show_category_link(conn, category_id) do
+    category_path(conn, :public_show, category_id)
   end
 end

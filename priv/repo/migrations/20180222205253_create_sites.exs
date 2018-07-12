@@ -8,6 +8,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
       timestamps()
     end
 
+    create(unique_index(:sites, [:host]))
     create(unique_index(:sites, [:name]))
   end
 end

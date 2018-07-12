@@ -4,7 +4,6 @@
   import ElephantInTheRoomWeb.LayoutView, only: [get_logged_user: 1]
   login = get_logged_user(@conn)
 %>
-
 <%= if @post.cover do %>
   <div class="uk-cover-container">
       <img class="uk-height-1-1 uk-width-1-1" src="<%= @post.cover %>" alt="">
@@ -31,7 +30,7 @@
       <p>
         Categories:
         <%= for category <- @post.categories do %>
-          <%= link category.name, to: show_category_link(@conn, @site, category) %> |
+          <%= link category.name, to: show_category_link(@conn, category) %>
         <% end %>
       </p2>
     <% end %>
@@ -39,7 +38,7 @@
       <p>
         Tags:
         <%= for tag <- @post.tags do %>
-          <%= link tag.name, to: show_tag_link(@conn, @site, tag) %> |
+          <%= link tag.name, to: show_tag_link(@conn, tag) %>
         <% end %>
       </p>
     <%= end %>

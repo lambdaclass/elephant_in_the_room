@@ -10,13 +10,13 @@
       <%= if post do %>
         <div class="post uk-flex" uk-grid>
           <div class="uk-width-1-3">
-            <%= link to: SiteView.show_link_with_date(@conn, @site, post) do %>
+            <%= link to: SiteView.show_link_with_date(@conn, post) do %>
               <img class="" src="<%= post.thumbnail %>" alt="<%= post.title %>">
             <% end %>
           </div>
           <div class="uk-width-expand uk-text-left">
             <p class="uk-text-uppercase uk-margin-remove-bottom">
-              <%= link post.title, to: SiteView.show_link_with_date(@conn, @site, post) %>
+              <%= link post.title, to: SiteView.show_link_with_date(@conn, post) %>
             </p>
             <p class="uk-margin-small-top">
               <%= if post.author do %>
@@ -30,4 +30,4 @@
       <% end %>
     <% end %>
   </div>
-<%= end%>
+<% end%>
