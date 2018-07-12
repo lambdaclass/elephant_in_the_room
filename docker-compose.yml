@@ -20,5 +20,11 @@ services:
     ports:
       - 5050:5050
 
+  redis:
+    container_name: elephant_in_the_room_redis
+    image: redis:4.0.10
+    ports:
+      - 6379:6379
+
 volumes:
   elephant_in_the_room_db_data:
