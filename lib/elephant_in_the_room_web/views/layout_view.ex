@@ -1,12 +1,11 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Sites, Sites.Site}
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.{User, Role}
 
   def get_nav_sites() do
     Sites.list_sites()
-    |> Enum.filter(fn s -> s.host != "localhost" end)
   end
 
   def get_categories(assigns, amount \\ 5)
@@ -77,9 +76,11 @@ defmodule ElephantInTheRoomWeb.LayoutView do
     {first, second}
   end
 
-  def show_site_link(conn) do
-    "http://" <> conn.host <> ":4000"
+  def show_site_link(%Site{} = site, conn) do
+    "#{to_string(conn.scheme)}://#{site.host}:#{to_string(conn.port)}"
   end
+
+  def show_site_link(conn), do: "http://" <> conn.host
 
   def show_category_link(conn, category_id) do
     category_path(conn, :public_show, category_id)
