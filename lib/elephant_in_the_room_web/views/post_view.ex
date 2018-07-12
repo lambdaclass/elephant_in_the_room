@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
   alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Repo
 
@@ -35,6 +36,11 @@ defmodule ElephantInTheRoomWeb.PostView do
 
   def get_selected_author(%Post{author: author}) when author != nil, do: author.id
   def get_selected_author(_other), do: ""
+
+  def get_selected_tags(%Post{tags: tags}) when is_list(tags) do
+    Enum.map(tags, fn (%Tag{name: name}) -> name end)
+  end
+  def get_selected_tags(_), do: []
 
   def show_content(%Post{rendered_content: content}), do: content
 
