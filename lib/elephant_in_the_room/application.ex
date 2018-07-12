@@ -14,7 +14,8 @@ defmodule ElephantInTheRoom.Application do
       supervisor(ElephantInTheRoomWeb.Endpoint, []),
       # Start your own worker by calling: ElephantInTheRoom.Worker.start_link(arg1, arg2, arg3)
       # worker(ElephantInTheRoom.Worker, [arg1, arg2, arg3]),
-      worker(ElephantInTheRoom.Backup, [])
+      worker(ElephantInTheRoom.Backup, []),
+      worker(Redix, [[], [name: :redix]]),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
