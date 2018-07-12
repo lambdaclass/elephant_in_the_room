@@ -124,7 +124,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def public_show(conn, _params) do
     site =
       Repo.get_by!(Site, host: conn.host)
-      |> Repo.preload(posts: [:categories, :author, :tags], categories: [], authors: [])
+      |> Repo.preload(Sites.default_site_preload())
 
     render(conn, "public_show.html", site: site)
   end
