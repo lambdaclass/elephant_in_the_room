@@ -10,6 +10,7 @@ help:
 	@echo "- ops: runs the database"
 
 deps:
+	mix local.rebar --force
 	mix local.hex --force
 	mix deps.get
 	cd assets/ && npm install
@@ -37,7 +38,7 @@ dev:
 install_frontend:
 	cd assets/ && npm install
 
-ops: ops_reset
+ops:
 	docker-compose -f docker-compose.yml up
 
 ops_reset:
