@@ -20,7 +20,7 @@ defmodule ElephantInTheRoom.Mixfile do
   def application do
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :faker, :scrivener_ecto, :arc_ecto, :redix]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto, :redix]
     ]
   end
 
