@@ -7,8 +7,7 @@
     });
     $("#post_tags").select2({
       placeholder: "Select tags",
-      tags: true,
-      allowClear: true
+      tags: []
     });
     $("#post_categories").select2();
   });
