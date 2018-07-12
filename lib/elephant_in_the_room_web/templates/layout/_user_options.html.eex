@@ -8,7 +8,7 @@
   </li>
   <% {:ok, user, _} -> %>
   <li>
-    <a href="<%= login_path(@conn, :index) %>">
+    <a>
       <i class="fas fa-user"></i>
       <%= user.username %>
     </a>

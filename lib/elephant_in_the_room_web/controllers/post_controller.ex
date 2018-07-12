@@ -52,9 +52,11 @@ defmodule ElephantInTheRoomWeb.PostController do
   def create(%{assigns: %{site: site}} = conn, %{"post" => post_params}) do
     case Sites.create_post(site, post_params) do
       {:ok, post} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+
         conn
         |> Controller.put_flash(:info, :creation_success)
-        |> redirect(to: site_post_path(conn, :edit, site, post))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(
@@ -132,5 +134,9 @@ defmodule ElephantInTheRoomWeb.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: site_post_path(conn, :index, site))
+  end
+
+  defp relative_path(conn, %Post{inserted_at: date, slug: slug}) do
+    post_path(conn, :public_show, date.year, date.month, date.day, slug)
   end
 end
