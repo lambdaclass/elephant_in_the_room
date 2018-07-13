@@ -11,13 +11,24 @@
 <% end %>
 
 <div class="uk-container uk-container-small uk-margin-top article">
-  <h1 class="uk-text-uppercase uk-text-bold"><%= @post.title %></h1>
-  <div class="uk-text-meta">
-    <%= case login do %>
+  <h1 class="uk-text-uppercase uk-text-bold post-main-title"><%= @post.title %></h1>
+   <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Edit", to: site_post_path(@conn, :edit, @site.id, @post.id)%>
+        <%= link "Edit", to: site_post_path(@conn, :edit, @site.id, @post.id),
+              class: "post-edit-button"%>
       <%= _ -> %>
-    <% end %>
+   <% end %>
+   <br>
+
+  <%= if !Enum.empty?(@post.tags) do %>
+      <span class="tags">
+        <%= for tag <- @post.tags do %>
+          <%= link tag.name, to: show_tag_link(@conn, tag),
+              class: "uk-badge post-main-tags" %>
+        <% end %>
+      </span>
+  <%= end %>
+  <div class="uk-text-meta">
     <p>
       <%= case @post.author do %>
         <% nil -> %>
@@ -34,14 +45,7 @@
         <% end %>
       </p2>
     <% end %>
-    <%= if length(@post.tags) > 0 do %>
-      <p>
-        Tags:
-        <%= for tag <- @post.tags do %>
-          <%= link tag.name, to: show_tag_link(@conn, tag) %>
-        <% end %>
-      </p>
-    <%= end %>
+
   </div>
   <div class="article-content uk-dropcap uk-text-justify">
     <%= raw show_content @post %>
