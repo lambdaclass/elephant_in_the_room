@@ -21,5 +21,6 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> cast(attrs, [:name, :host])
     |> validate_required([:name, :host])
     |> unique_constraint(:name)
+    |> unique_constraint(:host)
   end
 end
