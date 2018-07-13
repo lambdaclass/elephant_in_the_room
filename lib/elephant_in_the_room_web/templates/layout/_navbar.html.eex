@@ -23,7 +23,7 @@
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropwdown">Sections</span>
+          <span class="with-dropwdown">Categories</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -101,7 +101,7 @@
   <div class="uk-width-1-5 uk-text-center">
     <div class="element" uk-toggle="target: #offcanvas-section">
       <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
-      <div class="mini-description">Section</div>
+      <div class="mini-description">Categories</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
