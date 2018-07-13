@@ -55,7 +55,6 @@ defmodule ElephantInTheRoomWeb.PostController do
         path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
 
         conn
-        |> Controller.put_flash(:info, :creation_success)
         |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -118,9 +117,10 @@ defmodule ElephantInTheRoomWeb.PostController do
 
     case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+
         conn
-        |> Controller.put_flash(:info, :update_success)
-        |> redirect(to: site_post_path(conn, :edit, site, post))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)
