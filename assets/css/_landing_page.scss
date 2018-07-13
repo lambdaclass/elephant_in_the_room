@@ -31,17 +31,11 @@ $landing-separator-decrease-space: 12px;
     }
 
     @mixin content-border-right() {
-        width: calc(100% - #{$landing-separator-decrease-space});
-        border-right-style: solid;
-        border-right: $landing-separator-border;
-        padding-right: $landing-separator-space;
+        padding-right: 10px;
     }
 
     @mixin content-border-left() {
-        width: calc(100% - #{$landing-separator-decrease-space});
-        border-left-style: solid;
-        border-left: $landing-separator-border;
-        padding-left: $landing-separator-space;
+        padding-left: 10px;
     }
 
     @mixin content-border-bottom() {
@@ -177,7 +171,7 @@ $landing-separator-decrease-space: 12px;
                 padding-top: 0.6em;
                 padding-bottom: 0.6em;
                 color: grey;
-                font-size: 1.2rem;
+                font-size: 1rem;
                 text-align: left;
             }
 
@@ -185,7 +179,7 @@ $landing-separator-decrease-space: 12px;
                 color: black;
                 text-align: left;
                 text-transform: capitalize;
-                font-size: 1.2rem;            }
+                font-size: 1rem;            }
         }
 
         .main-content {
@@ -206,8 +200,11 @@ $landing-separator-decrease-space: 12px;
                 float: right;
                 margin-right: 10px;
             }
+            .author {
+                font-size: 1rem;
+            }
             .title {
-                font-size: 1em;
+                font-size: 1.1rem;
             }
             .sub-image-text {
                 display: none;
@@ -231,6 +228,10 @@ $landing-separator-decrease-space: 12px;
 
 .popular > a > p:last-child {
     margin-bottom: 20px;
+}
+
+.popular > a > p strong {
+    font-size: 1.2rem;
 }
 
 .popular > a > p span {
@@ -258,7 +259,7 @@ $landing-separator-decrease-space: 12px;
     color: #000;
 }
 
-.author:last-child hr, .latest hr:last-child {
+.author:last-child hr, .latest > hr:last-child {
     display: none;
 }
 
@@ -266,7 +267,7 @@ $landing-separator-decrease-space: 12px;
     padding: 10px;
 
     p {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     p:first-child {

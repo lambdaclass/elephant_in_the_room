@@ -1,4 +1,4 @@
-<% 
+<%
   %{
     section1: section_1_posts,
     section2: section_2_posts,
@@ -19,7 +19,7 @@
     <div class="uk-grid-collapse uk-flex group-content" uk-height-match="> *" uk-grid>
       <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1">
         <div class="individual-content main">
-          <%= render "_featured_post.html", Map.merge(assigns, 
+          <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "main-content", post: Enum.at(section_1_posts, 0),
                       description_limit: 200}) %>
         </div>
@@ -28,28 +28,28 @@
         <div class="right-top-container">
           <div class="uk-height-small">
             <div class="individual-content right-four-one">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 0),
                       no_description: true, no_category: true}) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-two">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 1),
                       no_description: true, no_category: true}) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-three">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 2),
                       no_description: true, no_category: true}) %>
             </div>
           </div>
           <div class="uk-height-small">
             <div class="individual-content right-four-four">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 3),
                       no_description: true, no_category: true}) %>
             </div>
@@ -60,14 +60,14 @@
         <div class="left-top-container">
           <div class="uk-width-1-2@s uk-width-1-1@m">
             <div class="individual-content left-two-one">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post: Enum.at(section_1_posts, 1),
                       no_description: true}) %>
             </div>
           </div>
           <div class="uk-width-1-2@s uk-width-1-1@m">
             <div class="individual-content left-two-two">
-              <%= render "_featured_post.html", Map.merge(assigns, 
+              <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post:  Enum.at(section_1_posts, 2),
                       no_description: true}) %>
             </div>
@@ -78,28 +78,28 @@
     <div class="uk-grid-collapse group-content group-content-four" uk-grid>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-one">
-          <%= render "_featured_post.html", Map.merge(assigns, 
+          <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post:  Enum.at(section_3_posts, 0),
                       description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-two">
-          <%= render "_featured_post.html", Map.merge(assigns, 
+          <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 1),
                       description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-three">
-          <%= render "_featured_post.html", Map.merge(assigns, 
+          <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 2),
                       description_limit: 100}) %>
         </div>
       </div>
       <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <div class="individual-content four-four">
-          <%= render "_featured_post.html", Map.merge(assigns, 
+          <%= render "_featured_post.html", Map.merge(assigns,
                     %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 3),
                       description_limit: 100}) %>
         </div>
@@ -121,7 +121,7 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- popular's column -->
         <div class="individual-content three-three">
-          <%= render "_popular.html", Map.merge(assigns, %{posts: section_5_posts}) %>
+          <%= render "_popular.html", Map.merge(assigns, %{posts: section_4_posts}) %>
         </div>
       </div>
     </div>
