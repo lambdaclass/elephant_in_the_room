@@ -33,4 +33,17 @@
       </div>
     </body>
   <% end %>
+
+  <%= case assigns[:info] do %>
+    <%= :update_success -> %>
+      <script>
+        UIkit.notification({message: 'Update Success!', status: 'success'})
+      </script>
+    <%= :creation_success -> %>
+      <script>
+        UIkit.notification({message: 'Creation Success!', status: 'success'})
+      </script>
+    <%= _ -> %>
+  <%= end %>
+
 </html>

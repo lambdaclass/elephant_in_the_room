@@ -14,18 +14,6 @@
   });
 </script>
 
-<%= case assigns[:info] do %>
-  <%= :update_success -> %>
-    <script>
-      UIkit.notification({message: 'Update sucess!', status: 'success'})
-    </script>
-  <%= :creation_success -> %>
-    <script>
-      UIkit.notification({message: 'Creation sucess!', status: 'success'})
-    </script>
-  <%= _ -> %>
-<%= end %>
-
 <div class="admin-title">
   <span class="title-text"><%= assigns[:title] %></span>
   <%= if assigns[:post] do %>
