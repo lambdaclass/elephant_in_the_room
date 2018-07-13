@@ -15,7 +15,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
     changes =
       default_attrs()
       |> Map.merge(attrs)
-      |> Map.put(:host, "site-#{site_number}")
+      |> Map.put(:host, "site-#{site_number}.com")
 
     case Sites.create_site(changes) do
       {:ok, site} ->
