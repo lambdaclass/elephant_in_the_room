@@ -1,5 +1,6 @@
 .article {
   .uk-text-meta {
+    padding-top: 2em;
     a {
       color: #222;
     }
@@ -27,8 +28,29 @@
         margin-right: -2%;
       }
     }
-
   }
+
+  .post-edit-button {
+      text-transform: uppercase;
+      font-size: 0.6em;
+      font-weight: bolder;
+      color: #2217d7;
+  }
+
+  .post-main-title {
+    margin-bottom: 0px;
+    display: inline;
+  }
+
+  .post-main-tags {
+      background: #686868;
+      color: #f0f0f0;
+      @media screen and (max-width: $break-s) {
+          font-size: 0.6em;
+          height: 2em;
+      }
+  }
+
 }
 
 .uk-cover-container {
