@@ -310,6 +310,15 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_latest_posts(%Site{} = site, amount) do
+    Post
+    |> where([post], post.site_id == ^site.id)
+    |> limit(^amount)
+    |> order_by(desc: :inserted_at)
+    |> preload(:author)
+    |> Repo.all
+  end
+
   @doc """
   Creates a post.
 
