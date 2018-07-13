@@ -115,7 +115,7 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-2@m">
         <!-- latest's column -->
         <div class="individual-content three-two">
-          <%= render "_latest.html", Map.merge(assigns, %{posts: section_4_posts})%>
+          <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
         </div>
       </div>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
