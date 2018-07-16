@@ -10,7 +10,8 @@
     "jquery": "^3.3.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
-    "uikit": "^3.0.0-beta.40"
+    "uikit": "^3.0.0-beta.40",
+    "inscrybmde": "1.11.3"
   },
   "devDependencies": {
     "babel-brunch": "6.1.1",
