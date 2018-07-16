@@ -6,6 +6,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateAuthors do
       add(:name, :string)
       add(:image, :string)
       add(:description, :text)
+      add(:is_columnist, :boolean)
 
       timestamps()
     end
