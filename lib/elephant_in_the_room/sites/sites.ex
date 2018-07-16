@@ -637,6 +637,7 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.update()
   end
 
+  def to_slug(nil), do: ""
   def to_slug(name) do
     name
     |> String.downcase()
