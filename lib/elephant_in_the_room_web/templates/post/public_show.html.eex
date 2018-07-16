@@ -6,7 +6,7 @@
 %>
 <%= if @post.cover do %>
   <div class="uk-cover-container">
-      <img class="uk-height-1-1 uk-width-1-1" src="<%= @post.cover %>" alt="">
+      <div class="uk-height-1-1 uk-width-1-1 uk-background-cover uk-background-center-center" data-src="<%= @post.cover %>" uk-img></div>
   </div>
 <% end %>
 
@@ -47,7 +47,7 @@
     <% end %>
 
   </div>
-  <div class="article-content uk-dropcap uk-text-justify">
+  <div class="article-content uk-text-justify">
     <%= raw show_content @post %>
   </div>
 </div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ElephantInTheRoom</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/fonts/fonts.css") %>">
+
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </head>
+
+  <body>
+    <div class="uk-flex-center uk-width-1-3">
+      <div class="uk-position-center">
+        <i class="exclamation-icon fas fa-exclamation-triangle"></i>
+        <h1 class="uk-heading-primary">404: Page Not Found</h1>
+      </div>
+      <div class="uk-margin-bottom">
+        <%= link  to: "/", class: "uk-link-heading uk-position-bottom-center" do %>
+          <h3>Go back to site</h3>
+        <% end %>
+      </div>  
+    </div>
+  </body>
+</html>

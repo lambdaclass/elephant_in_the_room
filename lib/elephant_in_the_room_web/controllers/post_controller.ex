@@ -73,16 +73,11 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def public_show(conn, %{"slug" => slug}) do
-    with site_id <- conn.assigns.site.id,
-         {:ok, site} <- Sites.get_site(site_id),
-         {:ok, post} <- Sites.get_post_by_slug(site_id, slug) do
-
-      Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post.id])
-
-      render(conn, "public_show.html", site: site, post: post)
-    else
-      _ -> render(conn, "404.html")
-    end
+    site_id = conn.assigns.site.id
+    site = Sites.get_site!(site_id)
+    post = Sites.get_post_by_slug!(site_id, slug)
+    Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post.id])
+    render(conn, "public_show.html", site: site, post: post)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

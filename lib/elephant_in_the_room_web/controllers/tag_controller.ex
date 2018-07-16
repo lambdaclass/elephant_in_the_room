@@ -63,7 +63,7 @@ defmodule ElephantInTheRoomWeb.TagController do
 
     tag =
       Sites.get_tag!(tag_id)
-      |> Repo.preload(:posts)
+      |> Repo.preload(posts: :author)
 
     render(conn, "public_show.html", tag: tag, site: site)
   end
