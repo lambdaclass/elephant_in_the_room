@@ -10,6 +10,7 @@ defmodule ElephantInTheRoom.Sites.Author do
     field(:description, :string)
     field(:image, Image.Type)
     field(:name, :string)
+    field(:is_columnist, :boolean, default: false)
 
     has_many(:posts, Post, on_delete: :nilify_all)
 
@@ -19,9 +20,9 @@ defmodule ElephantInTheRoom.Sites.Author do
   @doc false
   def changeset(%Author{} = author, attrs) do
     author
-    |> cast(attrs, [:name, :description])
+    |> cast(attrs, [:name, :description, :is_columnist])
     |> cast_attachments(attrs, [:image], [])
-    |> validate_required([:name])
+    |> validate_required([:name, :is_columnist])
     |> unique_constraint(:name)
   end
 
@@ -37,6 +38,6 @@ defmodule ElephantInTheRoom.Sites.Author do
         |> Repo.insert()
     end
   end
-  def ensure_author_exists(_), do: {:error, :invalid_id} 
+  def ensure_author_exists(_), do: {:error, :invalid_id}
 
 end

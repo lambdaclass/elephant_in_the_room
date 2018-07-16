@@ -13,6 +13,13 @@
     </div>
 
     <div class="uk-margin">
+      <%= label f, :is_columnist, "Columnist?", class: "uk-form-label" %>
+      <%= radio_button(f, :is_columnist, true) %> Yes
+      <%= radio_button(f, :is_columnist, false) %> No
+      <%= error_tag f, :name %>
+    </div>
+
+    <div class="uk-margin">
       <%= label f, :image, class: "uk-form-label" %>
       <%= file_input f, :image, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :image %>
