@@ -53,9 +53,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   def unique_slug_constraint(changeset, post, attrs) do
     post_slug = post.slug
     in_slug = attrs["slug"]
-    IO.inspect(post_slug)
-    IO.inspect(in_slug)
-    IO.inspect(attrs)
     if in_slug && post_slug != in_slug do
       IO.inspect("constraint")
       put_slugified_title(changeset, :new)
@@ -117,13 +114,6 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> validate_length(:rendered_content, min: 1)
   end
 
-  defp calculate_occurrences(slug, site_id) do
-    site = Sites.get_site!(site_id)
-
-    site.posts
-    |> Enum.count(fn post -> post.slug == slug end)
-  end
-
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
     changeset
@@ -137,13 +127,6 @@ defmodule ElephantInTheRoom.Sites.Post do
       slug = get_field(changeset, :title) |> Sites.to_slug()
     end
 
-    occurrences = calculate_occurrences(slug, site_id)
-    slug =
-      if new? == :new  && occurrences > 0 do
-        slug <> "-#{occurrences}"
-      else
-        slug
-      end
     put_change(changeset, :slug, slug)
   end
 
