@@ -54,7 +54,6 @@ defmodule ElephantInTheRoom.Sites.Post do
     post_slug = post.slug
     in_slug = attrs["slug"]
     if in_slug && post_slug != in_slug do
-      IO.inspect("constraint")
       put_slugified_title(changeset, :new)
       |> unique_constraint(:slug, name: :slug_unique_index)
     else
