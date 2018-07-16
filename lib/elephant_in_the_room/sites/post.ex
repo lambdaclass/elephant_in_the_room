@@ -154,11 +154,13 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> Enum.map(&get_or_insert_tag(&1, site_id))
   end
 
-  defp get_or_insert_tag(name, site_id) do
-    Repo.insert!(
-      %Tag{name: name, site_id: site_id},
-      on_conflict: [set: [name: name, site_id: site_id]],
-      conflict_target: :name
-    )
+  def get_or_insert_tag(name, site_id) do
+    inserted_tag = Repo.insert(%Tag{name: name, site_id: site_id, color: "686868"},
+      [on_conflict: :nothing])
+    case inserted_tag do
+      %{id: id} when id != nil -> inserted_tag
+      _ ->
+        Repo.get_by!(Tag, name: name, site_id: site_id)
+    end
   end
 end

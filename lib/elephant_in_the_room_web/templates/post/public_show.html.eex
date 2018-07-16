@@ -24,7 +24,7 @@
       <span class="tags">
         <%= for tag <- @post.tags do %>
           <%= link tag.name, to: show_tag_link(@conn, tag),
-              class: "uk-badge post-main-tags" %>
+              class: "uk-badge post-main-tags", style: "background: \##{tag.color}" %>
         <% end %>
       </span>
   <%= end %>

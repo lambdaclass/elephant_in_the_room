@@ -1,9 +1,11 @@
 defmodule ElephantInTheRoomWeb.Faker.Tag do
   alias ElephantInTheRoom.Sites
+  require Logger
 
   defp default_attrs do
     %{
-      "name" => Faker.Beer.hop()
+      "name" => Faker.Beer.hop(),
+      "color" => "707070"
     }
   end
 
@@ -13,7 +15,8 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
     case Sites.create_tag(attrs["site"], changes) do
       {:ok, tag} ->
         tag
-      {:error, _} ->
+      {:error, error} ->
+        Kernel.inspect(error) |> Logger.warn
         insert_one(attrs)
     end
   end
