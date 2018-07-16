@@ -55,6 +55,16 @@ defmodule ElephantInTheRoom.Sites.Post do
     changeset
   end
 
+  def put_date(changeset, attrs) do
+    case Ecto.Date.cast(attrs["date"]) do
+      {:ok, date} ->
+        Changeset.put_change(changeset, :date, date)
+
+      :error ->
+        Changeset.add_error(changeset, :date, "Wrong date")
+    end
+  end
+
   def store_cover(%Changeset{} = changeset, %{"cover" => nil}) do
     put_change(changeset, :cover, nil)
   end
@@ -74,19 +84,23 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def set_thumbnail(%Changeset{} = changeset) do
-    url = case get_field(changeset, :cover) do
-      nil ->
-        case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
-          nil ->
-            "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
-          [img] ->
-            img
-            |> String.split("\"")
-            |> Enum.at(1)
-        end
-      cover ->
-        cover
-    end
+    url =
+      case get_field(changeset, :cover) do
+        nil ->
+          case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
+            nil ->
+              "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+
+            [img] ->
+              img
+              |> String.split("\"")
+              |> Enum.at(1)
+          end
+
+        cover ->
+          cover
+      end
+
     put_change(changeset, :thumbnail, url)
   end
 
