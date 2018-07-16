@@ -43,6 +43,7 @@
         input.setAttribute("not_first", true)
       }
       input.value = value
+      input.style.color = "white"
       input.style.backgroundColor = value
     });
 </script>
