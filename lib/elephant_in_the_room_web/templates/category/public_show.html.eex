@@ -19,7 +19,9 @@
         <div class="uk-width-1-1 uk-text-center uk-text-left@s">
           <h2><%= link main_post.title, to: link_main_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
           <p class="uk-visible@s"><%= main_post.abstract %></p>
-          <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+          <%= if main_post.author do %>
+            <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+          <% end %>
           <p><%= PostView.show_date(main_post.updated_at) %></p>
         </div>
       </div>
@@ -36,7 +38,9 @@
           <div class="uk-width-1-2">
             <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
             <p class="uk-visible@s"><%= post.abstract %></p>
-            <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+            <%= if post.author do %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+            <% end %>
             <p><%= PostView.show_date(post.updated_at) %></p>
           </div>
         </div>
