@@ -1,4 +1,4 @@
-const handleFileSelect = evt => {
+const handleFileSelect = (editor, evt) => {
   evt.stopPropagation();
   evt.preventDefault();
 
@@ -29,10 +29,9 @@ const sendData = (data, mime) => {
   const url = "/images/binary";
 
   XHR.onloadend = () => {
-    const postTextArea = document.getElementById("post_content");
     if (XHR.status == 202) {
       const markdownImage = "![image](/images/" + XHR.response + ")";
-      insertTextAtPos(postTextArea, markdownImage);
+      window.editor.codemirror.replaceSelection(markdownImage);
     } else {
       alert(XHR.response);
     }
@@ -45,17 +44,17 @@ const sendData = (data, mime) => {
   XHR.send(data);
 };
 
-const handleDragOver = evt => {
+const handleDragOver = (editor, evt) => {
   evt.stopPropagation();
   evt.preventDefault();
   evt.dataTransfer.dropEffect = "copy";
 };
 
 window.onload = () => {
-  if (document.getElementById("post_content")) {
-    var postTextArea = document.getElementById("post_content");
-    postTextArea.addEventListener("dragover", handleDragOver, false);
-    postTextArea.addEventListener("drop", handleFileSelect, false);
+  if (window.editor) {
+    var postTextArea = window.editor.codemirror;
+    postTextArea.on("dragover", handleDragOver, false);
+    postTextArea.on("drop", handleFileSelect, false);
   }
 };
 
@@ -64,14 +63,3 @@ const isImage = file =>
   file.type == "image/png" ||
   file.type == "image/jpeg" ||
   file.type == "image/jpg";
-
-const insertTextAtPos = (element, newText) => {
-  const start = element.selectionStart;
-  const end = element.selectionEnd;
-  const text = element.value;
-  const before = text.substring(0, start);
-  const after = text.substring(end, text.length);
-  element.value = before + newText + after;
-  element.selectionStart = element.selectionEnd = start + newText.length;
-  element.focus();
-};

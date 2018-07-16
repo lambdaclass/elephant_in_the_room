@@ -10,26 +10,19 @@
     <title>ElephantInTheRoom</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="<%= static_path(@conn, "/css/select2.min.css") %>" rel="stylesheet"/>
-    <script src="<%= static_path(@conn, "/js/select2.full.min.js") %>"></script>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/fonts/fonts.css") %>">
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
-
-  <%= if assigns[:admin] do %>
-    <%= render "_admin.html", assigns %>
-  <% else %>
-    <body>
-      <div class="uk-offcanvas-content">
-        <%= render "_normal.html", assigns %>
-        <div role="main">
-          <%= render @view_module, @view_template, assigns %>
-        </div>
+  <body>
+    <div class="uk-margin">
+      <div class="uk-position-center">
+        <i class="exclamation-icon fas fa-exclamation-triangle"></i>
+        <h1 class="uk-heading-primary">500: Internal Server Error</h1>
+        <%= link to: "/", class: "uk-link-heading" do %>
+          <h3 class="uk-align-center"> "Go back to site" </h3>
+        <% end %>
       </div>
-    </body>
-  <% end %>
-
+    </div>
+  </body>
 </html>

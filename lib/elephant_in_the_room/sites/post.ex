@@ -45,10 +45,20 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
     |> put_rendered_content
-    |> put_slugified_title
-    |> unique_constraint(:slug, name: :slug_unique_index)
+    |> unique_slug_constraint(post, attrs)
     |> store_cover(attrs)
     |> set_thumbnail
+  end
+
+  def unique_slug_constraint(changeset, post, attrs) do
+    post_slug = post.slug
+    in_slug = attrs["slug"]
+    if in_slug && post_slug != in_slug do
+      put_slugified_title(changeset, :new)
+      |> unique_constraint(:slug, name: :slug_unique_index)
+    else
+      put_slugified_title(changeset, :same)
+    end
   end
 
   def store_cover(%Changeset{valid?: false} = changeset, _attrs) do
@@ -103,19 +113,12 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> validate_length(:rendered_content, min: 1)
   end
 
-  defp calculate_occurrences(slug, site_id) do
-    site = Sites.get_site!(site_id)
-
-    site.posts
-    |> Enum.count(fn post -> post.slug == slug end)
-  end
-
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
     changeset
   end
 
-  def put_slugified_title(%Changeset{} = changeset) do
+  def put_slugified_title(%Changeset{} = changeset, new?) do
     site_id = get_field(changeset, :site_id)
     slug = get_field(changeset, :slug)
 
@@ -123,10 +126,7 @@ defmodule ElephantInTheRoom.Sites.Post do
       slug = get_field(changeset, :title) |> Sites.to_slug()
     end
 
-    case calculate_occurrences(slug, site_id) do
-      0 -> put_change(changeset, :slug, slug)
-      n -> put_change(changeset, :slug, slug <> "-#{n}")
-    end
+    put_change(changeset, :slug, slug)
   end
 
   def generate_markdown(input) do

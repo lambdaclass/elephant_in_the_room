@@ -1,0 +1,12 @@
+language: elixir
+elixir: '1.6'
+otp_release: '20.3'
+before_script:
+  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+  - sudo apt-get install -y build-essential nodejs
+script:
+  - make deps
+  - cd assets && npx brunch build --production && cd ..
+  - MIX_ENV=prod
+  - mix compile
+  - mix phx.digest

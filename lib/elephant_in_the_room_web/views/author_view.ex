@@ -19,5 +19,10 @@ defmodule ElephantInTheRoomWeb.AuthorView do
     day = post.inserted_at.day
 
     post_path(conn, :public_show, year, month, day, post.slug)
+    |> replace_host(conn, post)
+  end
+
+  defp replace_host(relative_path, conn, post) do
+    "#{conn.scheme}://#{post.site.host}:#{conn.port}#{relative_path}"
   end
 end
