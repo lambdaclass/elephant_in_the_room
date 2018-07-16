@@ -126,7 +126,11 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    render(conn, "public_show.html", site: site, latest_posts: Sites.get_latest_posts(site, 5))
+    render(conn, "public_show.html",
+      site: site,
+      latest_posts: Sites.get_latest_posts(site, 10),
+      columnists: Sites.get_columnists(site, 10)
+    )
   end
 
   def show_default_site(conn, _params) do
