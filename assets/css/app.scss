@@ -10,7 +10,7 @@
 @import "_administration";
 
 html {
-font-family: $text-font;
+  font-family: $text-font;
 }
 
 a {
@@ -22,7 +22,18 @@ a:hover {
   text-decoration: none;
 }
 
-.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+.uk-h1,
+.uk-h2,
+.uk-h3,
+.uk-h4,
+.uk-h5,
+.uk-h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $title-font;
 }
 
@@ -64,7 +75,6 @@ a:hover {
     }
   }
 }
-
 
 .tooltip {
   position: relative;
@@ -120,11 +130,16 @@ a:hover {
   font-family: $title-font;
 }
 
-.uk-navbar-container.uk-navbar, .uk-navbar-container.uk-navbar li > .uk-navbar-dropdown, .uk-navbar-dropbar {
+.uk-navbar-container.uk-navbar,
+.uk-navbar-container.uk-navbar li > .uk-navbar-dropdown,
+.uk-navbar-dropbar {
   background-color: $black;
 }
 
-.uk-light .uk-navbar-nav > li > a, .uk-light .uk-navbar-dropdown-nav > li > a, .uk-offcanvas .uk-nav > li > a, .uk-offcanvas .uk-nav .uk-nav-sub > li > a {
+.uk-light .uk-navbar-nav > li > a,
+.uk-light .uk-navbar-dropdown-nav > li > a,
+.uk-offcanvas .uk-nav > li > a,
+.uk-offcanvas .uk-nav .uk-nav-sub > li > a {
   color: #fff;
   font-weight: bold;
 }
@@ -144,4 +159,8 @@ a:hover {
 }
 #offcanvas-side-menu .uk-parent > ul {
   background-color: $black-light;
+}
+
+.exclamation-icon {
+  font-size: 430px;
 }
