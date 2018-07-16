@@ -77,8 +77,7 @@ defmodule ElephantInTheRoomWeb.PostController do
          {:ok, site} <- Sites.get_site(site_id),
          {:ok, post} <- Sites.get_post_by_slug(site_id, slug) do
 
-      {:ok, post_visits} = Redix.command(:redix, ["PFADD", "post:#{post.id}", (Tuple.to_list(conn.remote_ip) |> Enum.join("."))])
-      Redix.command(:redix, ["ZADD", "site:#{site_id}", post_visits, post.id])
+      Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post.id])
 
       render(conn, "public_show.html", site: site, post: post)
     else
