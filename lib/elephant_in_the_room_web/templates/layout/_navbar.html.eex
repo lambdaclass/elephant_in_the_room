@@ -23,7 +23,7 @@
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropwdown">Sections</span>
+          <span class="with-dropwdown">Categories</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -81,41 +81,8 @@
       </li>
 
       <li><a href="#" class="a-reduced top-link subscribe" >Subscribe</a></li>
-
-      <li class="show-only-on-bigger-than-small">
-        <a href="#" class="a-reduced" uk-toggle="target: .nav-overlay; animation: uk-animation-fade">
-          <i class="fas fa-search"></i>
-        </a>
-      </li>
-
-      <li class="show-only-on-small">
-        <a class="a-reduced uk-navbar-toggle" href="#modal-full" uk-toggle>
-          <i class="fas fa-search"></i>
-        </a>
-      </li>
-
     </ul>
   </div>
-
-
-  <div class="nav-overlay uk-navbar-left uk-flex-1 search-inline-bar" hidden>
-    <div class="uk-navbar-item uk-width-expand">
-      <form class="uk-search uk-search-navbar uk-width-1-1">
-        <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
-      </form>
-    </div>
-    <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
-  </div>
-
-  <div id="modal-full" class="uk-modal-full uk-modal" uk-modal>
-    <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
-        <button class="uk-modal-close-full" type="button" uk-close></button>
-        <form class="uk-search uk-search-large">
-            <input class="uk-search-input uk-text-center" type="search" placeholder="Search..." autofocus>
-        </form>
-    </div>
-  </div>
-
 </nav>
 
 <div class="mini-navbar-container" uk-grid>
@@ -134,7 +101,7 @@
   <div class="uk-width-1-5 uk-text-center">
     <div class="element" uk-toggle="target: #offcanvas-section">
       <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
-      <div class="mini-description">Section</div>
+      <div class="mini-description">Categories</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">

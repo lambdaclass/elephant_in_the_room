@@ -1,32 +1,25 @@
 <script>
-  $(document).ready(function() { 
+  $(document).ready(function() {
     $("#post_author_id").select2({
       placeholder: "Select author",
       tags: true,
       allowClear: true
-    }); 
+    });
+    $("#post_tags").select2({
+      placeholder: "Select tags",
+      tags: [],
+      tokenSeparators: [","]
+    });
     $("#post_categories").select2();
   });
 </script>
-
-<%= case assigns[:info] do %>
-  <%= :update_success -> %>
-    <script>
-      UIkit.notification({message: 'Update sucess!', status: 'success'})
-    </script>
-  <%= :creation_success -> %>
-    <script>
-      UIkit.notification({message: 'Creation sucess!', status: 'success'})
-    </script>
-  <%= _ -> %>
-<%= end %>
 
 <div class="admin-title">
   <span class="title-text"><%= assigns[:title] %></span>
   <%= if assigns[:post] do %>
     <div "admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-        href="<%= ElephantInTheRoomWeb.DomainBased.get_post_public_show_path(@conn, @post, @site) %>"
+        href="<%= show_link(@conn, @post) %>"
         target="_blank">
         see post
       </a>
@@ -83,10 +76,11 @@
   </div>
 
   <div class="form-group" >
-    <%= label f, "tags (separated by comma)", class: "uk-form-label" %>
-    <%= text_input f, :tags_separated_by_comma, class: "uk-input uk-form-small",
-        value: put_commas(@changeset.data, :tags) %>
-    <%= error_tag f, :tags_separated_by_comma %>
+    <% selected_tags = get_selected_tags(assigns[:post]) %>
+    <%= label f, "tags", class: "uk-form-label" %>
+    <%= multiple_select f, :tags, selected_tags, class: "uk-input uk-form-small",
+        selected: selected_tags %>
+    <%= error_tag f, :tags %>
   </div>
 
   <div class="form-group">

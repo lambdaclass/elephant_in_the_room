@@ -121,17 +121,17 @@ defmodule ElephantInTheRoomWeb.SiteController do
     )
   end
 
-  def public_show(conn, params) do
-    if conn.host != "localhost" do
-      site =
-        Repo.get_by!(Site, host: conn.host)
-        |> Repo.preload([:posts, :categories, :authors])
+  def public_show(conn, _params) do
+    site =
+      Repo.get_by!(Site, host: conn.host)
+      |> Repo.preload(Sites.default_site_preload())
 
-      render(conn, "public_show.html", site: site, popular_posts: Sites.get_popular_posts(site, 5))
-    else
-      site = Sites.get_site!(params["id"])
-      render(conn, "public_show.html", site: site, popular_posts: Sites.get_popular_posts(site, 5))
-    end
+    render(conn, "public_show.html",
+      site: site,
+      latest_posts: Sites.get_latest_posts(site, 15),
+      columnists: Sites.get_columnists(site, 10),
+      popular_posts: Sites.get_popular_posts(site, 10)
+    )
   end
 
   def show_default_site(conn, _params) do

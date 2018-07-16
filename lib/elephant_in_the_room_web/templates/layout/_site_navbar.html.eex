@@ -4,7 +4,7 @@
 <div uk-sticky="show-on-up: true; animation: uk-animation-slide-top">
   <nav class="uk-navbar-container uk-light" uk-navbar="dropbar: true; mode: click">
     <div class="uk-navbar-left">
-      <%= link to: show_site_link(@site, @conn), class: "uk-navbar-item uk-logo" do %>
+      <%= link to: show_site_link(@conn), class: "uk-navbar-item uk-logo" do %>
         <h1 class="uk-text-uppercase uk-margin-auto-vertical"><%= @site.name %></h1>
       <% end %>
 
@@ -13,7 +13,7 @@
     <div class="uk-navbar-center">
       <ul class="uk-navbar-nav uk-visible@m">
         <%= for {category_id, category_name} <- categories do %>
-          <li><%= link category_name, to: show_category_link(@conn, category_id, @site) %></li>
+          <li><%= link category_name, to: show_category_link(@conn, category_id) %></li>
         <% end %>
         <li>
           <a href="#">
@@ -26,7 +26,7 @@
             <ul class="uk-nav uk-navbar-dropdown-nav" uk-grid>
               <%= for {category_id, category_name} <- more_categories do %>
                 <li class="uk-width-1-4">
-                  <%= link category_name, to: show_category_link(@conn, category_id, @site), class: "uk-text-capitalize"%>
+                  <%= link category_name, to: show_category_link(@conn, category_id), class: "uk-text-capitalize"%>
                 </li>
               <% end %>
             </ul>
@@ -62,7 +62,7 @@
         <ul class="uk-nav-sub">
           <%= for {category_id, category_name} <- categories++more_categories do %>
             <li>
-              <%= link category_name, to: show_category_link(@conn, category_id, @site), class: "uk-text-capitalize" %>
+              <%= link category_name, to: show_category_link(@conn, category_id), class: "uk-text-capitalize" %>
             </li>
           <% end %>
         </ul>
@@ -70,9 +70,9 @@
       <li class="uk-parent">
         <a href="#">Sites</a>
         <ul class="uk-nav-sub">
-          <%= for site <- get_nav_sites(@conn) do %>
+          <%= for site <- get_nav_sites() do %>
             <li class="<%= if in_current_site(@conn, site.id), do: "uk-active" %>">
-              <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
+              <%= link site.name, to: show_site_link(@conn), class: "uk-link-text" %>
             </li>
           <% end %>
         </ul>

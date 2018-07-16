@@ -13,6 +13,7 @@
                     <strong><%= @author.name %></strong>
                   </h3>
                   <p>Posts: <%= number_of_published_posts(@author)%> </p>
+                  <p>Columnist? <%= if @author.is_columnist, do: "Yes", else: "No" %> </p>
                 </center>
             </div>
         </div>

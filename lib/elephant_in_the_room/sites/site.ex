@@ -19,7 +19,8 @@ defmodule ElephantInTheRoom.Sites.Site do
   def changeset(%Site{} = site, attrs) do
     site
     |> cast(attrs, [:name, :host])
-    |> validate_required([:name])
+    |> validate_required([:name, :host])
     |> unique_constraint(:name)
+    |> unique_constraint(:host)
   end
 end

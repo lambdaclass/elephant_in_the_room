@@ -10,7 +10,6 @@
                          section_3_amount: 4,
                          section_4_amount: 5,
                          section_5_amount: 5})
-  authors = get_authors(@site, 5)
 %>
 
 <div class="main-landing-page-container">
@@ -109,13 +108,13 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- author's column -->
         <div class="individual-content three-one">
-          <%= render "_authors.html", Map.merge(assigns, %{authors: authors}) %>
+          <%= render "_authors.html", conn: @conn, authors: @columnists %>
         </div>
       </div>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-2@m">
         <!-- latest's column -->
         <div class="individual-content three-two">
-          <%= render "_latest.html", Map.merge(assigns, %{posts: section_4_posts})%>
+          <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
         </div>
       </div>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">

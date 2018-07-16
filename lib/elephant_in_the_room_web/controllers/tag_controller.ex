@@ -57,10 +57,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   end
 
   def public_show(conn, %{"tag_id" => tag_id} = params) do
-    site_id =
-      if conn.host != "localhost",
-        do: conn.assigns.site.id,
-        else: params["id"]
+    site_id = conn.assigns.site.id
 
     site = Sites.get_site!(site_id)
 

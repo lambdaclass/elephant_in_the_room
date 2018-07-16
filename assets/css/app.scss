@@ -1,5 +1,6 @@
 @import "../node_modules/flexboxgrid/dist/flexboxgrid";
 @import "../node_modules/uikit/dist/css/uikit.min";
+@import "_used_fonts";
 @import "_variables";
 @import "_navbar";
 @import "_navigation";
@@ -24,6 +25,10 @@ a:hover {
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
   font-family: $title-font;
+}
+
+.uk-card-default {
+  box-shadow: none;
 }
 
 .row {

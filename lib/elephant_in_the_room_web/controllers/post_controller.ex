@@ -3,7 +3,6 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoomWeb.DomainBased
   alias Phoenix.Controller
   import Ecto.Query
 
@@ -53,9 +52,10 @@ defmodule ElephantInTheRoomWeb.PostController do
   def create(%{assigns: %{site: site}} = conn, %{"post" => post_params}) do
     case Sites.create_post(site, post_params) do
       {:ok, post} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+
         conn
-        |> Controller.put_flash(:info, :creation_success)
-        |> redirect(to: site_post_path(conn, :edit, site, post))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(
@@ -72,8 +72,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
-  def public_show(conn, %{"slug" => slug} = params) do
-    with {:ok, site_id} <- DomainBased.get_site_id(conn, params),
+  def public_show(conn, %{"slug" => slug}) do
+    with site_id <- conn.assigns.site.id,
          {:ok, site} <- Sites.get_site(site_id),
          {:ok, post} <- Sites.get_post_by_slug(site_id, slug) do
 
@@ -103,7 +103,11 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"cover_delete" => "true", "id" => id, "post" => post_params}) do
+  def update(%{assigns: %{site: site}} = conn, %{
+        "cover_delete" => "true",
+        "id" => id,
+        "post" => post_params
+      }) do
     post = Sites.get_post!(id)
 
     {:ok, post_no_cover} = Sites.delete_cover(post)
@@ -117,9 +121,10 @@ defmodule ElephantInTheRoomWeb.PostController do
 
     case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+
         conn
-        |> Controller.put_flash(:info, :update_success)
-        |> redirect(to: site_post_path(conn, :edit, site, post))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", post: post, changeset: changeset)
@@ -133,5 +138,9 @@ defmodule ElephantInTheRoomWeb.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: site_post_path(conn, :index, site))
+  end
+
+  defp relative_path(conn, %Post{inserted_at: date, slug: slug}) do
+    post_path(conn, :public_show, date.year, date.month, date.day, slug)
   end
 end
