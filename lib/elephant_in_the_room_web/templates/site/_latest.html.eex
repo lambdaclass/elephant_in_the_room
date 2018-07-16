@@ -22,7 +22,7 @@
               <%= if post.author do %>
                 <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize" %>
               <% end %>
-              <%= PostView.show_date(post.updated_at) %>
+              <%= PostView.show_date(post.inserted_at) %>
             </p>
           </div>
         </div>

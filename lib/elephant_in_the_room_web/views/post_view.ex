@@ -38,8 +38,9 @@ defmodule ElephantInTheRoomWeb.PostView do
   def get_selected_author(_other), do: ""
 
   def get_selected_tags(%Post{tags: tags}) when is_list(tags) do
-    Enum.map(tags, fn (%Tag{name: name}) -> name end)
+    Enum.map(tags, fn %Tag{name: name} -> name end)
   end
+
   def get_selected_tags(_), do: []
 
   def show_content(%Post{rendered_content: content}), do: content
@@ -80,7 +81,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   defp format_diff(diff, _date) when diff < @one_hour,
     do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
 
-  defp format_diff(diff, _date) when diff > @one_hour,
+  defp format_diff(diff, _date) when diff > @one_hour and diff < @one_day,
     do: {:hours, "#{div(diff, @one_hour)} hours ago"}
 
   defp format_diff(diff, _date) when diff <= @one_day_and_few_hours, do: {:day, "a day ago"}
