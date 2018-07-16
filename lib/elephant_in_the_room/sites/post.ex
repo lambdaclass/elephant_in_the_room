@@ -39,6 +39,8 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
+    new_attrs = parse_date(attrs)
+
     post
     |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
@@ -55,15 +57,22 @@ defmodule ElephantInTheRoom.Sites.Post do
     changeset
   end
 
-  def put_date(changeset, attrs) do
-    case Ecto.Date.cast(attrs["date"]) do
-      {:ok, date} ->
-        Changeset.put_change(changeset, :date, date)
-
-      :error ->
-        Changeset.add_error(changeset, :date, "Wrong date")
-    end
+  def to_iso_hour(%{"hour" => hour, "minute" => minute, "second" => second}) do
+    iso_h = if String.length(hour) == 1, do: "0" <> hour, else: hour
+    iso_m = if String.length(minute) == 1, do: "0" <> minute, else: minute
+    iso_s = if String.length(second) == 1, do: "0" <> second, else: second
+    %{hour: iso_h, minute: iso_m, second: iso_s}
   end
+
+  defp parse_date(%{"date" => date, "hour" => hour} = attrs) do
+    iso_hour = to_iso_hour(hour)
+    date_string = "#{date} #{iso_hour.hour}:#{iso_hour.minute}:#{iso_hour.second}"
+    {:ok, datetime} = NaiveDateTime.from_iso8601(date_string)
+
+    datetime
+  end
+
+  defp parse_date(attrs), do: attrs
 
   def store_cover(%Changeset{} = changeset, %{"cover" => nil}) do
     put_change(changeset, :cover, nil)

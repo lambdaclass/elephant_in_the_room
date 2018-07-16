@@ -122,4 +122,14 @@ defmodule ElephantInTheRoomWeb.PostView do
   defp replace_host(relative_path, conn) do
     "http://#{conn.assigns.site.host}:#{conn.port}#{relative_path}"
   end
+
+  def post_hour_select(form, field, opts \\ []) do
+    builder = fn b ->
+      ~e"""
+      <%= b.(:hour, []) %> : <%= b.(:minute, []) %> : <%= b.(:second, []) %>
+      """
+    end
+
+    datetime_select(form, field, [builder: builder] ++ opts)
+  end
 end
