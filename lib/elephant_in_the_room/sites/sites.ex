@@ -319,6 +319,14 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.all
   end
 
+  def get_columnists(%Site{} = site, amount) do
+    Ecto.assoc(site, :authors)
+    |> where([author], author.is_columnist == true)
+    |> distinct(true)
+    |> limit(^amount)
+    |> Repo.all
+  end
+
   @doc """
   Creates a post.
 
