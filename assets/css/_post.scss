@@ -44,10 +44,12 @@
 
   .post-main-tags {
       background: #686868;
+      text-transform: uppercase;
       color: #f0f0f0;
+      padding: 2px 3px 2px 3px;
+      font-size: 0.7em;
       @media screen and (max-width: $break-s) {
           font-size: 0.6em;
-          height: 2em;
       }
   }
 
