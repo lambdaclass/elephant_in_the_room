@@ -1,4 +1,10 @@
 .article {
+  padding: 0 30px;
+
+  @media screen and (min-width: $break-s) {
+    padding: 0 60px;
+  }
+
   .uk-text-meta {
     padding-top: 2em;
     a {
@@ -11,7 +17,6 @@
   .article-content {
     p {
       color: $black;
-      font-size: 18px;
     }
     img {
       margin: 20px 0;
@@ -39,7 +44,6 @@
 
   .post-main-title {
     margin-bottom: 0px;
-    display: inline;
   }
 
   .post-main-tags {
