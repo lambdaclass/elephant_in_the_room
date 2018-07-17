@@ -74,6 +74,9 @@ defmodule ElephantInTheRoomWeb.PostView do
   @one_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 
+  defp format_diff(diff, date) when diff < 0,
+    do: {:date, "on #{date.day}-#{date.month}-#{date.year}"}
+
   defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "just now"}
 
   defp format_diff(diff, _date) when diff < @one_hour,
