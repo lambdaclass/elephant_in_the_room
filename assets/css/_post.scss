@@ -6,7 +6,7 @@
   }
 
   .uk-text-meta {
-    padding-top: 2em;
+    font-size: 80%;
     a {
       color: #222;
     }
@@ -43,7 +43,10 @@
   }
 
   .post-main-title {
-    margin-bottom: 0px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    border-top: 2px solid #666;
+    font-size: 170%;
   }
 
   .post-main-tags {
@@ -51,10 +54,7 @@
       text-transform: uppercase;
       color: #f0f0f0;
       padding: 2px 3px 2px 3px;
-      font-size: 0.7em;
-      @media screen and (max-width: $break-s) {
-          font-size: 0.6em;
-      }
+      font-size: 70%;
   }
 
 }
