@@ -10,11 +10,12 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
   end
 
   def generate_absolute_url(relative_path, conn) do
-    port = case conn.port do
-      80 -> ""
-      port -> ":#{port}"
-    end
     scheme = to_string(conn.scheme)
+    port = case {scheme, conn.port} do
+      {"http",  80}  -> ""
+      {"https", 443} -> ""
+      {_, port} -> ":#{port}"
+    end
     "#{scheme}://#{conn.assigns.site.host}#{port}#{relative_path}"
   end
 
