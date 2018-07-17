@@ -26,10 +26,12 @@
     <div class="author">
       <%= if @post.author do %>
         <%= link @post.author.name, to: author_path(@conn, :public_show, @post.author.id) %>
-        <p class="uk-text-muted uk-text-small"><%= PostView.show_date(@post.inserted_at) %></p>
       <% else %>
         &ensp;
       <% end %>
+    </div>
+    <div class="post-date">
+      <p><%= PostView.show_date(@post.inserted_at) %></p>
     </div>
   </div>
 <% end %>
