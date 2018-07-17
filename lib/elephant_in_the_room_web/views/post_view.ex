@@ -126,7 +126,9 @@ defmodule ElephantInTheRoomWeb.PostView do
   def post_hour_select(form, field, opts \\ []) do
     builder = fn b ->
       ~e"""
-      <%= b.(:hour, []) %> : <%= b.(:minute, []) %> : <%= b.(:second, []) %>
+      <%= b.(:hour, [class: "uk-select uk-form-width-xsmall"]) %> :
+      <%= b.(:minute, [class: "uk-select uk-form-width-xsmall"]) %> :
+      <%= b.(:second, [class: "uk-select uk-form-width-xsmall"]) %>
       """
     end
 

@@ -42,7 +42,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     new_attrs = parse_date(attrs)
 
     post
-    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
@@ -56,23 +56,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   def store_cover(%Changeset{valid?: false} = changeset, _attrs) do
     changeset
   end
-
-  def to_iso_hour(%{"hour" => hour, "minute" => minute, "second" => second}) do
-    iso_h = if String.length(hour) == 1, do: "0" <> hour, else: hour
-    iso_m = if String.length(minute) == 1, do: "0" <> minute, else: minute
-    iso_s = if String.length(second) == 1, do: "0" <> second, else: second
-    %{hour: iso_h, minute: iso_m, second: iso_s}
-  end
-
-  defp parse_date(%{"date" => date, "hour" => hour} = attrs) do
-    iso_hour = to_iso_hour(hour)
-    date_string = "#{date} #{iso_hour.hour}:#{iso_hour.minute}:#{iso_hour.second}"
-    {:ok, datetime} = NaiveDateTime.from_iso8601(date_string)
-
-    datetime
-  end
-
-  defp parse_date(attrs), do: attrs
 
   def store_cover(%Changeset{} = changeset, %{"cover" => nil}) do
     put_change(changeset, :cover, nil)
@@ -184,4 +167,18 @@ defmodule ElephantInTheRoom.Sites.Post do
       conflict_target: :name
     )
   end
+
+  defp parse_date(%{"date" => date, "hour" => hour} = attrs) do
+    [h, m, s] =
+      hour
+      |> Enum.map(fn {_, v} -> if String.length(v) == 1, do: "0" <> v, else: v end)
+
+    iso_hour = %{hour: h, minute: m, second: s}
+    date_string = "#{date} #{iso_hour.hour}:#{iso_hour.minute}:#{iso_hour.second}"
+    {:ok, datetime} = NaiveDateTime.from_iso8601(date_string)
+
+    Map.put(attrs, "inserted_at", datetime)
+  end
+
+  defp parse_date(attrs), do: attrs
 end
