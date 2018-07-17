@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="/css/color-picker.min.css" media="screen">
+<script src="/js/color-picker.min.js"></script>
+
 <body class="admin-body-root">
 
 <div class="admin-top-bar-line"></div>

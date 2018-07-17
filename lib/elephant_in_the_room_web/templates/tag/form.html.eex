@@ -1,3 +1,8 @@
+
+<div class="admin-title">
+  <span class="title-text">Edit tag</span>
+</div>
+
 <%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -6,14 +11,39 @@
   <% end %>
 
   <fieldset class="uk-fieldset">
-    <div class="uk-margin">
+    <div class="uk-no-margin">
       <%= label f, :name, class: "uk-form-label" %>
       <%= text_input f, :name, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :name %>
     </div>
 
-    <div class="uk-margin">
-      <%= submit "Submit", class: "uk-form-controls uk-input" %>
+    <div class="uk-no-margin">
+      <%= label f, :color, class: "uk-form-label" %>
+      <%= text_input f, :color, class: "uk-form-controls uk-input"%>
+      <%= error_tag f, :name %>
     </div>
+    
+    <div class="uk-margin">
+      <%= submit "Submit", class: "uk-button uk-button-primary" %>
+    </div>
+
+
   </fieldset>
 <% end %>
+
+<script>
+    var picker = new CP(document.querySelector('#tag_color'));
+    picker.on("change", function(color) {
+      let input = this.target;
+      let value
+      if (input.getAttribute("not_first") !== null) {
+        value = '#' + color
+      } else {
+        value = '#' + input.value
+        input.setAttribute("not_first", true)
+      }
+      input.value = value
+      input.style.color = "white"
+      input.style.backgroundColor = value
+    });
+</script>

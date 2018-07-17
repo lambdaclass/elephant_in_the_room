@@ -4,7 +4,7 @@ config = %{
   sites: 3,
   categories: 4,
   authors: 5,
-  tags: 3,
+  tags: 6,
   users: 6,
   posts: 15
 }
@@ -24,17 +24,16 @@ for site <- ElephantFaker.Site.insert_many(config.sites) do
       |> Enum.take_random(Faker.random_between(0, config.categories))
       |> Enum.map(fn cat -> cat.name end)
 
-    tags_separated_by_comma =
+    tag_string_list =
       tags
-      |> Enum.take_random(Faker.random_between(0, config.tags))
+      |> Enum.take_random(Faker.random_between(1, config.tags))
       |> Enum.map(fn tag -> tag.name end)
-      |> Enum.join(", ")
 
     ElephantFaker.Post.insert_one(%{
       "site" => site,
       "author_id" => random_author.id,
       "categories" => categories_name,
-      "tags_separated_by_comma" => tags_separated_by_comma
+      "tags" => tag_string_list
     })
   end
 end
