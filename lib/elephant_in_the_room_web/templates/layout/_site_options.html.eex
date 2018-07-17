@@ -1,5 +1,5 @@
-<%= for site <- get_nav_sites() do %>
+<%= for site <- Enum.take(@site_list, 7) do %>
   <li>
-    <%= link site.name, to: show_site_link(site, @conn), class: "uk-link-text" %>
+    <%= link site.name, to: show_site_link(site, @conn) %>
   </li>
 <% end %>

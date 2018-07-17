@@ -4,10 +4,6 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.{User, Role}
 
-  def get_nav_sites() do
-    Sites.list_sites()
-  end
-
   def get_categories(assigns, amount \\ 5)
 
   def get_categories(%{assigns: %{site: %{categories: categories}}}, amount) do

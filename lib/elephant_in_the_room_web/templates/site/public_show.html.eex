@@ -159,34 +159,4 @@
     </div>
   </div>
   </div>
-    <div class="uk-grid-collapse uk-flex-row footer uk-flex-center" uk-grid>
-      <!-- footer -->
-      <div class="uk-width-1-1 uk-margin-small-top footer-card uk-flex uk-flex-center  uk-text-left@m" uk-grid>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>About&nbsp;Us</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>Contact</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>Subscription</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <h1><%= @site.name %></h1>
-        </div>
-      </div>
-      <hr>
-    </div>
 </div>
