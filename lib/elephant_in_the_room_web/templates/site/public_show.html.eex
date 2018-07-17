@@ -120,7 +120,7 @@
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- popular's column -->
         <div class="individual-content three-three">
-          <%= render "_popular.html", Map.merge(assigns, %{posts: section_4_posts}) %>
+          <%= render "_popular.html", conn: @conn, site: @site, posts: @popular_posts %>
         </div>
       </div>
     </div>

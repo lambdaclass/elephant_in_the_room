@@ -18,14 +18,9 @@ defmodule ElephantInTheRoom.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    extra_app_dev = case Mix.env() do
-                      :prod -> []
-                      _ -> [:faker]
-                    end
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto] ++
-        extra_app_dev
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto, :redix]
     ]
   end
 
@@ -51,6 +46,8 @@ defmodule ElephantInTheRoom.Mixfile do
       {:guardian, "~> 1.0.1"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
+      {:redix, "~> 0.7.1"},
+
       # markdown
       {:cmark, "~> 0.7"},
       {:faker, "~> 0.9", only: [:dev, :test]},
