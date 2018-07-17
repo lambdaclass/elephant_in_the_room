@@ -13,14 +13,17 @@
 
 html {
   font-family: $text-font;
-  font-size: 22px;
+  font-size: 21px;
   hyphens: auto;
 
+  @media only screen and (max-width: 1200px) {
+    font-size: 19px;
+  }
   @media only screen and (max-width: 700px) {
-    font-size: 20px;
+    font-size: 18px;
   }
   @media only screen and (max-width: 640px) {
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 
