@@ -164,7 +164,7 @@
     </ul>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
-      <%= render "_category_options.html", assigns %>
+      <%= render "_site_options.html", assigns %>
     </ul>
   </div>
 </div>

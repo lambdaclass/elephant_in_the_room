@@ -22,9 +22,12 @@
   <% else %>
     <body>
       <div class="uk-offcanvas-content">
-        <%= render "_normal.html", assigns %>
+        <%= render "_navbar.html", assigns %>
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
+        </div>
+        <div>
+          <%= render "_normal_footer.html", assigns %>
         </div>
       </div>
     </body>
