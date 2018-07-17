@@ -25,6 +25,8 @@
 
 <% else %>
   <%= if assigns[:site] do %>
-      <title> @site.name </title>
-    <%= end %>
+    <title> <%= @site.name %></title>
+  <%= else %>
+    <title>Elephant In The Room</title>
+  <%= end %>
 <%= end %>
