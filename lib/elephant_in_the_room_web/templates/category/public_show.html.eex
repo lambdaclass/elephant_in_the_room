@@ -4,7 +4,7 @@
 %>
 
 <div class="uk-container uk-container-small">
-  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top"><%= @category.name %></h1>
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @category.name %></h1>
 
   <div class="uk-padding">
     <%= unless Enum.empty?(@category.posts) do %>
@@ -39,7 +39,7 @@
             <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
             <p class="uk-visible@s"><%= post.abstract %></p>
             <%= if post.author do %>
-              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold author" %>
             <% end %>
             <p><%= PostView.show_date(post.updated_at) %></p>
           </div>

@@ -23,7 +23,7 @@
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropwdown">Categories</span>
+          <span class="with-dropdown">Categories</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -31,7 +31,7 @@
           <div class="dropdown-arrow-up"> </div>
         </a>
         <div uk-dropdown="pos: bottom-center; offset: 0"
-             class="uk-navbar-dropdown dropwdown-container">
+             class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <%= render "_category_options.html", assigns %>
           </ul>
@@ -40,7 +40,7 @@
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropwdown">Magazine</span>
+          <span class="with-dropdown">Magazine</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -48,7 +48,7 @@
           <div class="dropdown-arrow-up"> </div>
         </a>
         <div uk-dropdown="pos: bottom-center; offset: 0"
-             class="uk-navbar-dropdown dropwdown-container">
+             class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="#">Current issue</a></li>
             <li><a href="#">All issue</a></li>
@@ -60,7 +60,7 @@
 
        <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropwdown">More</span>
+          <span class="with-dropdown">More</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -68,7 +68,7 @@
           <div class="dropdown-arrow-up"> </div>
         </a>
         <div uk-dropdown="pos: bottom-right; offset: 0"
-             class="uk-navbar-dropdown dropwdown-container">
+             class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li class="uk-nav-header">User</li>
             <li class="uk-nav-divider"></li>
