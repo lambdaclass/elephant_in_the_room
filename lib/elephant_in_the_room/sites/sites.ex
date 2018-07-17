@@ -334,6 +334,14 @@ defmodule ElephantInTheRoom.Sites do
     |> Enum.sort_by(&(scores[&1.id]), &>=/2)
   end
 
+  def get_latest_posts(%Site{} = site) do
+    Post
+    |> where([post], post.site_id == ^site.id)
+    |> order_by(desc: :inserted_at)
+    |> preload(:author)
+    |> Repo.all()
+  end
+
   def get_latest_posts(%Site{} = site, amount) do
     Post
     |> where([post], post.site_id == ^site.id)

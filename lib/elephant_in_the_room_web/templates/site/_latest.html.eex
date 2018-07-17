@@ -5,7 +5,9 @@
 
 <%= if !Enum.empty?(@posts) do %>
   <div class="latest">
-    <h3 class="uk-text-bold uk-text-left">Latest<hr></h3>
+    <h3 class="uk-text-bold uk-text-left">
+      <%= link "Latest", to: site_path(@conn, :public_show_latest)%><hr>
+    </h3>
     <%= for post <- @posts do %>
       <%= if post do %>
         <div class="post uk-flex" uk-grid>

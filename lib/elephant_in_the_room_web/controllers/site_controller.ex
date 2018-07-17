@@ -142,6 +142,14 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "public_show_popular.html", posts: popular_posts)
   end
 
+  def public_show_latest(conn, _params) do
+    latest_posts =
+      Repo.get_by!(Site, host: conn.host)
+      |> Sites.get_latest_posts
+
+    render(conn, "public_show_latest.html", posts: latest_posts)
+  end
+
   def show_default_site(conn, _params) do
     sites = Sites.list_sites()
 
