@@ -29,11 +29,11 @@
           <%= @conn.assigns[:last_backup_ready_at]%> UTC
         </span>
       </div>
-    <%= end %>
+    <% end %>
   </div>
 
   <div>
-    <%= form_for @conn, backup_path(@conn, :do_backup), fn f -> %>
+    <%= form_for @conn, backup_path(@conn, :do_backup), fn _ -> %>
       <%= submit "backup now", class: "uk-button uk-button-danger uk-button-small" %>
     <% end %>
     <%= if @conn.assigns[:last_backup_ready_at] do %>
@@ -42,7 +42,7 @@
           download latest backup
         </button>
       </a>
-    <%= end %>
+    <% end %>
   </div>
 
 </div>

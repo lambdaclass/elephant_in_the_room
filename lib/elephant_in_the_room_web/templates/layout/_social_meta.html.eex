@@ -5,8 +5,8 @@
   <% else %>
     <%= if assigns[:site] do %>
       <title> @site.name </title>
-    <%= end %>
-  <%= end %>
+    <% end %>
+  <% end %>
 
   <%= if @meta.url do %>
     <meta property="og:url" content="<%= @meta.url %>" />
@@ -14,7 +14,7 @@
   <%= if @meta.type do %>
     <meta property="og:type" content="<%= @meta.type %>" />
   <% end %>
-  
+
   <%= if @meta.description do %>
     <meta property="og:description" content="<%= @meta.description %>" />
   <% end %>
@@ -26,7 +26,7 @@
 <% else %>
   <%= if assigns[:site] do %>
     <title> <%= @site.name %></title>
-  <%= else %>
+  <% else %>
     <title>Elephant In The Room</title>
-  <%= end %>
-<%= end %>
+  <% end %>
+<% end %>

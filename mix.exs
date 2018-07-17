@@ -10,6 +10,7 @@ defmodule ElephantInTheRoom.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
+      elixirc_options: [warnings_as_errors: true],
       deps: deps()
     ]
   end

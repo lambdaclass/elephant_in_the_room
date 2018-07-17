@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
-  alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoom.Sites
 
-  def put(definition, version, {file, scope}) do
+  def put(_definition, version, {file, _scope}) do
     binary =
       if file.binary do
         file.binary
@@ -21,7 +21,7 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
     {:ok, saved_image.name}
   end
 
-  def url(definition, version, file_and_scope, _options \\ []) do
+  def url(_definition, version, file_and_scope, _options \\ []) do
     name =
       case version do
         :original ->
@@ -34,9 +34,4 @@ defmodule ElephantInTheRoomWeb.Uploaders.Postgresql do
     |> URI.encode()
   end
 
-  def delete(definition, version, file_and_scope) do
-    # TODO
-    # build_local_path(definition, version, file_and_scope)
-    # |> File.rm()
-  end
 end

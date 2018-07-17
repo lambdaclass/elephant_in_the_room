@@ -2,14 +2,10 @@
   %{
     section1: section_1_posts,
     section2: section_2_posts,
-    section3: section_3_posts,
-    section4: section_4_posts,
-    section5: section_5_posts
+    section3: section_3_posts
   } = get_posts(@site, %{section_1_amount: 3,
                          section_2_amount: 4,
-                         section_3_amount: 8,
-                         section_4_amount: 5,
-                         section_5_amount: 5})
+                         section_3_amount: 8})
 %>
 
 <div class="main-landing-page-container">

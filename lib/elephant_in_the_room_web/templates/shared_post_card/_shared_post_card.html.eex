@@ -1,5 +1,4 @@
 <%
-  alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoomWeb.{PostView, SiteView}
 %>
 
@@ -25,7 +24,7 @@
           <p><%= post.abstract %></p>
           <%= if post.author do %>
             <p class="author"><%= post.author.name %></p>
-          <%= end %>
+          <% end %>
         </div>
       </div>
       <div class="featured-bar-bottom"></div>
@@ -87,7 +86,7 @@
             <p><%= post.abstract %></p>
             <%= if post.author do %>
               <p class="author"><%= post.author.name %></p>
-            <%= end %>
+            <% end %>
           </div>
         </div>
 
@@ -110,7 +109,7 @@
               <p><%= post.abstract %></p>
               <%= if post.author do %>
                 <p class="author"><%= post.author.name %></p>
-              <%= end %>
+              <% end %>
             </div>
           </div>
         </a>

@@ -56,7 +56,7 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def public_show(conn, %{"tag_id" => tag_id} = params) do
+  def public_show(conn, %{"tag_id" => tag_id}) do
     site_id = conn.assigns.site.id
 
     site = Sites.get_site!(site_id)
@@ -74,7 +74,7 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "tag" => tag_params}) do
+  def update(conn, %{"id" => id, "tag" => tag_params}) do
     tag = Sites.get_tag!(id)
 
     case Sites.update_tag(tag, tag_params) do

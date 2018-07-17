@@ -51,7 +51,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {name, site_path(conn, :show, id)}
   end
 
-  defp bread_crumb_posts(conn,%Site{name: name, id: id}) do
+  defp bread_crumb_posts(conn, %Site{id: id}) do
     {"Posts", site_post_path(conn, :index, id)}
   end
 

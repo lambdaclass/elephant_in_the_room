@@ -73,7 +73,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
     render(SharedPostCardView, template, assigns)
   end
 
-  def get_abstract_to_display(%Post{abstract: abstract}, count)
+  def get_abstract_to_display(%Post{abstract: abstract}, _count)
       when abstract == nil,
       do: ""
 
@@ -105,31 +105,22 @@ defmodule ElephantInTheRoomWeb.SiteView do
   def get_posts(%Site{posts: posts}, %{
         section_1_amount: amount1,
         section_2_amount: amount2,
-        section_3_amount: amount3,
-        section_4_amount: amount4,
-        section_5_amount: amount5
+        section_3_amount: amount3
       }) do
     {s1_from, s1_to} = {0, amount1}
     {s2_from, s2_to} = {s1_to, s1_to + amount2}
     {s3_from, s3_to} = {s2_to, s2_to + amount3}
-    {s4_from, s4_to} = {s3_to, s3_to + amount4}
-    {s5_from, s5_to} = {s4_to, s4_to + amount5}
 
     %{
       section1: take_range_from_list(posts, s1_from, s1_to),
       section2: take_range_from_list(posts, s2_from, s2_to),
-      section3: take_range_from_list(posts, s3_from, s3_to),
-      section4: take_range_from_list(posts, s4_from, s4_to),
-      section5: take_range_from_list(posts, s5_from, s5_to)
+      section3: take_range_from_list(posts, s3_from, s3_to)
     }
   end
 
   def take_range_from_list(list, from, to) do
-    amount = to - from
-
-    range =
-      take_range_from_list(list, [], 0, from, to)
-      |> Enum.reverse()
+    take_range_from_list(list, [], 0, from, to)
+    |> Enum.reverse()
   end
 
   defp take_range_from_list([h | t], acc, current, from, to) do
@@ -140,7 +131,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
-  defp take_range_from_list([], acc, current, from, to) do
+  defp take_range_from_list([], acc, _current, _from, _to) do
     acc
   end
 end
