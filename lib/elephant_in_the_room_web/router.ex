@@ -53,6 +53,7 @@ defmodule ElephantInTheRoomWeb.Router do
     scope "/" do
       pipe_through([:site_required])
       get("/", SiteController, :public_show)
+      get("/popular", SiteController, :public_show_popular)
       get("/author/:author_id", AuthorController, :public_show)
       get("/post/:year/:month/:day/:slug", PostController, :public_show)
       get("/category/:category_id", CategoryController, :public_show)

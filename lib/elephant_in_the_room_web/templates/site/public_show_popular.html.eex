@@ -1,0 +1,50 @@
+<%
+  alias ElephantInTheRoomWeb.{PostView, SiteView}
+%>
+
+<div class="uk-container uk-container-small">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Popular</h1>
+
+  <div class="uk-padding">
+    <%= unless Enum.empty?(@posts) do %>
+      <% [main_post | other_posts] = @posts %>
+      <div class="category-main-post">
+        <% link_main_post = SiteView.show_link_with_date @conn, main_post %>
+        <div class="uk-width-1-1 uk-margin-bottom">
+          <%= link to: link_main_post do %>
+            <img data-src="<%= main_post.thumbnail %>" uk-img>
+          <% end %>
+        </div>
+        <div class="uk-width-1-1 uk-text-center uk-text-left@s">
+          <h2><%= link main_post.title, to: link_main_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
+          <p class="uk-visible@s"><%= main_post.abstract %></p>
+          <%= if main_post.author do %>
+            <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+          <% end %>
+          <p><%= PostView.show_date(main_post.updated_at) %></p>
+        </div>
+      </div>
+      <hr>
+
+      <%= for post <- other_posts do %>
+        <% link_post = SiteView.show_link_with_date @conn, post %>
+        <div class="category-posts" uk-grid>
+          <div class="uk-width-1-2">
+            <%= link to: link_post do %>
+              <img data-src="<%= post.thumbnail %>" uk-img>
+            <% end %>
+          </div>
+          <div class="uk-width-1-2">
+            <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
+            <p class="uk-visible@s"><%= post.abstract %></p>
+            <%= if post.author do %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold author" %>
+            <% end %>
+            <p><%= PostView.show_date(post.updated_at) %></p>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    <% end %>
+  </div>
+</div>

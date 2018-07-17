@@ -315,6 +315,10 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
+  def get_popular_posts(site) do
+    get_popular_posts(site, -1)
+  end
+
   def get_popular_posts(%Site{id: site_id}, amount) do
     {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount, "WITHSCORES"])
 
