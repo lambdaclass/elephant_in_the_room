@@ -1,9 +1,18 @@
 <%
   alias ElephantInTheRoomWeb.{PostView, SiteView}
+  import ElephantInTheRoomWeb.LayoutView, only: [get_logged_user: 1]
+  login = get_logged_user(@conn)
 %>
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top"><%= @tag.name %></h1>
+
+  <%= case login do %>
+      <%= {:ok, _user, _} -> %>
+        <%= link "Edit tag", to: site_tag_path(@conn, :edit, @site.id, @tag.id),
+              class: "uk-button uk-button-secondary uk-button-small" %>
+      <%= _ -> %>
+   <% end %>
 
   <div class="uk-padding">
     <%= unless Enum.empty?(@tag.posts) do %>

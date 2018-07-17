@@ -11,6 +11,18 @@
 <% end %>
 
 <div class="uk-container uk-container-small uk-margin-top article">
+
+  <%= if !Enum.empty?(@post.tags) do %>
+    <div>
+      <span class="tags">
+        <%= for tag <- @post.tags do %>
+          <%= link tag.name, to: show_tag_link(@conn, tag),
+              class: "post-main-tags", style: "background: \##{tag.color}" %>
+        <% end %>
+      </span>
+    </div>
+  <%= end %>
+
   <h1 class="uk-text-uppercase uk-text-bold post-main-title"><%= @post.title %></h1>
    <%= case login do %>
       <%= {:ok, _user, _} -> %>
@@ -20,14 +32,6 @@
    <% end %>
    <br>
 
-  <%= if !Enum.empty?(@post.tags) do %>
-      <span class="tags">
-        <%= for tag <- @post.tags do %>
-          <%= link tag.name, to: show_tag_link(@conn, tag),
-              class: "uk-badge post-main-tags" %>
-        <% end %>
-      </span>
-  <%= end %>
   <div class="uk-text-meta">
     <p>
       <%= case @post.author do %>

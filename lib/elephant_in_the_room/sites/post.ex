@@ -5,6 +5,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.Router.Helpers
 
   schema "posts" do
     field(:title, :string)
@@ -154,11 +155,22 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> Enum.map(&get_or_insert_tag(&1, site_id))
   end
 
-  defp get_or_insert_tag(name, site_id) do
-    Repo.insert!(
-      %Tag{name: name, site_id: site_id},
-      on_conflict: [set: [name: name, site_id: site_id]],
-      conflict_target: :name
-    )
+  def get_or_insert_tag(name, site_id) do
+    inserted_tag = Repo.insert(%Tag{name: name, site_id: site_id, color: "686868"},
+      [on_conflict: :nothing])
+    case inserted_tag do
+      %{id: id} when id != nil -> inserted_tag
+      _ ->
+        Repo.get_by!(Tag, name: name, site_id: site_id)
+    end
   end
+
+  def generate_og_meta(conn, %Post{title: title, thumbnail: image, abstract: description} = post) do
+    type = "article"
+    title = "#{title} - #{conn.assigns.site.name}"
+    url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
+    image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
+    %{url: url, type: type, title: title, description: description, image: image}
+  end
+
 end
