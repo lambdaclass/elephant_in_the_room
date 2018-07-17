@@ -21,6 +21,7 @@
     img {
       margin: 20px 0;
       color: #0366d6;
+      vertical-align: unset;
     }
     @media screen and (min-width: $break-s) {
       .img-left {
