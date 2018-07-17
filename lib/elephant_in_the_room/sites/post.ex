@@ -5,6 +5,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.Router.Helpers
 
   schema "posts" do
     field(:title, :string)
@@ -161,4 +162,13 @@ defmodule ElephantInTheRoom.Sites.Post do
       conflict_target: :name
     )
   end
+
+  def generate_og_meta(conn, %Post{title: title, thumbnail: image, abstract: description} = post) do
+    type = "article"
+    title = "#{title} - #{conn.assigns.site.name}"
+    url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
+    image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
+    %{url: url, type: type, title: title, description: description, image: image}
+  end
+
 end

@@ -1,0 +1,30 @@
+<%= if assigns[:meta] do %>
+  <%= if @meta.title do %>
+    <meta property="og:title" content="<%= @meta.title %>" />
+    <title> <%= @meta.title %> </title>
+  <% else %>
+    <%= if assigns[:site] do %>
+      <title> @site.name </title>
+    <%= end %>
+  <%= end %>
+
+  <%= if @meta.url do %>
+    <meta property="og:url" content="<%= @meta.url %>" />
+  <% end %>
+  <%= if @meta.type do %>
+    <meta property="og:type" content="<%= @meta.type %>" />
+  <% end %>
+  
+  <%= if @meta.description do %>
+    <meta property="og:description" content="<%= @meta.description %>" />
+  <% end %>
+
+  <%= if @meta.image do %>
+    <meta property="og:image" content="<%= @meta.image %>" />
+  <% end %>
+
+<% else %>
+  <%= if assigns[:site] do %>
+      <title> @site.name </title>
+    <%= end %>
+<%= end %>
