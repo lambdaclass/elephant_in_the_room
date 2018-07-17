@@ -6,7 +6,7 @@
   <%= if Enum.at(@authors, 0) != nil do %>
     <h3 class="uk-text-bold uk-text-left">Columnists<hr></h3>
     <%= for author <- @authors do %>
-      <div class="author" uk-grid>
+      <div class="author uk-flex uk-flex-middle" uk-grid>
         <div class="uk-width-1-4">
           <img class="uk-border-circle" src="<%= Image.url({author.image, author}) %>" width="40" height="40">
         </div>
