@@ -152,34 +152,32 @@ $landing-separator-decrease-space: 12px;
             }
 
             .sub-image-text {
-                text-align: right;
-                font-size: 0.7em;
                 color: #a7a7a7;
+                text-align: right;
+                font-size: 50%;
             }
 
             .title {
                 margin-bottom: 5px;
-                color: black;
                 line-height: 1em;
                 font-family: $title-font;
-                font-size: 1.3em;
                 text-align: left;
                 text-transform: uppercase;
+                hyphens: none;
             }
 
             .description {
-                padding-top: 0.6em;
-                padding-bottom: 0.6em;
+                padding-top: 0.6rem;
+                padding-bottom: 0.6rem;
                 color: grey;
-                font-size: 1rem;
+                font-size: 70%;
                 text-align: left;
             }
 
             .author {
-                color: black;
                 text-align: left;
                 text-transform: capitalize;
-                font-size: 1rem;            
+                font-size: 80%;           
             }
 
             .post-date {
@@ -187,6 +185,7 @@ $landing-separator-decrease-space: 12px;
                 text-align: right;
                 text-transform: lowercase;
                 font-size: 0.75rem;
+                
             }
         }
 
@@ -208,12 +207,6 @@ $landing-separator-decrease-space: 12px;
                 float: right;
                 margin-right: 10px;
             }
-            .author {
-                font-size: 1rem;
-            }
-            .title {
-                font-size: 1.1rem;
-            }
             .sub-image-text {
                 display: none;
             }
@@ -223,48 +216,49 @@ $landing-separator-decrease-space: 12px;
 
 .popular {
     padding: 10px;
+
+    > a {
+        text-decoration: none;
+    }
+
+    > a > p {
+        margin: 0;
+        color: #000;
+    }
+
+    > a > p:last-child {
+        margin-bottom: 20px;
+    }
+
+    > a > p:nth-child(2) {
+        font-size: 80%;
+    }
+
+    > a > p span {
+        color: #F0204F;
+    }
 }
 
-.popular > a {
-    text-decoration: none;
-}
 
-.popular > a > p {
-    margin: 0;
-    color: #000;
-}
-
-.popular > a > p:last-child {
-    margin-bottom: 20px;
-}
-
-.popular > a > p strong {
-    font-size: 1.2rem;
-}
-
-.popular > a > p span {
-    color: #F0204F;
-}
 
 .authors {
     padding: 10px;
-}
 
-.author > div:nth-child(2) {
-    padding: 0 10px 0 0;
-}
-
-.author p {
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.author p > strong > a {
-    color: #000;
+    .author > div:nth-child(2) {
+        padding-left: 5px;
+    }
+    .author p {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        font-size: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .author p > strong > a {
+        color: #000;
+    }
 }
 
 .author:last-child hr, .latest > hr:last-child {
@@ -274,15 +268,13 @@ $landing-separator-decrease-space: 12px;
 .latest {
     padding: 10px;
 
-    p {
-        font-size: 1rem;
-    }
-
     p:first-child {
         font-family: $title-font;
-        font-size: 1.3rem;
+        hyphens: none;
     }
-
+    p:nth-child(2) {
+        font-size: 80%;
+    }
     a {
         color: #000;
     }

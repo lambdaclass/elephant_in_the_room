@@ -44,7 +44,7 @@ $navbar-break-m: 9600px;
             // font-size: .8rem;
         }
 
-        .with-dropwdown {
+        .with-dropdown {
             padding-right: 4px;
         }
         .dropdown-arrow-up {
@@ -105,8 +105,9 @@ $navbar-break-m: 9600px;
             display: inline-flex;
         }
     }
-    .dropwdown-container {
+    .dropdown-container {
         background-color: white;
+        hyphens: none;
         a {
             color: black !important;
             text-transform: capitalize;

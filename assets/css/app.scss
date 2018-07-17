@@ -13,18 +13,25 @@
 
 html {
   font-family: $text-font;
-  font-size: 21px;
+  font-size: 22px;
   hyphens: auto;
 
-  @media only screen and (max-width: 1200px) {
-    font-size: 19px;
-  }
-  @media only screen and (max-width: 700px) {
-    font-size: 18px;
-  }
-  @media only screen and (max-width: 640px) {
-    font-size: 17px;
-  }
+  @media all and (max-width:1240px){ font-size: 20px; }
+  // @media all and (max-width:1000px){ font-size: 24px; }
+  // @media all and (max-width:960px){ font-size: 23px; }
+  // @media all and (max-width:920px){ font-size: 22px; }
+  // @media all and (max-width:880px){ font-size: 21px; }
+  @media all and (max-width:840px){ font-size: 20px; }
+  @media all and (max-width:800px){ font-size: 19px; }
+  @media all and (max-width:760px){ font-size: 18px; }
+  @media all and (max-width:720px){ font-size: 17px; }
+  @media all and (max-width:680px){ font-size: 16px; }
+  @media all and (max-width:640px){ font-size: 15px; }
+  @media all and (max-width:600px){ font-size: 14px; }
+  @media all and (max-width:560px){ font-size: 13px; }
+  @media all and (max-width:520px){ font-size: 12px; }
+
+  @media all and (max-width:520px){ font-size: 18px; }
 }
 
 a {
@@ -37,7 +44,9 @@ a:hover {
 }
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+  color: #000;
   font-family: $title-font;
+  hyphens: none;
 }
 
 .uk-card-default {
