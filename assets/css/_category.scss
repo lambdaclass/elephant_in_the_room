@@ -1,23 +1,33 @@
+.category-title {
+  font-size: 200%;
+}
+
 .category-main-post {
-  h2 > a {
-    color: $black;
-  }
-  h2 > a:hover {
-    color: $black;
+  h2 {
+    font-size: 150%;
+
+    > a, > a:hover {
+      color: $black;
+    }
   }
 }
+
 .category-posts {
   h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 120%;
+
+    > a, > a:hover {
+      color: $black;
+    }
   }
-  h2 > a {
-    color: $black;
-  }
-  h2 > a:hover {
-    color: $black;
-  }
+
   p {
     margin: 5px 0;
+    font-size: 90%;
   }
+}
+
+hr:last-child {
+  display: none;
 }
