@@ -92,7 +92,7 @@
 
   <div class="form-group">
     <%= label f, :date, class: "uk-form-label" %>
-    <%= text_input f, :date, class: "uk-input", placeholder: "1970-01-01", type: "date" %>
+    <%= text_input f, :date, value: default_date(assigns[:post]), class: "uk-input", type: "date" %>
     <%= error_tag f, :date %>
   </div>
 

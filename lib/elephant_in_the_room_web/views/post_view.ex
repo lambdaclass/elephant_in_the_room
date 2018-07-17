@@ -143,4 +143,26 @@ defmodule ElephantInTheRoomWeb.PostView do
 
     datetime_select(form, field, [builder: builder] ++ opts)
   end
+
+  defp complete_zeros(date) do
+    complete = fn n ->
+      if String.length(n) == 1, do: "0" <> n, else: n
+    end
+
+    year = complete.("#{date.year}")
+    month = complete.("#{date.month}")
+    day = complete.("#{date.day}")
+
+    "#{year}-#{month}-#{day}"
+  end
+
+  def default_date(%Post{inserted_at: date}) do
+    complete_zeros(date)
+  end
+
+  def default_date(_new_post) do
+    now = NaiveDateTime.utc_now()
+
+    complete_zeros(now)
+  end
 end
