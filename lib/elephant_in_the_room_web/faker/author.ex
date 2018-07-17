@@ -6,7 +6,8 @@ defmodule ElephantInTheRoomWeb.Faker.Author do
     %{
       "description" => Faker.Lorem.paragraph(2),
       "image" => Faker.Avatar.image_url(),
-      "name" => Faker.Name.name()
+      "name" => Faker.Name.name(),
+      "is_columnist" => :rand.uniform() > 0.5 
     }
   end
 
