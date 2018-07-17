@@ -36,11 +36,14 @@ $navbar-break-m: 9600px;
     }
     .a-reduced {
         height: 100%;
-        text-transform: capitalize !important;
         color: white !important;
-        &.top-link {
-            font-size: 1em !important;
+        text-transform: capitalize;
+        hyphens: none;
+
+        @media screen and (max-width: 700px) {
+            // font-size: .8rem;
         }
+
         .with-dropwdown {
             padding-right: 4px;
         }
@@ -103,10 +106,11 @@ $navbar-break-m: 9600px;
         }
     }
     .dropwdown-container {
-        background-color: white !important;
+        background-color: white;
         a {
-            text-transform: capitalize;
             color: black !important;
+            text-transform: capitalize;
+
             &:hover{
                 color: #666 !important;
             }
@@ -132,6 +136,10 @@ $navbar-break-m: 9600px;
     .element {
         cursor: pointer;
         padding-top: 4px;
+
+        .mini-description {
+            hyphens: none;
+        }
     }
 }
 
