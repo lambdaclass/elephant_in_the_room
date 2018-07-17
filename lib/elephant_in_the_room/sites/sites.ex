@@ -24,6 +24,8 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload([:categories, :posts, :tags])
   end
 
+  def list_site_no_preload, do: Repo.all(Site)
+
   @doc """
   Gets a single site.
 
