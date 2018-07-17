@@ -315,6 +315,21 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
+  def get_popular_posts(%Site{id: site_id}, amount) do
+    {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount, "WITHSCORES"])
+
+    scores =
+      Enum.chunk(data, 2)
+      |> Enum.map(fn [id, score] -> {String.to_integer(id), String.to_integer(score)} end)
+      |> Map.new
+
+    Post
+    |> where([post], post.id in ^Map.keys(scores))
+    |> Repo.all
+    |> Repo.preload(:author)
+    |> Enum.sort_by(&(scores[&1.id]), &>=/2)
+  end
+
   def get_latest_posts(%Site{} = site, amount) do
     Post
     |> where([post], post.site_id == ^site.id)
