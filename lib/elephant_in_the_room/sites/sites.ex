@@ -310,13 +310,18 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_post_by_slug!(site_id, slug, preload \\ @default_post_preload) do
+    Repo.get_by!(Post, slug: slug, site_id: site_id)
+    |> Repo.preload(preload)
+  end
+
   def get_latest_posts(%Site{} = site, amount) do
     Post
     |> where([post], post.site_id == ^site.id)
     |> limit(^amount)
     |> order_by(desc: :inserted_at)
     |> preload(:author)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_columnists(%Site{} = site, amount) do
@@ -632,6 +637,7 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.update()
   end
 
+  def to_slug(nil), do: ""
   def to_slug(name) do
     name
     |> String.downcase()

@@ -4,6 +4,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
     assigns
@@ -111,12 +112,20 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_link(conn, post) do
+    relative_link(conn, post)
+    |> Utils.generate_absolute_url(conn)
+  end
+
+  def show_thumb_link(conn, post) do
+    post.thumbnail
+    |> Utils.generate_absolute_url(conn)
+  end
+
+  def relative_link(conn, post) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
-
     post_path(conn, :public_show, year, month, day, post.slug)
-    |> replace_host(conn)
   end
 
   defp replace_host(relative_path, conn) do

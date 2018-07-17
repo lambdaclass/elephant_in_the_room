@@ -63,7 +63,7 @@ defmodule ElephantInTheRoomWeb.TagController do
 
     tag =
       Sites.get_tag!(tag_id)
-      |> Repo.preload(:posts)
+      |> Repo.preload(posts: :author)
 
     render(conn, "public_show.html", tag: tag, site: site)
   end
@@ -81,7 +81,7 @@ defmodule ElephantInTheRoomWeb.TagController do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: site_tag_path(conn, :show, site, tag))
+        |> redirect(to: tag_path(conn, :public_show, tag.id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tag: tag, changeset: changeset)

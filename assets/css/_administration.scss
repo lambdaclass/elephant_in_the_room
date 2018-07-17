@@ -103,7 +103,6 @@ $admin-light-grey: #cacaca;
         a {
             color: black;
             font-weight: bold;
-            font-size: 14px !important;
             font-family: $text-font;
             &:hover {
                 color: #276cda;
@@ -248,3 +247,14 @@ $admin-light-grey: #cacaca;
         }
     }
 }
+
+.color-field-set {
+    .palette-color-picker-button {
+        width: 100% !important;
+        border: 0 !important;
+    }
+    .color-input {
+        display: none;
+    }
+}
+

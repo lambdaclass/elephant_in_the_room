@@ -25,3 +25,4 @@ window.UIkit = UIkit;
 import "./navbar";
 import "./posts";
 import "./posts_image_upload";
+import "./markdown_editor";
