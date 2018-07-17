@@ -1,9 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Sites.Tag
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Post, Sites.Tag}
   alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
@@ -133,36 +130,36 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def post_hour_select(form, field, opts \\ []) do
+    default = default_hour(opts[:post])
+
     builder = fn b ->
       ~e"""
-      <%= b.(:hour, [class: "uk-select uk-form-width-xsmall"]) %> :
-      <%= b.(:minute, [class: "uk-select uk-form-width-xsmall"]) %> :
-      <%= b.(:second, [class: "uk-select uk-form-width-xsmall"]) %>
+      <%= b.(:hour, [class: "uk-select uk-form-width-xsmall", value: default.hour]) %> :
+      <%= b.(:minute, [class: "uk-select uk-form-width-xsmall", value: default.minute]) %> :
+      <%= b.(:second, [class: "uk-select uk-form-width-xsmall", value: default.second]) %>
       """
     end
 
     datetime_select(form, field, [builder: builder] ++ opts)
   end
 
-  defp complete_zeros(date) do
-    complete = fn n ->
-      if String.length(n) == 1, do: "0" <> n, else: n
-    end
-
-    year = complete.("#{date.year}")
-    month = complete.("#{date.month}")
-    day = complete.("#{date.day}")
-
-    "#{year}-#{month}-#{day}"
-  end
-
   def default_date(%Post{inserted_at: date}) do
-    complete_zeros(date)
+    Utils.complete_zeros(:date, date)
   end
 
   def default_date(_new_post) do
     now = NaiveDateTime.utc_now()
 
-    complete_zeros(now)
+    Utils.complete_zeros(:date, now)
+  end
+
+  def default_hour(%Post{inserted_at: date}) do
+    Utils.complete_zeros(:hour, date)
+  end
+
+  def default_hour(_new_post) do
+    now = NaiveDateTime.utc_now()
+
+    Utils.complete_zeros(:hour, now)
   end
 end

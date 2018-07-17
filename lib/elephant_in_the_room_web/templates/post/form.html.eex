@@ -98,7 +98,7 @@
 
   <div class="form-group">
     <%= label f, :hour, class: "uk-form-label" %>
-    <%= post_hour_select f, :hour %>
+    <%= post_hour_select f, :hour, post: assigns[:post] %>
     <%= error_tag f, :hour %>
   </div>
 
