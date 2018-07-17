@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoomWeb.Faker.Utils
+  require Logger
 
   # author 1
   # site 1
@@ -34,7 +35,13 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp gen_image_link() do
-    "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}"
+    link = "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}"
+    case HTTPoison.head(link, [], [hackney: [{:follow_redirect, true}] ]) do
+      {:ok, %{status_code: 200}} -> link
+      _ ->
+        Logger.warn("gen_image_link generate invalid link: #{link}")
+        gen_image_link()
+    end
   end
 
   defp gen_text(length) do
