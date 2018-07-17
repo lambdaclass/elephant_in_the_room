@@ -13,14 +13,14 @@
 
 html {
   font-family: $text-font;
-  font-size: 24px;
+  font-size: 22px;
   hyphens: auto;
 
-  @media all and (max-width:1240px){ font-size: 22px; }
+  @media all and (max-width:1240px){ font-size: 20px; }
   // @media all and (max-width:1000px){ font-size: 24px; }
   // @media all and (max-width:960px){ font-size: 23px; }
-  @media all and (max-width:920px){ font-size: 22px; }
-  @media all and (max-width:880px){ font-size: 21px; }
+  // @media all and (max-width:920px){ font-size: 22px; }
+  // @media all and (max-width:880px){ font-size: 21px; }
   @media all and (max-width:840px){ font-size: 20px; }
   @media all and (max-width:800px){ font-size: 19px; }
   @media all and (max-width:760px){ font-size: 18px; }
