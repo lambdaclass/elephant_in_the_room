@@ -21,7 +21,7 @@
             <%= PostView.show_featured_category(post) %>
           </div>
           <h3 class="uk-card-title"><%= post.title %></h3>
-          <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+          <p>Posted <%= PostView.show_date(post.inserted_at) %>.</p>
           <p><%= post.abstract %></p>
           <%= if post.author do %>
             <p class="author"><%= post.author.name %></p>
@@ -43,7 +43,7 @@
               <%= PostView.show_featured_category(post) %>
             </div>
             <h3 class="uk-card-title"><%= post.title %></h3>
-            <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+            <p>Posted <%= PostView.show_date(post.inserted_at) %>.</p>
             <p><%= post.abstract %></p>
             <p class="author"><%= post.author.name %></p>
           </div>
@@ -63,7 +63,7 @@
               <%= PostView.show_featured_category(post) %>
             </div>
             <h3 class="uk-card-title"><%= post.title %></h3>
-            <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+            <p>Posted <%= PostView.show_date(post.inserted_at) %>.</p>
             <p><%= post.abstract %></p>
             <p class="author"><%= post.author.name %></p>
           </div>
@@ -83,7 +83,7 @@
               <%= PostView.show_featured_category(post) %>
             </div>
             <h3 class="uk-card-title"><%= post.title %></h3>
-            <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+            <p>Posted <%= PostView.show_date(post.inserted_at) %>.</p>
             <p><%= post.abstract %></p>
             <%= if post.author do %>
               <p class="author"><%= post.author.name %></p>
@@ -106,7 +106,7 @@
             </div>
             <div class="uk-card-body body">
               <h3 class="uk-card-title"><%= post.title %></h3>
-              <p>Posted <%= PostView.show_date(post.updated_at) %>.</p>
+              <p>Posted <%= PostView.show_date(post.inserted_at) %>.</p>
               <p><%= post.abstract %></p>
               <%= if post.author do %>
                 <p class="author"><%= post.author.name %></p>

@@ -90,6 +90,18 @@
     <%= error_tag f, :categories %>
   </div>
 
+  <div class="form-group">
+    <%= label f, :date, class: "uk-form-label" %>
+    <%= text_input f, :date, value: default_date(assigns[:post]), class: "uk-input", type: "date" %>
+    <%= error_tag f, :date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :hour, class: "uk-form-label" %>
+    <%= post_hour_select f, :hour, post: assigns[:post] %>
+    <%= error_tag f, :hour %>
+  </div>
+
   <div class="no-uk-margin">
     <%= label f, :slug, class: "uk-form-label" %>
     <%= text_input f, :slug, class: "uk-input uk-form-small" %>
