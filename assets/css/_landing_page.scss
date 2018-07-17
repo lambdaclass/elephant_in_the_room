@@ -115,6 +115,11 @@ $landing-separator-decrease-space: 12px;
                 @include content-border-right();
             }
         }
+
+        .uk-width-1-1{
+            padding-right: 0.5em;
+        }
+
     }
 
     .group-content-three {
