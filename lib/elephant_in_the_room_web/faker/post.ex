@@ -51,6 +51,6 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   defp gen_md_image() do
     description = Faker.Lorem.word()
     image = gen_image_link()
-    "![#{description}](#{image})"
+    "\n![#{description}](#{image})\n"
   end
 end
