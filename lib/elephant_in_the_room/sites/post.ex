@@ -192,4 +192,5 @@ defmodule ElephantInTheRoom.Sites.Post do
     image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
     %{url: url, type: type, title: title, description: description, image: image}
   end
+
 end
