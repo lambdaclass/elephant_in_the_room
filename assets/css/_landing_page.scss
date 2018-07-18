@@ -116,10 +116,14 @@ $landing-separator-decrease-space: 12px;
             }
         }
 
-        .uk-width-1-1{
-            padding-right: 0.5em;
+        @media (min-width: $landing-break-m) {
+            .uk-width-1-1 {
+                padding-right: 10px;
+            }
+            .uk-width-1-1:last-child {
+                padding-right: 0;
+            }
         }
-
     }
 
     .group-content-three {
