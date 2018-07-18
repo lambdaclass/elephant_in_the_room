@@ -18,7 +18,6 @@ defmodule ElephantInTheRoomWeb.ConnCase do
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.User
   alias ElephantInTheRoom.Sites
-  alias Plug.Conn
 
   using do
     quote do
