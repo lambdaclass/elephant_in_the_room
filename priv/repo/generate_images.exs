@@ -27,7 +27,10 @@ defmodule ImageDownloader do
   def gen_url(), do: "https://picsum.photos/1024/786?image=#{:rand.uniform(1050)}"
 end
 
-for n <- 1..20 do
+# Command used to compress the images:
+# for i in `ls`; do convert $i -sampling-factor 4:2:0 -strip -quality 60 -interlace JPEG -colorspace sRGB "converted_$i" ; done
+
+for n <- 1..30 do
   ImageDownloader.gen_url()
   |> ImageDownloader.download_image()
   |> ImageDownloader.save_image("./images")
