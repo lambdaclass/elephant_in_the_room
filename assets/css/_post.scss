@@ -72,6 +72,6 @@
   height: 30vh;
 
   @media screen and (min-width: $break-s) {
-    height: calc(100vh - #{$navbar-height});
+    height: calc(85vh - #{$navbar-height});
   }
 }
