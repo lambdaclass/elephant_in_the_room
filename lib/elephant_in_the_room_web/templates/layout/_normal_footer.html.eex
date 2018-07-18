@@ -1,0 +1,31 @@
+<%= if assigns[:site] do %>
+  <div class="uk-grid-collapse uk-flex-row footer uk-flex-center" uk-grid>
+      <!-- footer -->
+      <div class="uk-width-1-1 uk-margin-small-top footer-card uk-flex uk-flex-center  uk-text-left@m" uk-grid>
+        <div class="uk-width-1-1@s uk-width-auto@m">
+          <ul class="uk-nav uk-nav-default">
+            <li class="uk-active"><a href="#"><strong>User</strong></a></li>
+            <%= render "_user_options.html", assigns %>
+          </ul>
+        </div>
+        <div class="uk-width-1-1@s uk-width-auto@m">
+          <ul class="uk-nav uk-nav-default">
+            <li class="uk-active"><a href="#"><strong>Categories</strong></a></li>
+            <%= render "_category_options.html", assigns %>
+          </ul>
+        </div>
+        <div class="uk-width-1-1@s uk-width-auto@m">
+          <ul class="uk-nav uk-nav-default">
+            <li class="uk-active"><a href="#"><strong>Sites</strong></a></li>
+            <%= render "_site_options.html", assigns %>
+          </ul>
+        </div>
+        <div class="uk-width-1-1@s uk-width-auto@m">
+          <h1>
+              <%= @site.name %>
+          </h1>
+        </div>
+      </div>
+      <hr>
+    </div>
+<% end %>

@@ -7,7 +7,7 @@
     section5: section_5_posts
   } = get_posts(@site, %{section_1_amount: 3,
                          section_2_amount: 4,
-                         section_3_amount: 4,
+                         section_3_amount: 8,
                          section_4_amount: 5,
                          section_5_amount: 5})
 %>
@@ -55,6 +55,7 @@
           </div>
         </div>
       </div>
+      
       <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse group-content-left-top" >
         <div class="left-top-container">
           <div class="uk-width-1-2@s uk-width-1-1@m">
@@ -104,6 +105,38 @@
         </div>
       </div>
     </div>
+
+    <div class="uk-grid-collapse group-content group-content-four" uk-grid>
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
+        <div class="individual-content four-one">
+          <%= render "_featured_post.html", Map.merge(assigns,
+                    %{featured_class: "left-two-one-content", post:  Enum.at(section_3_posts, 4),
+                      description_limit: 100}) %>
+        </div>
+      </div>
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
+        <div class="individual-content four-two">
+          <%= render "_featured_post.html", Map.merge(assigns,
+                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 5),
+                      description_limit: 100}) %>
+        </div>
+      </div>
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
+        <div class="individual-content four-three">
+          <%= render "_featured_post.html", Map.merge(assigns,
+                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 6),
+                      description_limit: 100}) %>
+        </div>
+      </div>
+      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
+        <div class="individual-content four-four">
+          <%= render "_featured_post.html", Map.merge(assigns,
+                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 7),
+                      description_limit: 100}) %>
+        </div>
+      </div>
+    </div>
+
     <div class="uk-grid-collapse group-content group-content-three" uk-grid>
       <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
         <!-- author's column -->
@@ -126,34 +159,4 @@
     </div>
   </div>
   </div>
-    <div class="uk-grid-collapse uk-flex-row footer uk-flex-center" uk-grid>
-      <!-- footer -->
-      <div class="uk-width-1-1 uk-margin-small-top footer-card uk-flex uk-flex-center  uk-text-left@m" uk-grid>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>About&nbsp;Us</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>Contact</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <ul class="uk-nav uk-nav-default">
-            <li class="uk-active"><a href="#"><strong>Subscription</strong></a></li>
-            <li><a href="#">Item</a></li>
-            <li><a href="#">Item</a></li>
-          </ul>
-        </div>
-        <div class="uk-width-1-1@s uk-width-auto@m">
-          <h1><%= @site.name %></h1>
-        </div>
-      </div>
-      <hr>
-    </div>
 </div>

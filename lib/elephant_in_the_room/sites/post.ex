@@ -40,8 +40,10 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
+    new_attrs = parse_date(attrs)
+
     post
-    |> cast(attrs, [:title, :content, :slug, :abstract, :site_id, :author_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
@@ -54,6 +56,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   def unique_slug_constraint(changeset, post, attrs) do
     post_slug = post.slug
     in_slug = attrs["slug"]
+
     if in_slug && post_slug != in_slug do
       put_slugified_title(changeset, :new)
       |> unique_constraint(:slug, name: :slug_unique_index)
@@ -85,19 +88,23 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def set_thumbnail(%Changeset{} = changeset) do
-    url = case get_field(changeset, :cover) do
-      nil ->
-        case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
-          nil ->
-            "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
-          [img] ->
-            img
-            |> String.split("\"")
-            |> Enum.at(1)
-        end
-      cover ->
-        cover
-    end
+    url =
+      case get_field(changeset, :cover) do
+        nil ->
+          case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
+            nil ->
+              "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+
+            [img] ->
+              img
+              |> String.split("\"")
+              |> Enum.at(1)
+          end
+
+        cover ->
+          cover
+      end
+
     put_change(changeset, :thumbnail, url)
   end
 
@@ -156,21 +163,40 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def get_or_insert_tag(name, site_id) do
-    inserted_tag = Repo.insert(%Tag{name: name, site_id: site_id, color: "686868"},
-      [on_conflict: :nothing])
+    inserted_tag =
+      Repo.insert(
+        %Tag{name: name, site_id: site_id, color: "686868"},
+        on_conflict: :nothing
+      )
+
     case inserted_tag do
-      %{id: id} when id != nil -> inserted_tag
+      %{id: id} when id != nil ->
+        inserted_tag
+
       _ ->
         Repo.get_by!(Tag, name: name, site_id: site_id)
     end
   end
 
-  def generate_og_meta(conn, %Post{title: title, thumbnail: image, abstract: description} = post) do
+  defp parse_date(%{"date" => date, "hour" => hour} = attrs) do
+    [h, m, s] =
+      hour
+      |> Enum.map(fn {_, v} -> if String.length(v) == 1, do: "0" <> v, else: v end)
+
+    iso_hour = %{hour: h, minute: m, second: s}
+    date_string = "#{date} #{iso_hour.hour}:#{iso_hour.minute}:#{iso_hour.second}"
+    {:ok, datetime} = NaiveDateTime.from_iso8601(date_string)
+
+    Map.put(attrs, "inserted_at", datetime)
+  end
+
+  defp parse_date(attrs), do: attrs
+
+  def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
     type = "article"
     title = "#{title} - #{conn.assigns.site.name}"
     url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
     image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
     %{url: url, type: type, title: title, description: description, image: image}
   end
-
 end

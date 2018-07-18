@@ -1,9 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Sites.Tag
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Post, Sites.Tag}
   alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
@@ -39,8 +36,9 @@ defmodule ElephantInTheRoomWeb.PostView do
   def get_selected_author(_other), do: ""
 
   def get_selected_tags(%Post{tags: tags}) when is_list(tags) do
-    Enum.map(tags, fn (%Tag{name: name}) -> name end)
+    Enum.map(tags, fn %Tag{name: name} -> name end)
   end
+
   def get_selected_tags(_), do: []
 
   def show_content(%Post{rendered_content: content}), do: content
@@ -76,12 +74,15 @@ defmodule ElephantInTheRoomWeb.PostView do
   @one_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 
+  defp format_diff(diff, date) when diff < 0,
+    do: {:date, "on #{date.day}-#{date.month}-#{date.year}"}
+
   defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "just now"}
 
   defp format_diff(diff, _date) when diff < @one_hour,
     do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
 
-  defp format_diff(diff, _date) when diff > @one_hour,
+  defp format_diff(diff, _date) when diff > @one_hour and diff < @one_day,
     do: {:hours, "#{div(diff, @one_hour)} hours ago"}
 
   defp format_diff(diff, _date) when diff <= @one_day_and_few_hours, do: {:day, "a day ago"}
@@ -127,4 +128,41 @@ defmodule ElephantInTheRoomWeb.PostView do
     post_path(conn, :public_show, year, month, day, post.slug)
   end
 
+  defp replace_host(relative_path, conn) do
+    "http://#{conn.assigns.site.host}:#{conn.port}#{relative_path}"
+  end
+
+  def post_hour_select(form, field, opts \\ []) do
+    default = default_hour(opts[:post])
+
+    builder = fn b ->
+      ~e"""
+      <%= b.(:hour, [class: "uk-select uk-form-width-xsmall", value: default.hour]) %> :
+      <%= b.(:minute, [class: "uk-select uk-form-width-xsmall", value: default.minute]) %> :
+      <%= b.(:second, [class: "uk-select uk-form-width-xsmall", value: default.second]) %>
+      """
+    end
+
+    datetime_select(form, field, [builder: builder] ++ opts)
+  end
+
+  def default_date(%Post{inserted_at: date}) do
+    Utils.complete_zeros(:date, date)
+  end
+
+  def default_date(_new_post) do
+    now = NaiveDateTime.utc_now()
+
+    Utils.complete_zeros(:date, now)
+  end
+
+  def default_hour(%Post{inserted_at: date}) do
+    Utils.complete_zeros(:hour, date)
+  end
+
+  def default_hour(_new_post) do
+    now = NaiveDateTime.utc_now()
+
+    Utils.complete_zeros(:hour, now)
+  end
 end

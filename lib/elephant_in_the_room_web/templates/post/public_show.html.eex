@@ -39,7 +39,7 @@
         <% %Author{:id => id, :name => name} -> %>
           By <%= link name, to: author_path(@conn, :public_show, id) %> |
       <% end %>
-      <%= show_date(@post.updated_at) %>
+      <%= show_date(@post.inserted_at) %>
     </p>
     <%= if length(@post.categories) > 0 do %>
       <p>

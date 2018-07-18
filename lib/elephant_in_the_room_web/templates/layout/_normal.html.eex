@@ -1,5 +1,0 @@
-<%= if current_site(@conn) do %>
-  <%= render "_navbar.html", assigns %>
-<% else %>
-  <%= render "_navbar.html", assigns %>
-<% end %>

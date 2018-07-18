@@ -5,7 +5,6 @@
 
 <%= if assigns[:post] do %>
   <div class="<%= assigns.featured_class %>">
-
     <%= link to: PostView.show_link(@conn, @post) do %>
       <div class="image" data-src="<%= @post.thumbnail %>" uk-img> </div>
       <div class="sub-image-text">
@@ -31,6 +30,8 @@
         &ensp;
       <% end %>
     </div>
-
+    <div class="post-date">
+      <p><%= PostView.show_date(@post.inserted_at) %></p>
+    </div>
   </div>
 <% end %>
