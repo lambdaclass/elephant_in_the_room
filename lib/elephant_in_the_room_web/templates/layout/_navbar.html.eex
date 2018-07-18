@@ -17,9 +17,9 @@
   <div class="nav-overlay uk-navbar-right">
     <ul class="uk-navbar-nav ul-reduced">
 
-      <li><a href="#" class="a-reduced top-link hide-on-small">Popular</a></li>
+      <li><%= link "Popular", to: site_path(@conn, :public_show_popular), class: "a-reduced top-link hide-on-small"%></li>
 
-      <li><a href="#" class="a-reduced top-link hide-on-small">Latest</a></li>
+      <li><%= link "Latest", to: site_path(@conn, :public_show_latest), class: "a-reduced top-link hide-on-small" %></li>
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
@@ -88,14 +88,18 @@
 <div class="mini-navbar-container" uk-grid>
   <div class="uk-width-1-5 uk-text-center">
     <div class="element">
-      <div class="mini-icon"><i class="fas fa-chart-line fa-2x"></i></div>
-      <div class="mini-description">Popular</div>
+      <%= link to: site_path(@conn, :public_show_popular) do %>
+        <div class="mini-icon"><i class="fas fa-chart-line fa-2x"></i></div>
+        <div class="mini-description">Popular</div>
+      <% end %>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
     <div class="element">
-      <div class="mini-icon"><i class="fas fa-clock fa-2x"></i></div>
-      <div class="mini-description">Latest</div>
+      <%= link to: site_path(@conn, :public_show_latest) do %>
+        <div class="mini-icon"><i class="fas fa-clock fa-2x"></i></div>
+        <div class="mini-description">Latest</div>
+      <% end %>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">

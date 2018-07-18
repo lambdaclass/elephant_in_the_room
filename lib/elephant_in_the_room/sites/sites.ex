@@ -317,6 +317,10 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
+  def get_popular_posts(site) do
+    get_popular_posts(site, -1)
+  end
+
   def get_popular_posts(%Site{id: site_id}, amount) do
     {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount, "WITHSCORES"])
 
@@ -330,6 +334,14 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.all
     |> Repo.preload(:author)
     |> Enum.sort_by(&(scores[&1.id]), &>=/2)
+  end
+
+  def get_latest_posts(%Site{} = site) do
+    Post
+    |> where([post], post.site_id == ^site.id)
+    |> order_by(desc: :inserted_at)
+    |> preload(:author)
+    |> Repo.all()
   end
 
   def get_latest_posts(%Site{} = site, amount) do

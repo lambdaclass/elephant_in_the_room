@@ -5,7 +5,9 @@
 
 <div class="popular uk-text-left uk-height-1-1">
   <%= if posts && Enum.at(posts,0) != nil do %>
-    <h3 class="uk-text-bold uk-text-left">Popular<hr></h3>
+    <h3 class="uk-text-bold uk-text-left">
+      <%= link "Popular", to: site_path(@conn, :public_show_popular)%><hr>
+    </h3>
     <%= for {post, post_index} <- Enum.with_index(posts, 1) do %>
 
       <%= link to: SiteView.show_link_with_date(@conn, post) do %>
