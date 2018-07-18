@@ -8,6 +8,34 @@
                          section_3_amount: 8})
 %>
 
+<div class="uk-flex" uk-grid>
+  <div class="uk-width-1-2@s">
+    <%= render "_main_post.html", conn: @conn, post: Enum.at(section_1_posts, 0) %>
+  </div>
+  <div class="uk-width-1-4@m uk-flex-first@m">
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 1) %>
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 2) %>
+  </div>
+  <div class="uk-width-1-4@m uk-flex uk-flex-column">
+    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 0) %>
+    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 1) %>
+    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 2) %>
+    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 3) %>
+  </div>
+  <div class="uk-width-1-4@m">
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 0), abstract: true %>
+  </div>
+  <div class="uk-width-1-4@m">
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 1), abstract: true %>
+  </div>
+  <div class="uk-width-1-4@m">
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 2), abstract: true %>
+  </div>
+  <div class="uk-width-1-4@m">
+    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 3), abstract: true %>
+  </div>
+</div>
+
 <div class="main-landing-page-container">
   <div class="main-landing-page-content">
   <div class="uk-grid-collapse">
@@ -51,7 +79,7 @@
           </div>
         </div>
       </div>
-      
+
       <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse group-content-left-top" >
         <div class="left-top-container">
           <div class="uk-width-1-2@s uk-width-1-1@m">

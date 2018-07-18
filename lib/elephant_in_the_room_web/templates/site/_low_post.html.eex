@@ -1,0 +1,29 @@
+<%
+  alias ElephantInTheRoomWeb.PostView
+%>
+
+<%= if assigns[:post] do %>
+  <div class="post post-low">
+    <div class="image">
+      <%= link to: PostView.show_link(@conn, @post) do %>
+        <img class="image" data-src="<%= @post.thumbnail %>" uk-img>
+      <% end %>
+    </div>
+
+    <div class="title">
+      <%= link @post.title, to: PostView.show_link(@conn, @post) %>
+    </div>
+
+    <div class="author">
+      <%= if @post.author do %>
+        <%= link @post.author.name, to: author_path(@conn, :public_show, @post.author.id) %>
+      <% else %>
+        &ensp;
+      <% end %>
+    </div>
+
+    <div class="date">
+      <p><%= PostView.show_date(@post.inserted_at) %></p>
+    </div>
+  </div>
+<% end %>
