@@ -131,7 +131,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def generate_markdown(input) do
-    Cmark.to_html(input, [:safe])
+    Cmark.to_html(input, [:safe, :hardbreaks])
   end
 
   def parse_categories(params) do

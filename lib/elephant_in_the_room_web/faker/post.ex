@@ -43,6 +43,6 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     image_content = File.read!(Utils.get_image_path())
 
     {:ok, image} = Sites.create_image(%{name: Ecto.UUID.generate(), binary: image_content})
-    "![#{description}](/images/#{image.name})"
+    "\n![#{description}](/images/#{image.name})\n"
   end
 end
