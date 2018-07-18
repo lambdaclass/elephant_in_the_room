@@ -1,7 +1,7 @@
 alias ElephantInTheRoomWeb.Faker, as: ElephantFaker
 
 config = %{
-  sites: 3,
+  sites: 2,
   categories: 4,
   authors: 5,
   tags: 6,
