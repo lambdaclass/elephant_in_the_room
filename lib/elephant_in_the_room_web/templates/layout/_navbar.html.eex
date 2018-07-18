@@ -17,7 +17,6 @@
   <div class="nav-overlay uk-navbar-right">
     <ul class="uk-navbar-nav ul-reduced">
 
-      <li><a href="#" class="a-reduced top-link hide-on-small">Popular</a></li>
       <li><%= link "Popular", to: site_path(@conn, :public_show_popular), class: "a-reduced top-link hide-on-small"%></li>
 
       <li><%= link "Latest", to: site_path(@conn, :public_show_latest), class: "a-reduced top-link hide-on-small" %></li>
