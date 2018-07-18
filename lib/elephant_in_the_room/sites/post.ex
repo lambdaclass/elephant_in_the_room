@@ -192,4 +192,10 @@ defmodule ElephantInTheRoom.Sites.Post do
     image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
     %{url: url, type: type, title: title, description: description, image: image}
   end
+
+  def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
+    Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
+    post
+  end
+
 end

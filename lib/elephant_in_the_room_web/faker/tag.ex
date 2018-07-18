@@ -4,8 +4,7 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
 
   defp default_attrs do
     %{
-      "name" => Faker.Beer.hop(),
-      "color" => Faker.Color.rgb_hex()
+      "name" => Faker.Beer.hop()
     }
   end
 
