@@ -77,9 +77,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     site = Sites.get_site!(site_id)
     post = Sites.get_post_by_slug!(site_id, slug)
     meta = Post.generate_og_meta(conn, post)
-    
-    Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post.id])
-    
+    Post.increase_views_for_popular_by_1(post)
     render(conn, "public_show.html", site: site, post: post, meta: meta)
   end
 
