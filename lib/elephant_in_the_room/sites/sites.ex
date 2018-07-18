@@ -379,15 +379,18 @@ defmodule ElephantInTheRoom.Sites do
       Map.put(attrs, "site_id", site.id)
       |> ensure_author_exists
 
-    %Post{}
+    inserted_post = %Post{}
     |> Post.changeset(post_attrs)
     |> Repo.insert()
-  end
 
-  def create_post(attrs \\ %{}) do
-    %Post{}
-    |> Post.changeset(ensure_author_exists(attrs))
-    |> Repo.insert()
+    case inserted_post do
+      {:ok, post} ->
+        Post.increase_views_for_popular_by_1(post)
+        inserted_post
+      _ ->
+        inserted_post
+    end
+
   end
 
   def ensure_author_exists(attrs) do
