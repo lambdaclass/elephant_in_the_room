@@ -182,7 +182,7 @@ $landing-separator-decrease-space: 12px;
             .author {
                 text-align: left;
                 text-transform: capitalize;
-                font-size: 80%;           
+                font-size: 75%;
             }
 
             .post-date {
@@ -191,7 +191,7 @@ $landing-separator-decrease-space: 12px;
                 color: gray;
                 text-align: right;
                 text-transform: lowercase;
-                font-size: 0.75rem;
+                font-size: 70%;
             }
         }
 
@@ -205,6 +205,9 @@ $landing-separator-decrease-space: 12px;
         }
 
         .right-four-one-content {
+            .title {
+                font-size: 85%;
+            }
             .image {
                 background-size: cover;
                 width: 80px;
@@ -225,6 +228,7 @@ $landing-separator-decrease-space: 12px;
 
     > a {
         text-decoration: none;
+        font-size: 80%
     }
 
     > a > p {
@@ -237,7 +241,7 @@ $landing-separator-decrease-space: 12px;
     }
 
     > a > p:nth-child(2) {
-        font-size: 80%;
+        font-size: 90%;
     }
 
     > a > p span {
