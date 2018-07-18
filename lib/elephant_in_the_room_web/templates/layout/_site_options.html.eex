@@ -1,5 +1,7 @@
-<%= for site <- Enum.take(@site_list, 7) do %>
-  <li>
-    <%= link site.name, to: show_site_link(site, @conn) %>
-  </li>
+<%= if assigns[:site_list] do %>
+  <%= for site <- Enum.take(@site_list, 7) do %>
+    <li>
+      <%= link site.name, to: show_site_link(site, @conn) %>
+    </li>
+  <% end %>
 <% end %>

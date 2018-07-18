@@ -1,4 +1,5 @@
-<div class="uk-grid-collapse uk-flex-row footer uk-flex-center" uk-grid>
+<%= if assigns[:site] do %>
+  <div class="uk-grid-collapse uk-flex-row footer uk-flex-center" uk-grid>
       <!-- footer -->
       <div class="uk-width-1-1 uk-margin-small-top footer-card uk-flex uk-flex-center  uk-text-left@m" uk-grid>
         <div class="uk-width-1-1@s uk-width-auto@m">
@@ -20,8 +21,11 @@
           </ul>
         </div>
         <div class="uk-width-1-1@s uk-width-auto@m">
-          <h1><%= @site.name %></h1>
+          <h1>
+              <%= @site.name %>
+          </h1>
         </div>
       </div>
       <hr>
     </div>
+<% end %>
