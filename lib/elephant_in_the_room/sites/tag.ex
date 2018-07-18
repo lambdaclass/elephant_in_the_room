@@ -22,16 +22,43 @@ defmodule ElephantInTheRoom.Sites.Tag do
 
   @doc false
   def changeset(%Tag{} = tag, attrs) do
-    attrs = remove_numeral_from_color(attrs)
-
     tag
     |> cast(attrs, [:name, :color, :site_id])
+    |> ensure_color(tag, attrs)
     |> validate_required([:name, :color, :site_id])
     |> unique_constraint(:name)
   end
 
-  defp remove_numeral_from_color(%{"color" => color} = attrs), do:
-    %{attrs | "color" => String.replace(color, "#", "")}
-  defp remove_numeral_from_color(attrs), do: attrs
+  defp ensure_color(changeset, tag, attrs) do
+    color =
+      case attrs do
+        %{"color" => color} ->
+          remove_numeral_from_color(color)
+        _ ->
+          case tag do
+            %{color: color} when is_binary(color) -> color
+            _ ->  get_random_predefined_color()
+          end
+      end
+    put_change(changeset, :color, color)
+  end
+
+  defp remove_numeral_from_color(color), do:
+    String.replace(color, "#", "")
+
+  def predefined_colors do
+    ["e4830b",
+     "6cbd01",
+     "1e87f0",
+     "32d296",
+     "f0506e",
+     "d231dc"]
+  end
+
+  def get_random_predefined_color do
+    colors = predefined_colors()
+    pos = :rand.uniform(length(colors)) - 1
+    Enum.at(colors, pos)
+  end
 
 end
