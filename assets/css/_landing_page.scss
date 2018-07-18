@@ -116,10 +116,14 @@ $landing-separator-decrease-space: 12px;
             }
         }
 
-        .uk-width-1-1{
-            padding-right: 0.5em;
+        @media (min-width: $landing-break-m) {
+            .uk-width-1-1 {
+                padding-right: 10px;
+            }
+            .uk-width-1-1:last-child {
+                padding-right: 0;
+            }
         }
-
     }
 
     .group-content-three {
@@ -142,6 +146,7 @@ $landing-separator-decrease-space: 12px;
             text-decoration: none;
         }
         .four-one-content, .left-two-one-content, .main-content, .right-four-one-content {
+            position: relative;
             padding-bottom: 10px;
             overflow: hidden;
             height: calc(100% - 15px);
@@ -205,6 +210,11 @@ $landing-separator-decrease-space: 12px;
         }
 
         .right-four-one-content {
+            .post-date {
+                position: absolute;
+                top: 80px;
+                right: 0;
+            }
             .title {
                 font-size: 85%;
             }
