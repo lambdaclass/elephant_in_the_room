@@ -85,12 +85,12 @@
         <%= for {title, url} <- crumb_path do %>
           <span class="divider">/</span>
           <a class="path" href="<%= url %>"><%= title %></a>
-        <%= end %>
+        <% end %>
         <%= case crumb_target do %>
           <%= {title, _} -> %>
           <span class="divider">/</span>
           <span class="path target"><%= title %></span>
-          <%= _ -> %>
+          <% _ -> %>
         <% end %>
       </div>
       <div role="main">

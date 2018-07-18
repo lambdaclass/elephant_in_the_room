@@ -1,5 +1,4 @@
 <%
-  alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoomWeb.{PostView, SiteView}
 %>
 

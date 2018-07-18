@@ -100,10 +100,9 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{
+  def update(conn, %{
         "cover_delete" => "true",
-        "id" => id,
-        "post" => post_params
+        "id" => id
       }) do
     post = Sites.get_post!(id)
 

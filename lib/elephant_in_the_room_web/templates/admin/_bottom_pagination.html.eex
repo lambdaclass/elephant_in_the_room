@@ -11,14 +11,14 @@
           Previous
         </a>
       </li>
-    <%= end %>
+    <% end %>
     <%= if show_middle do %>
       <li class="">
         <span>
           <%= "#{max(@page_number,1)}/#{max(@total_pages,1)}" %>
         </span>
       </li>
-    <%= end %>
+    <% end %>
     <%= if pagination_right do %>
       <li class="">
         <a href="<%= assigns.page.(@page_number + 1) %>">
@@ -26,6 +26,6 @@
           <span class="uk-margin-small-left" uk-pagination-next></span>
         </a>
       </li>
-    <%= end %>
+    <% end %>
   </ul>
 </div>

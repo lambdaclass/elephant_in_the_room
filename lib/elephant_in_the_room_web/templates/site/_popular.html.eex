@@ -1,6 +1,5 @@
 <%
-  alias ElephantInTheRoomWeb.Uploaders.Image
-  alias ElephantInTheRoomWeb.{PostView, SiteView}
+  alias ElephantInTheRoomWeb.SiteView
   posts = assigns[:posts]
 %>
 

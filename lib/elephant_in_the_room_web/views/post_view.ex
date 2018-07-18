@@ -128,10 +128,6 @@ defmodule ElephantInTheRoomWeb.PostView do
     post_path(conn, :public_show, year, month, day, post.slug)
   end
 
-  defp replace_host(relative_path, conn) do
-    "http://#{conn.assigns.site.host}:#{conn.port}#{relative_path}"
-  end
-
   def post_hour_select(form, field, opts \\ []) do
     default = default_hour(opts[:post])
 

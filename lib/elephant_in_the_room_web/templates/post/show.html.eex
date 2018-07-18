@@ -1,4 +1,3 @@
-<% alias ElephantInTheRoomWeb.Uploaders.Image %>
 <h2><%= @post.title %></h2>
 
 <ul>

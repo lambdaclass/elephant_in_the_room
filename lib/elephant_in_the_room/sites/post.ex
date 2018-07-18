@@ -5,7 +5,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.Uploaders.Image
-  alias ElephantInTheRoomWeb.Router.Helpers
 
   schema "posts" do
     field(:title, :string)
@@ -48,21 +47,14 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
     |> put_rendered_content
-    |> unique_slug_constraint(post, attrs)
+    |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
   end
 
-  def unique_slug_constraint(changeset, post, attrs) do
-    post_slug = post.slug
-    in_slug = attrs["slug"]
-
-    if in_slug && post_slug != in_slug do
-      put_slugified_title(changeset, :new)
-      |> unique_constraint(:slug, name: :slug_unique_index)
-    else
-      put_slugified_title(changeset, :same)
-    end
+  def unique_slug_constraint(changeset) do
+    put_slugified_title(changeset)
+    |> unique_constraint(:slug, name: :slug_unique_index)
   end
 
   def store_cover(%Changeset{valid?: false} = changeset, _attrs) do
@@ -126,12 +118,13 @@ defmodule ElephantInTheRoom.Sites.Post do
     changeset
   end
 
-  def put_slugified_title(%Changeset{} = changeset, new?) do
-    site_id = get_field(changeset, :site_id)
+  def put_slugified_title(%Changeset{} = changeset) do
     slug = get_field(changeset, :slug)
 
-    if slug == nil || String.length(slug) == 0 do
-      slug = get_field(changeset, :title) |> Sites.to_slug()
+    slug = if slug == nil || String.length(slug) == 0 do
+      get_field(changeset, :title) |> Sites.to_slug()
+    else
+      slug
     end
 
     put_change(changeset, :slug, slug)

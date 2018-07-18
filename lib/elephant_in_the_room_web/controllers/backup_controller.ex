@@ -2,8 +2,6 @@ defmodule ElephantInTheRoomWeb.BackupController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.Backup
   alias ElephantInTheRoom.BackupData
-  alias ElephantInTheRoom.Repo
-
 
   def do_backup(conn, _params) do
     Backup.run_backup_now()

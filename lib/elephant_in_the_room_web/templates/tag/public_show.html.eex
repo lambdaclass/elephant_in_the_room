@@ -11,7 +11,7 @@
       <%= {:ok, _user, _} -> %>
         <%= link "Edit tag", to: site_tag_path(@conn, :edit, @site.id, @tag.id),
               class: "uk-button uk-button-secondary uk-button-small" %>
-      <%= _ -> %>
+      <% _ -> %>
    <% end %>
 
   <div class="uk-padding">

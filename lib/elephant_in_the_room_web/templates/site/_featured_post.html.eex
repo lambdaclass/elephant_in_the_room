@@ -1,5 +1,4 @@
 <%
-  alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoomWeb.PostView
 %>
 
@@ -21,7 +20,7 @@
       <div class="description">
         <%= get_abstract_to_display(@post, assigns[:description_limit]) %>
       </div>
-    <%= end%>
+    <% end %>
 
     <div class="author">
       <%= if @post.author do %>

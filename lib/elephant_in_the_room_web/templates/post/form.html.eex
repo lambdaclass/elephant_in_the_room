@@ -24,7 +24,7 @@
         see post
       </a>
     </div>
-  <%= end %>
+  <% end %>
 </div>
 
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
@@ -121,4 +121,4 @@
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>
   <% end%>
-<%= end %>
+<% end %>
