@@ -50,12 +50,12 @@ $navbar-break-m: 9600px;
         .dropdown-arrow-up {
             width: 0;
             height: 0;
-            border-left: 0.5em solid transparent;
-            border-right: 0.5em solid transparent;
-            border-bottom: 0.5em solid white;
+            border-left: 0.6em solid transparent;
+            border-right: 0.6em solid transparent;
+            border-bottom: 0.6em solid white;
             display:none;
             position: absolute;
-            top: 2.5em;
+            bottom: 0;
         }
         .text-icons{
             position: relative;
