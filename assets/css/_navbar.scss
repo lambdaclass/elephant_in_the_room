@@ -9,6 +9,10 @@ $navbar-break-m: 960px;
     max-width: 0px;
 }
 
+.uk-navbar-right {
+    overflow: hidden;
+}
+
 .navbar-title{
     height: auto;
     position: relative;
@@ -37,7 +41,6 @@ $navbar-break-m: 960px;
 
 .navbar-container {
     min-width: 0px;
-    overflow: hidden;
     height: $navbar-height;
     background: black !important;
     .ul-reduced {
