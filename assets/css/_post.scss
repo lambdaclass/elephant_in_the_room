@@ -95,15 +95,15 @@
         height: 1em;
         .fab,.far {
             bottom: 0.2em;
-            left: 0.02em;
+            left: 0.01em;
             position: relative;
         }
     }
 
      @media screen and (min-width: $break-s) {
          .social-button {
-             margin: 0.5em 0.6em 1em 0;
-             transform: scale(1.5);
+             margin: 0.5em 0.4em 1em 0;
+             transform: scale(1.3);
          }
      }
 
