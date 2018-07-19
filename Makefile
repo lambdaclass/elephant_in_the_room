@@ -1,5 +1,6 @@
 .PHONY: help demo_server create_db populate_db install_frontend \
-        ops ops_reset ops_backup_db deps lint_css prod
+        ops ops_reset ops_backup_db deps lint_css prod attach_prod \
+		stop_prod
 
 help:
 	@echo "To start a demo sever run in two separated shells:"
@@ -54,8 +55,13 @@ lint_css:
 	cd assets && node_modules/stylelint/bin/stylelint.js css/*
 
 prod:
-	mix deps.get --only prod
-	bash -c "MIX_ENV=prod mix compile"
 	bash -c "cd assets && npx brunch build --production"
-	mix phx.digest
-	bash -c "MIX_ENV=prod PORT=80 iex -S mix phx.server"
+	bash -c "MIX_ENV=prod mix phx.digest"
+	bash -c "MIX_ENV=prod mix release"
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room start"
+ 
+attach_prod: 
+	bash -c "_build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room attach"
+
+stop_prod: 
+	bash -c "_build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room stop"

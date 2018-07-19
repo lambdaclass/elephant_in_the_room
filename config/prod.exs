@@ -15,13 +15,17 @@ use Mix.Config
 # which you typically run after static files are built.
 config :elephant_in_the_room, ElephantInTheRoomWeb.Endpoint,
   load_from_system_env: true,
+  http: [port: {:system, "PORT"}],
   debug_errors: false,
   code_reloader: false,
   check_origin: false,
+  root: ".",
+  server: true,
+  version: Application.spec(:elephant_in_the_room, :vsn),
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :warn
 
 # ## SSL Support
 #
