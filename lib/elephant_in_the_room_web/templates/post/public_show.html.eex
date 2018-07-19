@@ -48,12 +48,11 @@
         <% end %>
       </p2>
     <% end %>
-
   </div>
+  <%= render "_social_share.html", assigns %>
+  
   <div class="article-content uk-text-justify">
     <%= raw show_content @post %>
   </div>
-
-  <%= render "_social_share.html", assigns %>
 
 </div>
