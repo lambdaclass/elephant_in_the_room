@@ -1,25 +1,2 @@
-<div class="row">
-  <div class="col-xs-0 col-md-1 col-lg-2"></div>
-  <div class="col-xs-12 col-md-10 col-lg-8">
-    <div class="el-form uk-flex uk-flex-center">
-      <div class="uk-card uk-card-default">
+<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :create, @site)) %>
 
-        <div class="uk-card-header">
-          <div class="uk-grid-small uk-flex-middle" uk-grid>
-            <div class="uk-width-expand">
-              <h3 class="uk-card-title uk-margin-remove-bottom">
-                <div><center><legend class="uk-legend">New Tag</legend></center></div>
-              </h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :create, @site)) %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>
