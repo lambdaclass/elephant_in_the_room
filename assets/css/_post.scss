@@ -1,4 +1,5 @@
 .article {
+  min-height: 70vh;
   padding: 0 30px;
 
   @media screen and (min-width: $break-s) {
