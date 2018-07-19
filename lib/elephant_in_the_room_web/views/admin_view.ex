@@ -73,6 +73,9 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {"Tags", site_tag_path(conn, :index, site_id)}
   end
 
+  defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
+    {"Tag",""}
+  end
   defp bread_crumb_tag_edit(conn, %Site{id: site_id}, %Tag{id: tag_id, name: tag_name}) do
     {"\##{tag_name}", site_tag_path(conn, :edit, site_id, tag_id)}
   end

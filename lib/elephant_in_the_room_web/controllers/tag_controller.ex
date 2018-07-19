@@ -37,12 +37,15 @@ defmodule ElephantInTheRoomWeb.TagController do
       %Tag{site_id: site.id}
       |> Sites.change_tag()
 
-    render(conn, "new.html", changeset: changeset, site: site)
+    render(conn, "new.html",
+      changeset: changeset,
+      site: site,
+      bread_crumb: [:sites, site, :tags, %Tag{}])
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
     case Sites.create_tag(site, tag_params) do
-      {:ok, tag} ->
+      {:ok, _tag} ->
         redirect(conn, to: site_tag_path(conn, :index, site.id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
