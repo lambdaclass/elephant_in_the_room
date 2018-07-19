@@ -22,7 +22,9 @@
               display: none;
           }
       }
-
+      & > div:first-child{
+          padding-bottom: 0.4em;
+      }
       a {
           color: #ff0052;
       }
