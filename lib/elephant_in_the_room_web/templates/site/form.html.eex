@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
+<%= form_for @changeset, @action, [class: "uk-form-stacked", multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -14,7 +14,7 @@
 
     <div class="uk-margin">
       <%= label f, :description, class: "uk-form-label" %>
-      <%= text_input f, :description, class: "uk-form-controls uk-input" %>
+      <%= textarea f, :description, class: "uk-textarea uk-form-width-large" %>
       <%= error_tag f, :description %>
     </div>
 
@@ -24,9 +24,13 @@
       <%= error_tag f, :host %>
     </div>
 
-    <div class="uk-margin">
-      <%= label f, :image, class: "uk-form-label" %>
-      <%= text_input f, :image, class: "uk-form-controls uk-input" %>
+    <div class="form-group uk-width-1-1">
+      <%= label f, :image, class: "uk-form-label"%>
+      <%= if @changeset.data.image do %>
+        <img src="<%= @changeset.data.image  %>" width="200">
+        <%= submit "Delete image", name: "image_delete", value: "true" %>
+      <% end %>
+      <%= file_input f, :image %>
       <%= error_tag f, :image %>
     </div>
 

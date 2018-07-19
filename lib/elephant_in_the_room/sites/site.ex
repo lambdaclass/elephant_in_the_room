@@ -8,8 +8,8 @@ defmodule ElephantInTheRoom.Sites.Site do
   schema "sites" do
     field(:name, :string)
     field(:host, :string)
-    field(:description, :string)
     field(:image, :string)
+    field(:description, :string)
 
     has_many(:categories, Category, on_delete: :delete_all)
     has_many(:posts, Post, on_delete: :delete_all)
@@ -22,10 +22,11 @@ defmodule ElephantInTheRoom.Sites.Site do
   @doc false
   def changeset(%Site{} = site, attrs) do
     site
-    |> cast(attrs, [:name, :host])
+    |> cast(attrs, [:name, :host, :description])
     |> validate_required([:name, :host])
     |> unique_constraint(:name)
     |> unique_constraint(:host)
+    |> store_image(attrs)
   end
 
   def store_image(%Changeset{} = changeset, %{"image" => nil}) do
