@@ -4,7 +4,7 @@
   login = get_logged_user(@conn)
 %>
 
-<div class="uk-container uk-container-small">
+<div class="uk-container uk-container-small main-body-public-content">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @tag.name %></h1>
 
   <%= case login do %>

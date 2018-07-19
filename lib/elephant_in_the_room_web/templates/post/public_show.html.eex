@@ -9,7 +9,7 @@
   </div>
 <% end %>
 
-<div class="uk-container uk-container-small uk-margin-top article">
+<div class="uk-container uk-container-small uk-margin-top article main-body-public-content">
 
   <%= if !Enum.empty?(@post.tags) do %>
     <div>

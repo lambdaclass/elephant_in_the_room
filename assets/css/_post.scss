@@ -1,5 +1,4 @@
 .article {
-  min-height: 70vh;
   padding: 0 30px;
 
   @media screen and (min-width: $break-s) {
@@ -33,7 +32,7 @@
           color: #ff0052;
       }
   }
-  
+
   .article-content {
     line-height: 1.35;
 
