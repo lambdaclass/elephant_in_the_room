@@ -2,7 +2,7 @@
   alias ElephantInTheRoomWeb.Uploaders.Image
 %>
 
-<div class="uk-container">
+<div class="uk-container main-body-public-content">
   <div class="uk-margin-top" uk-grid>
     <div class="uk-width-1-3@m uk-text-center">
       <img class="uk-border-circle" src="<%= Image.url({@author.image, @author}) %>" width="200" height="200" alt="<%= @author.name %>">

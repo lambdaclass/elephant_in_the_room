@@ -7,7 +7,7 @@
                          section_2_amount: 4,
                          section_3_amount: 8})
 %>
-<div class="site-content uk-flex" uk-grid>
+<div class="site-content uk-flex main-body-public-content " uk-grid>
   <div class="uk-width-2-3@s uk-width-1-2@m main-post">
     <%= render "_main_post.html", conn: @conn, post: Enum.at(section_1_posts, 0) %>
   </div>
