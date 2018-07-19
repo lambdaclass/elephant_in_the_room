@@ -7,152 +7,41 @@
                          section_2_amount: 4,
                          section_3_amount: 8})
 %>
+<div class="site-content uk-flex" uk-grid>
+  <div class="uk-width-2-3@s uk-width-1-2@m main-post">
+    <%= render "_main_post.html", conn: @conn, post: Enum.at(section_1_posts, 0) %>
+  </div>
 
-<div class="main-landing-page-container">
-  <div class="main-landing-page-content">
-  <div class="uk-grid-collapse">
-    <div class="uk-grid-collapse uk-flex group-content" uk-height-match="> *" uk-grid>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-height-large card1">
-        <div class="individual-content main">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "main-content", post: Enum.at(section_1_posts, 0),
-                      description_limit: 200}) %>
-        </div>
+  <div class="uk-width-1-1@s uk-width-1-4@m uk-flex-first@m">
+    <div class="" uk-grid>
+      <div class="uk-width-1-2@s uk-width-1-1@m">
+        <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 1) %>
       </div>
-      <div class="uk-width-1-2@s uk-width-1-4@m uk-flex-wrap group-content-right-four">
-        <div class="right-top-container">
-          <div class="uk-height-small">
-            <div class="individual-content right-four-one">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 0),
-                      no_description: true, no_category: true}) %>
-            </div>
-          </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-two">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 1),
-                      no_description: true, no_category: true}) %>
-            </div>
-          </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-three">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 2),
-                      no_description: true, no_category: true}) %>
-            </div>
-          </div>
-          <div class="uk-height-small">
-            <div class="individual-content right-four-four">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "right-four-one-content", post: Enum.at(section_2_posts, 3),
-                      no_description: true, no_category: true}) %>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div uk-grid class="uk-width-1-4@m uk-flex-first@m uk-grid-collapse group-content-left-top" >
-        <div class="left-top-container">
-          <div class="uk-width-1-2@s uk-width-1-1@m">
-            <div class="individual-content left-two-one">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_1_posts, 1),
-                      no_description: true}) %>
-            </div>
-          </div>
-          <div class="uk-width-1-2@s uk-width-1-1@m">
-            <div class="individual-content left-two-two">
-              <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post:  Enum.at(section_1_posts, 2),
-                      no_description: true}) %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="uk-grid-collapse group-content group-content-four" uk-grid>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-one">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post:  Enum.at(section_3_posts, 0),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-two">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 1),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-three">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 2),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-four">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 3),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-    </div>
-
-    <div class="uk-grid-collapse group-content group-content-four" uk-grid>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-one">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post:  Enum.at(section_3_posts, 4),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-two">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 5),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-three">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 6),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-      <div class="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <div class="individual-content four-four">
-          <%= render "_featured_post.html", Map.merge(assigns,
-                    %{featured_class: "left-two-one-content", post: Enum.at(section_3_posts, 7),
-                      description_limit: 100}) %>
-        </div>
-      </div>
-    </div>
-
-    <div class="uk-grid-collapse group-content group-content-three" uk-grid>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
-        <!-- author's column -->
-        <div class="individual-content three-one">
-          <%= render "_authors.html", conn: @conn, authors: @columnists %>
-        </div>
-      </div>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-2@m">
-        <!-- latest's column -->
-        <div class="individual-content three-two">
-          <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
-        </div>
-      </div>
-      <div class="uk-flex-column uk-width-1-1 uk-width-1-4@m">
-        <!-- popular's column -->
-        <div class="individual-content three-three">
-          <%= render "_popular.html", conn: @conn, site: @site, posts: @popular_posts %>
-        </div>
+      <div class="uk-width-1-2@s uk-width-1-1@m">
+        <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 2) %>
       </div>
     </div>
   </div>
+
+  <div class="uk-width-1-3@s uk-width-1-4@m uk-flex uk-flex-column low-posts">
+    <%= for post <- Enum.take(section_2_posts, 4) do %>
+      <%= render "_low_post.html", conn: @conn, post: post %>
+    <% end %>
+  </div>
+
+  <%= for post <- Enum.take(section_3_posts, 8) do %>
+    <div class="uk-width-1-2@s uk-width-1-4@m">
+      <%= render "_regular_post.html", conn: @conn, post: post, abstract: true %>
+    </div>
+  <% end %>
+
+  <div class="uk-width-1-4@m list-authors">
+    <%= render "_authors.html", conn: @conn, authors: @columnists %>
+  </div>
+  <div class="uk-width-1-2@m list-latest">
+    <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
+  </div>
+  <div class="uk-width-1-4@m list-popular">
+    <%= render "_popular.html", conn: @conn, site: @site, posts: @popular_posts %>
   </div>
 </div>
