@@ -55,13 +55,13 @@
     <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 7), abstract: true %>
   </div>
 
-  <div class="uk-width-1-4@m">
+  <div class="uk-width-1-4@m list-authors">
     <%= render "_authors.html", conn: @conn, authors: @columnists %>
   </div>
-  <div class="uk-width-1-2@m">
+  <div class="uk-width-1-2@m list-latest">
     <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
   </div>
-  <div class="uk-width-1-4@m">
+  <div class="uk-width-1-4@m list-popular">
     <%= render "_popular.html", conn: @conn, site: @site, posts: @popular_posts %>
   </div>
 </div>

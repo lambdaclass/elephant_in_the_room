@@ -51,7 +51,7 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # markdown
       {:cmark, "~> 0.7"},
-      {:faker, "~> 0.9", only: [:dev, :test]},
+      {:faker, "~> 0.9"},
 
       # pagination
       {:scrivener_ecto, "~> 1.0"},

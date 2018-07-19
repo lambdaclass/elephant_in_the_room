@@ -8,19 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= render "_social_meta.html", assigns %>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link href="<%= static_path(@conn, "/css/select2.min.css") %>" rel="stylesheet"/>
-    <script src="<%= static_path(@conn, "/js/select2.full.min.js") %>"></script>
-
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
   <%= if assigns[:admin] do %>
-    <%= render "_admin.html", assigns %>
+    <body class="admin-body-root">
+      <%= render "_admin.html", assigns %>
+    </body>
+    <%= render "_deps.html", assigns %>
   <% else %>
     <% assigns = Map.merge(assigns, %{site_list: Sites.list_site_no_preload()}) %>
     <body>
@@ -34,6 +29,7 @@
         </div>
       </div>
     </body>
+    <%= render "_deps.html", assigns %>
   <% end %>
 
 </html>

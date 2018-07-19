@@ -103,6 +103,30 @@
   }
 }
 
+.list-authors {
+    order: unset;
+
+    @media screen and (max-width: 960px) {
+        order: 3;
+    }
+}
+
+.list-latest {
+    order: unset;
+
+    @media screen and (max-width: 960px) {
+        order: 2;
+    }
+}
+
+.list-popular {
+    order: unset;
+
+    @media screen and (max-width: 960px) {
+        order: 1;
+    }
+}
+
 .popular {
   padding: 10px;
 
