@@ -1,6 +1,14 @@
 
 <div class="admin-title">
   <span class="title-text">Edit tag</span>
+  <%= if assigns[:tag] do %>
+    <div "admin-title-options">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+         href="<%= tag_path(@conn, :public_show, @tag.id) %>">
+        see tag
+      </a>
+  </div>
+  <% end %>
 </div>
 
 <%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
