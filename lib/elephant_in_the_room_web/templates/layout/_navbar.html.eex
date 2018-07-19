@@ -51,9 +51,8 @@
              class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="#">Current issue</a></li>
-            <li><a href="#">All issue</a></li>
+            <li><a href="#">All issues</a></li>
             <li><a href="#">Manage subscriptions</a></li>
-            <li><a href="#">Subscribe</a></li>
           </ul>
         </div>
       </li>
