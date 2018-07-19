@@ -6,22 +6,44 @@
   }
 
   .uk-text-meta {
-    font-size: 80%;
-    a {
-      color: #ff0052;
-    }
-    a:hover {
-      color: #ff0052;
-    }
+      font-size: 80%;
+      padding-top: 1em;
+      padding-bottom: 1.5em;
+      .category-meta {
+          a:before {
+              content: '\2022';
+              margin-right: 0.1em;
+              color: #e8e8e8;
+          }
+          &  > :first-child {
+              padding-left: 3px;
+          }
+          &  > :first-child:before {
+              display: none;
+          }
+      }
+      & > div:first-child{
+          padding-bottom: 0.4em;
+      }
+      a {
+          color: #ff0052;
+      }
+      a:hover {
+          color: #ff0052;
+      }
   }
+  
   .article-content {
     line-height: 1.35;
 
     p {
       color: $black;
     }
+
     img {
       margin: 20px 0;
+      color: #0366d6;
+      vertical-align: unset;
     }
 
     @media screen and (min-width: $break-s) {
@@ -41,10 +63,10 @@
   }
 
   .post-edit-button {
-      text-transform: uppercase;
-      font-size: 0.6em;
-      font-weight: bolder;
-      color: #2217d7;
+    text-transform: uppercase;
+    font-size: 0.6em;
+    font-weight: bolder;
+    color: #2217d7;
   }
 
   .post-main-title {
@@ -55,20 +77,20 @@
   }
 
   .post-main-tags {
-      background: #686868;
-      color: white;
-      text-transform: lowercase;
-      height: 20px;
-      padding: 0.15em 4px;
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 15px;
-      border-radius: 2px;
-      box-shadow: inset 0 -1px 0 rgba(27,31,35,0.12);
-      box-sizing: border-box;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
+    background: #686868;
+    color: white;
+    text-transform: lowercase;
+    height: 20px;
+    padding: 0.15em 4px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 15px;
+    border-radius: 2px;
+    box-shadow: inset 0 -1px 0 rgba(27, 31, 35, 0.12);
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+      sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
-
 }
 
 .uk-cover-container {

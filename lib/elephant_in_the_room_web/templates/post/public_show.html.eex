@@ -29,24 +29,23 @@
               class: "post-edit-button"%>
       <% _ -> %>
    <% end %>
-   <br>
 
   <div class="uk-text-meta">
-    <p>
+    <div>
       <%= case @post.author do %>
         <% nil -> %>
         <% %Author{:id => id, :name => name} -> %>
           By <%= link name, to: author_path(@conn, :public_show, id) %> |
       <% end %>
       <%= show_date(@post.inserted_at) %>
-    </p>
+    </div>
     <%= if length(@post.categories) > 0 do %>
-      <p>
+      <div class ="category-meta">
         Categories:
         <%= for category <- @post.categories do %>
           <%= link category.name, to: show_category_link(@conn, category) %>
         <% end %>
-      </p2>
+      </div>
     <% end %>
   </div>
   <%= render "_social_share.html", assigns %>
