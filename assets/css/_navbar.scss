@@ -1,34 +1,42 @@
 $navbar-height: 3em;
 $mini-navbar-height: 4em;
 $navbar-break-s: 640px;
-$navbar-break-m: 9600px;
+$navbar-break-m: 960px;
+
+
+.uk-navbar-left {
+    max-width: 0px;
+}
 
 .navbar-title{
     height: auto;
-    top: -0.4em;
-    left: -0.6em;
     position: relative;
-    .second, .first{
-        text-transform: capitalize;
-        color: white;
-        font-family: $title-font;
-        white-space: nowrap;
+    text-transform: capitalize;
+    color: white;
+    font-family: $title-font;
+    white-space: nowrap;
+    font-size: 0.9em !important;
+
+    @media screen and (min-width: $navbar-break-s /2) {
+        font-size: 1.3em !important;
     }
 
-    .first{
+    @media screen and (min-width: $navbar-break-s) {
+        font-size: 1.6em !important;
+    }
+
+    @media screen and (min-width: $navbar-break-m) {
         font-size: 2em !important;
     }
 
-    .second{
-        font-size: 0.75em !important;
-        position: absolute;
-        top: 3em;
-        left: 6.1em;
+    &.a-title {
+        background: black !important;
     }
-
 }
 
 .navbar-container {
+    min-width: 0px;
+    overflow: hidden;
     height: $navbar-height;
     background: black !important;
     .ul-reduced {
@@ -40,7 +48,7 @@ $navbar-break-m: 9600px;
         text-transform: capitalize;
         hyphens: none;
 
-        @media screen and (max-width: 700px) {
+        @media screen and (min-width: 700px) {
             // font-size: .8rem;
         }
 

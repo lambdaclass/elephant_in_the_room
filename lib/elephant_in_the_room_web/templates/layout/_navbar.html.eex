@@ -1,16 +1,12 @@
-<% {site_name1, site_name2} = get_site_name(@conn) %>
-
 <nav class="uk-navbar-container navbar-container" uk-navbar>
 
   <div class="uk-navbar-left">
     <ul class="uk-navbar-nav ul-reduced">
       <li class="uk-active">
-        <a href="<%= get_site_path(@conn) %>" class="navbar-title a-reduced">
-          <div class="first"><%= site_name1  %></div>
-          <div class="second"><%= site_name2  %></div>
+        <a href="<%= get_site_path(@conn) %>" class="navbar-title a-reduced a-title">
+          <%=  get_site_name(@conn) %>
         </a>
       </li>
-
     </ul>
   </div>
 
@@ -78,8 +74,6 @@
           </ul>
         </div>
       </li>
-
-      <li><a href="#" class="a-reduced top-link subscribe" >Subscribe</a></li>
     </ul>
   </div>
 </nav>
@@ -148,8 +142,6 @@
     <ul class="uk-nav uk-nav-default">
       <li><a href="#">Current issue</a></li>
       <li><a href="#">All issue</a></li>
-      <li><a href="#">Manage subscriptions</a></li>
-      <li><a href="#">Subscribe</a></li>
     </ul>
   </div>
 </div>
