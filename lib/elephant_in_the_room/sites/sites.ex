@@ -322,7 +322,7 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def get_popular_posts(%Site{id: site_id}, amount) do
-    {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount, "WITHSCORES"])
+    {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount - 1, "WITHSCORES"])
 
     scores =
       Enum.chunk(data, 2)
