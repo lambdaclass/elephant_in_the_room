@@ -24,36 +24,16 @@
   </div>
 
   <div class="uk-width-1-3@s uk-width-1-4@m uk-flex uk-flex-column low-posts">
-    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 0) %>
-    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 1) %>
-    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 2) %>
-    <%= render "_low_post.html", conn: @conn, post: Enum.at(section_2_posts, 3) %>
+    <%= for post <- Enum.take(section_2_posts, 4) do %>
+      <%= render "_low_post.html", conn: @conn, post: post %>
+    <% end %>
   </div>
 
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 0), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 1), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 2), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 3), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 4), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 5), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 6), abstract: true %>
-  </div>
-  <div class="uk-width-1-2@s uk-width-1-4@m">
-    <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_3_posts, 7), abstract: true %>
-  </div>
+  <%= for post <- Enum.take(section_3_posts, 8) do %>
+    <div class="uk-width-1-2@s uk-width-1-4@m">
+      <%= render "_regular_post.html", conn: @conn, post: post, abstract: true %>
+    </div>
+  <% end %>
 
   <div class="uk-width-1-4@m list-authors">
     <%= render "_authors.html", conn: @conn, authors: @columnists %>
