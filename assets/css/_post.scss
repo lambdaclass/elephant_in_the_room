@@ -102,3 +102,21 @@
     height: calc(85vh - #{$navbar-height});
   }
 }
+
+.social-share {
+    padding-bottom: 0.5em;
+    .social-button {
+        padding-right: 1em;
+    }
+    .email {
+        color: grey;
+    }
+
+    .facebook {
+        color: #4267b2;
+    }
+
+    .twitter {
+        color: #1ea1f3;
+    }
+}
