@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.AdminView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.{Site, Post}
+  alias ElephantInTheRoom.Sites.{Site, Post, Tag}
 
 
   def bread_crumb(conn, path) when is_list(path) do
@@ -30,6 +30,12 @@ defmodule ElephantInTheRoomWeb.AdminView do
       :post_edit ->
         bread_crumb_get_link(data, rest,
           [bread_crumb_post_edit(data.conn, data.site, data.post) | acc])
+      :tags ->
+        bread_crumb_get_link(data, rest,
+          [bread_crumb_tags(data.conn, data.site) | acc])
+      %Tag{} = tag ->
+        bread_crumb_get_link(Map.put(data, :tag, tag), rest,
+          [bread_crumb_tag_edit(data.conn, data.site, tag) | acc])
       _ ->
         bread_crumb_get_link(data, rest, acc)
     end
@@ -61,6 +67,14 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_post_edit(conn,%Site{id: site_id}, %Post{id: post_id}) do
     {"Edit", site_post_path(conn, :edit, site_id, post_id)}
+  end
+
+  defp bread_crumb_tags(conn, %Site{id: site_id}) do
+    {"Tags", site_tag_path(conn, :index, site_id)}
+  end
+
+  defp bread_crumb_tag_edit(conn, %Site{id: site_id}, %Tag{id: tag_id, name: tag_name}) do
+    {"\##{tag_name}", site_tag_path(conn, :edit, site_id, tag_id)}
   end
 
 end

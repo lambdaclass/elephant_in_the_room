@@ -27,7 +27,8 @@ defmodule ElephantInTheRoomWeb.TagController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :tags]
     )
   end
 
@@ -71,7 +72,11 @@ defmodule ElephantInTheRoomWeb.TagController do
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(id)
     changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
+    render(conn, "edit.html",
+      site: site,
+      tag: tag,
+      changeset: changeset,
+      bread_crumb: [:sites, site, :tags, tag])
   end
 
   def update(conn, %{"id" => id, "tag" => tag_params}) do
