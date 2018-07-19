@@ -27,7 +27,7 @@
     <div class="form-group uk-width-1-1">
       <%= label f, :image, class: "uk-form-label"%>
       <%= if @changeset.data.image do %>
-        <img src="<%= @changeset.data.image  %>" width="200">
+        <img src="<%= @changeset.data.image %>" width="200">
         <%= submit "Delete image", name: "image_delete", value: "true" %>
       <% end %>
       <%= file_input f, :image %>

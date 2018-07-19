@@ -126,18 +126,23 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    render(conn, "public_show.html",
+    meta = Site.generate_og_meta(conn)
+
+    render(
+      conn,
+      "public_show.html",
       site: site,
       latest_posts: Sites.get_latest_posts(site, 15),
       columnists: Sites.get_columnists(site, 10),
-      popular_posts: Sites.get_popular_posts(site, 10)
+      popular_posts: Sites.get_popular_posts(site, 10),
+      meta: meta
     )
   end
 
   def public_show_popular(conn, _params) do
     popular_posts =
       Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_popular_posts
+      |> Sites.get_popular_posts()
 
     render(conn, "public_show_popular.html", posts: popular_posts)
   end
@@ -145,7 +150,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def public_show_latest(conn, _params) do
     latest_posts =
       Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_latest_posts
+      |> Sites.get_latest_posts()
 
     render(conn, "public_show_latest.html", posts: latest_posts)
   end

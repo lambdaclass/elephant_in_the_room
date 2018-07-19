@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   use Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{SiteView, Uploaders.Image, Utils.Utils}
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
   schema "sites" do
@@ -41,5 +41,19 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   def store_image(%Changeset{} = changeset, _attrs) do
     changeset
+  end
+
+  def generate_og_meta(conn) do
+    [url, image] =
+      [SiteView.show_site_link(conn), conn.assigns.site.image]
+      |> Enum.map(fn path -> Utils.generate_absolute_url(path, conn) end)
+
+    %{
+      url: url,
+      type: "website",
+      title: "#{conn.assigns.site.name}",
+      description: conn.assigns.site.description,
+      image: image
+    }
   end
 end
