@@ -6,13 +6,29 @@
   }
 
   .uk-text-meta {
-    font-size: 80%;
-    a {
-      color: #ff0052;
-    }
-    a:hover {
-      color: #ff0052;
-    }
+      font-size: 80%;
+      padding-top: 1em;
+      padding-bottom: 1.5em;
+      .category-meta {
+          a:before {
+              content: '\2022';
+              margin-right: 0.1em;
+              color: #e8e8e8;
+          }
+          &  > :first-child {
+              padding-left: 3px;
+          }
+          &  > :first-child:before {
+              display: none;
+          }
+      }
+
+      a {
+          color: #ff0052;
+      }
+      a:hover {
+          color: #ff0052;
+      }
   }
   .article-content {
     p {
