@@ -46,7 +46,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   def store_image(%Changeset{} = changeset, %{"image" => image}) do
     {:ok, image_name} = Image.store(%{image | filename: Ecto.UUID.generate()})
 
-    put_change(changeset, :image, "/images/" <> image_name)
+    put_change(changeset, :image, "/images/#{image_name}")
   end
 
   def store_image(%Changeset{} = changeset, _attrs), do: changeset

@@ -17,10 +17,14 @@
       <%= text_input f, :title, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :title %>
     </div>
-
-    <div class="uk-margin">
-      <%= label f, :favicon, class: "uk-form-label" %>
-      <%= file_input f, :favicon, class: "uk-form-controls uk-input" %>
+    
+    <div class="form-group uk-width-1-1">
+      <%= label f, :favicon, class: "uk-form-label"%>
+      <%= if @changeset.data.favicon do %>
+        <img src="<%= @changeset.data.favicon %>" width="200">
+        <%= submit "Delete favicon", name: "favicon_delete", value: "true" %>
+      <% end %>
+      <%= file_input f, :favicon %>
       <%= error_tag f, :favicon %>
     </div>
 
