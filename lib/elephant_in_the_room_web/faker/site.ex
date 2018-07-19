@@ -12,10 +12,12 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
   end
 
   def insert_one(site_number, attrs \\ %{}) do
+    host = if site_number == 0, do: "localhost", else: "site-#{site_number}.com"
+
     changes =
       default_attrs()
       |> Map.merge(attrs)
-      |> Map.put(:host, "site-#{site_number}.com")
+      |> Map.put(:host, host)
 
     case Sites.create_site(changes) do
       {:ok, site} ->
@@ -27,7 +29,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
   end
 
   def insert_many(n, attrs \\ %{}) do
-    Enum.to_list(1..n)
+    Enum.to_list(0..n)
     |> Enum.map(fn n -> insert_one(n, attrs) end)
   end
 end
