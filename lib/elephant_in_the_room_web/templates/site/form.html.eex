@@ -13,11 +13,22 @@
     </div>
 
     <div class="uk-margin">
+      <%= label f, :description, class: "uk-form-label" %>
+      <%= text_input f, :description, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :description %>
+    </div>
+
+    <div class="uk-margin">
       <%= label f, :host, class: "uk-form-label" %>
       <%= text_input f, :host, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :host %>
     </div>
 
+    <div class="uk-margin">
+      <%= label f, :image, class: "uk-form-label" %>
+      <%= text_input f, :image, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :image %>
+    </div>
 
     <div class="uk-margin">
       <%= submit "Submit", class: "uk-button uk-button-primary" %>

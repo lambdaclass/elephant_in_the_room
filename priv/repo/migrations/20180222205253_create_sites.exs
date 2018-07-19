@@ -5,6 +5,8 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
     create table(:sites) do
       add(:name, :string)
       add(:host, :string)
+      add(:description, :string)
+      add(:image, :string)
       timestamps()
     end
 
