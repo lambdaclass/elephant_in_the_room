@@ -8,19 +8,15 @@
   </div>
 </div>
 
-<table class="uk-table uk-table-responsive uk-table-divider">
+<table class="uk-table uk-table-divider admin-tag-list-table">
     <thead>
-        <tr>
-            <th class="uk-table-expand">tag</th>
-            <th class="uk-width-small">options</th>
-        </tr>
     </thead>
      <tbody>
        <%= for tag <- @tags do %>
         <tr>
           <td>
-            <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag),
-                  class: "post-main-tags", style: "background: \##{tag.color}"%>
+            <%= link tag.name, to: tag_path(@conn, :public_show, tag.id),
+                  class: "post-main-tags big-tag", style: "background: \##{tag.color}"%>
           </td>
           <td>
             <%= link "", to: site_tag_path(@conn, :edit, @site, tag),
