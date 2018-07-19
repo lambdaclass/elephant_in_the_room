@@ -1,0 +1,18 @@
+<div class="social-share">
+
+  <a class="social-button facebook"
+     href="https://www.facebook.com/sharer/sharer.php?u=sample_url">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <a class="social-button twitter"
+    href="https://twitter.com/home?status=sample_url%0A">
+    <i class="fab fa-twitter"></i>
+  </a>
+
+  <a class="social-button email"
+     href="mailto:?&body=share%20url">
+    <i class="far fa-envelope"></i>
+  </a>
+
+</div>
