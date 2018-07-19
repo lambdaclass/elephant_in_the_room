@@ -23,6 +23,10 @@
     font-family: $title-font;
     text-transform: uppercase;
     hyphens: none;
+
+    @media screen and (max-width: 640px) {
+        font-size: 125%;
+    }
   }
   .category {
     font-size: 50%;
@@ -94,6 +98,10 @@
 
   .title {
     line-height: 1rem;
+
+    @media screen and (max-width: 640px) {
+      line-height: 1.2
+    }
   }
   .author-date {
     margin-top: auto;
