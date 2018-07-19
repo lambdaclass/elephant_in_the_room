@@ -61,15 +61,10 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   def get_site_name(conn) do
     site = conn.assigns[:site]
 
-    name =
-      case site do
-        nil -> "Elephant in the room"
-        site -> site.name
-      end
-
-    [first | rest] = String.split(name, " ")
-    second = Enum.join(rest, " ")
-    {first, second}
+    case site do
+      nil -> "Elephant in the room"
+      site -> site.name
+    end
   end
 
   def show_site_link(%Site{} = site, conn) do
