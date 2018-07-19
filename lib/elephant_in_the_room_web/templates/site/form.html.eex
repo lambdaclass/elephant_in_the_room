@@ -13,6 +13,18 @@
     </div>
 
     <div class="uk-margin">
+      <%= label f, :title, class: "uk-form-label" %>
+      <%= text_input f, :title, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :title %>
+    </div>
+
+    <div class="uk-margin">
+      <%= label f, :favicon, class: "uk-form-label" %>
+      <%= file_input f, :favicon, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :favicon %>
+    </div>
+
+    <div class="uk-margin">
       <%= label f, :description, class: "uk-form-label" %>
       <%= textarea f, :description, class: "uk-textarea uk-form-width-large" %>
       <%= error_tag f, :description %>
