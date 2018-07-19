@@ -7,6 +7,8 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
       add(:host, :string)
       add(:description, :string)
       add(:image, :string)
+      add(:favicon, :string)
+      add(:title, :string)
       timestamps()
     end
 

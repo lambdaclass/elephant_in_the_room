@@ -10,6 +10,8 @@ defmodule ElephantInTheRoom.Sites.Site do
     field(:host, :string)
     field(:image, :string)
     field(:description, :string)
+    field(:favicon, :string)
+    field(:title, :string)
 
     has_many(:categories, Category, on_delete: :delete_all)
     has_many(:posts, Post, on_delete: :delete_all)
