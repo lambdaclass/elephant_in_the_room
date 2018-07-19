@@ -1,47 +1,35 @@
-<h2><%= @site.name %>Tags</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
-<table class="uk-table uk-table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Menu</th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for tag <- @tags do %>
-    <tr>
-      <td>
-        <%= link tag.name, to: site_tag_path(@conn, :show, @site, tag), 
-          class: "a" %>
-      </td>
-      <td class="text-right">
-        <span>
-          <%= link "", to: site_tag_path(@conn, :edit, @site, tag), 
-            class: "el-menu-icon fa fa-edit" %>
-        </span>
-        <span>
-          <%= link "", to: site_tag_path(@conn, :delete, @site, tag), 
-            method: :delete, data: [confirm: "Are you sure?"], 
-            class: "el-menu-icon fa fa-trash-alt" %>
-        </span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
+<div class="admin-title">
+  <span class="title-text"> Tags </span>
+  <div "admin-title-options">
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+       href="<%= site_tag_path(@conn, :new, @site) %>">
+      create new
+    </a>
+  </div>
+</div>
+
+<table class="uk-table uk-table-divider admin-tag-list-table">
+    <thead>
+    </thead>
+     <tbody>
+       <%= for tag <- @tags do %>
+        <tr>
+          <td>
+            <%= link tag.name, to: tag_path(@conn, :public_show, tag.id),
+                  class: "post-main-tags big-tag", style: "background: \##{tag.color}"%>
+          </td>
+          <td>
+            <%= link "", to: site_tag_path(@conn, :edit, @site, tag),
+                  class: "el-menu-icon fa fa-edit" %>
+            <%= link "", to: site_tag_path(@conn, :delete, @site, tag),
+                  method: :delete, data: [confirm: "Are you sure?"],
+                  class: "el-menu-icon fa fa-trash-alt" %>
+          </td>
+        </tr>
+       <% end %>
+    </tbody>
 </table>
 
-<%= case compare(@page_number, @total_pages) do %>
-  <% :equal -> %>
-    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-  <% :lesser -> %>
-    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number - 1, class: "el-arrow-icon fa fa-arrow-right fa-2x") %></span>
-  <% :first -> %>
-    <span><%= link "", to: site_tag_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
-  <% _ -> %>
-<% end %>
 
-<br>
-
-<span><%= link "New Tag", to: site_tag_path(@conn, :new, @site) %></span>
-<span><%= link "Back", to: site_path(@conn, :index) %></span>
+<%= render ElephantInTheRoomWeb.AdminView,
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_tag_path(@conn, :index, @site, page: &1)) %>
