@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.{Sites, Sites.Site, Repo}
 
   def index(conn, params) do
     page =
@@ -126,7 +125,9 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    render(conn, "public_show.html",
+    render(
+      conn,
+      "public_show.html",
       site: site,
       latest_posts: Sites.get_latest_posts(site, 15),
       columnists: Sites.get_columnists(site, 10),
@@ -137,7 +138,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def public_show_popular(conn, _params) do
     popular_posts =
       Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_popular_posts
+      |> Sites.get_popular_posts()
 
     render(conn, "public_show_popular.html", posts: popular_posts)
   end
@@ -145,7 +146,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def public_show_latest(conn, _params) do
     latest_posts =
       Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_latest_posts
+      |> Sites.get_latest_posts()
 
     render(conn, "public_show_latest.html", posts: latest_posts)
   end

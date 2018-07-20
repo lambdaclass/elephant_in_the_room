@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Sites, Sites.Site}
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.{User, Role}
+  alias ElephantInTheRoom.{Sites, Sites.Site, Auth, Auth.User, Auth.Role}
 
   def get_categories(assigns, amount \\ 5)
 

@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.AuthorView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.{Repo, Sites.Post}
   import Ecto.Query
 
   def number_of_published_posts(author) do

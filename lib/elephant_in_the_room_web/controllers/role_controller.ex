@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.RoleController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.Role
+  alias ElephantInTheRoom.{Repo, Auth, Auth.Role}
 
   def index(conn, params) do
     page =

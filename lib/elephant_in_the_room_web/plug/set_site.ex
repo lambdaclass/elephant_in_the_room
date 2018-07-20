@@ -1,6 +1,5 @@
 defmodule ElephantInTheRoomWeb.Plugs.SetSite do
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Site
+  alias ElephantInTheRoom.{Repo, Sites.Site}
   alias Plug.Conn
   alias ElephantInTheRoomWeb.Router.Helpers, as: Routes
   import Phoenix.Controller, only: [redirect: 2]

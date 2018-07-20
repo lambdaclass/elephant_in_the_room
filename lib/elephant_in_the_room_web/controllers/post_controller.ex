@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Post}
   alias Phoenix.Controller
   import Ecto.Query
 

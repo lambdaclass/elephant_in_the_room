@@ -1,9 +1,10 @@
 defmodule ElephantInTheRoomWeb.Router do
   use ElephantInTheRoomWeb, :router
   import ElephantInTheRoomWeb.Plugs.SetSite
+  alias ElephantInTheRoom.Auth
 
   pipeline :auth do
-    plug(ElephantInTheRoom.Auth.Pipeline)
+    plug(Auth.Pipeline)
   end
 
   pipeline :ensure_auth do
@@ -13,7 +14,7 @@ defmodule ElephantInTheRoomWeb.Router do
   pipeline :image_uploading do
     plug(:fetch_session)
     plug(:put_secure_browser_headers)
-    plug(ElephantInTheRoom.Auth.Pipeline)
+    plug(Auth.Pipeline)
     plug(Guardian.Plug.EnsureAuthenticated)
   end
 
@@ -65,7 +66,7 @@ defmodule ElephantInTheRoomWeb.Router do
       pipe_through([:on_admin_page, :ensure_auth])
       get("/", AdminController, :index)
       resources("/roles", RoleController, param: "role_name")
-      resources("/users", UserController)
+      resources("/users", UserController, param: "user_name")
       resources("/authors", AuthorController, param: "author_name")
       get("/backup", BackupController, :index)
       post("/backup/do_backup", BackupController, :do_backup)
