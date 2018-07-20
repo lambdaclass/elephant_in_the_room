@@ -50,7 +50,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
 
   defp bread_crumb_sites(conn) do
-    {"Sites", site_path(conn, :index)}
+    {"Sitios", site_path(conn, :index)}
   end
 
   defp bread_crumb_site(conn, %Site{name: name, id: id}) do
@@ -58,7 +58,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_posts(conn, %Site{id: id}) do
-    {"Posts", site_post_path(conn, :index, id)}
+    {"Artículos", site_post_path(conn, :index, id)}
   end
 
   defp bread_crumb_post(conn,%Site{id: site_id}, %Post{id: post_id}) do
@@ -66,15 +66,15 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_post_edit(conn,%Site{id: site_id}, %Post{id: post_id}) do
-    {"Edit", site_post_path(conn, :edit, site_id, post_id)}
+    {"Editar", site_post_path(conn, :edit, site_id, post_id)}
   end
 
   defp bread_crumb_tags(conn, %Site{id: site_id}) do
-    {"Tags", site_tag_path(conn, :index, site_id)}
+    {"Etiquetas", site_tag_path(conn, :index, site_id)}
   end
 
   defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
-    {"Tag",""}
+    {"Etiqueta",""}
   end
   defp bread_crumb_tag_edit(conn, %Site{id: site_id}, %Tag{id: tag_id, name: tag_name}) do
     {"\##{tag_name}", site_tag_path(conn, :edit, site_id, tag_id)}
