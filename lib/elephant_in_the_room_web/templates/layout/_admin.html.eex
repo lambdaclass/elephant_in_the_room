@@ -17,7 +17,7 @@
       </li>
     </ul>
     <ul class="uk-navbar-nav admin-nav-options show-only-on-bigger-than-small">
-      <li><a href="/">Home</a></li>
+      <li><a href="/">Inicio</a></li>
       <li><%= link "Cerrar Sesión", to: login_path(@conn, :logout) %></li>
     </ul>
   </div>
@@ -35,7 +35,7 @@
 <div id="admin-navbar-small"
      class="admin-nav-options small-admin-nav-options" aria-hidden="true" hidden>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="/">Inicio</a></li>
     <li><%= link "Cerrar Sesión", to: login_path(@conn, :logout) %></li>
   </ul>
   <div class="shadow"></div>
