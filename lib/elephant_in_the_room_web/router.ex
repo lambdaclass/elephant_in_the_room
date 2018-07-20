@@ -74,7 +74,7 @@ defmodule ElephantInTheRoomWeb.Router do
 
       resources "/sites", SiteController do
         pipe_through(:load_site_info)
-        resources("/categories", CategoryController)
+        resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController)
         resources("/tags", TagController)
       end

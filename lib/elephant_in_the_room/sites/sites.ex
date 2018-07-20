@@ -635,14 +635,6 @@ defmodule ElephantInTheRoom.Sites do
     Repo.get!(Author, id)
   end
 
-  def get_author_by_name!(name) do
-    Repo.get_by!(Author, name: name)
-  end
-
-  def get_author_by_name(name) do
-    Repo.get_by(Author, name: name)
-  end
-
   @doc """
   Creates a author.
 
@@ -798,5 +790,19 @@ defmodule ElephantInTheRoom.Sites do
   """
   def change_image(%Image{} = image) do
     Image.changeset(image, %{})
+  end
+
+  def get_by_name!(model, name) do
+    Repo.get_by!(model, name: name)
+  end
+
+  def get_by_name(model, name) do
+    Repo.get_by(model, name: name)
+  end
+
+  def from_name!(name, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(model)
   end
 end

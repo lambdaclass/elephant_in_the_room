@@ -26,7 +26,7 @@
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, @category), class: "uk-button" %></span>
+        <span><%= link "Edit", to: site_category_path(@conn, :edit, @site, URI.encode(@category)), class: "uk-button" %></span>
         <span><%= link "Back", to: site_category_path(@conn, :index, @site), class: "uk-button" %></span>
       </div>
     </div>

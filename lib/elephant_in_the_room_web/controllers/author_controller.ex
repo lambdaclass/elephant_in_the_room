@@ -41,26 +41,26 @@ defmodule ElephantInTheRoomWeb.AuthorController do
   end
 
   def show(conn, %{"author_name" => name}) do
-    author = author_from_name(name)
+    author = Sites.from_name!(name, Author)
     render(conn, "show.html", author: author)
   end
 
   def public_show(conn, %{"author_name" => name}) do
     author =
-      author_from_name(name)
+      Sites.from_name!(name, Author)
       |> Repo.preload(posts: [:site])
 
     render(conn, "public_show.html", author: author)
   end
 
   def edit(conn, %{"author_name" => name}) do
-    author = author_from_name(name)
+    author = Sites.from_name!(name, Author)
     changeset = Sites.change_author(author)
     render(conn, "edit.html", author: author, changeset: changeset)
   end
 
   def update(conn, %{"author_name" => name, "author" => author_params}) do
-    author = author_from_name(name)
+    author = Sites.from_name!(name, Author)
 
     case Sites.update_author(author, author_params) do
       {:ok, author} ->
@@ -74,17 +74,11 @@ defmodule ElephantInTheRoomWeb.AuthorController do
   end
 
   def delete(conn, %{"author_name" => name}) do
-    author = author_from_name(name)
+    author = Sites.from_name!(name, Author)
     {:ok, _author} = Sites.delete_author(author)
 
     conn
     |> put_flash(:info, "Author deleted successfully.")
     |> redirect(to: author_path(conn, :index))
-  end
-
-  defp author_from_name(name) do
-    name
-    |> URI.decode()
-    |> Sites.get_author_by_name!()
   end
 end
