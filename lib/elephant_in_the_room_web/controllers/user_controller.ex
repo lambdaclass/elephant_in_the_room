@@ -44,33 +44,33 @@ defmodule ElephantInTheRoomWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+  def show(conn, %{"user_name" => name}) do
+    user = Auth.from_name!(name, User)
     render(conn, "show.html", user: user)
   end
 
-  def edit(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+  def edit(conn, %{"user_name" => name}) do
+    user = Auth.from_name!(name, User)
     changeset = Auth.change_user(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Auth.get_user!(id)
+  def update(conn, %{"user_name" => name, "user" => user_params}) do
+    user = Auth.from_name!(name, User)
 
     case Auth.update_user(user, user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: user_path(conn, :show, URI.encode(user.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+  def delete(conn, %{"user_name" => name}) do
+    user = Auth.from_name!(name, User)
     {:ok, _user} = Auth.delete_user(user)
 
     conn
