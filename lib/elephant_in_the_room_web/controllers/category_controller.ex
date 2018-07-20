@@ -65,7 +65,10 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       amount: 10, page: page)
     category = %{category | posts: posts}
 
-    render(conn, "public_show.html", category: category, site: site)
+    render(conn, "public_show.html",
+      category: category,
+      site: site,
+      page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

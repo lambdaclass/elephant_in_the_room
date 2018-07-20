@@ -66,7 +66,10 @@ defmodule ElephantInTheRoomWeb.TagController do
     posts = Sites.get_tag_with_posts(site, tag_id, amount: 10, page: page)
     tag = %{tag | posts: posts}
 
-    render(conn, "public_show.html", tag: tag, site: site)
+    render(conn, "public_show.html",
+      tag: tag,
+      site: site,
+      page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
