@@ -129,7 +129,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "public_show.html",
       site: site,
       latest_posts: Sites.get_latest_posts(site, 15),
-      columnists: Sites.get_columnists(site, 10),
+      columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
       popular_posts: Sites.get_popular_posts(site, 10)
     )
   end

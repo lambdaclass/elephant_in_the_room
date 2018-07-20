@@ -36,7 +36,8 @@
   <% end %>
 
   <div class="uk-width-1-4@m list-authors">
-    <%= render "_authors.html", conn: @conn, authors: @columnists %>
+    <%= render "_authors.html", conn: @conn,
+          columnists_and_posts: @columnists_and_posts %>
   </div>
   <div class="uk-width-1-2@m list-latest">
     <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
