@@ -67,6 +67,9 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
+  defp get_page(%{"page" => page}), do: String.to_integer(page)
+  defp get_page(_), do: 1
+
   def paginate_elements(site, params) do
     category_page =
       case params do
@@ -130,14 +133,13 @@ defmodule ElephantInTheRoomWeb.SiteController do
       site: site,
       latest_posts: Sites.get_latest_posts(site, 15),
       columnists: Sites.get_columnists(site, 10),
-      popular_posts: Sites.get_popular_posts(site, 10)
+      popular_posts: Sites.get_popular_posts(site, amount: 10)
     )
   end
 
-  def public_show_popular(conn, _params) do
-    popular_posts =
-      Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_popular_posts
+  def public_show_popular(conn, params) do
+    page = get_page(params)
+    popular_posts = Sites.get_popular_posts(conn.assigns.site, [page: page])
 
     render(conn, "public_show_popular.html", posts: popular_posts)
   end

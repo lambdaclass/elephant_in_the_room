@@ -317,12 +317,17 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  def get_popular_posts(site) do
-    get_popular_posts(site, -1)
+  def get_popular_posts(%Site{id: site_id}, opts \\ []) do
+    page = Keyword.get(opts, :page, 1) - 1
+    amount = Keyword.get(opts, :amount, 10) - 1
+    index_from = page * amount
+    index_to = (page + 1) * amount
+    get_popular_posts_from_db(site_id, index_from, index_to + 1)
   end
 
-  def get_popular_posts(%Site{id: site_id}, amount) do
-    {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount - 1, "WITHSCORES"])
+  def get_popular_posts_from_db(site_id, index_from, index_to) do
+    {:ok, data} = Redix.command(:redix,
+      ["ZREVRANGE", "site:#{site_id}", index_from, index_to, "WITHSCORES"])
 
     scores =
       Enum.chunk(data, 2)
