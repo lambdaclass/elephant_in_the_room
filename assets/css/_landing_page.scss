@@ -112,6 +112,7 @@
   > a > p {
     margin: 0;
     color: #000;
+    hyphens: none;
   }
 
   > a > p:last-child {
@@ -119,6 +120,7 @@
   }
 
   > a > p:nth-child(2) {
+    color: #666;
     font-size: 80%;
   }
 
