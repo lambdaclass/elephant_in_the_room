@@ -23,7 +23,7 @@
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Edit", to: author_path(@conn, :edit, @author), class: "uk-button" %></span>
+        <span><%= link "Edit", to: author_path(@conn, :edit, URI.encode(@author.name)), class: "uk-button" %></span>
         <span><%= link "Back", to: author_path(@conn, :index), class: "uk-button" %></span>
       </div>
     </div>

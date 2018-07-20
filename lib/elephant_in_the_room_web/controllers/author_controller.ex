@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.AuthorController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Author
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Author}
 
   def index(conn, params) do
     page =
@@ -35,7 +33,7 @@ defmodule ElephantInTheRoomWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author created successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: author_path(conn, :show, URI.encode(author.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -68,7 +66,7 @@ defmodule ElephantInTheRoomWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author updated successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: author_path(conn, :show, URI.encode(author.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", author: author, changeset: changeset)
