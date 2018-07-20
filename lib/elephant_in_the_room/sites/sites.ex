@@ -317,12 +317,19 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  def get_popular_posts(%Site{id: site_id}, opts \\ []) do
+  defp pagination_opts(opts) do
     page = Keyword.get(opts, :page, 1) - 1
-    amount = Keyword.get(opts, :amount, 10) - 1
+    amount = Keyword.get(opts, :amount, 10)
     index_from = page * amount
-    index_to = (page + 1) * amount
-    get_popular_posts_from_db(site_id, index_from, index_to + 1)
+    index_to = index_from + amount - 1
+    %{page: page,
+      amount: amount,
+      index: {index_from, index_to}}
+  end
+
+  def get_popular_posts(%Site{id: site_id}, opts \\ []) do
+    %{index: {index_from, index_to}} = pagination_opts(opts)
+    get_popular_posts_from_db(site_id, index_from, index_toq)
   end
 
   def get_popular_posts_from_db(site_id, index_from, index_to) do
@@ -341,21 +348,16 @@ defmodule ElephantInTheRoom.Sites do
     |> Enum.sort_by(&(scores[&1.id]), &>=/2)
   end
 
-  def get_latest_posts(%Site{} = site) do
-    Post
-    |> where([post], post.site_id == ^site.id)
-    |> order_by(desc: :inserted_at)
-    |> preload(:author)
-    |> Repo.all()
-  end
-
-  def get_latest_posts(%Site{} = site, amount) do
-    Post
-    |> where([post], post.site_id == ^site.id)
-    |> limit(^amount)
-    |> order_by(desc: :inserted_at)
-    |> preload(:author)
-    |> Repo.all()
+  def get_latest_posts(%Site{id: site_id}, opts \\ []) do
+    %{index: {index_from, _},
+      amount: amount} = pagination_opts(opts)
+    query = from post in Post,
+      where: post.site_id == ^site_id,
+      order_by: [desc: post.inserted_at],
+      offset: ^index_from,
+      limit: ^amount,
+      preload: [:author]
+    Repo.all(query)
   end
 
   def get_columnists(%Site{} = site, amount) do

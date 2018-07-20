@@ -131,7 +131,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
     render(conn, "public_show.html",
       site: site,
-      latest_posts: Sites.get_latest_posts(site, 15),
+      latest_posts: Sites.get_latest_posts(site, amount: 15),
       columnists: Sites.get_columnists(site, 10),
       popular_posts: Sites.get_popular_posts(site, amount: 10)
     )
@@ -144,10 +144,10 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "public_show_popular.html", posts: popular_posts)
   end
 
-  def public_show_latest(conn, _params) do
-    latest_posts =
-      Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_latest_posts
+  def public_show_latest(conn, params) do
+    page = get_page(params)
+    latest_posts = Sites.get_latest_posts(conn.assigns.site,
+      [page: page, amount: 10])
 
     render(conn, "public_show_latest.html", posts: latest_posts)
   end
