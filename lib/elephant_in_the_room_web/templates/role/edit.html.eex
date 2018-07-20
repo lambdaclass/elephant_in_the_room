@@ -15,7 +15,7 @@
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, role_path(@conn, :update, @role)) %>
+          <%= render "form.html", Map.put(assigns, :action, role_path(@conn, :update, URI.encode(@role.name))) %>
         </div>
       </div>
     </div>

@@ -64,7 +64,7 @@ defmodule ElephantInTheRoomWeb.Router do
     scope "/admin" do
       pipe_through([:on_admin_page, :ensure_auth])
       get("/", AdminController, :index)
-      resources("/roles", RoleController)
+      resources("/roles", RoleController, param: "role_name")
       resources("/users", UserController)
       resources("/authors", AuthorController, param: "author_name")
       get("/backup", BackupController, :index)

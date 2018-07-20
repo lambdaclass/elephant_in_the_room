@@ -240,4 +240,18 @@ defmodule ElephantInTheRoom.Auth do
       false -> {:error, "Incorrect username or password"}
     end
   end
+
+  def get_by_name!(name, model) do
+    Repo.get_by!(model, name: name)
+  end
+
+  def get_by_name(name, model) do
+    Repo.get_by(model, name: name)
+  end
+
+  def from_name!(name, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(model)
+  end
 end
