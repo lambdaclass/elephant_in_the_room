@@ -375,9 +375,7 @@ defmodule ElephantInTheRoom.Sites do
         post: post
       }
 
-    Repo.all(query)
-    |> Enum.filter(fn(x) -> x.author != nil end)
-    |> Enum.reverse
+    Repo.all(query) |> Enum.reverse
   end
 
   @doc """
