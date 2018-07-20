@@ -18,7 +18,7 @@
     </ul>
     <ul class="uk-navbar-nav admin-nav-options show-only-on-bigger-than-small">
       <li><a href="/">Home</a></li>
-      <li><%= link "Logout", to: login_path(@conn, :logout) %></li>
+      <li><%= link "Cerrar Sesión", to: login_path(@conn, :logout) %></li>
     </ul>
   </div>
 
@@ -36,7 +36,7 @@
      class="admin-nav-options small-admin-nav-options" aria-hidden="true" hidden>
   <ul>
     <li><a href="/">Home</a></li>
-    <li><%= link "Logout", to: login_path(@conn, :logout) %></li>
+    <li><%= link "Cerrar Sesión", to: login_path(@conn, :logout) %></li>
   </ul>
   <div class="shadow"></div>
 </div>
@@ -50,19 +50,19 @@
   <div uk-grid>
     <div class="uk-width-5-5 uk-width-auto@s side-bar">
 
-      <h3> Administration </h3>
+      <h3> Administración </h3>
 
       <ul class="administation-items">
         <li>
-          <%= link "Sites",
+          <%= link "Sitios",
           to: site_path(@conn, :index) %>
         </li>
         <li>
-          <%= link "Authors",
+          <%= link "Autores",
           to: author_path(@conn, :index) %>
         </li>
         <li>
-          <%= link "Users",
+          <%= link "Usuarios",
           to: user_path(@conn, :index) %>
         </li>
         <li>
@@ -70,7 +70,7 @@
           to: role_path(@conn, :index) %>
         </li>
         <li>
-          <%= link "Backup",
+          <%= link "Respaldo",
           to: backup_path(@conn, :index) %>
         </li>
       </ul>
