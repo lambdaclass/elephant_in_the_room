@@ -12,17 +12,7 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
         |> redirect(to: Routes.login_path(conn, :login))
         |> Conn.halt()
 
-      site ->
-        site =
-          site
-          |> Repo.preload(
-            categories: [],
-            posts: [:tags, :categories, :author],
-            tags: []
-          )
-
-        conn
-        |> Conn.assign(:site, site)
+      site -> Conn.assign(conn, :site, site)
     end
   end
 end
