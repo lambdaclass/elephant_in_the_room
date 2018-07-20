@@ -1,18 +1,12 @@
-.site-content {
+.site-content.uk-container {
+  margin-bottom: 60px;
+  padding-left: 0;
+  padding-right: 0;
 
   @media screen and (min-width: 640px) {
     margin-top: 30px;
-    margin-bottom: 60px;
-  }
-
-  @media screen and (min-width: 640px) and (max-width: 1280px) {
-    padding: 0 20px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -23,9 +17,10 @@
     font-family: $title-font;
     text-transform: uppercase;
     hyphens: none;
+    font-size: 125%;
 
-    @media screen and (max-width: 640px) {
-        font-size: 125%;
+    @media screen and (min-width: 640px) {
+      font-size: 100%;
     }
   }
   .category {
@@ -43,11 +38,14 @@
   }
 }
 
-.main-post {
-  order: unset;
+.main-post, .low-posts {
+  order: 0;
 
-  @media screen and (min-width: 640px) and (max-width: 960px) {
+  @media screen and (min-width: 640px) {
     order: -1;
+  }
+  @media screen and (min-width: 960px) {
+    order: 0;
   }
 }
 
@@ -62,17 +60,10 @@
   }
 }
 
-.low-posts {
-  order: unset;
-
-  @media screen and (min-width: 640px) and (max-width: 960px) {
-    order: -1;
-  }
-}
-
 .post.post-low {
-  text-align: left;
   margin-bottom: 30px;
+  padding: 0 15px;
+  text-align: left;
 
   p {
     margin: 0;
@@ -87,8 +78,8 @@
     line-height: 1rem;
   }
 
-  @media screen and (max-width: 640px) {
-    padding: 0 15px;
+  @media screen and (min-width: 640px) {
+    padding: 0;
   }
 }
 
@@ -97,10 +88,10 @@
   text-align: left;
 
   .title {
-    line-height: 1rem;
+    line-height: 1.2;
 
-    @media screen and (max-width: 640px) {
-      line-height: 1.2
+    @media screen and (min-width: 640px) {
+      line-height: 1rem;
     }
   }
   .author-date {
@@ -109,30 +100,6 @@
   .title, .abstract, .author, .date {
     padding: 0 15px;
   }
-}
-
-.list-authors {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 3;
-    }
-}
-
-.list-latest {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 2;
-    }
-}
-
-.list-popular {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 1;
-    }
 }
 
 .popular {
@@ -145,6 +112,7 @@
   > a > p {
     margin: 0;
     color: #000;
+    hyphens: none;
   }
 
   > a > p:last-child {
@@ -152,6 +120,7 @@
   }
 
   > a > p:nth-child(2) {
+    color: #666;
     font-size: 80%;
   }
 

@@ -22,5 +22,15 @@
     <div class="uk-margin">
       <%= submit "Enviar", class: "uk-button uk-button-primary" %>
     </div>
+
   </fieldset>
+<% end %>
+
+<%= if assigns[:site] do %>
+  <%= link to: site_path(@conn, :delete, @site.id),
+        method: :delete,
+        data: [confirm: "Are you sure your want to delete this site"],
+        class: "uk-button uk-button-danger uk-width-1-1" do %>
+        <i class="fas fa-trash"></i>
+  <% end %>
 <% end %>

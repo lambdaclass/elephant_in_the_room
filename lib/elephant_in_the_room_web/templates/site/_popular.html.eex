@@ -11,7 +11,7 @@
     <%= for {post, post_index} <- Enum.with_index(posts, 1) do %>
 
       <%= link to: SiteView.show_link_with_date(@conn, post) do %>
-        <p><strong><span><%= post_index %></span>&nbsp;<%= post.title %></strong></p>
+        <p><span><%= post_index %></span>&nbsp;<%= post.title %></p>
         <%= if post.author do %>
           <p><%= post.author.name %></p>
         <% end %>

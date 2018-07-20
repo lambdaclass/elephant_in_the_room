@@ -1,10 +1,13 @@
+<% alias ElephantInTheRoomWeb.Utils.Utils %>
 
-<div class="admin-panel-greetings">
-  <h3> <%= @site.name %></h3>
-  <p>
-    <%= @site.host %>
-  </p>
-</div>
+<%= link to: Utils.generate_absolute_url("", @conn, @site) do %>
+  <div class="admin-panel-greetings">
+    <h3> <%= @site.name %></h3>
+    <p>
+      <%= @site.host %>
+    </p>
+  </div>
+<% end %>
 
 <div class="uk-child-width-1-2@s admin-change-options-cards" uk-grid>
 
