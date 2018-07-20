@@ -369,12 +369,15 @@ defmodule ElephantInTheRoom.Sites do
       left_join: author in Author,
       on: post.author_id == author.id,
       limit: ^amount,
+      where: author.is_columnist == true,
       select: %{
         author: author,
         post: post
       }
 
-    Repo.all(query) |> Enum.reverse
+    Repo.all(query)
+    |> Enum.filter(fn(x) -> x.author != nil end)
+    |> Enum.reverse
   end
 
   @doc """
