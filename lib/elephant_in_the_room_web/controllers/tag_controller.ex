@@ -5,6 +5,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Repo
   import Ecto.Query
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =
@@ -58,14 +59,12 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def public_show(conn, %{"tag_id" => tag_id}) do
-    site_id = conn.assigns.site.id
-
-    site = Sites.get_site!(site_id)
-
-    tag =
-      Sites.get_tag!(tag_id)
-      |> Repo.preload(posts: :author)
+  def public_show(conn, %{"tag_id" => tag_id} = params) do
+    page = get_page(params)
+    site = conn.assigns.site
+    tag = Sites.get_tag!(tag_id)
+    posts = Sites.get_tag_with_posts(site, tag_id, amount: 10, page: page)
+    tag = %{tag | posts: posts}
 
     render(conn, "public_show.html", tag: tag, site: site)
   end
