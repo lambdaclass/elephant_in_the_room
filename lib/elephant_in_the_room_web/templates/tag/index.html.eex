@@ -15,13 +15,13 @@
        <%= for tag <- @tags do %>
         <tr>
           <td>
-            <%= link tag.name, to: tag_path(@conn, :public_show, tag.id),
+            <%= link tag.name, to: tag_path(@conn, :public_show, URI.encode(tag.name)),
                   class: "post-main-tags big-tag", style: "background: \##{tag.color}"%>
           </td>
           <td>
-            <%= link "", to: site_tag_path(@conn, :edit, @site, tag),
+            <%= link "", to: site_tag_path(@conn, :edit, @site, URI.encode(tag.name)),
                   class: "el-menu-icon fa fa-edit" %>
-            <%= link "", to: site_tag_path(@conn, :delete, @site, tag),
+            <%= link "", to: site_tag_path(@conn, :delete, @site, URI.encode(tag.name)),
                   method: :delete, data: [confirm: "Are you sure?"],
                   class: "el-menu-icon fa fa-trash-alt" %>
           </td>

@@ -58,7 +58,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/author/:author_name", AuthorController, :public_show)
       get("/post/:year/:month/:day/:slug", PostController, :public_show)
       get("/category/:category_name", CategoryController, :public_show)
-      get("/tag/:tag_id", TagController, :public_show)
+      get("/tag/:tag_name", TagController, :public_show)
     end
 
     scope "/admin" do
@@ -76,7 +76,7 @@ defmodule ElephantInTheRoomWeb.Router do
         pipe_through(:load_site_info)
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController)
-        resources("/tags", TagController)
+        resources("/tags", TagController, param: "tag_name")
       end
     end
   end
