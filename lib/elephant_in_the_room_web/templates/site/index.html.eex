@@ -1,9 +1,9 @@
 <div class="admin-title">
-  <span class="title-text"> Sites </span>
+  <span class="title-text"> Sitios </span>
   <div "admin-title-options">
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-       href="<%=  site_path(@conn, :new) %>">
-      create new
+       href="<%= site_path(@conn, :new) %>">
+      crear nuevo
     </a>
   </div>
 </div>
@@ -14,7 +14,7 @@
       <li class="site-item"
           onclick="window.location = '<%= site_path(@conn, :show, site) %>'">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
-        edit
+        editar
       </a>
       <a class="site-link">
         <%= site.name %>

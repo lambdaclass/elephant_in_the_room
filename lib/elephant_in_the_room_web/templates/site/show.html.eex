@@ -16,7 +16,7 @@
          onclick="window.location='<%= site_path(@conn, :edit, @site) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-alt"></i>
-        Edit site
+        Editar sitio
       </h3>
     </div>
   </div>
@@ -26,7 +26,7 @@
          onclick="window.location='<%= site_category_path(@conn, :index, @site) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-calendar-alt"></i>
-        Categories
+        Categorías
       </h3>
     </div>
   </div>
@@ -37,7 +37,7 @@
          onclick="window.location='<%= site_post_path(@conn, :index, @site) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-word"></i>
-        Posts
+        Artículos
       </h3>
     </div>
   </div>
@@ -48,7 +48,7 @@
          onclick="window.location='<%= site_tag_path(@conn, :index, @site) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-hashtag"></i>
-        Tags
+        Etiquetas
       </h3>
     </div>
   </div>

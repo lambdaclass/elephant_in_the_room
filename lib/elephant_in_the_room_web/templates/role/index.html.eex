@@ -1,27 +1,27 @@
 <h2>Roles</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
+<p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Menu</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
 <%= for role <- @roles do %>
     <tr>
       <td>
-        <%= link role.name, to: role_path(@conn, :show, role), 
+        <%= link role.name, to: role_path(@conn, :show, role),
           class: "a" %>
       </td>
       <td class="text-right">
         <span>
-          <%= link "", to: role_path(@conn, :edit, role), 
+          <%= link "", to: role_path(@conn, :edit, role),
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: role_path(@conn, :delete, role), 
-            method: :delete, data: [confirm: "Are you sure?"], 
+          <%= link "", to: role_path(@conn, :delete, role),
+            method: :delete, data: [confirm: "Are you sure?"],
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
@@ -43,5 +43,5 @@
 
 <br>
 
-<span><%= link "New Role", to: role_path(@conn, :new) %></span>
-<span><%= link "Back", to: admin_path(@conn, :index) %></span>
+<span><%= link "Crear Rol", to: role_path(@conn, :new) %></span>
+<span><%= link "Regresar", to: admin_path(@conn, :index) %></span>

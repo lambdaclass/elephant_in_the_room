@@ -1,9 +1,9 @@
 <% user_name = ElephantInTheRoomWeb.LayoutView.get_logger_user_name!(@conn) %>
 
 <div class="admin-panel-greetings">
-  <h3> Hello, <%= user_name %>. </h3>
+  <h3> Hola, <%= user_name %>. </h3>
   <p>
-    I hope you are having a great day!
+    ¡Espero estes teniendo un gran día!
   </p>
 </div>
 
@@ -15,7 +15,7 @@
     <div class="admin-panel-indicators">
       <div class="indicator-container">
         <div class="number">439k</div>
-        <div class="name">daily visits</div>
+        <div class="name">visitas diarias</div>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
     <div class="admin-panel-indicators">
       <div class="indicator-container">
         <div class="number">12k</div>
-        <div class="name">subscribers</div>
+        <div class="name">suscriptores</div>
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
     <div class="admin-panel-indicators">
       <div class="indicator-container">
         <div class="number">30k</div>
-        <div class="name">users</div>
+        <div class="name">usuarios</div>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
     <div class="admin-panel-indicators">
       <div class="indicator-container">
         <div class="number">1.2k</div>
-        <div class="name">posts</div>
+        <div class="name">artículos</div>
       </div>
     </div>
   </div>
