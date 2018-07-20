@@ -34,8 +34,8 @@
     <div>
       <%= case @post.author do %>
         <% nil -> %>
-        <% %Author{:id => id, :name => name} -> %>
-          By <%= link name, to: author_path(@conn, :public_show, id) %> |
+        <% %Author{:name => name} -> %>
+          By <%= link name, to: author_path(@conn, :public_show, URI.encode(name)) %> |
       <% end %>
       <%= show_date(@post.inserted_at) %>
     </div>
