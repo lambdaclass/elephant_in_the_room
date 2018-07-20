@@ -329,7 +329,7 @@ defmodule ElephantInTheRoom.Sites do
 
   def get_popular_posts(%Site{id: site_id}, opts \\ []) do
     %{index: {index_from, index_to}} = pagination_opts(opts)
-    get_popular_posts_from_db(site_id, index_from, index_toq)
+    get_popular_posts_from_db(site_id, index_from, index_to)
   end
 
   def get_popular_posts_from_db(site_id, index_from, index_to) do
