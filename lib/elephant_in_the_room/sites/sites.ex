@@ -792,11 +792,15 @@ defmodule ElephantInTheRoom.Sites do
     Image.changeset(image, %{})
   end
 
-  def get_by_name!(model, name) do
+  def get_by_name!(name, model) do
     Repo.get_by!(model, name: name)
   end
 
-  def get_by_name(model, name) do
+  def get_by_name!(name, site_id, model) do
+    Repo.get_by!(model, name: name, site_id: site_id)
+  end
+
+  def get_by_name(name, model) do
     Repo.get_by(model, name: name)
   end
 
@@ -804,5 +808,11 @@ defmodule ElephantInTheRoom.Sites do
     name
     |> URI.decode()
     |> get_by_name!(model)
+  end
+
+  def from_name!(name, site_id, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(site_id, model)
   end
 end

@@ -57,7 +57,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/popular", SiteController, :public_show_popular)
       get("/author/:author_name", AuthorController, :public_show)
       get("/post/:year/:month/:day/:slug", PostController, :public_show)
-      get("/category/:category_id", CategoryController, :public_show)
+      get("/category/:category_name", CategoryController, :public_show)
       get("/tag/:tag_id", TagController, :public_show)
     end
 

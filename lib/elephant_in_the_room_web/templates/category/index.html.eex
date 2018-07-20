@@ -20,7 +20,7 @@
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: site_category_path(@conn, :delete, @site, URI.encode(category)), 
+          <%= link "", to: site_category_path(@conn, :delete, @site, URI.encode(category.name)), 
             method: :delete, data: [confirm: "Are you sure?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>

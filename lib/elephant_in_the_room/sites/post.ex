@@ -4,7 +4,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
 
   schema "posts" do
     field(:title, :string)
@@ -121,11 +121,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   def put_slugified_title(%Changeset{} = changeset) do
     slug = get_field(changeset, :slug)
 
-    slug = if slug == nil || String.length(slug) == 0 do
-      get_field(changeset, :title) |> Sites.to_slug()
-    else
-      slug
-    end
+    slug =
+      if slug == nil || String.length(slug) == 0 do
+        get_field(changeset, :title) |> Sites.to_slug()
+      else
+        slug
+      end
 
     put_change(changeset, :slug, slug)
   end
@@ -188,8 +189,8 @@ defmodule ElephantInTheRoom.Sites.Post do
   def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
     type = "article"
     title = "#{title} - #{conn.assigns.site.name}"
-    url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
-    image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
+    url = PostView.show_link(conn, post)
+    image = PostView.show_thumb_link(conn, post)
     %{url: url, type: type, title: title, description: description, image: image}
   end
 
@@ -197,5 +198,4 @@ defmodule ElephantInTheRoom.Sites.Post do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
   end
-
 end

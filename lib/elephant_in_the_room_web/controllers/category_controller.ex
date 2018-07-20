@@ -42,7 +42,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: site_category_path(conn, :show, site, URI.encode(category)))
+        |> redirect(to: site_category_path(conn, :show, site, URI.encode(category.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
@@ -50,7 +50,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   end
 
   def show(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
-    category = Sites.from_name!(name, Category)
+    category = Sites.from_name!(name, site.id, Category)
     render(conn, "show.html", category: category, site: site)
   end
 
