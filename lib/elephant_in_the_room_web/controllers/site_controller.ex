@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoom.{Sites, Repo}
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(conn, params) do
     page =
@@ -67,8 +68,6 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
-  defp get_page(%{"page" => page}), do: String.to_integer(page)
-  defp get_page(_), do: 1
 
   def paginate_elements(site, params) do
     category_page =

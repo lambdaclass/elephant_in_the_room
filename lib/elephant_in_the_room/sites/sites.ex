@@ -360,6 +360,22 @@ defmodule ElephantInTheRoom.Sites do
     Repo.all(query)
   end
 
+  def get_category_with_posts(%Site{id: site_id}, category_id, opts \\ []) do
+    %{index: {index_from, _},
+      amount: amount} = pagination_opts(opts)
+    posts = from c in Category,
+      where: c.id == ^category_id and c.site_id == ^site_id,
+      left_join: posts_categories in "posts_categories",
+      where: c.id == posts_categories.category_id,
+      left_join: p in Post,
+      where: p.id == posts_categories.post_id,
+      offset: ^index_from,
+      limit: ^amount,
+      select: p
+
+    Repo.preload(Repo.all(posts), [:author])
+  end
+
   def get_columnists(%Site{} = site, amount) do
     Ecto.assoc(site, :authors)
     |> where([author], author.is_columnist == true)
