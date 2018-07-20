@@ -1,10 +1,10 @@
 .site-content.uk-container {
+  margin-bottom: 60px;
   padding-left: 0;
   padding-right: 0;
 
   @media screen and (min-width: 640px) {
     margin-top: 30px;
-    margin-bottom: 60px;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -17,9 +17,10 @@
     font-family: $title-font;
     text-transform: uppercase;
     hyphens: none;
+    font-size: 125%;
 
-    @media screen and (max-width: 640px) {
-        font-size: 125%;
+    @media screen and (min-width: 640px) {
+      font-size: 100%;
     }
   }
   .category {
@@ -60,8 +61,9 @@
 }
 
 .post.post-low {
-  text-align: left;
   margin-bottom: 30px;
+  padding: 0 15px;
+  text-align: left;
 
   p {
     margin: 0;
@@ -76,8 +78,8 @@
     line-height: 1rem;
   }
 
-  @media screen and (max-width: 640px) {
-    padding: 0 15px;
+  @media screen and (min-width: 640px) {
+    padding: 0;
   }
 }
 
@@ -86,10 +88,10 @@
   text-align: left;
 
   .title {
-    line-height: 1rem;
+    line-height: 1.2;
 
-    @media screen and (max-width: 640px) {
-      line-height: 1.2
+    @media screen and (min-width: 640px) {
+      line-height: 1rem;
     }
   }
   .author-date {
@@ -98,30 +100,6 @@
   .title, .abstract, .author, .date {
     padding: 0 15px;
   }
-}
-
-.list-authors {
-    order: 0;
-
-    @media screen and (max-width: 960px) {
-        order: 3;
-    }
-}
-
-.list-latest {
-    order: 0;
-
-    @media screen and (max-width: 960px) {
-        order: 2;
-    }
-}
-
-.list-popular {
-    order: 0;
-
-    @media screen and (max-width: 960px) {
-        order: 1;
-    }
 }
 
 .popular {
