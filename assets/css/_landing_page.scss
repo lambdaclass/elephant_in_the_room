@@ -1,18 +1,12 @@
-.site-content {
+.site-content.uk-container {
+  padding-left: 0;
+  padding-right: 0;
 
   @media screen and (min-width: 640px) {
     margin-top: 30px;
     margin-bottom: 60px;
-  }
-
-  @media screen and (min-width: 640px) and (max-width: 1280px) {
-    padding: 0 20px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -43,11 +37,14 @@
   }
 }
 
-.main-post {
-  order: unset;
+.main-post, .low-posts {
+  order: 0;
 
-  @media screen and (min-width: 640px) and (max-width: 960px) {
+  @media screen and (min-width: 640px) {
     order: -1;
+  }
+  @media screen and (min-width: 960px) {
+    order: 0;
   }
 }
 
@@ -59,14 +56,6 @@
   }
   .abstract {
     margin: 10px 0;
-  }
-}
-
-.low-posts {
-  order: unset;
-
-  @media screen and (min-width: 640px) and (max-width: 960px) {
-    order: -1;
   }
 }
 
@@ -112,7 +101,7 @@
 }
 
 .list-authors {
-    order: unset;
+    order: 0;
 
     @media screen and (max-width: 960px) {
         order: 3;
@@ -120,7 +109,7 @@
 }
 
 .list-latest {
-    order: unset;
+    order: 0;
 
     @media screen and (max-width: 960px) {
         order: 2;
@@ -128,7 +117,7 @@
 }
 
 .list-popular {
-    order: unset;
+    order: 0;
 
     @media screen and (max-width: 960px) {
         order: 1;
