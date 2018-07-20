@@ -66,7 +66,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/", AdminController, :index)
       resources("/roles", RoleController)
       resources("/users", UserController)
-      resources("/authors", AuthorController)
+      resources("/authors", AuthorController, param: "author_name")
       get("/backup", BackupController, :index)
       post("/backup/do_backup", BackupController, :do_backup)
       get("/backup/download_latest", BackupController, :download_latest)
