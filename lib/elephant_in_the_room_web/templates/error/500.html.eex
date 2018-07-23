@@ -18,9 +18,9 @@
     <div class="uk-margin">
       <div class="uk-position-center">
         <i class="exclamation-icon fas fa-exclamation-triangle"></i>
-        <h1 class="uk-heading-primary">500: Internal Server Error</h1>
+        <h1 class="uk-heading-primary">500: Error Interno del Servidor</h1>
         <%= link to: "/", class: "uk-link-heading" do %>
-          <h3 class="uk-align-center"> "Go back to site" </h3>
+          <h3 class="uk-align-center"> "Regresar al sitio" </h3>
         <% end %>
       </div>
     </div>

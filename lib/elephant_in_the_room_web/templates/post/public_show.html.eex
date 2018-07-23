@@ -25,7 +25,7 @@
   <h1 class="uk-text-uppercase uk-text-bold post-main-title"><%= @post.title %></h1>
    <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Edit", to: site_post_path(@conn, :edit, @site.id, @post.id),
+        <%= link "Editar", to: site_post_path(@conn, :edit, @site.id, @post.id),
               class: "post-edit-button"%>
       <% _ -> %>
    <% end %>
@@ -35,7 +35,7 @@
       <%= case @post.author do %>
         <% nil -> %>
         <% %Author{:id => id, :name => name} -> %>
-          By <%= link name, to: author_path(@conn, :public_show, id) %> |
+          Por <%= link name, to: author_path(@conn, :public_show, id) %> |
       <% end %>
       <%= show_date(@post.inserted_at) %>
     </div>

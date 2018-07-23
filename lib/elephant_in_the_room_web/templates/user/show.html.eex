@@ -1,24 +1,24 @@
-<h2>Show User</h2>
+<h2>Usuario</h2>
 
 <ul>
 
   <li>
-    <strong>Username:</strong>
+    <strong>Usuario:</strong>
     <%= @user.username %>
   </li>
 
   <li>
-    <strong>Role:</strong>
+    <strong>Rol:</strong>
     <%= @user.role.name %>
   </li>
 
   <li>
-    <strong>Firstname:</strong>
+    <strong>Nombre:</strong>
     <%= @user.firstname %>
   </li>
 
   <li>
-    <strong>Lastname:</strong>
+    <strong>Apellido:</strong>
     <%= @user.lastname %>
   </li>
 
@@ -29,5 +29,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<span><%= link "Editar", to: user_path(@conn, :edit, @user) %></span>
+<span><%= link "Regresar", to: user_path(@conn, :index) %></span>

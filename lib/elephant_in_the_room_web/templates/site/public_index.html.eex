@@ -1,5 +1,5 @@
-<h2>Sites</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
+<h2>Sitios</h2>
+<p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
 
 <div>
   <%= case compare(@page_number, @total_pages) do %>
