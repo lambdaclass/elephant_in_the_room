@@ -361,6 +361,23 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.all
   end
 
+  def get_columnists_and_posts(%{id: site_id}, amount) do
+    query = from post in Post,
+      where: post.site_id == ^site_id,
+      order_by: [desc: post.inserted_at],
+      distinct: post.author_id,
+      left_join: author in Author,
+      on: post.author_id == author.id,
+      limit: ^amount,
+      where: author.is_columnist == true,
+      select: %{
+        author: author,
+        post: post
+      }
+
+    Repo.all(query) |> Enum.reverse
+  end
+
   @doc """
   Creates a post.
 
