@@ -1,4 +1,3 @@
-<% alias ElephantInTheRoom.Sites.Post %>
 
 <h2><%= @site.name %>>Categories</h2>
 
@@ -20,9 +19,9 @@
     <div class="uk-card-body">
         <center><p>Posts: <%= number_of_posts(@category)%> </p></center>
         Latest posts in this category:
-        <%= for %Post{inserted_at: date, slug: slug} = post <- latest_posts(@category) do %>
+        <%= for post <- latest_posts(@category) do %>
             <p>
-              <%= link post.title, to: post_path(@conn, :public_show, date.year, date.month, date.day, slug), class: "a" %>
+              <%= link post.title, to: show_post_link(@conn, post), class: "a" %>
             </p>
         <% end %>
     </div>
