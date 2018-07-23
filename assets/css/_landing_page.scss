@@ -147,6 +147,14 @@
   .author p > strong > a {
     color: #000;
   }
+  .landing-author-profile-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 }
 
 .author:last-child hr, .latest > hr:last-child {

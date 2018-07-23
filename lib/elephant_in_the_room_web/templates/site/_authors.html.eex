@@ -7,11 +7,13 @@
   <%= if Enum.at(@columnists_and_posts, 0) != nil do %>
     <h3 class="uk-text-bold uk-text-left">Columnistas<hr></h3>
     <%= for data <- @columnists_and_posts do %>
-      <div class="author uk-flex uk-flex-middle" uk-grid>
-        <div class="uk-width-1-4">
-          <img class="uk-border-circle"
-               width="40" height="40"
-               src="<%= Image.url({data.author.image, data.author}) %>" >
+      <% author_image = Image.url({data.author.image, data.author}) %>
+
+      <div class="author" uk-grid>
+        <div class="uk-width-auto">
+          <div class="landing-author-profile-picture"
+               style="background-image: url('<%= author_image %>')">
+          </div>
         </div>
         <div class="uk-width-expand">
           <p>
