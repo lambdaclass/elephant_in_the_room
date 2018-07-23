@@ -1,5 +1,5 @@
 <%= render "form.html", Map.merge(assigns, %{
-  action: site_post_path(@conn, :update, @site, @post),
+  action: site_post_path(@conn, :update, @site, @post.slug),
   title: "Edit post"
 })%>
 
