@@ -38,6 +38,12 @@
   }
 }
 
+.low-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .main-post, .low-posts {
   order: 0;
 
@@ -52,8 +58,17 @@
 .post.post-main {
   text-align: center;
 
-  .title, .abstract, .author, .date {
+  .abstract, .author, .date {
     padding: 0 15px;
+  }
+  .date {
+    margin-bottom: 0px;
+  }
+  .title {
+    padding: 0;
+    font-size: 1.6em;
+    line-height: 1em;
+    font-weight: bolder;
   }
   .abstract {
     margin: 10px 0;
@@ -61,7 +76,6 @@
 }
 
 .post.post-low {
-  margin-bottom: 30px;
   padding: 0 15px;
   text-align: left;
 
@@ -100,33 +114,37 @@
   .title, .abstract, .author, .date {
     padding: 0 15px;
   }
+  .date{
+    p {
+      margin-bottom: 0;
+    }
+  }
 }
 
-.popular {
+.landing-page-popular-section {
   padding: 10px;
 
   > a {
     text-decoration: none;
-  }
-
-  > a > p {
-    margin: 0;
     color: #000;
     hyphens: none;
   }
 
-  > a > p:last-child {
-    margin-bottom: 20px;
-  }
-
-  > a > p:nth-child(2) {
-    color: #666;
+  .title {
     font-size: 80%;
+    line-height: 1.1em;
+    margin-bottom: 0.2em;
   }
 
-  > a > p span {
+  .popular-order {
     color: #F0204F;
   }
+
+  .author {
+    color: #666;
+    font-size: 70%;
+  }
+
 }
 
 .authors {
@@ -146,6 +164,14 @@
   }
   .author p > strong > a {
     color: #000;
+  }
+  .landing-author-profile-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
 
