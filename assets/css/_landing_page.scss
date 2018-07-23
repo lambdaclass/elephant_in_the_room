@@ -58,8 +58,17 @@
 .post.post-main {
   text-align: center;
 
-  .title, .abstract, .author, .date {
+  .abstract, .author, .date {
     padding: 0 15px;
+  }
+  .date {
+    margin-bottom: 0px;
+  }
+  .title {
+    padding: 0;
+    font-size: 1.6em;
+    line-height: 1em;
+    font-weight: bolder;
   }
   .abstract {
     margin: 10px 0;

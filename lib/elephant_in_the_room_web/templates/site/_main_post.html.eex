@@ -31,7 +31,7 @@
     </div>
 
     <div class="date">
-      <p><%= PostView.show_date(@post.inserted_at) %></p>
+      <%= PostView.show_date(@post.inserted_at) %>
     </div>
   </div>
 <% end %>
