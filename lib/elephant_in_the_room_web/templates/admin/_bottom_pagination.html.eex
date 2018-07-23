@@ -8,7 +8,7 @@
       <li>
         <a href="<%= assigns.page.(@page_number - 1) %>">
           <span class="uk-margin-small-right" uk-pagination-previous></span>
-          Previous
+          Anterior
         </a>
       </li>
     <% end %>
@@ -22,7 +22,7 @@
     <%= if pagination_right do %>
       <li class="">
         <a href="<%= assigns.page.(@page_number + 1) %>">
-          Next
+          Siguiente
           <span class="uk-margin-small-left" uk-pagination-next></span>
         </a>
       </li>

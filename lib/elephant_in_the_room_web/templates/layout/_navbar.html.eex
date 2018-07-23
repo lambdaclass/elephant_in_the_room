@@ -15,11 +15,11 @@
 
       <li><%= link "Popular", to: site_path(@conn, :public_show_popular), class: "a-reduced top-link hide-on-small"%></li>
 
-      <li><%= link "Latest", to: site_path(@conn, :public_show_latest), class: "a-reduced top-link hide-on-small" %></li>
+      <li><%= link "Recientes", to: site_path(@conn, :public_show_latest), class: "a-reduced top-link hide-on-small" %></li>
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropdown">Categories</span>
+          <span class="with-dropdown">Categorías</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -36,7 +36,7 @@
 
       <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropdown">Magazine</span>
+          <span class="with-dropdown">Revista</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -46,15 +46,15 @@
         <div uk-dropdown="pos: bottom-center; offset: 0"
              class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li><a href="#">Current issue</a></li>
-            <li><a href="#">All issues</a></li>
+            <li><a href="#">Edición</a></li>
+            <li><a href="#">Todas las ediciones</a></li>
           </ul>
         </div>
       </li>
 
        <li>
         <a href="#" class="a-reduced top-link hide-on-small">
-          <span class="with-dropdown">More</span>
+          <span class="with-dropdown">Más</span>
           <span class="text-icons">
             <i class="fas fa-angle-down icon-down"></i>
             <i class="fas fa-angle-up icon-up"></i>
@@ -64,10 +64,10 @@
         <div uk-dropdown="pos: bottom-right; offset: 0"
              class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li class="uk-nav-header">User</li>
+            <li class="uk-nav-header">Usuario</li>
             <li class="uk-nav-divider"></li>
             <%= render "_user_options.html", assigns %>
-            <li class="uk-nav-header">Sites</li>
+            <li class="uk-nav-header">Sitios</li>
             <li class="uk-nav-divider"></li>
             <%= render "_site_options.html", assigns %>
           </ul>
@@ -90,26 +90,26 @@
     <div class="element">
       <%= link to: site_path(@conn, :public_show_latest) do %>
         <div class="mini-icon"><i class="fas fa-clock fa-2x"></i></div>
-        <div class="mini-description">Latest</div>
+        <div class="mini-description">Recientes</div>
       <% end %>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
     <div class="element" uk-toggle="target: #offcanvas-section">
       <div class="mini-icon"><i class="fas fa-bars fa-2x"></i></div>
-      <div class="mini-description">Categories</div>
+      <div class="mini-description">Categorías</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
     <div class="element" uk-toggle="target: #offcanvas-magazine">
       <div class="mini-icon"><i class="fas fa-book fa-2x"></i></div>
-      <div class="mini-description">Magazine</div>
+      <div class="mini-description">Revista</div>
     </div>
   </div>
   <div class="uk-width-1-5 uk-text-center">
     <div class="element" uk-toggle="target: #offcanvas-more">
       <div class="mini-icon"><i class="fas fa-plus fa-2x"></i></div>
-      <div class="mini-description">More</div>
+      <div class="mini-description">Más</div>
     </div>
   </div>
 </div>
@@ -122,7 +122,7 @@
      uk-offcanvas="mode: none; overlay: true">
   <div class="uk-offcanvas-bar">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
-    <h3>Categories</h3>
+    <h3>Categorías</h3>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
       <%= render "_category_options.html", assigns %>
@@ -136,11 +136,11 @@
      uk-offcanvas="mode: none; overlay: true">
   <div class="uk-offcanvas-bar">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
-    <h3>Magazine</h3>
+    <h3>Revista</h3>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
-      <li><a href="#">Current issue</a></li>
-      <li><a href="#">All issue</a></li>
+      <li><a href="#">Edición</a></li>
+      <li><a href="#">Todas las ediciones</a></li>
     </ul>
   </div>
 </div>
@@ -151,7 +151,7 @@
      uk-offcanvas="mode: none; overlay: true">
   <div class="uk-offcanvas-bar">
     <button class="uk-offcanvas-close" type="button" uk-close></button>
-    <h3>More</h3>
+    <h3>Más</h3>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
       <%= render "_user_options.html", assigns %>
