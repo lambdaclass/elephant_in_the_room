@@ -9,7 +9,7 @@
 
   <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Edit tag", to: site_tag_path(@conn, :edit, @site.id, URI.encode(@tag.name)),
+        <%= link "Edit tag", to: site_tag_path(@conn, :edit, URI.encode(@site.name), URI.encode(@tag.name)),
               class: "uk-button uk-button-secondary uk-button-small" %>
       <% _ -> %>
    <% end %>

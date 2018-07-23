@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.TagController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Tag}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Tag, Sites.Site}
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -53,9 +53,10 @@ defmodule ElephantInTheRoomWeb.TagController do
     end
   end
 
-  def show(%{assigns: %{site: site}} = conn, %{"tag_name" => name}) do
-    tag = Sites.from_name!(name, site.id, Tag)
-    render(conn, "show.html", tag: tag, site: site)
+  def show(conn, %{"site_name" => site_name, "tag_name" => name}) do
+    tag_site = Sites.from_name!(URI.decode(site_name), Site)
+    tag = Sites.from_name!(name, tag_site.id, Tag)
+    render(conn, "show.html", tag: tag, site: tag_site)
   end
 
   def public_show(conn, %{"tag_name" => name}) do
@@ -70,8 +71,10 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "public_show.html", tag: tag, site: site)
   end
 
-  def edit(%{assigns: %{site: site}} = conn, %{"tag_name" => name}) do
-    tag = Sites.from_name!(name, site.id, Tag)
+  def edit(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "tag_name" => name}) do
+
+    tag_site = Sites.from_name!(URI.decode(site_name), Site)
+    tag = Sites.from_name!(name, tag_site.id, Tag)
     changeset = Sites.change_tag(tag)
 
     render(
@@ -84,15 +87,14 @@ defmodule ElephantInTheRoomWeb.TagController do
     )
   end
 
-  def update(conn, %{"tag_name" => name, "tag" => tag_params}) do
-    site_id = conn.assigns.site.id
-    tag = Sites.from_name!(name, site_id, Tag)
+  def update(%{assigns: %{site: site}} = conn, %{"tag_name" => name, "tag" => tag_params}) do
+    tag = Sites.from_name!(name, Tag)
 
     case Sites.update_tag(tag, tag_params) do
       {:ok, tag} ->
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: tag_path(conn, :public_show, URI.encode(tag.name)))
+        |> redirect(to: tag_path(conn, :public_show, URI.encode(site.name), URI.encode(tag.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tag: tag, changeset: changeset)

@@ -72,16 +72,16 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {"Edit", site_post_path(conn, :edit, site_id, post_id)}
   end
 
-  defp bread_crumb_tags(conn, %Site{id: site_id}) do
-    {"Tags", site_tag_path(conn, :index, site_id)}
+  defp bread_crumb_tags(conn, %Site{name: site_name}) do
+    {"Tags", site_tag_path(conn, :index, URI.encode(site_name))}
   end
 
   defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
     {"Tag",""}
   end
 
-  defp bread_crumb_tag_edit(conn, %Site{id: site_id}, %Tag{id: tag_id, name: tag_name}) do
-    {"\##{tag_name}", site_tag_path(conn, :edit, site_id, tag_id)}
+  defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
+    {"\##{tag_name}", site_tag_path(conn, :edit, URI.encode(site_name), URI.encode(tag_name))}
   end
 
 end

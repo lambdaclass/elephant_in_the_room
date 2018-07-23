@@ -11,16 +11,16 @@
 <%= for category <- @categories do %>
     <tr>
       <td>
-        <%= link category.name, to: site_category_path(@conn, :show, @site, URI.encode(category.name)), 
+        <%= link category.name, to: site_category_path(@conn, :show, URI.encode(@site.name), URI.encode(category.name)), 
           class: "a" %>
       </td>
        <td class="text-right">
         <span>
-          <%= link "", to: site_category_path(@conn, :edit, @site, URI.encode(category.name)), 
+          <%= link "", to: site_category_path(@conn, :edit, URI.encode(@site.name), URI.encode(category.name)), 
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: site_category_path(@conn, :delete, @site, URI.encode(category.name)), 
+          <%= link "", to: site_category_path(@conn, :delete, URI.encode(@site.name), URI.encode(category.name)), 
             method: :delete, data: [confirm: "Are you sure?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
@@ -43,5 +43,5 @@
 
 <br>
 
-<span><%= link "New Category", to: site_category_path(@conn, :new, @site) %></span>
-<span><%= link "Back", to: site_path(@conn, :index) %></span>
+<span><%= link "New Category", to: site_category_path(@conn, :new, URI.encode(@site.name)) %></span>
+<span><%= link "Back", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>

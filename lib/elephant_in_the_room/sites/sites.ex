@@ -81,10 +81,11 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
-  def get_site_by_name!(site_name, preload \\ @default_site_preload), do:
+  def get_site_by_name!(site_name, preload \\ @default_site_preload) do
     Site
-    |> Repo.get_by!(name: site_name)
+    |> Repo.get_by!(name: URI.decode(site_name))
     |> Repo.preload(preload)
+  end
 
   @doc """
   Creates a site.

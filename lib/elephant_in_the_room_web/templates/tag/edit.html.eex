@@ -1,1 +1,1 @@
-<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :update, @site, URI.encode(@tag.name))) %>
+<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :update, URI.encode(@site.name), URI.encode(@tag.name))) %>

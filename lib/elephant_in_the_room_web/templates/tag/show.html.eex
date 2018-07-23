@@ -17,14 +17,14 @@
         Latest posts with this tag:
         <%= for post <- latest_posts(@tag) do %>
             <p>
-              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %>
+              <%= link post.title, to: site_post_path(@conn, :show, URI.encode(@site.name), post), class: "a" %>
             </p>
         <% end %>
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Edit", to: site_tag_path(@conn, :edit, @site, @tag) %></span>
-        <span><%= link "Back", to: site_tag_path(@conn, :index, @site) %></span>
+        <span><%= link "Edit", to: site_tag_path(@conn, :edit, URI.encode(@site.name), @tag) %></span>
+        <span><%= link "Back", to: site_tag_path(@conn, :index, URI.encode(@site.name)) %></span>
       </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Category}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Category, Sites.Site}
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -42,15 +42,16 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: site_category_path(conn, :show, site, URI.encode(category.name)))
+        |> redirect(to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
     end
   end
 
-  def show(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
-    category = Sites.from_name!(name, site.id, Category)
+  def show(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "category_name" => name}) do
+    cat_site = Sites.from_name!(site_name, Site)
+    category = Sites.from_name!(name, cat_site.id, Category)
     render(conn, "show.html", category: category, site: site)
   end
 
@@ -82,7 +83,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: site_category_path(conn, :show, site, URI.encode(category.name)))
+        |> redirect(to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
@@ -95,6 +96,6 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: site_category_path(conn, :index, site))
+    |> redirect(to: site_category_path(conn, :index, URI.encode(site.name)))
   end
 end
