@@ -50,7 +50,7 @@
   </div>
   <%= render "_social_share.html", assigns %>
 
-  <div class="article-content uk-text-justify">
+  <div class="article-content">
     <%= raw show_content @post %>
   </div>
 
