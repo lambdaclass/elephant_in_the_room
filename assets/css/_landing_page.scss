@@ -102,31 +102,30 @@
   }
 }
 
-.popular {
+.landing-page-popular-section {
   padding: 10px;
 
   > a {
     text-decoration: none;
-  }
-
-  > a > p {
-    margin: 0;
     color: #000;
     hyphens: none;
   }
 
-  > a > p:last-child {
-    margin-bottom: 20px;
-  }
-
-  > a > p:nth-child(2) {
-    color: #666;
+  .title {
     font-size: 80%;
+    line-height: 1.1em;
+    margin-bottom: 0.2em;
   }
 
-  > a > p span {
+  .popular-order {
     color: #F0204F;
   }
+
+  .author {
+    color: #666;
+    font-size: 70%;
+  }
+
 }
 
 .authors {
