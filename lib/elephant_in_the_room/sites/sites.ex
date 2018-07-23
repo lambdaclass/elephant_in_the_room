@@ -317,12 +317,24 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  def get_popular_posts(site) do
-    get_popular_posts(site, -1)
+  defp pagination_opts(opts) do
+    page = Keyword.get(opts, :page, 1) - 1
+    amount = Keyword.get(opts, :amount, 10)
+    index_from = page * amount
+    index_to = index_from + amount - 1
+    %{page: page,
+      amount: amount,
+      index: {index_from, index_to}}
   end
 
-  def get_popular_posts(%Site{id: site_id}, amount) do
-    {:ok, data} = Redix.command(:redix, ["ZREVRANGE", "site:#{site_id}", 0, amount - 1, "WITHSCORES"])
+  def get_popular_posts(%Site{id: site_id}, opts \\ []) do
+    %{index: {index_from, index_to}} = pagination_opts(opts)
+    get_popular_posts_from_db(site_id, index_from, index_to)
+  end
+
+  def get_popular_posts_from_db(site_id, index_from, index_to) do
+    {:ok, data} = Redix.command(:redix,
+      ["ZREVRANGE", "site:#{site_id}", index_from, index_to, "WITHSCORES"])
 
     scores =
       Enum.chunk(data, 2)
@@ -336,21 +348,48 @@ defmodule ElephantInTheRoom.Sites do
     |> Enum.sort_by(&(scores[&1.id]), &>=/2)
   end
 
-  def get_latest_posts(%Site{} = site) do
-    Post
-    |> where([post], post.site_id == ^site.id)
-    |> order_by(desc: :inserted_at)
-    |> preload(:author)
-    |> Repo.all()
+  def get_latest_posts(%Site{id: site_id}, opts \\ []) do
+    %{index: {index_from, _},
+      amount: amount} = pagination_opts(opts)
+    query = from post in Post,
+      where: post.site_id == ^site_id,
+      order_by: [desc: post.inserted_at],
+      offset: ^index_from,
+      limit: ^amount,
+      preload: [:author]
+    Repo.all(query)
   end
 
-  def get_latest_posts(%Site{} = site, amount) do
-    Post
-    |> where([post], post.site_id == ^site.id)
-    |> limit(^amount)
-    |> order_by(desc: :inserted_at)
-    |> preload(:author)
-    |> Repo.all()
+  def get_category_with_posts(%Site{id: site_id}, category_id, opts \\ []) do
+    %{index: {index_from, _},
+      amount: amount} = pagination_opts(opts)
+    posts = from c in Category,
+      where: c.id == ^category_id and c.site_id == ^site_id,
+      left_join: posts_categories in "posts_categories",
+      where: c.id == posts_categories.category_id,
+      left_join: p in Post,
+      where: p.id == posts_categories.post_id,
+      offset: ^index_from,
+      limit: ^amount,
+      select: p
+
+    Repo.preload(Repo.all(posts), [:author])
+  end
+
+  def get_tag_with_posts(%Site{id: site_id}, tag_id, opts \\ []) do
+    %{index: {index_from, _},
+      amount: amount} = pagination_opts(opts)
+    posts = from t in Tag,
+      where: t.id == ^tag_id and t.site_id == ^site_id,
+      left_join: posts_tags in "posts_tags",
+      where: t.id == posts_tags.tag_id,
+      left_join: p in Post,
+      where: p.id == posts_tags.post_id,
+      offset: ^index_from,
+      limit: ^amount,
+      select: p
+
+    Repo.preload(Repo.all(posts), [:author])
   end
 
   def get_columnists(%Site{} = site, amount) do

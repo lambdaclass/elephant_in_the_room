@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Category
   alias ElephantInTheRoom.Repo
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -56,16 +57,18 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(conn, %{"category_id" => category_id}) do
-    site_id = conn.assigns.site.id
+  def public_show(conn, %{"category_id" => category_id} = opts) do
+    page = get_page(opts)
+    site = conn.assigns.site
+    category = Sites.get_category!(category_id)
+    posts = Sites.get_category_with_posts(site, category_id,
+      amount: 10, page: page)
+    category = %{category | posts: posts}
 
-    site = Sites.get_site!(site_id)
-
-    category =
-      Sites.get_category!(category_id)
-      |> Repo.preload(posts: :categories, posts: :author)
-
-    render(conn, "public_show.html", category: category, site: site)
+    render(conn, "public_show.html",
+      category: category,
+      site: site,
+      page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do

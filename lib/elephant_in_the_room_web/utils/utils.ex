@@ -54,4 +54,9 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
 
     %{hour: hour, minute: minute, second: second}
   end
+
+
+  def get_page(%{"page" => page}), do: String.to_integer(page)
+  def get_page(_), do: 1
+
 end

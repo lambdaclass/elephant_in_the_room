@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoom.{Sites, Repo}
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(conn, params) do
     page =
@@ -67,6 +68,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
+
   def paginate_elements(site, params) do
     category_page =
       case params do
@@ -128,26 +130,29 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
     render(conn, "public_show.html",
       site: site,
-      latest_posts: Sites.get_latest_posts(site, 15),
+      latest_posts: Sites.get_latest_posts(site, amount: 15),
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
-      popular_posts: Sites.get_popular_posts(site, 10)
+      popular_posts: Sites.get_popular_posts(site, amount: 10)
     )
   end
 
-  def public_show_popular(conn, _params) do
-    popular_posts =
-      Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_popular_posts
+  def public_show_popular(conn, params) do
+    page = get_page(params)
+    popular_posts = Sites.get_popular_posts(conn.assigns.site, [page: page])
 
-    render(conn, "public_show_popular.html", posts: popular_posts)
+    render(conn, "public_show_popular.html",
+      posts: popular_posts,
+      page: page)
   end
 
-  def public_show_latest(conn, _params) do
-    latest_posts =
-      Repo.get_by!(Site, host: conn.host)
-      |> Sites.get_latest_posts
+  def public_show_latest(conn, params) do
+    page = get_page(params)
+    latest_posts = Sites.get_latest_posts(conn.assigns.site,
+      [page: page, amount: 10])
 
-    render(conn, "public_show_latest.html", posts: latest_posts)
+    render(conn, "public_show_latest.html",
+      posts: latest_posts,
+      page: page)
   end
 
   def show_default_site(conn, _params) do
