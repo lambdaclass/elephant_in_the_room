@@ -45,18 +45,18 @@ defmodule ElephantInTheRoomWeb.UserController do
   end
 
   def show(conn, %{"user_name" => name}) do
-    user = Auth.from_name!(name, User)
+    user = Auth.from_username!(name)
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"user_name" => name}) do
-    user = Auth.from_name!(name, User)
+    user = Auth.from_username!(name)
     changeset = Auth.change_user(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"user_name" => name, "user" => user_params}) do
-    user = Auth.from_name!(name, User)
+    user = Auth.from_username!(name)
 
     case Auth.update_user(user, user_params) do
       {:ok, user} ->
@@ -70,7 +70,7 @@ defmodule ElephantInTheRoomWeb.UserController do
   end
 
   def delete(conn, %{"user_name" => name}) do
-    user = Auth.from_name!(name, User)
+    user = Auth.from_username!(name)
     {:ok, _user} = Auth.delete_user(user)
 
     conn

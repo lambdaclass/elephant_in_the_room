@@ -13,18 +13,18 @@
 <%= for user <- @users do %>
     <tr>
       <td>
-        <%= link user.username, to: user_path(@conn, :show, URI.encode(user.name)), 
+        <%= link user.username, to: user_path(@conn, :show, URI.encode(user.username)), 
         class: "a" %>
       </td>
       <td><%= get_rolename(user.role) %></td>
       <td><%= user.email %></td>
       <td class="text-right">
         <span>
-          <%= link "", to: user_path(@conn, :edit, URI.encode(user.name)), 
+          <%= link "", to: user_path(@conn, :edit, URI.encode(user.username)), 
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: user_path(@conn, :delete, URI.encode(user.name)), 
+          <%= link "", to: user_path(@conn, :delete, URI.encode(user.username)), 
             method: :delete, data: [confirm: "Are you sure?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>

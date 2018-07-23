@@ -181,7 +181,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       {:ok, site} ->
         conn
         |> put_flash(:info, "Site updated successfully.")
-        |> redirect(to: site_path(conn, :show, site))
+        |> redirect(to: site_path(conn, :show, site.name))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", site: site, changeset: changeset)

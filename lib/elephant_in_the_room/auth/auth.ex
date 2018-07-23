@@ -254,4 +254,10 @@ defmodule ElephantInTheRoom.Auth do
     |> URI.decode()
     |> get_by_name!(model)
   end
+
+  def from_username!(username) do
+    name =  URI.decode(username)
+
+    Repo.get_by!(User, username: name)
+  end
 end
