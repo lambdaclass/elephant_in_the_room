@@ -38,6 +38,12 @@
   }
 }
 
+.low-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .main-post, .low-posts {
   order: 0;
 
@@ -61,7 +67,6 @@
 }
 
 .post.post-low {
-  margin-bottom: 30px;
   padding: 0 15px;
   text-align: left;
 
@@ -99,6 +104,11 @@
   }
   .title, .abstract, .author, .date {
     padding: 0 15px;
+  }
+  .date{
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 
