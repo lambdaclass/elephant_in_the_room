@@ -73,7 +73,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/backup/download_latest", BackupController, :download_latest)
       get("/backup/modify_settings", BackupController, :get_modify_settings)
 
-      resources "/sites", SiteController do
+      resources "/sites", SiteController, param: "name" do
         pipe_through(:load_site_info)
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")

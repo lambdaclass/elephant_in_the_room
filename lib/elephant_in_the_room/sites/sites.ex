@@ -81,6 +81,11 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_site_by_name!(site_name, preload \\ @default_site_preload), do:
+    Site
+    |> Repo.get_by!(name: site_name)
+    |> Repo.preload(preload)
+
   @doc """
   Creates a site.
 

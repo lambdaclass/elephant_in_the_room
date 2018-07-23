@@ -39,7 +39,10 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    new_attrs = parse_date(attrs)
+    new_attrs =
+      attrs
+      |> parse_date()
+      |> put_site_id()
 
     post
     |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
@@ -52,6 +55,11 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> set_thumbnail
   end
 
+
+  def put_site_id(%{site_name: site_name}) do
+    Sites.get_site_by_name!(site_name)
+  end
+  def put_site_id(attrs), do: attrs
   def unique_slug_constraint(changeset) do
     put_slugified_title(changeset)
     |> unique_constraint(:slug, name: :slug_unique_index)

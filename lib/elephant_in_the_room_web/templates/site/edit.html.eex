@@ -15,11 +15,11 @@
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, site_path(@conn, :update, @site)) %>
+          <%= render "form.html", Map.put(assigns, :action, site_path(@conn, :update, @site.name)) %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<span><%= link "Back", to: site_path(@conn, :index) %></span>
+<span><%= link "Back", to: site_path(@conn, :show, @site.name) %></span>

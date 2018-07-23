@@ -12,7 +12,7 @@
 <ul class="uk-list uk-list-striped admin-site-list">
   <%= for site <- @sites do %>
       <li class="site-item"
-          onclick="window.location = '<%= site_path(@conn, :show, site) %>'">
+          onclick="window.location = '<%= site_path(@conn, :show, URI.encode(site.name)) %>'">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
         edit
       </a>

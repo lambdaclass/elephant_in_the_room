@@ -107,8 +107,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
     }
   end
 
-  def show(conn, %{"id" => id} = params) do
-    site = Sites.get_site!(id)
+  def show(conn, %{"name" => name} = params) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     pages = paginate_elements(site, params)
 
     render(
@@ -168,14 +168,14 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    site = Sites.get_site!(id)
+  def edit(conn, %{"name" => name}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     changeset = Sites.change_site(site)
     render(conn, "edit.html", site: site, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "site" => site_params}) do
-    site = Sites.get_site!(id)
+  def update(conn, %{"name" => name, "site" => site_params}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
 
     case Sites.update_site(site, site_params) do
       {:ok, site} ->
@@ -188,8 +188,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    site = Sites.get_site!(id)
+  def delete(conn, %{"name" => name}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     {:ok, _site} = Sites.delete_site(site)
 
     conn

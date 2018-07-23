@@ -1,8 +1,8 @@
 <div class="admin-title">
-  <span class="title-text"> Posts</span>
+  <span class="title-text">Posts</span>
   <div "admin-title-options">
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-      href="<%= site_post_path(@conn, :new, @site) %>">
+      href="<%= site_post_path(@conn, :new, @site.name) %>">
       create new
     </a>
   </div>
@@ -11,7 +11,7 @@
 <ul class="uk-list uk-list-striped admin-site-list">
   <%= for post <- @posts do %>
       <li class="site-item"
-          onclick="window.location = '<%= site_post_path(@conn, :edit, @site, post.slug) %>'">
+          onclick="window.location = '<%= site_post_path(@conn, :edit, @site.name, post.slug) %>'">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
         edit
       </a>
@@ -23,4 +23,4 @@
 </ul>
 
 <%= render ElephantInTheRoomWeb.AdminView,
-      "_bottom_pagination.html", Map.put(assigns, :page, &site_post_path(@conn, :index, @site.id, page: &1)) %>
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_post_path(@conn, :index, @site.name, page: &1)) %>
