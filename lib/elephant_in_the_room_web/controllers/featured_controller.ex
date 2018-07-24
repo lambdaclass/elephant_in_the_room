@@ -3,8 +3,8 @@ defmodule ElephantInTheRoomWeb.FeaturedController do
   # alias ElephantInTheRoom.Sites.Site
   #alias ElephantInTheRoom.{Sites, Repo}
 
-  def show_featured_levels(_conn, _params) do
-
+  def show_featured_levels(conn, _params) do
+    render(conn, "show_featured_levels.html")
   end
 
 end

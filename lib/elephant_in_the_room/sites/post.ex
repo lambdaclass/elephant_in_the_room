@@ -14,6 +14,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:rendered_content, :string)
     field(:cover, :string)
     field(:thumbnail, :string)
+    field(:featured_level, :integer, default: 0)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
@@ -45,7 +46,7 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :featured_level])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])

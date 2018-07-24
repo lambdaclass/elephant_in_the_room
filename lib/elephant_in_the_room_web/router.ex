@@ -78,6 +78,9 @@ defmodule ElephantInTheRoomWeb.Router do
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
+        scope "/featured" do 
+          get("/", FeaturedController, :show_featured_levels)
+        end
       end
     end
   end
