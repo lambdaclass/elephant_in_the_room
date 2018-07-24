@@ -15,7 +15,7 @@ alias ElephantInTheRoom.{Repo, Auth, Auth.Role}
 case Repo.get_by(Role, name: "admin") do
   nil ->
     IO.puts("Creating admin role")
-    Auth.create_role(%{name: "admin"})
+    Auth.create_role!(%{name: "admin"})
 
   _admin_role ->
     IO.puts("admin role already created!")
@@ -26,7 +26,7 @@ admin_role_id = Repo.get_by(Role, name: "admin").id
 case Repo.get_by(Role, name: "user") do
   nil ->
     IO.puts("Creating user role")
-    Auth.create_role(%{name: "user"})
+    Auth.create_role!(%{name: "user"})
 
   _user_role ->
     IO.puts("user role already created!")
@@ -49,9 +49,9 @@ admin_user_created = fn ->
 end
 
 unless admin_user_created.() do
-  admin = create_admin_user_data.()
-  Auth.create_user(admin)
-  inform_str = "user: #{admin.username}\npassword: #{admin.password}\n"
+  admin_data = create_admin_user_data.()
+  admin = Auth.create_user!(admin_data)
+  inform_str = "user: #{admin_data.username}\npassword: #{admin_data.password}\n"
   file_name = "admin_data.txt"
   File.write!(file_name, inform_str, [:write])
   IO.puts("Administration account data is inside #{file_name}, check it for logging")

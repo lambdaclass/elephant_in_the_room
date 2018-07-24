@@ -1,8 +1,7 @@
 defmodule ElephantInTheRoom.Sites.Image do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "images" do
     field(:name, :string)
     field(:binary, :binary)

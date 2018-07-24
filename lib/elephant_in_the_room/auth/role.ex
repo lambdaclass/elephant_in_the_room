@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoom.Auth.Role do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Auth.{Role, User}
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "roles" do
     field(:name, :string)
     has_many(:users, User)

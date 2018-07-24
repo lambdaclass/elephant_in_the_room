@@ -1,11 +1,10 @@
 defmodule ElephantInTheRoom.Auth.User do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
 
   alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "users" do
     field(:email, :string)
     field(:firstname, :string)

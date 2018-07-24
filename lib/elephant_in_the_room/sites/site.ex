@@ -1,9 +1,8 @@
 defmodule ElephantInTheRoom.Sites.Site do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "sites" do
     field(:name, :string)
     field(:host, :string)

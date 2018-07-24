@@ -1,12 +1,11 @@
 defmodule ElephantInTheRoom.BackupData do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.BackupData
   alias ElephantInTheRoom.Repo
 
   @uuid "f99264db-9df1-47cd-8942-701c31e03d0c"
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "backup_data" do
     field :last_backup_name, :string
     field :last_backup_moment, :utc_datetime

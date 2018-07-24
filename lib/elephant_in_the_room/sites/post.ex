@@ -1,12 +1,11 @@
 defmodule ElephantInTheRoom.Sites.Post do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "posts" do
     field(:title, :string)
     field(:slug, :string)
