@@ -92,9 +92,10 @@ defmodule ElephantInTheRoomWeb.TagController do
 
     case Sites.update_tag(tag, tag_params) do
       {:ok, tag} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, tag)}"
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: tag_path(conn, :public_show, URI.encode(site.name), URI.encode(tag.name)))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tag: tag, changeset: changeset)
@@ -108,5 +109,9 @@ defmodule ElephantInTheRoomWeb.TagController do
     conn
     |> put_flash(:info, "Tag deleted successfully.")
     |> redirect(to: site_tag_path(conn, :index, site))
+  end
+
+  defp relative_path(conn, %Tag{name: name}) do
+    tag_path(conn, :public_show, URI.encode(name))
   end
 end
