@@ -35,9 +35,17 @@
 
   .article-content {
     line-height: 1.35;
+    margin-bottom: 5em;
 
     p {
       color: $black;
+      hyphens: none;
+      font-size: 20px;
+      @media all and (max-width:1240px){ font-size: 19px; }
+      @media all and (max-width:840px){ font-size: 18px; }
+      @media all and (max-width:720px){ font-size: 19px; }
+      margin-top: 0;
+      margin-bottom: 0.4em;
     }
 
     img {

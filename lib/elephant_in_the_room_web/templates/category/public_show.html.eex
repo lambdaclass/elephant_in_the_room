@@ -45,6 +45,12 @@
         </div>
         <hr>
       <% end %>
+
+      <%= if Enum.at(other_posts,0) != nil do %>
+        <%= link "Siguiente",
+              to: "#{category_path(@conn, :public_show, @category.id)}?page=#{@page+1}" %>
+      <% end %>
+
     <% end %>
   </div>
 </div>

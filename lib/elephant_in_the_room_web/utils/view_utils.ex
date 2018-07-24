@@ -1,7 +1,4 @@
 defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
-  alias Phoenix.View
-  alias ElephantInTheRoomWeb.SharedPostCardView
-  alias ElephantInTheRoom.Repo
 
   def compare(1, 1), do: :unique_page
 
@@ -18,21 +15,5 @@ defmodule ElephantInTheRoomWeb.Utils.ViewUtils do
     show_right = total_pages > 1 && page_number < total_pages
     show_middle = show_left && show_right
     {show_left, show_middle, show_right}
-  end
-
-  def shared_render_posts_card(conn, posts, assigns) do
-    posts =
-      posts
-      |> Enum.map(fn p ->
-        Repo.preload(p, [:categories, :tags, :author])
-      end)
-
-    all_assigns = Enum.concat([posts: posts, conn: conn], assigns)
-
-    View.render(
-      SharedPostCardView,
-      "_shared_post_card.html",
-      all_assigns
-    )
   end
 end

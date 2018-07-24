@@ -1,12 +1,12 @@
-<h2>Users</h2>
-<p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
+<h2>Usuarios</h2>
+<p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
-      <th>Username</th>
-      <th>Role</th>
+      <th>Usuario</th>
+      <th>Rol</th>
       <th>Email</th>
-      <th>Menu</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +25,7 @@
         </span>
         <span>
           <%= link "", to: user_path(@conn, :delete, URI.encode(user.username)), 
-            method: :delete, data: [confirm: "Are you sure?"], 
+            method: :delete, data: [confirm: "¿Estás seguro?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
@@ -60,5 +60,5 @@
 
 <br/>
 
-<span><%= link "New User", to: user_path(@conn, :new) %></span>
-<span><%= link "Back", to: admin_path(@conn, :index) %></span>
+<p><%= link "Crear Usuario", to: user_path(@conn, :new) %></p>
+<p><%= link "Regresar", to: admin_path(@conn, :index) %></p>

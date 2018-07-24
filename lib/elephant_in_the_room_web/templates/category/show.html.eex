@@ -1,5 +1,4 @@
-
-<h2><%= @site.name %>>Categories</h2>
+<h2><%= @site.name %>&nbsp;&lt;&nbsp;Categorías</h2>
 
 
 <div class="uk-card uk-card-default uk-width-1-2@m">
@@ -11,14 +10,14 @@
                     <strong><%= @category.name %></strong>
                   </h3>
                   <center><p><%= @category.description %></p></center>
-                  
+
                 </center>
             </div>
         </div>
     </div>
     <div class="uk-card-body">
-        <center><p>Posts: <%= number_of_posts(@category)%> </p></center>
-        Latest posts in this category:
+        <center><p>Artículos: <%= number_of_posts(@category)%> </p></center>
+        Últimos artículos en esta categoría:
         <%= for post <- latest_posts(@category) do %>
             <p>
               <%= link post.title, to: show_post_link(@conn, post), class: "a" %>
@@ -27,8 +26,8 @@
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Edit", to: site_category_path(@conn, :edit, URI.encode(@site.name), URI.encode(@category.name)), class: "uk-button" %></span>
-        <span><%= link "Back", to: site_category_path(@conn, :index, URI.encode(@site.name)), class: "uk-button" %></span>
+        <span><%= link "Editar", to: site_category_path(@conn, :edit, URI.encode(@site.name), URI.encode(@category.name)), class: "uk-button" %></span>
+        <span><%= link "Regresar", to: site_category_path(@conn, :index, URI.encode(@site.name)), class: "uk-button" %></span>
       </div>
     </div>
 </div>

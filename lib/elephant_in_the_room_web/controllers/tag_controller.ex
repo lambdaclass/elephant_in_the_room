@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.{Repo, Sites, Sites.Tag, Sites.Site}
   import Ecto.Query
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =
@@ -59,20 +60,24 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: tag_site)
   end
 
-  def public_show(conn, %{"tag_name" => name}) do
+  def public_show(conn, %{"tag_name" => name} = params) do
+    page = get_page(params)
     site_id = conn.assigns.site.id
 
     site = Sites.get_site!(site_id)
 
     tag =
-      Sites.from_name!(name, site_id, Tag)
+      name
+      |> Sites.from_name!(site_id, Tag)
       |> Repo.preload(posts: :author)
 
-    render(conn, "public_show.html", tag: tag, site: site)
+    posts = Sites.get_tag_with_posts(site, tag.id, amount: 10, page: page)
+    tag = %{tag | posts: posts}
+
+    render(conn, "public_show.html", tag: tag, site: site, page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "tag_name" => name}) do
-
     tag_site = Sites.from_name!(URI.decode(site_name), Site)
     tag = Sites.from_name!(name, tag_site.id, Tag)
     changeset = Sites.change_tag(tag)
@@ -93,6 +98,7 @@ defmodule ElephantInTheRoomWeb.TagController do
     case Sites.update_tag(tag, tag_params) do
       {:ok, tag} ->
         path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, tag)}"
+
         conn
         |> put_flash(:info, "Tag updated successfully.")
         |> redirect(external: path)

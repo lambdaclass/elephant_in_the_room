@@ -1,11 +1,11 @@
 
 <div class="admin-title">
-  <span class="title-text">Edit tag</span>
+  <span class="title-text">Editar etiqueta</span>
   <%= if assigns[:tag] do %>
     <div "admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
          href="<%= tag_path(@conn, :public_show, URI.encode(@tag.name)) %>">
-        see tag
+        Ver etiqueta
       </a>
   </div>
   <% end %>
@@ -14,25 +14,25 @@
 <%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      <p>Por favor revisa los errores a continuación.</p>
     </div>
   <% end %>
 
   <fieldset class="uk-fieldset">
     <div class="uk-no-margin">
-      <%= label f, :name, class: "uk-form-label" %>
+      <%= label f, :name, "Nombre", class: "uk-form-label" %>
       <%= text_input f, :name, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :name %>
     </div>
 
     <div class="uk-no-margin">
-      <%= label f, :color, class: "uk-form-label" %>
+      <%= label f, :color, "Color", class: "uk-form-label" %>
       <%= text_input f, :color, class: "uk-form-controls uk-input"%>
       <%= error_tag f, :name %>
     </div>
-    
+
     <div class="uk-margin">
-      <%= submit "Submit", class: "uk-button uk-button-primary" %>
+      <%= submit "Enviar", class: "uk-button uk-button-primary" %>
     </div>
 
 

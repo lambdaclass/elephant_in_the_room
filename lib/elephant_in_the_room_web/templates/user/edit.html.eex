@@ -1,6 +1,4 @@
-<h2>Edit User</h2>
-
 <%= render "form.html", Map.put(assigns, :action, user_path(@conn, :update, URI.encode(@user.name)))
-                        |> Map.put(:form_title, "Edit User Account") %>
+                        |> Map.put(:form_title, "Editar Usuario") %>
 
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<span><%= link "Regresar", to: user_path(@conn, :index) %></span>

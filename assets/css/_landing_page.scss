@@ -1,18 +1,12 @@
-.site-content {
+.site-content.uk-container {
+  margin-bottom: 60px;
+  padding-left: 0;
+  padding-right: 0;
 
   @media screen and (min-width: 640px) {
     margin-top: 30px;
-    margin-bottom: 60px;
-  }
-
-  @media screen and (min-width: 640px) and (max-width: 1280px) {
-    padding: 0 20px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -23,9 +17,10 @@
     font-family: $title-font;
     text-transform: uppercase;
     hyphens: none;
+    font-size: 125%;
 
-    @media screen and (max-width: 640px) {
-        font-size: 125%;
+    @media screen and (min-width: 640px) {
+      font-size: 100%;
     }
   }
   .category {
@@ -43,36 +38,46 @@
   }
 }
 
-.main-post {
-  order: unset;
+.low-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  @media screen and (min-width: 640px) and (max-width: 960px) {
+.main-post, .low-posts {
+  order: 0;
+
+  @media screen and (min-width: 640px) {
     order: -1;
+  }
+  @media screen and (min-width: 960px) {
+    order: 0;
   }
 }
 
 .post.post-main {
   text-align: center;
 
-  .title, .abstract, .author, .date {
+  .abstract, .author, .date {
     padding: 0 15px;
+  }
+  .date {
+    margin-bottom: 0px;
+  }
+  .title {
+    padding: 0;
+    font-size: 1.6em;
+    line-height: 1em;
+    font-weight: bolder;
   }
   .abstract {
     margin: 10px 0;
   }
 }
 
-.low-posts {
-  order: unset;
-
-  @media screen and (min-width: 640px) and (max-width: 960px) {
-    order: -1;
-  }
-}
-
 .post.post-low {
+  padding: 0 15px;
   text-align: left;
-  margin-bottom: 30px;
 
   p {
     margin: 0;
@@ -87,8 +92,8 @@
     line-height: 1rem;
   }
 
-  @media screen and (max-width: 640px) {
-    padding: 0 15px;
+  @media screen and (min-width: 640px) {
+    padding: 0;
   }
 }
 
@@ -97,10 +102,10 @@
   text-align: left;
 
   .title {
-    line-height: 1rem;
+    line-height: 1.2;
 
-    @media screen and (max-width: 640px) {
-      line-height: 1.2
+    @media screen and (min-width: 640px) {
+      line-height: 1rem;
     }
   }
   .author-date {
@@ -109,55 +114,37 @@
   .title, .abstract, .author, .date {
     padding: 0 15px;
   }
-}
-
-.list-authors {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 3;
+  .date{
+    p {
+      margin-bottom: 0;
     }
+  }
 }
 
-.list-latest {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 2;
-    }
-}
-
-.list-popular {
-    order: unset;
-
-    @media screen and (max-width: 960px) {
-        order: 1;
-    }
-}
-
-.popular {
+.landing-page-popular-section {
   padding: 10px;
 
   > a {
     text-decoration: none;
-  }
-
-  > a > p {
-    margin: 0;
     color: #000;
+    hyphens: none;
   }
 
-  > a > p:last-child {
-    margin-bottom: 20px;
-  }
-
-  > a > p:nth-child(2) {
+  .title {
     font-size: 80%;
+    line-height: 1.1em;
+    margin-bottom: 0.2em;
   }
 
-  > a > p span {
+  .popular-order {
     color: #F0204F;
   }
+
+  .author {
+    color: #666;
+    font-size: 70%;
+  }
+
 }
 
 .authors {
@@ -177,6 +164,14 @@
   }
   .author p > strong > a {
     color: #000;
+  }
+  .landing-author-profile-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
 

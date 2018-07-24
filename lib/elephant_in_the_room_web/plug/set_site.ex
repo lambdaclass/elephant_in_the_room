@@ -12,16 +12,8 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
         |> Conn.halt()
 
       site ->
-        site =
-          site
-          |> Repo.preload(
-            categories: [],
-            posts: [:tags, :categories, :author],
-            tags: []
-          )
-
-        conn
-        |> Conn.assign(:site, site)
+        site = Repo.preload(site, categories: [])
+        Conn.assign(conn, :site, site)
     end
   end
 end

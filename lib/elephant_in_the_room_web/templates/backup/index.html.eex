@@ -1,30 +1,30 @@
 <div class="backup-container">
 
   <div class="admin-title">
-    <span class="title-text"> Sites </span>
+    <span class="title-text"> Sitios </span>
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
       href="">
-      refresh
+      refrescar
     </a>
     </span>
   </div>
 
   <div class="uk-margin">
     <div>
-      <span>Status:</span>
+      <span>Estado:</span>
       <span id="backup-data-will-run-at">
         <%= @conn.assigns[:status] %>
       </span>
     </div>
     <%= if @conn.assigns[:last_backup_ready_at] do %>
       <div>
-        <span>Last backup location:</span>
+        <span>Ubicación del último respaldo:</span>
         <span id="backup-data-will-run-at">
           <%= @conn.assigns[:last_backup_location] %>
         </span>
       </div>
       <div>
-        <span>Last backup generated at:</span>
+        <span>Fecha de creación del último respaldo:</span>
         <span id="backup-data-status">
           <%= @conn.assigns[:last_backup_ready_at]%> UTC
         </span>
@@ -34,12 +34,12 @@
 
   <div>
     <%= form_for @conn, backup_path(@conn, :do_backup), fn _ -> %>
-      <%= submit "backup now", class: "uk-button uk-button-danger uk-button-small" %>
+      <%= submit "Crear respaldo", class: "uk-button uk-button-danger uk-button-small" %>
     <% end %>
     <%= if @conn.assigns[:last_backup_ready_at] do %>
       <a href="<%= backup_path(@conn, :download_latest)%>">
         <button class="uk-button uk-button-primary uk-button-small">
-          download latest backup
+          Descargar último respaldo
         </button>
       </a>
     <% end %>

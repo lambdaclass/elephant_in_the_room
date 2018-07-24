@@ -75,23 +75,23 @@ defmodule ElephantInTheRoomWeb.PostView do
   @two_weeks 1_209_600
 
   defp format_diff(diff, date) when diff < 0,
-    do: {:date, "on #{date.day}-#{date.month}-#{date.year}"}
+    do: {:date, "el #{date.day}-#{date.month}-#{date.year}"}
 
-  defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "just now"}
+  defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "justo ahora"}
 
   defp format_diff(diff, _date) when diff < @one_hour,
-    do: {:minutes, "#{div(diff, @one_minute)} minutes ago"}
+    do: {:minutes, "hace #{div(diff, @one_minute)} minutos"}
 
   defp format_diff(diff, _date) when diff > @one_hour and diff < @one_day,
-    do: {:hours, "#{div(diff, @one_hour)} hours ago"}
+    do: {:hours, "hace #{div(diff, @one_hour)} horas"}
 
-  defp format_diff(diff, _date) when diff <= @one_day_and_few_hours, do: {:day, "a day ago"}
+  defp format_diff(diff, _date) when diff <= @one_day_and_few_hours, do: {:day, "hace un día"}
 
   defp format_diff(diff, _date) when diff > @one_day_and_few_hours,
-    do: {:days, "#{div(diff, @one_day)} days ago"}
+    do: {:days, "hace #{div(diff, @one_day)} dias"}
 
   defp format_diff(diff, date) when diff > @two_weeks,
-    do: {:date, "on #{date.day}-#{date.month}-#{date.year}"}
+    do: {:date, "el #{date.day}-#{date.month}-#{date.year}"}
 
   def show_date(date) do
     now = NaiveDateTime.utc_now()

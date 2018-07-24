@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.{Repo, Sites, Sites.Category, Sites.Site}
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -42,7 +43,9 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name)))
+        |> redirect(
+          to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name))
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
@@ -55,16 +58,19 @@ defmodule ElephantInTheRoomWeb.CategoryController do
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(conn, %{"category_name" => name}) do
-    site_id = conn.assigns.site.id
+  def public_show(conn, %{"category_name" => name} = params) do
+    page = get_page(params)
 
-    site = Sites.get_site!(site_id)
+    site = conn.assigns.site
 
     category =
       Sites.from_name!(name, Category)
       |> Repo.preload(posts: :categories, posts: :author)
 
-    render(conn, "public_show.html", category: category, site: site)
+    posts = Sites.get_category_with_posts(site, category.id, amount: 10, page: page)
+    category = %{category | posts: posts}
+
+    render(conn, "public_show.html", category: category, site: site, page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
@@ -83,7 +89,9 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name)))
+        |> redirect(
+          to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name))
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)

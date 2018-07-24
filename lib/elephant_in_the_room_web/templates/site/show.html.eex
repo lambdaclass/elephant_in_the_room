@@ -1,10 +1,13 @@
+<% alias ElephantInTheRoomWeb.Utils.Utils %>
 
-<div class="admin-panel-greetings">
-  <h3> <%= @site.name %></h3>
-  <p>
-    <%= @site.host %>
-  </p>
-</div>
+<%= link to: Utils.generate_absolute_url("", @conn, @site) do %>
+  <div class="admin-panel-greetings">
+    <h3> <%= @site.name %></h3>
+    <p>
+      <%= @site.host %>
+    </p>
+  </div>
+<% end %>
 
 <div class="uk-child-width-1-2@s admin-change-options-cards" uk-grid>
 
@@ -13,7 +16,7 @@
          onclick="window.location='<%= site_path(@conn, :edit, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-alt"></i>
-        Edit site
+        Editar sitio
       </h3>
     </div>
   </div>
@@ -23,7 +26,7 @@
          onclick="window.location='<%= site_category_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-calendar-alt"></i>
-        Categories
+        Categorías
       </h3>
     </div>
   </div>
@@ -34,7 +37,7 @@
          onclick="window.location='<%= site_post_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-word"></i>
-        Posts
+        Artículos
       </h3>
     </div>
   </div>
@@ -45,7 +48,7 @@
          onclick="window.location='<%= site_tag_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-hashtag"></i>
-        Tags
+        Etiquetas
       </h3>
     </div>
   </div>

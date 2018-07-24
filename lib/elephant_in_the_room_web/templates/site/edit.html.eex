@@ -8,7 +8,7 @@
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-expand">
               <h3 class="uk-card-title uk-margin-remove-bottom">
-                <div><center><legend class="uk-legend">Edit Site</legend></center></div>
+                <div><center><legend class="uk-legend">Editar Sitio</legend></center></div>
               </h3>
             </div>
           </div>
@@ -22,4 +22,4 @@
   </div>
 </div>
 
-<span><%= link "Back", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>
+<span><%= link "Regresar", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>

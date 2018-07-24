@@ -1,4 +1,4 @@
 <h2><%= @role.name %></h2>
 
-<span><%= link "Edit", to: role_path(@conn, :edit, URI.encode(@role.name)) %></span>
-<span><%= link "Back", to: role_path(@conn, :index) %></span>
+<span><%= link "Editar", to: role_path(@conn, :edit, URI.encode(@role.name)) %></span>
+<span><%= link "Regresar", to: role_path(@conn, :index) %></span>
