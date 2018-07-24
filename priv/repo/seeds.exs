@@ -10,7 +10,7 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias ElephantInTheRoom.{Sites, Repo, Auth, Auth.Role}
+alias ElephantInTheRoom.{Repo, Auth, Auth.Role}
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
@@ -43,7 +43,12 @@ create_admin_user_data = fn ->
   }
 end
 
-if length(Sites.list_sites()) == 0 do
+admin_user_created = fn ->
+  Auth.list_users()
+  |> Enum.any?(fn user -> user.username == "admin" end)
+end
+
+unless admin_user_created.() do
   admin = create_admin_user_data.()
   Auth.create_user(admin)
   inform_str = "user: #{admin.username}\npassword: #{admin.password}\n"
