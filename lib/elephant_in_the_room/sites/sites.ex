@@ -844,4 +844,100 @@ defmodule ElephantInTheRoom.Sites do
   def change_image(%Image{} = image) do
     Image.changeset(image, %{})
   end
+
+  alias ElephantInTheRoom.Sites.Magazine
+
+  @doc """
+  Returns the list of magazines.
+
+  ## Examples
+
+      iex> list_magazines()
+      [%Magazine{}, ...]
+
+  """
+  def list_magazines do
+    Repo.all(Magazine)
+  end
+
+  @doc """
+  Gets a single magazine.
+
+  Raises `Ecto.NoResultsError` if the Magazine does not exist.
+
+  ## Examples
+
+      iex> get_magazine!(123)
+      %Magazine{}
+
+      iex> get_magazine!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_magazine!(id), do: Repo.get!(Magazine, id)
+
+  @doc """
+  Creates a magazine.
+
+  ## Examples
+
+      iex> create_magazine(%{field: value})
+      {:ok, %Magazine{}}
+
+      iex> create_magazine(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_magazine(attrs \\ %{}) do
+    %Magazine{}
+    |> Magazine.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a magazine.
+
+  ## Examples
+
+      iex> update_magazine(magazine, %{field: new_value})
+      {:ok, %Magazine{}}
+
+      iex> update_magazine(magazine, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_magazine(%Magazine{} = magazine, attrs) do
+    magazine
+    |> Magazine.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Magazine.
+
+  ## Examples
+
+      iex> delete_magazine(magazine)
+      {:ok, %Magazine{}}
+
+      iex> delete_magazine(magazine)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_magazine(%Magazine{} = magazine) do
+    Repo.delete(magazine)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking magazine changes.
+
+  ## Examples
+
+      iex> change_magazine(magazine)
+      %Ecto.Changeset{source: %Magazine{}}
+
+  """
+  def change_magazine(%Magazine{} = magazine) do
+    Magazine.changeset(magazine, %{})
+  end
 end
