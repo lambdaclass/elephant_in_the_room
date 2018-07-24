@@ -40,6 +40,10 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   def check_title(%Changeset{} = changeset, _attrs), do: changeset
 
+  def store_image(%Changeset{valid?: false} = changeset, _attrs) do
+    changeset
+  end
+
   def store_image(%Changeset{} = changeset, %{"image" => nil}),
     do: put_change(changeset, :image, nil)
 
@@ -51,8 +55,12 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   def store_image(%Changeset{} = changeset, _attrs), do: changeset
 
+  def validate_favicon(%Changeset{valid?: false} = changeset, _attrs) do
+    changeset
+  end
+
   def validate_favicon(%Changeset{} = changeset, %{"favicon" => nil}),
-    do: put_change(changeset, :image, nil)
+    do: put_change(changeset, :favicon, nil)
 
   def validate_favicon(
         %Changeset{} = changeset,

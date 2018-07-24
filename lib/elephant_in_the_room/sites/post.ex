@@ -121,11 +121,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   def put_slugified_title(%Changeset{} = changeset) do
     slug = get_field(changeset, :slug)
 
-    slug = if slug == nil || String.length(slug) == 0 do
-      get_field(changeset, :title) |> Sites.to_slug()
-    else
-      slug
-    end
+    slug =
+      if slug == nil || String.length(slug) == 0 do
+        get_field(changeset, :title) |> Sites.to_slug()
+      else
+        slug
+      end
 
     put_change(changeset, :slug, slug)
   end
@@ -190,12 +191,16 @@ defmodule ElephantInTheRoom.Sites.Post do
     title = "#{title} - #{conn.assigns.site.name}"
     url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
     image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
-    %{url: url, type: type, title: title, description: description, image: image}
+
+    if image != nil do
+      %{url: url, type: type, title: title, description: description, image: image}
+    else
+      %{url: url, type: type, title: title, description: description}
+    end
   end
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
   end
-
 end
