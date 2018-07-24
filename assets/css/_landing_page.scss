@@ -23,6 +23,14 @@
       font-size: 100%;
     }
   }
+  p {
+    margin: 0;
+  }
+  .image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   .category {
     font-size: 50%;
     text-align: right;
@@ -56,11 +64,11 @@
 }
 
 .post.post-main {
-  text-align: center;
-
-  .abstract, .author, .date {
-    padding: 0 15px;
+  text-align: left;
+  .image {
+    height: 30vh;
   }
+
   .date {
     margin-bottom: 0px;
   }
@@ -70,18 +78,13 @@
     line-height: 1em;
     font-weight: bolder;
   }
-  .abstract {
-    margin: 10px 0;
+  .abstract, .author {
+    margin-top: 10px;
   }
 }
 
 .post.post-low {
-  padding: 0 15px;
   text-align: left;
-
-  p {
-    margin: 0;
-  }
   .image {
     float: right;
     width: 80px;
@@ -101,6 +104,10 @@
   height: 100%;
   text-align: left;
 
+  .image {
+    height:200px;
+  }
+
   .title {
     line-height: 1.2;
 
@@ -111,12 +118,23 @@
   .author-date {
     margin-top: auto;
   }
-  .title, .abstract, .author, .date {
-    padding: 0 15px;
+  .abstract, .author {
+    margin-top: 10px;
   }
   .date{
     p {
       margin-bottom: 0;
+    }
+  }
+}
+
+.right-regular-post {
+  .post:nth-child(2){
+    background: red;
+  }
+  @media screen and (min-width: $navbar-break-m) {
+    .image {
+      height: 17vh !important;
     }
   }
 }
