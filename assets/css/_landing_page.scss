@@ -23,6 +23,9 @@
       font-size: 100%;
     }
   }
+  p {
+    margin: 0;
+  }
   .image {
     background-size: cover;
     background-repeat: no-repeat;
@@ -61,14 +64,11 @@
 }
 
 .post.post-main {
-  text-align: center;
+  text-align: left;
   .image {
     height: 30vh;
   }
 
-  .abstract, .author, .date {
-    padding: 0 15px;
-  }
   .date {
     margin-bottom: 0px;
   }
@@ -78,18 +78,13 @@
     line-height: 1em;
     font-weight: bolder;
   }
-  .abstract {
-    margin: 10px 0;
+  .abstract, .author {
+    margin-top: 10px;
   }
 }
 
 .post.post-low {
-  padding: 0 15px;
   text-align: left;
-
-  p {
-    margin: 0;
-  }
   .image {
     float: right;
     width: 80px;
@@ -123,12 +118,23 @@
   .author-date {
     margin-top: auto;
   }
-  .title, .abstract, .author, .date {
-    padding: 0 15px;
+  .abstract, .author {
+    margin-top: 10px;
   }
   .date{
     p {
       margin-bottom: 0;
+    }
+  }
+}
+
+.right-regular-post {
+  .post:nth-child(2){
+    background: red;
+  }
+  @media screen and (min-width: $navbar-break-m) {
+    .image {
+      height: 17vh !important;
     }
   }
 }
