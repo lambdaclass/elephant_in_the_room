@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   use Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
+  alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author, Magazine}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
@@ -17,6 +17,7 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, on_replace: :nilify)
+    belongs_to(:magazine, Magazine)
 
     many_to_many(
       :categories,
@@ -42,14 +43,34 @@ defmodule ElephantInTheRoom.Sites.Post do
     new_attrs = parse_date(attrs)
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :site_id])
+    |> validate_required([:title, :content])
+    |> validate_site_or_magazine
     |> put_rendered_content
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
+  end
+
+  def validate_site_or_magazine(changeset) do
+    case get_field(changeset, :site_id) do
+      nil ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            add_error(changeset, :site_id, "Site does not exist")
+          _ ->
+            changeset
+        end
+      _ ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            changeset
+          _ ->
+            add_error(changeset, :site_id, "Post can't belong to site and magazine")
+        end
+    end
   end
 
   def unique_slug_constraint(changeset) do
