@@ -13,6 +13,7 @@
       tokenSeparators: [","]
     });
     $("#post_categories").select2();
+    $("#post_featured_level").select2();
   });
 </script>
 
