@@ -22,7 +22,6 @@
       <%= label f, :favicon, "Icono", class: "uk-form-label"%>
       <%= if @changeset.data.favicon do %>
         <img src="<%= @changeset.data.favicon %>" width="200">
-        <%= submit "Borrar icono", name: "favicon_delete", value: "true" %>
       <% end %>
       <%= file_input f, :favicon %>
       <%= error_tag f, :favicon %>
@@ -41,10 +40,9 @@
     </div>
 
     <div class="form-group uk-width-1-1">
-      <%= label f, :image, class: "uk-form-label"%>
+      <%= label f, :image, "Imagén", class: "uk-form-label"%>
       <%= if @changeset.data.image do %>
         <img src="<%= @changeset.data.image %>" width="200">
-        <%= submit "Delete image", name: "image_delete", value: "true" %>
       <% end %>
       <%= file_input f, :image %>
       <%= error_tag f, :image %>
@@ -60,7 +58,7 @@
 <%= if assigns[:site] do %>
   <%= link to: site_path(@conn, :delete, @site.id),
         method: :delete,
-        data: [confirm: "Are you sure your want to delete this site"],
+        data: [confirm: "¿Estás seguro que quieres borrar el sitio?"],
         class: "uk-button uk-button-danger uk-width-1-1" do %>
         <i class="fas fa-trash"></i>
   <% end %>

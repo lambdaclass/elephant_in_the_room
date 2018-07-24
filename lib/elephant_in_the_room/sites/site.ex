@@ -61,9 +61,9 @@ defmodule ElephantInTheRoom.Sites.Site do
     if valid_favicon?(ct) do
       {:ok, favicon_name} = Image.store(%{favicon | filename: Ecto.UUID.generate()})
 
-      put_change(changeset, :favicon, favicon_name)
+      put_change(changeset, :favicon, "/images/#{favicon_name}")
     else
-      Changeset.add_error(changeset, :favicon, "The favicon must have .ico extension.")
+      Changeset.add_error(changeset, :favicon, "El icono debe tener extensión .ico")
     end
   end
 
