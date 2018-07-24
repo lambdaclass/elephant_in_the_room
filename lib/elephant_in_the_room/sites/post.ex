@@ -6,6 +6,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "posts" do
     field(:title, :string)
     field(:slug, :string)

@@ -3,6 +3,7 @@ defmodule ElephantInTheRoom.Sites.Tag do
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Site, Tag, Post}
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "tags" do
     field(:name, :string)
     field(:color, :string)

@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Sites.Category do
   use Ecto.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Category, Site, Post}
-
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "categories" do
     field(:description, :string)
     field(:name, :string)

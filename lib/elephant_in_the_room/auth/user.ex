@@ -5,6 +5,7 @@ defmodule ElephantInTheRoom.Auth.User do
   alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "users" do
     field(:email, :string)
     field(:firstname, :string)

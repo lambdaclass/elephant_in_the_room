@@ -10,10 +10,7 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias ElephantInTheRoom.Auth
-alias ElephantInTheRoom.Auth.Role
-alias ElephantInTheRoom.Repo
-alias ElephantInTheRoom.Auth.User
+alias ElephantInTheRoom.{Sites, Repo, Auth, Auth.Role}
 
 case Repo.get_by(Role, name: "admin") do
   nil ->
@@ -23,6 +20,7 @@ case Repo.get_by(Role, name: "admin") do
   _admin_role ->
     IO.puts("admin role already created!")
 end
+
 admin_role_id = Repo.get_by(Role, name: "admin").id
 
 case Repo.get_by(Role, name: "user") do
@@ -34,10 +32,10 @@ case Repo.get_by(Role, name: "user") do
     IO.puts("user role already created!")
 end
 
-create_admin_user_data = fn () -> 
+create_admin_user_data = fn ->
   %{
     username: "admin",
-    password:  to_string(Kernel.trunc(:rand.uniform()*1000000000)),
+    password: to_string(Kernel.trunc(:rand.uniform() * 1_000_000_000)),
     firstname: "admin",
     lastname: "1",
     email: "admin@lambdaclass.com",
@@ -45,7 +43,7 @@ create_admin_user_data = fn () ->
   }
 end
 
-if  Repo.get_by(User, id: 1) == nil do
+if length(Sites.list_sites()) == 0 do
   admin = create_admin_user_data.()
   Auth.create_user(admin)
   inform_str = "user: #{admin.username}\npassword: #{admin.password}\n"
