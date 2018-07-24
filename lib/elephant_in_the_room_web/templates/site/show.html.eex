@@ -53,4 +53,14 @@
     </div>
   </div>
 
+  <div>
+    <div class="uk-card uk-card-default uk-card-small uk-card-body"
+         onclick="window.location='<%= site_tag_path(@conn, :index, @site) %>'">
+      <h3 class="uk-card-title">
+        <i class="fas fa-star"></i>
+        Destacados
+      </h3>
+    </div>
+  </div>
+
 </div>
