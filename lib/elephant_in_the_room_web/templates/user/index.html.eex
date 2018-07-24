@@ -29,7 +29,6 @@
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
-
     </tr>
 <% end %>
   </tbody>

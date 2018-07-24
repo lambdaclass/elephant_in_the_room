@@ -1,4 +1,4 @@
-<%= render "form.html", Map.put(assigns, :action, user_path(@conn, :update, URI.encode(@user.name)))
+<%= render "form.html", Map.put(assigns, :action, user_path(@conn, :update, URI.encode(@user.username)))
                         |> Map.put(:form_title, "Editar Usuario") %>
 
 <span><%= link "Regresar", to: user_path(@conn, :index) %></span>

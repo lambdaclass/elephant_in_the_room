@@ -62,7 +62,7 @@ defmodule ElephantInTheRoomWeb.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, URI.encode(user.name)))
+        |> redirect(to: user_path(conn, :show, URI.encode(user.username)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)

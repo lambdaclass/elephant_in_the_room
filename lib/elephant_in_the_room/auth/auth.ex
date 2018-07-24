@@ -256,8 +256,10 @@ defmodule ElephantInTheRoom.Auth do
   end
 
   def from_username!(username) do
-    name =  URI.decode(username)
+    name = URI.decode(username)
 
-    Repo.get_by!(User, username: name)
+    User
+    |> Repo.get_by!(username: name)
+    |> Repo.preload([:role])
   end
 end
