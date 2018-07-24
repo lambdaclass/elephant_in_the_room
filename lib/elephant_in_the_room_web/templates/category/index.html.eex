@@ -11,17 +11,17 @@
 <%= for category <- @categories do %>
     <tr>
       <td>
-        <%= link category.name, to: site_category_path(@conn, :show, @site, category),
+        <%= link category.name, to: site_category_path(@conn, :show, URI.encode(@site.name), URI.encode(category.name)), 
           class: "a" %>
       </td>
        <td class="text-right">
         <span>
-          <%= link "", to: site_category_path(@conn, :edit, @site, category),
+          <%= link "", to: site_category_path(@conn, :edit, URI.encode(@site.name), URI.encode(category.name)), 
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: site_category_path(@conn, :delete, @site, category),
-            method: :delete, data: [confirm: "Are you sure?"],
+          <%= link "", to: site_category_path(@conn, :delete, URI.encode(@site.name), URI.encode(category.name)), 
+            method: :delete, data: [confirm: "¿Estás seguro?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
@@ -43,5 +43,5 @@
 
 <br>
 
-<p><%= link "Crear Categoría", to: site_category_path(@conn, :new, @site) %></p>
-<p><%= link "Regresar", to: site_path(@conn, :index) %></p>
+<span><%= link "Crear Categoría", to: site_category_path(@conn, :new, URI.encode(@site.name)) %></span>
+<span><%= link "Regresar", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>

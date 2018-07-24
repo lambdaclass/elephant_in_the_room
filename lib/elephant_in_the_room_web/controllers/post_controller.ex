@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Post}
   alias Phoenix.Controller
   import Ecto.Query
 
@@ -54,35 +52,27 @@ defmodule ElephantInTheRoomWeb.PostController do
       {:ok, post} ->
         path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
 
-        conn
-        |> redirect(external: path)
+        redirect(conn, external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(
-          conn,
-          "new.html",
-          changeset: changeset,
-          site: site
-        )
+        render(conn, "new.html", changeset: changeset, site: site)
     end
   end
 
-  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+  def show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
+    post = Sites.get_post_by_slug!(site.id, slug)
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
-  def public_show(conn, %{"slug" => slug}) do
-    site_id = conn.assigns.site.id
-    site = Sites.get_site!(site_id)
-    post = Sites.get_post_by_slug!(site_id, slug)
+  def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
+    post = Sites.get_post_by_slug!(site.id, slug)
     meta = Post.generate_og_meta(conn, post)
     Post.increase_views_for_popular_by_1(post)
     render(conn, "public_show.html", site: site, post: post, meta: meta)
   end
 
-  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+  def edit(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
+    post = Sites.get_post_by_slug!(site.id, slug)
     categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
 
@@ -98,19 +88,19 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def update(conn, %{
+  def update(%{assigns: %{site: site}} = conn, %{
         "cover_delete" => "true",
-        "id" => id
+        "slug" => slug
       }) do
-    post = Sites.get_post!(id)
+    post = Sites.get_post_by_slug!(site.id, slug)
 
     {:ok, post_no_cover} = Sites.delete_cover(post)
 
     render(conn, "edit.html", post: post_no_cover, changeset: Sites.change_post(post_no_cover))
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "post" => post_params}) do
-    post = Sites.get_post!(id)
+  def update(%{assigns: %{site: site}} = conn, %{"slug" => slug, "post" => post_params}) do
+    post = Sites.get_post_by_slug!(site.id, slug)
     post_params_with_site_id = Map.put(post_params, "site_id", site.id)
 
     case Sites.update_post(post, post_params_with_site_id) do
@@ -125,13 +115,13 @@ defmodule ElephantInTheRoomWeb.PostController do
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    post = Sites.get_post!(id)
+  def delete(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
+    post = Sites.get_post_by_slug!(site.id, slug)
     {:ok, _post} = Sites.delete_post(post)
 
     conn
     |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: site_post_path(conn, :index, site))
+    |> redirect(to: site_post_path(conn, :index, site.name))
   end
 
   defp relative_path(conn, %Post{inserted_at: date, slug: slug}) do

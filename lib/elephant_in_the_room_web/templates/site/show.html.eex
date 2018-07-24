@@ -13,7 +13,7 @@
 
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body"
-         onclick="window.location='<%= site_path(@conn, :edit, @site) %>'">
+         onclick="window.location='<%= site_path(@conn, :edit, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-alt"></i>
         Editar sitio
@@ -23,7 +23,7 @@
 
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body"
-         onclick="window.location='<%= site_category_path(@conn, :index, @site) %>'">
+         onclick="window.location='<%= site_category_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-calendar-alt"></i>
         Categorías
@@ -34,7 +34,7 @@
 
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body"
-         onclick="window.location='<%= site_post_path(@conn, :index, @site) %>'">
+         onclick="window.location='<%= site_post_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-file-word"></i>
         Artículos
@@ -45,7 +45,7 @@
 
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body"
-         onclick="window.location='<%= site_tag_path(@conn, :index, @site) %>'">
+         onclick="window.location='<%= site_tag_path(@conn, :index, @site.name) %>'">
       <h3 class="uk-card-title">
         <i class="fas fa-hashtag"></i>
         Etiquetas

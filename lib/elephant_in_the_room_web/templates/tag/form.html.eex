@@ -4,8 +4,8 @@
   <%= if assigns[:tag] do %>
     <div "admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-         href="<%= tag_path(@conn, :public_show, @tag.id) %>">
-        ver etiqueta
+         href="<%= tag_path(@conn, :public_show, URI.encode(@tag.name)) %>">
+        Ver etiqueta
       </a>
   </div>
   <% end %>

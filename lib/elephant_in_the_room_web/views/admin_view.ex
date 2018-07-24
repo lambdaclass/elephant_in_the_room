@@ -6,6 +6,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   def bread_crumb(conn, path) when is_list(path) do
     bread_crumb_get_link(conn, path)
   end
+
   def bread_crumb(conn, _) do
     bread_crumb_get_link(conn, [])
   end
@@ -13,6 +14,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   def bread_crumb_get_link(conn, path) do
     bread_crumb_get_link(%{conn: conn}, path, [])
   end
+
   def bread_crumb_get_link(data, [element | rest], acc) do
     case element do
       :sites ->
@@ -40,6 +42,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
         bread_crumb_get_link(data, rest, acc)
     end
   end
+
   def bread_crumb_get_link(_, [], acc) do
     case acc do
       [] -> {[], []}
@@ -53,31 +56,32 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {"Sitios", site_path(conn, :index)}
   end
 
-  defp bread_crumb_site(conn, %Site{name: name, id: id}) do
-    {name, site_path(conn, :show, id)}
+  defp bread_crumb_site(conn, %Site{name: name}) do
+    {name, site_path(conn, :show, name)}
   end
 
-  defp bread_crumb_posts(conn, %Site{id: id}) do
-    {"Artículos", site_post_path(conn, :index, id)}
+  defp bread_crumb_posts(conn, %Site{name: site_name}) do
+    {"Artículos", site_post_path(conn, :index, site_name)}
   end
 
-  defp bread_crumb_post(conn,%Site{id: site_id}, %Post{id: post_id}) do
-    {"#{post_id}", site_post_path(conn, :show, site_id, post_id)}
+  defp bread_crumb_post(conn, _site, %Post{inserted_at: date, title: title} = post) do
+    {"#{title}", post_path(conn, :public_show, date.year, date.month, date.day, post.slug)}
   end
 
-  defp bread_crumb_post_edit(conn,%Site{id: site_id}, %Post{id: post_id}) do
+  defp bread_crumb_post_edit(conn, %Site{id: site_id}, %Post{id: post_id}) do
     {"Editar", site_post_path(conn, :edit, site_id, post_id)}
   end
 
-  defp bread_crumb_tags(conn, %Site{id: site_id}) do
-    {"Etiquetas", site_tag_path(conn, :index, site_id)}
+  defp bread_crumb_tags(conn, %Site{name: site_name}) do
+    {"Etiquetas", site_tag_path(conn, :index, URI.encode(site_name))}
   end
 
   defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
     {"Etiqueta",""}
   end
-  defp bread_crumb_tag_edit(conn, %Site{id: site_id}, %Tag{id: tag_id, name: tag_name}) do
-    {"\##{tag_name}", site_tag_path(conn, :edit, site_id, tag_id)}
+
+  defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
+    {"\##{tag_name}", site_tag_path(conn, :edit, URI.encode(site_name), URI.encode(tag_name))}
   end
 
 end

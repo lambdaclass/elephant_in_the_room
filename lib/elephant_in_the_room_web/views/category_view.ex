@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.CategoryView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites.Post}
+  alias ElephantInTheRoomWeb.Utils.Utils
   import Ecto.Query
 
   def get_top_featured_post(_conn, posts) do
@@ -46,5 +47,10 @@ defmodule ElephantInTheRoomWeb.CategoryView do
 
   def show_site_link(conn) do
     site_path(conn, :public_show)
+  end
+
+  def show_post_link(conn, %Post{inserted_at: date, slug: slug}) do
+    post_path(conn, :public_show, date.year, date.month, date.day, slug)
+    |> Utils.generate_absolute_url(conn)
   end
 end
