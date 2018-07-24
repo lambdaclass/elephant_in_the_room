@@ -5,6 +5,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   alias ElephantInTheRoom.Sites.Tag
   alias ElephantInTheRoom.Repo
   import Ecto.Query
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =
@@ -27,7 +28,8 @@ defmodule ElephantInTheRoomWeb.TagController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :tags]
     )
   end
 
@@ -36,15 +38,16 @@ defmodule ElephantInTheRoomWeb.TagController do
       %Tag{site_id: site.id}
       |> Sites.change_tag()
 
-    render(conn, "new.html", changeset: changeset, site: site)
+    render(conn, "new.html",
+      changeset: changeset,
+      site: site,
+      bread_crumb: [:sites, site, :tags, %Tag{}])
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
     case Sites.create_tag(site, tag_params) do
-      {:ok, tag} ->
-        conn
-        |> put_flash(:info, "Tag created successfully.")
-        |> redirect(to: site_tag_path(conn, :show, site, tag))
+      {:ok, _tag} ->
+        redirect(conn, to: site_tag_path(conn, :index, site.id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
@@ -56,22 +59,27 @@ defmodule ElephantInTheRoomWeb.TagController do
     render(conn, "show.html", tag: tag, site: site)
   end
 
-  def public_show(conn, %{"tag_id" => tag_id}) do
-    site_id = conn.assigns.site.id
+  def public_show(conn, %{"tag_id" => tag_id} = params) do
+    page = get_page(params)
+    site = conn.assigns.site
+    tag = Sites.get_tag!(tag_id)
+    posts = Sites.get_tag_with_posts(site, tag_id, amount: 10, page: page)
+    tag = %{tag | posts: posts}
 
-    site = Sites.get_site!(site_id)
-
-    tag =
-      Sites.get_tag!(tag_id)
-      |> Repo.preload(posts: :author)
-
-    render(conn, "public_show.html", tag: tag, site: site)
+    render(conn, "public_show.html",
+      tag: tag,
+      site: site,
+      page: page)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
     tag = Sites.get_tag!(id)
     changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
+    render(conn, "edit.html",
+      site: site,
+      tag: tag,
+      changeset: changeset,
+      bread_crumb: [:sites, site, :tags, tag])
   end
 
   def update(conn, %{"id" => id, "tag" => tag_params}) do

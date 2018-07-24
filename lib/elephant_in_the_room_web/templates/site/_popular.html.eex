@@ -3,18 +3,28 @@
   posts = assigns[:posts]
 %>
 
-<div class="popular uk-text-left uk-height-1-1">
+<div class="landing-page-popular-section uk-text-left uk-height-1-1">
   <%= if posts && Enum.at(posts,0) != nil do %>
     <h3 class="uk-text-bold uk-text-left">
-      <%= link "Popular", to: site_path(@conn, :public_show_popular)%><hr>
+      <%= link "Populares", to: site_path(@conn, :public_show_popular)%><hr>
     </h3>
     <%= for {post, post_index} <- Enum.with_index(posts, 1) do %>
 
       <%= link to: SiteView.show_link_with_date(@conn, post) do %>
-        <p><strong><span><%= post_index %></span>&nbsp;<%= post.title %></strong></p>
+        
+        <div class="title">
+          <span class="popular-order">
+            <%= post_index %>
+          </span>
+          <%= post.title %>
+        </div>
+
         <%= if post.author do %>
-          <p><%= post.author.name %></p>
+          <div class="author">
+            <p><%= post.author.name %></p>
+          </div>
         <% end %>
+
       <% end %>
 
     <% end %>

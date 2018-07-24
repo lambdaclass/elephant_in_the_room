@@ -1,27 +1,27 @@
-<h2>Authors</h2>
+<h2>Autores</h2>
 <p><%= "Page: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
-    <tr>      
-      <th>Name</th>
-      <th>Menu</th>
+    <tr>
+      <th>Nombre</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
 <%= for author <- @authors do %>
     <tr>
       <td>
-        <%= link author.name, to: author_path(@conn, :show, author), 
+        <%= link author.name, to: author_path(@conn, :show, author),
           class: "a"  %>
       </td>
       <td class="text-right">
         <span>
-          <%= link "", to: author_path(@conn, :edit, author), 
+          <%= link "", to: author_path(@conn, :edit, author),
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: author_path(@conn, :delete, author), 
-            method: :delete, data: [confirm: "Are you sure?"], 
+          <%= link "", to: author_path(@conn, :delete, author),
+            method: :delete, data: [confirm: "Are you sure?"],
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
@@ -43,5 +43,5 @@
 
 <br>
 
-<span><%= link "New Author", to: author_path(@conn, :new) %></span>
-<span><%= link "Back", to: admin_path(@conn, :index) %></span>
+<p><%= link "Crear Autor", to: author_path(@conn, :new) %></p>
+<p><%= link "Regresar", to: admin_path(@conn, :index) %></p>

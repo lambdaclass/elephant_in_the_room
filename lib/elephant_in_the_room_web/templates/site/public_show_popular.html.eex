@@ -3,7 +3,7 @@
 %>
 
 <div class="uk-container uk-container-small">
-  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Popular</h1>
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Populares</h1>
 
   <div class="uk-padding">
     <%= unless Enum.empty?(@posts) do %>
@@ -45,6 +45,12 @@
         </div>
         <hr>
       <% end %>
+
+      <%= if Enum.at(other_posts,0) != nil do %>
+        <%= link "Siguiente",
+              to: "#{site_path(@conn, :public_show_popular)}?page=#{@page+1}" %>
+      <% end %>
+
     <% end %>
   </div>
 </div>

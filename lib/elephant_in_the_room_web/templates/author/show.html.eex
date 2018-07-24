@@ -1,5 +1,5 @@
 <% alias ElephantInTheRoomWeb.Uploaders.Image %>
-<h2>Authors</h2>
+<h2>Autores</h2>
 
 <div class="uk-card uk-card-default uk-width-1-2@m">
     <div class="uk-card-header">
@@ -12,8 +12,8 @@
                   <h3 class="uk-card-title uk-margin-remove-bottom">
                     <strong><%= @author.name %></strong>
                   </h3>
-                  <p>Posts: <%= number_of_published_posts(@author)%> </p>
-                  <p>Columnist? <%= if @author.is_columnist, do: "Yes", else: "No" %> </p>
+                  <p>Artículos: <%= number_of_published_posts(@author)%> </p>
+                  <p>Columnista? <%= if @author.is_columnist, do: "Sí", else: "No" %> </p>
                 </center>
             </div>
         </div>
@@ -23,8 +23,8 @@
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Edit", to: author_path(@conn, :edit, @author), class: "uk-button" %></span>
-        <span><%= link "Back", to: author_path(@conn, :index), class: "uk-button" %></span>
+        <span><%= link "Editar", to: author_path(@conn, :edit, @author), class: "uk-button" %></span>
+        <span><%= link "Regresar", to: author_path(@conn, :index), class: "uk-button" %></span>
       </div>
     </div>
 </div>

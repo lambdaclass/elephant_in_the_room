@@ -4,12 +4,12 @@
   login = get_logged_user(@conn)
 %>
 
-<div class="uk-container uk-container-small">
+<div class="uk-container uk-container-small main-body-public-content">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @tag.name %></h1>
 
   <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Edit tag", to: site_tag_path(@conn, :edit, @site.id, @tag.id),
+        <%= link "Editar etiqueta", to: site_tag_path(@conn, :edit, @site.id, @tag.id),
               class: "uk-button uk-button-secondary uk-button-small" %>
       <% _ -> %>
    <% end %>
@@ -54,6 +54,12 @@
         </div>
         <hr>
       <% end %>
+
+      <%= if Enum.at(other_posts,0) != nil do %>
+        <%= link "Siguiente",
+              to: "#{tag_path(@conn,:public_show, @tag.id)}?page=#{@page+1}" %>
+      <% end %>
+
     <% end %>
   </div>
 </div>
