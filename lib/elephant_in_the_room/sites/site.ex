@@ -58,7 +58,7 @@ defmodule ElephantInTheRoom.Sites.Site do
         %Changeset{} = changeset,
         %{"favicon" => %Plug.Upload{content_type: ct} = favicon}
       ) do
-    if ct == "image/x-icon" do
+    if valid_favicon?(ct) do
       {:ok, favicon_name} = Image.store(%{favicon | filename: Ecto.UUID.generate()})
 
       put_change(changeset, :favicon, favicon_name)
@@ -82,4 +82,8 @@ defmodule ElephantInTheRoom.Sites.Site do
       image: image
     }
   end
+
+  defp valid_favicon?("image/vnd.microsoft.icon"), do: true
+  defp valid_favicon?("image/x-icon"), do: true
+  defp valid_favicon?(_content_type), do: false
 end
