@@ -2,8 +2,8 @@
   <span class="title-text"> Etiquetas </span>
   <div "admin-title-options">
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-       href="<%= site_tag_path(@conn, :new, @site) %>">
-      crear etiqueta
+       href="<%= site_tag_path(@conn, :new, URI.encode(@site.name)) %>">
+      Crear etiqueta
     </a>
   </div>
 </div>
@@ -15,13 +15,13 @@
        <%= for tag <- @tags do %>
         <tr>
           <td>
-            <%= link tag.name, to: tag_path(@conn, :public_show, tag.id),
+            <%= link tag.name, to: tag_link(@conn, tag),
                   class: "post-main-tags big-tag", style: "background: \##{tag.color}"%>
           </td>
           <td>
-            <%= link "", to: site_tag_path(@conn, :edit, @site, tag),
+            <%= link "", to: site_tag_path(@conn, :edit, URI.encode(@site.name), URI.encode(tag.name)),
                   class: "el-menu-icon fa fa-edit" %>
-            <%= link "", to: site_tag_path(@conn, :delete, @site, tag),
+            <%= link "", to: site_tag_path(@conn, :delete, URI.encode(@site.name), URI.encode(tag.name)),
                   method: :delete, data: [confirm: "Are you sure?"],
                   class: "el-menu-icon fa fa-trash-alt" %>
           </td>
@@ -32,4 +32,4 @@
 
 
 <%= render ElephantInTheRoomWeb.AdminView,
-      "_bottom_pagination.html", Map.put(assigns, :page, &site_tag_path(@conn, :index, @site, page: &1)) %>
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_tag_path(@conn, :index, URI.encode(@site.name), page: &1)) %>

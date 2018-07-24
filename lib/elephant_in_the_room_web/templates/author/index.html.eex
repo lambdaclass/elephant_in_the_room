@@ -11,17 +11,17 @@
 <%= for author <- @authors do %>
     <tr>
       <td>
-        <%= link author.name, to: author_path(@conn, :show, author),
+        <%= link author.name, to: author_path(@conn, :show, URI.encode(author.name)), 
           class: "a"  %>
       </td>
       <td class="text-right">
         <span>
-          <%= link "", to: author_path(@conn, :edit, author),
+          <%= link "", to: author_path(@conn, :edit, URI.encode(author.name)), 
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: author_path(@conn, :delete, author),
-            method: :delete, data: [confirm: "Are you sure?"],
+          <%= link "", to: author_path(@conn, :delete, URI.encode(author.name)), 
+            method: :delete, data: [confirm: "¿Estás seguro?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>
