@@ -60,7 +60,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       {:ok, site} ->
         conn
         |> put_flash(:info, "Site created successfully.")
-        |> redirect(to: site_path(conn, :show, site))
+        |> redirect(to: site_path(conn, :show, URI.encode(site.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
