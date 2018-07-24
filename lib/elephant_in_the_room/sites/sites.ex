@@ -147,6 +147,12 @@ defmodule ElephantInTheRoom.Sites do
     Repo.delete(site)
   end
 
+  def delete_site_field(%Site{} = site, field) do
+    site
+    |> Post.changeset(%{"#{field}" => nil})
+    |> Repo.update()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking site changes.
 

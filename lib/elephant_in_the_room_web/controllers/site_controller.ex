@@ -148,8 +148,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def public_show_latest(conn, params) do
     page = get_page(params)
-    latest_posts =
-      Sites.get_latest_posts(conn.assigns.site, page: page, amount: 10)
+    latest_posts = Sites.get_latest_posts(conn.assigns.site, page: page, amount: 10)
 
     render(conn, "public_show_latest.html", posts: latest_posts, page: page)
   end
@@ -175,6 +174,18 @@ defmodule ElephantInTheRoomWeb.SiteController do
     site = Sites.get_site_by_name!(URI.decode(name))
     changeset = Sites.change_site(site)
     render(conn, "edit.html", site: site, changeset: changeset)
+  end
+
+  def update(%{assigns: %{site: site}} = conn, %{"image_delete" => "true"}) do
+    {:ok, site_no_image} = Sites.delete_site_field(site, "image")
+    changeset = Sites.change_site(site_no_image)
+    render(conn, "edit.html", site: site_no_image, changeset: changeset)
+  end
+
+  def update(%{assigns: %{site: site}} = conn, %{"favicon_delete" => "true"}) do
+    {:ok, site_no_image} = Sites.delete_site_field(site, "favicon")
+    changeset = Sites.change_site(site_no_image)
+    render(conn, "edit.html", site: site_no_image, changeset: changeset)
   end
 
   def update(conn, %{"name" => name, "site" => site_params}) do
