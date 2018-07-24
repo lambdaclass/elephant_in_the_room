@@ -47,7 +47,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
     case Sites.create_tag(site, tag_params) do
       {:ok, _tag} ->
-        redirect(conn, to: site_tag_path(conn, :index, site.id))
+        redirect(conn, to: site_tag_path(conn, :index, URI.encode(site.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
