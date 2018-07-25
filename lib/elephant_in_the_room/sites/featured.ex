@@ -2,14 +2,15 @@ defmodule ElephantInTheRoom.Sites.Featured do
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Repo
+  @default_post_preload [:author, :categories]
 
   defmodule FeaturedLevel do
     defstruct [:level, :fetch_limit]
   end
 
   def get_featured_levels(:fetcheable) do
-    [_|Fetcheable] = get_featured_levels()
-    Fetcheable
+    [_|fetcheable] = get_featured_levels()
+    fetcheable
   end
   def get_featured_levels() do
     [
@@ -21,13 +22,17 @@ defmodule ElephantInTheRoom.Sites.Featured do
     ]
   end
 
+  def get_posts_from_level_pair(level, [{%FeaturedLevel{level: level}, posts} | _]), do: posts
+  def get_posts_from_level_pair(level, [{_, _} | moreFeatured]), do: get_posts_from_level_pair(level, moreFeatured)
+  def get_posts_from_level_pair(_,_), do: []
+
   def get_featured_posts(%FeaturedLevel{fetch_limit: :no_fetch}, _), do: []
   def get_featured_posts(%FeaturedLevel{level: level, fetch_limit: limit}, site_id) do
     posts_query = from p in Post,
       where: p.featured_level == ^level and p.site_id == ^site_id,
       order_by: [desc: p.inserted_at],
       limit: ^limit,
-      preload: [:author]
+      preload: ^@default_post_preload
     Repo.all(posts_query)
   end
 
@@ -64,7 +69,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
       where: p.site_id == ^site_id  and not p.id in ^featured_posts_ids,
       order_by: [desc: p.inserted_at],
       limit: ^limit,
-      preload: [:author]
+      preload: ^@default_post_preload
     Repo.all(post_query)
   end
 

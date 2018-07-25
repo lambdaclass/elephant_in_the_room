@@ -1,6 +1,7 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Sites, Sites.Site, Repo}
+  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.Sites.{Site, Featured}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(conn, params) do
@@ -126,11 +127,18 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
+    {featured_posts_with_levels, aditional_posts} =
+      Featured.get_all_featured_posts_ensure_filled(site.id, 15)
+
     render(
       conn,
       "public_show.html",
       site: site,
-      latest_posts: Sites.get_latest_posts(site, amount: 15),
+      section_1_posts: Featured.get_posts_from_level_pair(1, featured_posts_with_levels),
+      section_2_posts: Featured.get_posts_from_level_pair(2, featured_posts_with_levels),
+      section_3_posts: Featured.get_posts_from_level_pair(3, featured_posts_with_levels),
+      section_4_posts: Featured.get_posts_from_level_pair(4, featured_posts_with_levels),
+      latest_posts: aditional_posts,
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
       popular_posts: Sites.get_popular_posts(site, amount: 10)
     )
