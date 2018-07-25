@@ -4,7 +4,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author, Magazine}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
 
   schema "posts" do
     field(:title, :string)
@@ -40,7 +40,10 @@ defmodule ElephantInTheRoom.Sites.Post do
 
   @doc false
   def changeset(%Post{} = post, attrs) do
-    new_attrs = parse_date(attrs)
+    new_attrs =
+      attrs
+      |> parse_date()
+      |> put_site_id()
 
     post
     |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id])
@@ -72,6 +75,12 @@ defmodule ElephantInTheRoom.Sites.Post do
         end
     end
   end
+
+  def put_site_id(%{site_name: site_name}) do
+    Sites.get_site_by_name!(site_name)
+  end
+
+  def put_site_id(attrs), do: attrs
 
   def unique_slug_constraint(changeset) do
     put_slugified_title(changeset)
@@ -142,11 +151,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   def put_slugified_title(%Changeset{} = changeset) do
     slug = get_field(changeset, :slug)
 
-    slug = if slug == nil || String.length(slug) == 0 do
-      get_field(changeset, :title) |> Sites.to_slug()
-    else
-      slug
-    end
+    slug =
+      if slug == nil || String.length(slug) == 0 do
+        get_field(changeset, :title) |> Sites.to_slug()
+      else
+        slug
+      end
 
     put_change(changeset, :slug, slug)
   end
@@ -209,8 +219,8 @@ defmodule ElephantInTheRoom.Sites.Post do
   def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
     type = "article"
     title = "#{title} - #{conn.assigns.site.name}"
-    url = ElephantInTheRoomWeb.PostView.show_link(conn, post)
-    image = ElephantInTheRoomWeb.PostView.show_thumb_link(conn, post)
+    url = PostView.show_link(conn, post)
+    image = PostView.show_thumb_link(conn, post)
     %{url: url, type: type, title: title, description: description, image: image}
   end
 
@@ -218,5 +228,4 @@ defmodule ElephantInTheRoom.Sites.Post do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
   end
-
 end

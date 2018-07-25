@@ -4,11 +4,10 @@
 
 <%= if assigns[:post] do %>
   <div class="post post-main">
-    <div class="image">
-      <%= link to: PostView.show_link(@conn, @post) do %>
-        <img class="image" data-src="<%= @post.thumbnail %>" uk-img>
-      <% end %>
-    </div>
+    <%= link to: PostView.show_link(@conn, @post) do %>
+      <div class="image" style="background-image: url('<%= @post.thumbnail %>')">
+      </div>
+     <% end %>
 
     <div class="category">
       <%= Enum.at(@post.categories, 0, %{name: nil}).name || raw "&ensp;" %>
@@ -31,7 +30,7 @@
     </div>
 
     <div class="date">
-      <p><%= PostView.show_date(@post.inserted_at) %></p>
+      <%= PostView.show_date(@post.inserted_at) %>
     </div>
   </div>
 <% end %>

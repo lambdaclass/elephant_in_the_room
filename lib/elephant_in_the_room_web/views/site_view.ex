@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Sites.Author
+  alias ElephantInTheRoom.Sites.{Post, Site, Author}
 
   alias ElephantInTheRoomWeb.SharedPostCardView
 

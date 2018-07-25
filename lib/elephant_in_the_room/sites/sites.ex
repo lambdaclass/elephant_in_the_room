@@ -7,7 +7,7 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image}
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image, Magazine}
 
   @doc """
   Returns the list of sites.
@@ -79,6 +79,12 @@ defmodule ElephantInTheRoom.Sites do
       nil -> {:error, :not_found}
       site -> {:ok, site}
     end
+  end
+
+  def get_site_by_name!(site_name, preload \\ @default_site_preload) do
+    Site
+    |> Repo.get_by!(name: URI.decode(site_name))
+    |> Repo.preload(preload)
   end
 
   @doc """
@@ -339,13 +345,13 @@ defmodule ElephantInTheRoom.Sites do
     scores =
       Enum.chunk(data, 2)
       |> Enum.map(fn [id, score] -> {String.to_integer(id), String.to_integer(score)} end)
-      |> Map.new
+      |> Map.new()
 
     Post
     |> where([post], post.id in ^Map.keys(scores))
-    |> Repo.all
+    |> Repo.all()
     |> Repo.preload(:author)
-    |> Enum.sort_by(&(scores[&1.id]), &>=/2)
+    |> Enum.sort_by(&scores[&1.id], &>=/2)
   end
 
   def get_latest_posts(%Site{id: site_id}, opts \\ []) do
@@ -397,7 +403,7 @@ defmodule ElephantInTheRoom.Sites do
     |> where([author], author.is_columnist == true)
     |> distinct(true)
     |> limit(^amount)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_columnists_and_posts(%{id: site_id}, amount) do
@@ -435,14 +441,16 @@ defmodule ElephantInTheRoom.Sites do
       Map.put(attrs, "site_id", site.id)
       |> ensure_author_exists
 
-    inserted_post = %Post{}
-    |> Post.changeset(post_attrs)
-    |> Repo.insert()
+    inserted_post =
+      %Post{}
+      |> Post.changeset(post_attrs)
+      |> Repo.insert()
 
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
         inserted_post
+
       _ ->
         inserted_post
     end
@@ -733,6 +741,7 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def to_slug(nil), do: ""
+
   def to_slug(name) do
     name
     |> String.downcase()
@@ -852,8 +861,6 @@ defmodule ElephantInTheRoom.Sites do
     Image.changeset(image, %{})
   end
 
-  alias ElephantInTheRoom.Sites.Magazine
-
   @doc """
   Returns the list of magazines.
 
@@ -946,5 +953,29 @@ defmodule ElephantInTheRoom.Sites do
   """
   def change_magazine(%Magazine{} = magazine) do
     Magazine.changeset(magazine, %{})
+  end
+
+  def get_by_name!(name, model) do
+    Repo.get_by!(model, name: name)
+  end
+
+  def get_by_name!(name, site_id, model) do
+    Repo.get_by!(model, name: name, site_id: site_id)
+  end
+
+  def get_by_name(name, model) do
+    Repo.get_by(model, name: name)
+  end
+
+  def from_name!(name, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(model)
+  end
+
+  def from_name!(name, site_id, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(site_id, model)
   end
 end

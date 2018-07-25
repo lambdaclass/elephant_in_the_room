@@ -23,6 +23,14 @@
       font-size: 100%;
     }
   }
+  p {
+    margin: 0;
+  }
+  .image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   .category {
     font-size: 50%;
     text-align: right;
@@ -38,6 +46,12 @@
   }
 }
 
+.low-posts {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .main-post, .low-posts {
   order: 0;
 
@@ -50,24 +64,27 @@
 }
 
 .post.post-main {
-  text-align: center;
-
-  .title, .abstract, .author, .date {
-    padding: 0 15px;
+  text-align: left;
+  .image {
+    height: 30vh;
   }
-  .abstract {
-    margin: 10px 0;
+
+  .date {
+    margin-bottom: 0px;
+  }
+  .title {
+    padding: 0;
+    font-size: 1.6em;
+    line-height: 1em;
+    font-weight: bolder;
+  }
+  .abstract, .author {
+    margin-top: 10px;
   }
 }
 
 .post.post-low {
-  margin-bottom: 30px;
-  padding: 0 15px;
   text-align: left;
-
-  p {
-    margin: 0;
-  }
   .image {
     float: right;
     width: 80px;
@@ -87,6 +104,10 @@
   height: 100%;
   text-align: left;
 
+  .image {
+    height:200px;
+  }
+
   .title {
     line-height: 1.2;
 
@@ -97,36 +118,51 @@
   .author-date {
     margin-top: auto;
   }
-  .title, .abstract, .author, .date {
-    padding: 0 15px;
+  .abstract, .author {
+    margin-top: 10px;
+  }
+  .date{
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 
-.popular {
+.right-regular-post {
+  .post:nth-child(2){
+    background: red;
+  }
+  @media screen and (min-width: $navbar-break-m) {
+    .image {
+      height: 17vh !important;
+    }
+  }
+}
+
+.landing-page-popular-section {
   padding: 10px;
 
   > a {
     text-decoration: none;
-  }
-
-  > a > p {
-    margin: 0;
     color: #000;
     hyphens: none;
   }
 
-  > a > p:last-child {
-    margin-bottom: 20px;
-  }
-
-  > a > p:nth-child(2) {
-    color: #666;
+  .title {
     font-size: 80%;
+    line-height: 1.1em;
+    margin-bottom: 0.2em;
   }
 
-  > a > p span {
+  .popular-order {
     color: #F0204F;
   }
+
+  .author {
+    color: #666;
+    font-size: 70%;
+  }
+
 }
 
 .authors {
@@ -146,6 +182,14 @@
   }
   .author p > strong > a {
     color: #000;
+  }
+  .landing-author-profile-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
 

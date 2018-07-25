@@ -1,6 +1,6 @@
 <%= render "form.html", Map.merge(assigns, %{
-  action: site_post_path(@conn, :create, @site),
+  action: site_post_path(@conn, :create, URI.encode(@site.name)),
   title: "Nuevo Artículo"
 })%>
 
-<span><%= link "Regresar", to: site_post_path(@conn, :index, @site) %></span>
+<span><%= link "Regresar", to: site_post_path(@conn, :index, URI.encode(@site.name)) %></span>

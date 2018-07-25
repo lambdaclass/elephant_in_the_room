@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.AuthorController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Author
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Author}
 
   def index(conn, params) do
     page =
@@ -35,48 +33,48 @@ defmodule ElephantInTheRoomWeb.AuthorController do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author created successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: author_path(conn, :show, URI.encode(author.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    author = Sites.get_author!(id)
+  def show(conn, %{"author_name" => name}) do
+    author = Sites.from_name!(name, Author)
     render(conn, "show.html", author: author)
   end
 
-  def public_show(conn, %{"author_id" => id}) do
+  def public_show(conn, %{"author_name" => name}) do
     author =
-      Sites.get_author!(id)
+      Sites.from_name!(name, Author)
       |> Repo.preload(posts: [:site])
 
     render(conn, "public_show.html", author: author)
   end
 
-  def edit(conn, %{"id" => id}) do
-    author = Sites.get_author!(id)
+  def edit(conn, %{"author_name" => name}) do
+    author = Sites.from_name!(name, Author)
     changeset = Sites.change_author(author)
     render(conn, "edit.html", author: author, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "author" => author_params}) do
-    author = Sites.get_author!(id)
+  def update(conn, %{"author_name" => name, "author" => author_params}) do
+    author = Sites.from_name!(name, Author)
 
     case Sites.update_author(author, author_params) do
       {:ok, author} ->
         conn
         |> put_flash(:info, "Author updated successfully.")
-        |> redirect(to: author_path(conn, :show, author))
+        |> redirect(to: author_path(conn, :show, URI.encode(author.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", author: author, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    author = Sites.get_author!(id)
+  def delete(conn, %{"author_name" => name}) do
+    author = Sites.from_name!(name, Author)
     {:ok, _author} = Sites.delete_author(author)
 
     conn

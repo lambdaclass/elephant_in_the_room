@@ -100,7 +100,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_tag_link(conn, tag) do
-    tag_path(conn, :public_show, tag.id)
+    tag_path(conn, :public_show, URI.encode(tag.name))
   end
 
   def show_site_link(conn) do
@@ -108,7 +108,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_category_link(conn, category) do
-    category_path(conn, :public_show, category.id)
+    category_path(conn, :public_show, URI.encode(category.name))
   end
 
   def show_link(conn, post) do

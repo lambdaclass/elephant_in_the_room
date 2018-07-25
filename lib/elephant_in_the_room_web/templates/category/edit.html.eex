@@ -15,11 +15,12 @@
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :update, @site, @category)) %>
+          <%= render "form.html", Map.put(assigns, :action, 
+            site_category_path(@conn, :update, URI.encode(@site.name), URI.encode(@category.name))) %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<span><%= link "Regresar", to: site_category_path(@conn, :index, @site) %></span>
+<span><%= link "Regresar", to: site_category_path(@conn, :index, URI.encode(@site.name)) %></span>

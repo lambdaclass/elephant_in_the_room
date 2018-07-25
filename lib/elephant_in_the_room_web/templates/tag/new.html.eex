@@ -1,2 +1,2 @@
-<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :create, @site)) %>
+<%= render "form.html", Map.put(assigns, :action, site_tag_path(@conn, :create, URI.encode(@site.name))) %>
 

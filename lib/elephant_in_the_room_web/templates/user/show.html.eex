@@ -29,5 +29,5 @@
 
 </ul>
 
-<span><%= link "Editar", to: user_path(@conn, :edit, @user) %></span>
+<span><%= link "Editar", to: user_path(@conn, :edit, URI.encode(@user.username)) %></span>
 <span><%= link "Regresar", to: user_path(@conn, :index) %></span>

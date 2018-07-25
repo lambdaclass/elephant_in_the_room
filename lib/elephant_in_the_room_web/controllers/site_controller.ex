@@ -1,7 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.{Sites, Sites.Site, Repo}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(conn, params) do
@@ -61,13 +60,12 @@ defmodule ElephantInTheRoomWeb.SiteController do
       {:ok, site} ->
         conn
         |> put_flash(:info, "Site created successfully.")
-        |> redirect(to: site_path(conn, :show, site))
+        |> redirect(to: site_path(conn, :show, URI.encode(site.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
-
 
   def paginate_elements(site, params) do
     category_page =
@@ -110,8 +108,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
     }
   end
 
-  def show(conn, %{"id" => id} = params) do
-    site = Sites.get_site!(id)
+  def show(conn, %{"name" => name} = params) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     pages = paginate_elements(site, params)
 
     render(
@@ -128,7 +126,9 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    render(conn, "public_show.html",
+    render(
+      conn,
+      "public_show.html",
       site: site,
       latest_posts: Sites.get_latest_posts(site, amount: 15),
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
@@ -138,21 +138,17 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def public_show_popular(conn, params) do
     page = get_page(params)
-    popular_posts = Sites.get_popular_posts(conn.assigns.site, [page: page])
+    popular_posts = Sites.get_popular_posts(conn.assigns.site, page: page)
 
-    render(conn, "public_show_popular.html",
-      posts: popular_posts,
-      page: page)
+    render(conn, "public_show_popular.html", posts: popular_posts, page: page)
   end
 
   def public_show_latest(conn, params) do
     page = get_page(params)
-    latest_posts = Sites.get_latest_posts(conn.assigns.site,
-      [page: page, amount: 10])
+    latest_posts =
+      Sites.get_latest_posts(conn.assigns.site, page: page, amount: 10)
 
-    render(conn, "public_show_latest.html",
-      posts: latest_posts,
-      page: page)
+    render(conn, "public_show_latest.html", posts: latest_posts, page: page)
   end
 
   def show_default_site(conn, _params) do
@@ -172,28 +168,28 @@ defmodule ElephantInTheRoomWeb.SiteController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
-    site = Sites.get_site!(id)
+  def edit(conn, %{"name" => name}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     changeset = Sites.change_site(site)
     render(conn, "edit.html", site: site, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "site" => site_params}) do
-    site = Sites.get_site!(id)
+  def update(conn, %{"name" => name, "site" => site_params}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
 
     case Sites.update_site(site, site_params) do
       {:ok, site} ->
         conn
         |> put_flash(:info, "Site updated successfully.")
-        |> redirect(to: site_path(conn, :show, site))
+        |> redirect(to: site_path(conn, :show, site.name))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", site: site, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    site = Sites.get_site!(id)
+  def delete(conn, %{"name" => name}) do
+    site = Sites.get_site_by_name!(URI.decode(name))
     {:ok, _site} = Sites.delete_site(site)
 
     conn

@@ -11,17 +11,17 @@
 <%= for role <- @roles do %>
     <tr>
       <td>
-        <%= link role.name, to: role_path(@conn, :show, role),
+        <%= link role.name, to: role_path(@conn, :show, URI.encode(role.name)), 
           class: "a" %>
       </td>
       <td class="text-right">
         <span>
-          <%= link "", to: role_path(@conn, :edit, role),
+          <%= link "", to: role_path(@conn, :edit, URI.encode(role.name)), 
             class: "el-menu-icon fa fa-edit" %>
         </span>
         <span>
-          <%= link "", to: role_path(@conn, :delete, role),
-            method: :delete, data: [confirm: "Are you sure?"],
+          <%= link "", to: role_path(@conn, :delete, URI.encode(role.name)), 
+            method: :delete, data: [confirm: "¿Estás seguro?"], 
             class: "el-menu-icon fa fa-trash-alt" %>
         </span>
       </td>

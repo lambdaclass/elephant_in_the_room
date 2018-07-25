@@ -40,11 +40,15 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_content() do
-    [gen_text(50), gen_md_image(), gen_text(40)] |> Enum.join(" ")
+    [gen_text(20), gen_md_image(), gen_text(20)] |> Enum.join("\n\n")
   end
 
-  defp gen_text(length) do
-    Faker.Lorem.paragraph(:rand.uniform(length))
+  defp gen_text(length), do: gen_text(length, :rand.uniform(5))
+  defp gen_text(length, paragraph_count) do
+    paragraphs = for _ <- 0 .. paragraph_count do
+      Faker.Lorem.paragraph(:rand.uniform(length))
+    end
+    Enum.join(paragraphs, "\n\n")
   end
 
   defp gen_md_image() do
@@ -52,6 +56,6 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     image_content = File.read!(Utils.get_image_path())
 
     {:ok, image} = Sites.create_image(%{name: Ecto.UUID.generate(), binary: image_content})
-    "\n![#{description}](/images/#{image.name})\n"
+    "![#{description}](/images/#{image.name})"
   end
 end

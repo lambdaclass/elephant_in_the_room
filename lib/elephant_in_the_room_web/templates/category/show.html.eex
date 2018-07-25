@@ -20,14 +20,14 @@
         Últimos artículos en esta categoría:
         <%= for post <- latest_posts(@category) do %>
             <p>
-              <%= link post.title, to: site_post_path(@conn, :show, @site, post), class: "a" %>
+              <%= link post.title, to: show_post_link(@conn, post), class: "a" %>
             </p>
         <% end %>
     </div>
     <div class="uk-card-footer">
       <div class="uk-align-right">
-        <span><%= link "Editar", to: site_category_path(@conn, :edit, @site, @category), class: "uk-button" %></span>
-        <span><%= link "Regresar", to: site_category_path(@conn, :index, @site), class: "uk-button" %></span>
+        <span><%= link "Editar", to: site_category_path(@conn, :edit, URI.encode(@site.name), URI.encode(@category.name)), class: "uk-button" %></span>
+        <span><%= link "Regresar", to: site_category_path(@conn, :index, URI.encode(@site.name)), class: "uk-button" %></span>
       </div>
     </div>
 </div>

@@ -14,7 +14,7 @@
     </div>
 
     <div class="uk-width-1-1@s uk-width-1-4@m uk-flex-first@m regular-posts">
-      <div class="" uk-grid>
+      <div class="right-regular-post" uk-grid>
         <div class="uk-width-1-2@s uk-width-1-1@m">
           <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 1) %>
         </div>
