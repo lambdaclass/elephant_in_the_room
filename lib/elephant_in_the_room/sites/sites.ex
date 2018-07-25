@@ -446,7 +446,14 @@ defmodule ElephantInTheRoom.Sites do
       _ ->
         inserted_post
     end
+  end
 
+  def create_magazine_post(attrs) do
+    new_attrs = ensure_author_exists(attrs)
+
+    %Post{}
+    |> Post.changeset(new_attrs)
+    |> Repo.insert
   end
 
   def ensure_author_exists(attrs) do
