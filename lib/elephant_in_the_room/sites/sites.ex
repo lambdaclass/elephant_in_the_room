@@ -497,6 +497,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_post(%Post{} = post) do
+    Post.delete_popular_entry(post)
     Repo.delete(post)
   end
 

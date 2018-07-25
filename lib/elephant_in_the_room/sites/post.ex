@@ -206,4 +206,14 @@ defmodule ElephantInTheRoom.Sites.Post do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
   end
+
+  def delete_popular_entry(%Post{id: post_id, site_id: site_id} = post) do
+    Redix.command(:redix, ["ZREM", "site:#{site_id}", post_id])
+    post
+  end
+
+  def delete_all_popular_entries() do
+    Redix.command(:redix, ["FLUSHDB"])
+  end
+
 end

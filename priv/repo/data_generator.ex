@@ -1,5 +1,6 @@
 alias ElephantInTheRoomWeb.Faker, as: ElephantFaker
 
+ElephantInTheRoom.Sites.Post.delete_all_popular_entries()
 config = %{
   sites: 2,
   categories: 4,
