@@ -193,7 +193,10 @@ defmodule ElephantInTheRoom.Sites.Post do
     Map.put(attrs, "inserted_at", datetime)
   end
 
-  defp parse_date(attrs), do: attrs
+  defp parse_date(attrs) do
+    now = NaiveDateTime.utc_now |> NaiveDateTime.truncate(:second)
+    Map.put(attrs, "inserted_at", now)
+  end
 
   def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
     type = "article"
