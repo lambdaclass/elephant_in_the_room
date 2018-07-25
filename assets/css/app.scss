@@ -166,3 +166,9 @@ a:hover {
 .main-body-public-content {
   min-height: 70vh;
 }
+
+.site-content {
+  @media (min-width: 1376px) {
+      min-width: 1280px;
+  }
+}
