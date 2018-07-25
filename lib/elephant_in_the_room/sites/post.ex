@@ -212,4 +212,8 @@ defmodule ElephantInTheRoom.Sites.Post do
     post
   end
 
+  def delete_all_popular_entries() do
+    Redix.command(:redix, ["FLUSHDB"])
+  end
+
 end
