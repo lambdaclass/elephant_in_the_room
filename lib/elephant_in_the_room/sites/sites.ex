@@ -149,7 +149,7 @@ defmodule ElephantInTheRoom.Sites do
 
   def delete_site_field(%Site{} = site, field) do
     site
-    |> Post.changeset(%{"#{field}" => nil})
+    |> Site.changeset(%{"#{field}" => nil})
     |> Repo.update()
   end
 

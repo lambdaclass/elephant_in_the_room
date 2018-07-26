@@ -176,13 +176,15 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "edit.html", site: site, changeset: changeset)
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"image_delete" => "true"}) do
+  def update(conn, %{"image_delete" => "true", "name" => name}) do
+    site = Sites.from_name!(name, Site)
     {:ok, site_no_image} = Sites.delete_site_field(site, "image")
     changeset = Sites.change_site(site_no_image)
     render(conn, "edit.html", site: site_no_image, changeset: changeset)
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"favicon_delete" => "true"}) do
+  def update(conn, %{"favicon_delete" => "true", "name" => name}) do
+    site = Sites.from_name!(name, Site)
     {:ok, site_no_image} = Sites.delete_site_field(site, "favicon")
     changeset = Sites.change_site(site_no_image)
     render(conn, "edit.html", site: site_no_image, changeset: changeset)

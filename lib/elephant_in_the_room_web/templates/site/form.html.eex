@@ -58,7 +58,7 @@
 <% end %>
 
 <%= if assigns[:site] do %>
-  <%= link to: site_path(@conn, :delete, @site.id),
+  <%= link to: site_path(@conn, :delete, URI.encode(@site.name)),
         method: :delete,
         data: [confirm: "¿Estás seguro que quieres borrar el sitio?"],
         class: "uk-button uk-button-danger uk-width-1-1" do %>
