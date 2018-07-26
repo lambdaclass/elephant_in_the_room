@@ -80,6 +80,12 @@ defmodule ElephantInTheRoom.Auth do
     |> Repo.insert()
   end
 
+  def create_user!(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert!()
+  end
+
   @doc """
   Updates a user.
 
@@ -174,6 +180,12 @@ defmodule ElephantInTheRoom.Auth do
     %Role{}
     |> Role.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def create_role!(attrs \\ %{}) do
+    %Role{}
+    |> Role.changeset(attrs)
+    |> Repo.insert!()
   end
 
   @doc """

@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoom.Auth.User do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
 
   alias ElephantInTheRoom.Auth.{User, Role}
