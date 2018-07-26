@@ -8,10 +8,21 @@ defmodule ElephantInTheRoom.Sites.Featured do
     defstruct [:level, :fetch_limit]
   end
 
+  defmodule FeaturedCachedPosts do
+    use Ecto.Schema
+    schema "featured_cached_posts" do
+      field(:level, :integer)
+      field(:post_id, :integer)
+    end
+
+  end
+
   def get_featured_levels(:fetcheable) do
     [_|fetcheable] = get_featured_levels()
     fetcheable
   end
+
+  def no_featured_level, do: Enum.at(get_featured_levels(), 0)
   def get_featured_levels() do
     [
       %FeaturedLevel{level: 0, fetch_limit: :no_fetch},
@@ -47,6 +58,24 @@ defmodule ElephantInTheRoom.Sites.Featured do
     aditional_posts = get_more_posts_from_featured(featured_posts, additive_limit, site_id)
     fill_featured_with_aditional(featured_posts, aditional_posts)
   end
+
+  def get_all_featured_posts_ensure_filled_cached(site_id, additive_limit) do
+    cached_posts = read_all_stored_cached_posts()
+    case is_featured_list_empty(cached_posts) do
+      true -> 
+        all_posts = get_all_featured_posts_ensure_filled(site_id, additive_limit)
+        generate_and_save_featured_cached_posts_entries(all_posts)
+        all_posts
+      false ->
+        cached_posts
+    end
+  end
+
+  defp is_featured_list_empty({_, [_|_]}), do: false
+  defp is_featured_list_empty({featured_list,_}), do: is_featured_list_empty(featured_list)
+  defp is_featured_list_empty([{_, [ _|_]} | _]), do: false
+  defp is_featured_list_empty([]), do: true
+  defp is_featured_list_empty([{_, []} | rest]), do: is_featured_list_empty(rest)
 
   defp amount_of_needed_featured_posts(featured_posts) do
     Enum.reduce(featured_posts, 0, fn({%{fetch_limit: limit}, posts}, count) ->
@@ -84,5 +113,69 @@ defmodule ElephantInTheRoom.Sites.Featured do
     fill_featured_with_aditional(featured_posts, remainding_posts, [featured_filled | acc])
   end
 
+  defp generate_featured_cached_posts_entries({featured_posts, aditional}) do
+    all = [{no_featured_level(), aditional} | featured_posts]
+    generate_featured_cached_posts_entries(all, [])
+  end
+  defp generate_featured_cached_posts_entries([{%FeaturedLevel{level: level}, posts} | featured_posts], acc) do
+    posts_for_level = generate_featured_cached_posts_entries(level, posts, acc)
+    generate_featured_cached_posts_entries(featured_posts, posts_for_level)
+  end
+  defp generate_featured_cached_posts_entries([], acc), do: acc
+  defp generate_featured_cached_posts_entries(level, [post | more_posts], acc) do
+    acc = [%FeaturedCachedPosts{level: level, post_id: post.id} | acc]
+    generate_featured_cached_posts_entries(level, more_posts, acc)
+  end
+  defp generate_featured_cached_posts_entries(_level, [], acc), do: acc
+
+  defp save_cached_posts_entries(cached_posts_entries) do
+    clear_all_stored_cached_posts_entries()
+    Repo.insert_all(FeaturedCachedPosts, cached_posts_entries)
+  end
+
+  defp generate_and_save_featured_cached_posts_entries(featured_posts) do
+    cache_entries = generate_featured_cached_posts_entries(featured_posts)
+    save_cached_posts_entries(cache_entries)
+  end
+
+  defp clear_all_stored_cached_posts_entries() do
+    delete_query = from _ in FeaturedCachedPosts, where: true
+    Repo.delete_all(delete_query)
+  end
+
+  defp read_all_stored_cached_posts() do
+    cached_posts_list = read_all_stored_cached_posts_from_db()
+    get_posts_from_list_with_level(cached_posts_list)
+  end
+
+  defp get_posts_from_list(featured_level, posts), do: get_posts_from_list(featured_level, posts, [], [])
+  defp get_posts_from_list(%FeaturedLevel{fetch_limit: limit}, posts, rem, result) when
+    limit >= length(result) or limit == :no_fetch, do: 
+    {result, Enum.reverse(rem) ++ posts}
+  defp get_posts_from_list(%FeaturedLevel{level: level} = featured_level, [post | posts], rem, result) do
+    if level == post.featured_level do
+      get_posts_from_list(featured_level, posts, rem, [post | result])
+    else
+      get_posts_from_list(featured_level, posts, [post | rem], [post | result])
+    end
+  end
+
+  defp get_posts_from_list_with_level(cached_posts) do
+    Enum.reduce(get_featured_levels(:fetcheable), {[], cached_posts}, 
+    fn(featured_level, {result, remainding}) ->
+      {posts_of_level, remainding} = get_posts_from_list(featured_level, remainding)
+      {[posts_of_level | result], remainding}
+    end)
+  end
+
+  defp read_all_stored_cached_posts_from_db() do
+    posts =from cache in FeaturedCachedPosts,
+      left_join: post in Post,
+      where: cache.id == post.id,
+      order_by: [desc: post.inserted_at],
+      preload: [post: ^@default_post_preload],
+      select: post
+    Repo.all(posts)
+  end
 
 end
