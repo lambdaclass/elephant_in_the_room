@@ -21,6 +21,7 @@ defmodule ElephantInTheRoom.Sites.Magazine do
     magazine
     |> cast(attrs, [:title, :description, :site_id])
     |> validate_required([:title, :description, :site_id])
+    |> assoc_constraint(:site)
     |> validate_cover(attrs)
   end
 
