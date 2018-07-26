@@ -1,8 +1,5 @@
 use Mix.Config
 
-config :elephant_in_the_room, ElephantInTheRoom.Repo,
-  migration_primary_key: [id: :uuid, type: :binary_id]
-
 # For production, we often load configuration from external
 # sources, such as your system environment. For this reason,
 # you won't find the :http configuration below, but set inside

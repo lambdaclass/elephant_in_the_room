@@ -62,7 +62,6 @@ config :elephant_in_the_room, ElephantInTheRoom.Repo,
   database: "elephant_in_the_room_dev",
   hostname: "localhost",
   pool_size: 10,
-  migration_primary_key: [id: :uuid, type: :binary_id]
 
 ##
 ## Cookies & Auth
