@@ -128,7 +128,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       |> Repo.preload(Sites.default_site_preload())
 
     {featured_posts_with_levels, aditional_posts} =
-      Featured.get_all_featured_posts_ensure_filled(site.id, 15)
+      Featured.get_all_featured_posts_ensure_filled_cached(site.id, 15)
 
     render(
       conn,

@@ -53,13 +53,13 @@ defmodule ElephantInTheRoom.Sites.Featured do
     end)
   end
 
-  def get_all_featured_posts_ensure_filled(site_id, additive_limit \\ 0) do
+  def get_all_featured_posts_ensure_filled(site_id, additive_limit) do
     featured_posts = get_all_featured_posts(site_id)
     aditional_posts = get_more_posts_from_featured(featured_posts, additive_limit, site_id)
     fill_featured_with_aditional(featured_posts, aditional_posts)
   end
 
-  def get_all_featured_posts_ensure_filled_cached(site_id, additive_limit) do
+  def get_all_featured_posts_ensure_filled_cached(site_id, additive_limit \\ 0) do
     cached_posts = read_all_stored_cached_posts()
     case is_featured_list_empty(cached_posts) do
       true -> 
@@ -169,7 +169,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
   end
 
   defp read_all_stored_cached_posts_from_db() do
-    posts =from cache in FeaturedCachedPosts,
+    posts = from cache in FeaturedCachedPosts,
       left_join: post in Post,
       where: cache.id == post.id,
       order_by: [desc: post.inserted_at],
