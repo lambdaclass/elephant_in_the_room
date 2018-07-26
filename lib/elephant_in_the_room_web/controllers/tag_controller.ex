@@ -108,13 +108,13 @@ defmodule ElephantInTheRoomWeb.TagController do
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"tage_name" => name}) do
+  def delete(%{assigns: %{site: site}} = conn, %{"tag_name" => name}) do
     tag = Sites.from_name!(name, site.id, Tag)
     {:ok, _tag} = Sites.delete_tag(tag)
 
     conn
     |> put_flash(:info, "Tag deleted successfully.")
-    |> redirect(to: site_tag_path(conn, :index, site))
+    |> redirect(to: site_tag_path(conn, :index, URI.encode(site.name)))
   end
 
   defp relative_path(conn, %Tag{name: name}) do

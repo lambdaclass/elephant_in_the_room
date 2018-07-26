@@ -2,8 +2,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
   use Ecto.Migration
 
   def change do
-    create table(:posts, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:posts) do
       add(:title, :string)
       add(:slug, :string)
       add(:abstract, :text)

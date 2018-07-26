@@ -2,8 +2,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateAuthors do
   use Ecto.Migration
 
   def change do
-    create table(:authors, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:authors) do
       add(:name, :string)
       add(:image, :string)
       add(:description, :text)

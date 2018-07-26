@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="uk-card-body">
-        <center><p>Artículos: <%= number_of_posts(@category)%> </p></center>
+        <center><p>Artículos: <%= number_of_posts(@category) %> </p></center>
         Últimos artículos en esta categoría:
         <%= for post <- latest_posts(@category) do %>
             <p>

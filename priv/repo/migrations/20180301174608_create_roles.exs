@@ -2,8 +2,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateRoles do
   use Ecto.Migration
 
   def change do
-    create table(:roles, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:roles) do
       add(:name, :string)
 
       timestamps()

@@ -2,8 +2,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do
-    create table(:users, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:users) do
       add(:username, :string)
       add(:firstname, :string)
       add(:lastname, :string)

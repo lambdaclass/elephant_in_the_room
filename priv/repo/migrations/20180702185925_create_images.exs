@@ -2,8 +2,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateImages do
   use Ecto.Migration
 
   def change do
-    create table(:images, primary_key: false) do
-      add(:id, :uuid, primary_key: true)
+    create table(:images) do
       add(:binary, :binary)
 
       timestamps()
