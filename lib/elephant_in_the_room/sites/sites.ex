@@ -870,8 +870,10 @@ defmodule ElephantInTheRoom.Sites do
       [%Magazine{}, ...]
 
   """
-  def list_magazines do
-    Repo.all(Magazine)
+  def list_magazines(site) do
+    Magazine
+    |> where([m], m.site_id == ^site.id)
+    |> Repo.all()
   end
 
   @doc """

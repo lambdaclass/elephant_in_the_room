@@ -60,6 +60,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/post/:year/:month/:day/:slug", PostController, :public_show)
       get("/category/:category_name", CategoryController, :public_show)
       get("/tag/:tag_name", TagController, :public_show)
+      # resources("/magazines", MagazineController)
     end
 
     scope "/admin" do
@@ -78,6 +79,7 @@ defmodule ElephantInTheRoomWeb.Router do
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
+        resources("/magazines", MagazineController, except: [:show])
       end
     end
   end

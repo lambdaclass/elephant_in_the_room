@@ -1,0 +1,23 @@
+<h2>Show Magazine</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @magazine.title %>
+  </li>
+
+  <li>
+    <strong>Cover:</strong>
+    <%= @magazine.cover %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @magazine.description %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: magazine_path(@conn, :edit, @magazine) %></span>
+<span><%= link "Back", to: magazine_path(@conn, :index) %></span>

@@ -1,0 +1,26 @@
+<h2>Revistas</h2>
+
+<table class="uk-table uk-table-striped">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for magazine <- @magazines do %>
+      <tr>
+        <td><%= link magazine.title, to: site_magazine_path(@conn, :edit, @site.name, magazine) %></td>
+        <td><%= magazine.description %></td>
+        <td class="text-right">
+          <span><%= link "", to: site_magazine_path(@conn, :edit, @site.name, magazine), class: "fa fa-edit" %></span>
+          <span><%= link "", to: site_magazine_path(@conn, :delete, @site.name, magazine), method: :delete, data: [confirm: "¿Estás seguro?"], class: "fa fa-trash-alt" %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= link "Crear Revista", to: site_magazine_path(@conn, :new, @site.name) %></p>
+<p><%= link "Regresar", to: admin_path(@conn, :index) %></p>
