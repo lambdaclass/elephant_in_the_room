@@ -61,7 +61,7 @@ config :elephant_in_the_room, ElephantInTheRoom.Repo,
   password: "postgres",
   database: "elephant_in_the_room_dev",
   hostname: "localhost",
-  pool_size: 10,
+  pool_size: 10
 
 ##
 ## Cookies & Auth

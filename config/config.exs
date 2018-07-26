@@ -21,8 +21,7 @@ config :logger, :console,
 
 config :arc, storage: Arc.Storage.Local
 
-config :elephant_in_the_room, ElephantInTheRoom.Repo,
-  migration_primary_key: [id: :uuid, type: :binary_id]
+config :elephant_in_the_room, ElephantInTheRoom.Repo, migration_primary_key: [id: :uuid, type: :binary_id]
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
