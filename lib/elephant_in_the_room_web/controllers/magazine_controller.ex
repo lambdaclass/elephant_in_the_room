@@ -21,16 +21,16 @@ defmodule ElephantInTheRoomWeb.MagazineController do
       {:ok, magazine} ->
         conn
         |> put_flash(:info, "Magazine created successfully.")
-        |> redirect(to: magazine_path(conn, :show, magazine))
+        |> redirect(to: magazine_path(conn, :public_show, magazine))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  # def show(conn, %{"id" => id}) do
-  #   magazine = Sites.get_magazine!(id)
-  #   render(conn, "show.html", magazine: magazine)
-  # end
+  def public_show(conn, %{"id" => id}) do
+    magazine = Sites.get_magazine!(id)
+    render(conn, "show.html", magazine: magazine)
+  end
 
   def edit(conn, %{"id" => id}) do
     magazine = Sites.get_magazine!(id)
@@ -45,7 +45,7 @@ defmodule ElephantInTheRoomWeb.MagazineController do
       {:ok, magazine} ->
         conn
         |> put_flash(:info, "Magazine updated successfully.")
-        |> redirect(to: magazine_path(conn, :show, magazine))
+        |> redirect(to: magazine_path(conn, :public_show, magazine))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", magazine: magazine, changeset: changeset)
     end

@@ -1,5 +1,5 @@
-<h2>Edit Magazine</h2>
+<h2>Editar Revista</h2>
 
-<%= render "form.html", Map.put(assigns, :action, magazine_path(@conn, :update, @magazine)) %>
+<%= render "form.html", Map.put(assigns, :action, site_magazine_path(@conn, :update, @site.name, @magazine)) %>
 
-<span><%= link "Back", to: magazine_path(@conn, :index) %></span>
+<span><%= link "Regresar", to: site_magazine_path(@conn, :index, @site.name) %></span>

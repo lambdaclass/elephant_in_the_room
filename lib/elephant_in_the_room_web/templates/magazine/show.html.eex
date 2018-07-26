@@ -19,5 +19,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: magazine_path(@conn, :edit, @magazine) %></span>
-<span><%= link "Back", to: magazine_path(@conn, :index) %></span>
+<p><%= link "Editar", to: site_magazine_path(@conn, :edit, @site.name, @magazine) %></p>
+<p><%= link "Regresar", to: site_magazine_path(@conn, :index, @site.name) %></p>
