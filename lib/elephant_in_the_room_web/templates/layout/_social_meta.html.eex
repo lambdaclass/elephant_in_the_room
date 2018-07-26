@@ -4,7 +4,7 @@
     <title> <%= @meta.title %> </title>
   <% else %>
     <%= if assigns[:site] do %>
-      <title> @site.name </title>
+      <title> @site.title </title>
     <% end %>
   <% end %>
 
@@ -25,7 +25,7 @@
 
 <% else %>
   <%= if assigns[:site] do %>
-    <title> <%= @site.name %></title>
+    <title> <%= @site.title %></title>
   <% else %>
     <title>Elephant In The Room</title>
   <% end %>
