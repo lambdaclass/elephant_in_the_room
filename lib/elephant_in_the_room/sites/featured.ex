@@ -33,6 +33,12 @@ defmodule ElephantInTheRoom.Sites.Featured do
     ]
   end
 
+  def invalidate_cache do
+    Multi.new
+    |> clear_all_stored_cached_posts_entries
+    |> Repo.transaction
+  end
+
   def get_posts_from_level_pair(level, [{%FeaturedLevel{level: level}, posts} | _]), do: posts
   def get_posts_from_level_pair(level, [{_, _} | moreFeatured]), do: get_posts_from_level_pair(level, moreFeatured)
   def get_posts_from_level_pair(_,_), do: []
@@ -153,7 +159,8 @@ defmodule ElephantInTheRoom.Sites.Featured do
 
   def read_all_stored_cached_posts() do
     cached_posts_list = read_all_stored_cached_posts_from_db()
-    get_posts_from_list_with_level(cached_posts_list)
+    {featured_posts, aditional_posts} = get_posts_from_list_with_level(cached_posts_list)
+    fill_featured_with_aditional(featured_posts, aditional_posts)
   end
 
   defp get_posts_from_list(featured_level, posts), do: get_posts_from_list(featured_level, posts, [], [])
@@ -181,7 +188,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
       join: cache in FeaturedCachedPosts,
       on: cache.id == post.id,
       order_by: [desc: post.inserted_at],
-      preload: [post: ^@default_post_preload]
+      preload: ^@default_post_preload
     Repo.all(posts)
   end
 

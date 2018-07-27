@@ -7,7 +7,8 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image}
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image,
+                                 Featured}
 
   @doc """
   Returns the list of sites.
@@ -449,6 +450,7 @@ defmodule ElephantInTheRoom.Sites do
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
+        Featured.invalidate_cache()
         inserted_post
 
       _ ->
@@ -479,6 +481,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def update_post(%Post{} = post, attrs) do
+    Featured.invalidate_cache()
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
@@ -497,6 +500,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_post(%Post{} = post) do
+    Featured.invalidate_cache()
     Repo.delete(post)
   end
 
@@ -510,6 +514,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_post(%Post{} = post) do
+    Featured.invalidate_cache()
     Post.changeset(post, %{})
   end
 
