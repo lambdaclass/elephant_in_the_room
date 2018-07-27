@@ -2,6 +2,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
   import Ecto.Query, warn: false
   alias ElephantInTheRoom.Sites.Post
   alias ElephantInTheRoom.Repo
+  alias Ecto.Multi
   @default_post_preload [:author, :categories]
 
   defmodule FeaturedLevel do
@@ -14,7 +15,6 @@ defmodule ElephantInTheRoom.Sites.Featured do
       field(:level, :integer)
       field(:post_id, :integer)
     end
-
   end
 
   def get_featured_levels(:fetcheable) do
@@ -129,18 +129,26 @@ defmodule ElephantInTheRoom.Sites.Featured do
   defp generate_featured_cached_posts_entries(_level, [], acc), do: acc
 
   defp save_cached_posts_entries(cached_posts_entries) do
-    clear_all_stored_cached_posts_entries()
-    Repo.insert_all(FeaturedCachedPosts, cached_posts_entries)
+    {:ok, _} = Multi.new
+    |> clear_all_stored_cached_posts_entries()
+    |> insert_all_featured_cached_posts_entries(cached_posts_entries)
+    |> Repo.transaction
   end
+
+  def insert_all_featured_cached_posts_entries(multi, [entry | entries]) do
+    Multi.insert(multi, "cache_entry_#{entry.post_id}", entry)
+    |> insert_all_featured_cached_posts_entries(entries)
+  end
+  def insert_all_featured_cached_posts_entries(multi, []), do: multi
 
   defp generate_and_save_featured_cached_posts_entries(featured_posts) do
     cache_entries = generate_featured_cached_posts_entries(featured_posts)
     save_cached_posts_entries(cache_entries)
   end
 
-  defp clear_all_stored_cached_posts_entries() do
+  defp clear_all_stored_cached_posts_entries(multi) do
     delete_query = from _ in FeaturedCachedPosts, where: true
-    Repo.delete_all(delete_query)
+    Multi.delete_all(multi, :clear_all_cache_entries, delete_query)
   end
 
   def read_all_stored_cached_posts() do
