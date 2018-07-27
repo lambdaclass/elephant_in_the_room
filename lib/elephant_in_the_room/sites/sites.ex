@@ -323,6 +323,11 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
+  def get_magazine_post_by_slug!(magazine_id, slug, preload \\ @default_post_preload) do
+    Repo.get_by!(Post, slug: slug, magazine_id: magazine_id)
+    |> Repo.preload(preload)
+  end
+
   defp pagination_opts(opts) do
     page = Keyword.get(opts, :page, 1) - 1
     amount = Keyword.get(opts, :amount, 10)

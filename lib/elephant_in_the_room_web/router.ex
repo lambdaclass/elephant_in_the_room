@@ -61,6 +61,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/category/:category_name", CategoryController, :public_show)
       get("/tag/:tag_name", TagController, :public_show)
       get("/magazine/:id", MagazineController, :public_show)
+      get("/magazine/:magazine_id/post/:year/:month/:day/:slug", PostController, :public_show, as: "magazine_post")
     end
 
     scope "/admin" do

@@ -1,6 +1,3 @@
-<%
-  alias ElephantInTheRoomWeb.SiteView
-%>
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @magazine.title %></h1>
@@ -21,7 +18,7 @@
       <hr>
 
       <%= for post <- @magazine.posts do %>
-        <% link_post = SiteView.show_link_with_date @conn, post %>
+        <% link_post = show_link_with_date(@conn, @magazine, post) %>
         <div class="category-posts" uk-grid>
           <div class="uk-width-1-3">
             <%= link to: link_post do %>

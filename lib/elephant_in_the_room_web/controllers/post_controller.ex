@@ -64,6 +64,12 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
+  def public_show(conn, %{"magazine_id" => magazine_id, "slug" => slug}) do
+    post = Sites.get_magazine_post_by_slug!(magazine_id, slug)
+    meta = Post.generate_og_meta(conn, post)
+    render(conn, "public_show.html", post: post, meta: meta)
+  end
+
   def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
     post = Sites.get_post_by_slug!(site.id, slug)
     meta = Post.generate_og_meta(conn, post)
