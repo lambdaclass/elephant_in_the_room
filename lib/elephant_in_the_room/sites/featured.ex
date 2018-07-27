@@ -143,7 +143,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
     Repo.delete_all(delete_query)
   end
 
-  defp read_all_stored_cached_posts() do
+  def read_all_stored_cached_posts() do
     cached_posts_list = read_all_stored_cached_posts_from_db()
     get_posts_from_list_with_level(cached_posts_list)
   end
@@ -164,17 +164,16 @@ defmodule ElephantInTheRoom.Sites.Featured do
     Enum.reduce(get_featured_levels(:fetcheable), {[], cached_posts}, 
     fn(featured_level, {result, remainding}) ->
       {posts_of_level, remainding} = get_posts_from_list(featured_level, remainding)
-      {[posts_of_level | result], remainding}
+      {[{featured_level, posts_of_level} | result], remainding}
     end)
   end
 
-  defp read_all_stored_cached_posts_from_db() do
-    posts = from cache in FeaturedCachedPosts,
-      left_join: post in Post,
-      where: cache.id == post.id,
+  def read_all_stored_cached_posts_from_db() do
+    posts = from post in Post,
+      join: cache in FeaturedCachedPosts,
+      on: cache.id == post.id,
       order_by: [desc: post.inserted_at],
-      preload: [post: ^@default_post_preload],
-      select: post
+      preload: [post: ^@default_post_preload]
     Repo.all(posts)
   end
 
