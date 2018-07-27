@@ -82,13 +82,18 @@ defmodule ElephantInTheRoom.Sites.Site do
       [SiteView.show_site_link(conn), conn.assigns.site.image]
       |> Enum.map(fn path -> Utils.generate_absolute_url(path, conn) end)
 
-    %{
+    meta_tags = %{
       url: url,
       type: "website",
       title: "#{conn.assigns.site.name}",
-      description: conn.assigns.site.description,
-      image: image
+      description: conn.assigns.site.description
     }
+
+    if conn.assigns.site.image do
+      Map.put(meta_tags, :image, image)
+    else
+      meta_tags
+    end
   end
 
   defp valid_favicon?("image/vnd.microsoft.icon"), do: true
