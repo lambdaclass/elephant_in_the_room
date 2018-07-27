@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   use Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoomWeb.{SiteView, Uploaders.Image, Utils.Utils}
+  alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
   schema "sites" do
@@ -76,25 +76,6 @@ defmodule ElephantInTheRoom.Sites.Site do
   end
 
   def validate_favicon(%Changeset{} = changeset, _attrs), do: changeset
-
-  def generate_og_meta(conn) do
-    [url, image] =
-      [SiteView.show_site_link(conn), conn.assigns.site.image]
-      |> Enum.map(fn path -> Utils.generate_absolute_url(path, conn) end)
-
-    meta_tags = %{
-      url: url,
-      type: "website",
-      title: "#{conn.assigns.site.name}",
-      description: conn.assigns.site.description
-    }
-
-    if conn.assigns.site.image do
-      Map.put(meta_tags, :image, image)
-    else
-      meta_tags
-    end
-  end
 
   defp valid_favicon?("image/vnd.microsoft.icon"), do: true
   defp valid_favicon?("image/x-icon"), do: true

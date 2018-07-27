@@ -126,7 +126,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    meta = Site.generate_og_meta(conn)
+    meta = Sites.gen_og_meta_for_site(conn)
 
     render(
       conn,

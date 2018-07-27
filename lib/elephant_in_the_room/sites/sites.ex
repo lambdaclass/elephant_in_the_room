@@ -7,6 +7,7 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoomWeb.{SiteView, PostView, Utils.Utils}
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image}
 
   @doc """
@@ -279,6 +280,25 @@ defmodule ElephantInTheRoom.Sites do
     Category.changeset(category, %{})
   end
 
+  def gen_og_meta_for_site(conn) do
+    [url, image] =
+      [SiteView.show_site_link(conn), conn.assigns.site.image]
+      |> Enum.map(fn path -> Utils.generate_absolute_url(path, conn) end)
+
+    meta_tags = %{
+      url: url,
+      type: "website",
+      title: "#{conn.assigns.site.name}",
+      description: conn.assigns.site.description
+    }
+
+    if conn.assigns.site.image do
+      Map.put(meta_tags, :image, image)
+    else
+      meta_tags
+    end
+  end
+
   @doc """
   Returns the list of posts.
 
@@ -523,6 +543,20 @@ defmodule ElephantInTheRoom.Sites do
     post
     |> Post.changeset(%{"cover" => nil})
     |> Repo.update()
+  end
+
+  def gen_og_meta_for_post(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
+    type = "article"
+    title = "#{title} - #{conn.assigns.site.name}"
+
+    url = PostView.show_link(conn, post)
+    image = PostView.show_thumb_link(conn, post)
+
+    if image != nil do
+      %{url: url, type: type, title: title, description: description, image: image}
+    else
+      %{url: url, type: type, title: title, description: description}
+    end
   end
 
   @doc """
