@@ -288,7 +288,7 @@ defmodule ElephantInTheRoom.Sites do
     meta_tags = %{
       url: url,
       type: "website",
-      title: "#{conn.assigns.site.name}",
+      title: "#{conn.assigns.site.title}",
       description: conn.assigns.site.description
     }
 
