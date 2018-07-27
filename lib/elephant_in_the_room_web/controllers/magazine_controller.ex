@@ -29,7 +29,7 @@ defmodule ElephantInTheRoomWeb.MagazineController do
 
   def public_show(conn, %{"id" => id}) do
     magazine = Sites.get_magazine!(id)
-    render(conn, "show.html", magazine: magazine)
+    render(conn, "public_show.html", magazine: magazine)
   end
 
   def edit(conn, %{"id" => id}) do
