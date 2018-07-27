@@ -28,7 +28,7 @@ defmodule ElephantInTheRoomWeb.MagazineController do
   end
 
   def public_show(conn, %{"id" => id}) do
-    magazine = Sites.get_magazine!(id)
+    magazine = Sites.get_magazine!(id, [posts: :author])
     render(conn, "public_show.html", magazine: magazine)
   end
 

@@ -890,8 +890,10 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_magazine!(id), do: Repo.get!(Magazine, id)
-
+  def get_magazine!(id, preloads \\ []) do
+    Repo.get!(Magazine, id)
+    |> Repo.preload(preloads)
+  end
   @doc """
   Creates a magazine.
 
