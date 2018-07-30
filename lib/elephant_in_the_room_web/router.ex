@@ -78,6 +78,7 @@ defmodule ElephantInTheRoomWeb.Router do
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
+        resources("/feedbacks", FeedbackController)
       end
     end
   end

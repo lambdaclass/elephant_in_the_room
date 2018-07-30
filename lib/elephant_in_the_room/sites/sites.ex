@@ -898,6 +898,10 @@ defmodule ElephantInTheRoom.Sites do
     Repo.delete(feedback)
   end
 
+  def change_feedback(%Feedback{} = feedback) do
+    Feedback.changeset(feedback, %{})
+  end
+
   def get_by_name!(name, model) do
     Repo.get_by!(model, name: name)
   end
