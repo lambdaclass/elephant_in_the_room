@@ -47,7 +47,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
   def get_featured_posts(%FeaturedLevel{level: level, fetch_limit: limit}, site_id) do
     posts_query = from p in Post,
       where: p.featured_level == ^level and p.site_id == ^site_id,
-      order_by: [desc: p.inserted_at],
+      order_by: [desc: p.inserted_at, desc: p.updated_at],
       limit: ^limit,
       preload: ^@default_post_preload
     Repo.all(posts_query)
@@ -71,7 +71,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
       true ->
         all_posts = get_all_featured_posts_ensure_filled(site_id, additive_limit)
         generate_and_save_featured_cached_posts_entries(all_posts, site_id)
-        all_posts
+        read_all_stored_cached_posts(site_id)
       false ->
         cached_posts
     end
@@ -102,7 +102,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
     limit = amount_of_needed_featured_posts + additive_limit
     post_query = from p in Post,
       where: p.site_id == ^site_id  and not p.id in ^featured_posts_ids,
-      order_by: [desc: p.inserted_at],
+      order_by: [desc: p.inserted_at, desc: p.updated_at],
       limit: ^limit,
       preload: ^@default_post_preload
     Repo.all(post_query)
@@ -166,7 +166,11 @@ defmodule ElephantInTheRoom.Sites.Featured do
 
   defp sort_posts_list_by_date(post_list) do
     Enum.sort(post_list, fn(a, b) ->
-      NaiveDateTime.diff(a.inserted_at, b.inserted_at) >= 0
+      val = case NaiveDateTime.diff(a.inserted_at, b.inserted_at) do
+        0 -> NaiveDateTime.diff(a.updated_at, b.updated_at)
+        x -> x
+      end
+      val >= 0
     end)
   end
 
@@ -185,11 +189,14 @@ defmodule ElephantInTheRoom.Sites.Featured do
   end
 
   defp get_posts_from_list_with_level(cached_posts) do
-    Enum.reduce(get_featured_levels(:fetcheable), {[], cached_posts},
+    {featured, rem} = Enum.reduce(get_featured_levels(:fetcheable), {[], cached_posts},
     fn(featured_level, {result, remainding}) ->
       {posts_of_level, remainding} = get_posts_from_list(featured_level, remainding)
       {[{featured_level, posts_of_level} | result], remainding}
     end)
+    featured = Enum.reverse(featured)
+    rem = sort_posts_list_by_date(rem)
+    {featured, rem}
   end
 
   def read_all_stored_cached_posts_from_db(site_id) do
