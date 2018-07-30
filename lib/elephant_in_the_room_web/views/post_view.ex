@@ -161,4 +161,20 @@ defmodule ElephantInTheRoomWeb.PostView do
 
     Utils.complete_zeros(:hour, now)
   end
+
+  def site_or_magazine_path(conn, action, site_name, nil) do
+    site_post_path(conn, action, site_name)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine_id) do
+    site_magazine_post_path(conn, action, site_name, magazine_id)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, nil, post_slug) do
+    site_post_path(conn, action, site_name, post_slug)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine_id, post_slug) do
+    site_magazine_post_path(conn, action, site_name, magazine_id, post_slug)
+  end
 end

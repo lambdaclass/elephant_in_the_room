@@ -80,7 +80,9 @@ defmodule ElephantInTheRoomWeb.Router do
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
-        resources("/magazines", MagazineController, except: [:show])
+        resources "/magazines", MagazineController, except: [:show] do
+          resources("/posts", PostController, param: "slug", except: [:show])
+        end
       end
     end
   end

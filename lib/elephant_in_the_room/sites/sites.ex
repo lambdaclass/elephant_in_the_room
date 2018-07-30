@@ -318,6 +318,34 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_posts_paginated({:site, site_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: page_number)
+    end
+  end
+
+  def get_posts_paginated({:magazine, magazine_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: page_number)
+    end
+  end
+
   def get_post_by_slug!(site_id, slug, preload \\ @default_post_preload) do
     Repo.get_by!(Post, slug: slug, site_id: site_id)
     |> Repo.preload(preload)

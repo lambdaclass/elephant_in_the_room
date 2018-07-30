@@ -2,7 +2,7 @@
   <span class="title-text">Posts</span>
   <div "admin-title-options">
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-      href="<%= site_post_path(@conn, :new, @site.name) %>">
+      href="<%= site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine_id]) %>">
       Crear nuevo
     </a>
   </div>
@@ -10,14 +10,15 @@
 
 <ul class="uk-list uk-list-striped admin-site-list">
   <%= for post <- @posts do %>
-      <li class="site-item"
-          onclick="window.location = '<%= site_post_path(@conn, :edit, @site.name, post.slug) %>'">
-      <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
-        editar
-      </a>
-      <a class="site-link">
-        <%= post.title %>
-      </a>
+      <li class="site-item">
+        <%= link to: site_or_magazine_path(@conn, :edit, @site.name, assigns[:magazine_id], post.slug) do %>
+          <span class="uk-button uk-button-primary uk-button-small admin-mini-button">
+            editar
+          </span>
+          <span class="site-link">
+            <%= post.title %>
+          </span>
+        <% end %>
     </li>
   <% end %>
 </ul>

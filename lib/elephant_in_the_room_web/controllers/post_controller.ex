@@ -1,32 +1,31 @@
 defmodule ElephantInTheRoomWeb.PostController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Post}
+  alias ElephantInTheRoom.{Sites, Sites.Post}
   alias Phoenix.Controller
-  import Ecto.Query
+
+  def index(conn, %{"magazine_id" => magazine_id} = params) do
+    page = Sites.get_posts_paginated({:magazine, magazine_id}, params["page"])
+
+    index(conn, params, page, magazine_id, nil)
+  end
 
   def index(%{assigns: %{site: site}} = conn, params) do
-    page =
-      case params do
-        %{"page" => page_number} ->
-          Post
-          |> where([p], p.site_id == ^site.id)
-          |> Repo.paginate(page: page_number)
+    page = Sites.get_posts_paginated({:site, site.id}, params["page"])
 
-        %{} ->
-          Post
-          |> where([p], p.site_id == ^site.id)
-          |> Repo.paginate(page: 1)
-      end
+    index(conn, params, page, nil, [:sites, site, :posts])
+  end
 
+  def index(conn, _params, page, magazine_id, bread_crumb) do
     render(
       conn,
       "index.html",
+      magazine_id: magazine_id,
       posts: page.entries,
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
       total_entries: page.total_entries,
-      bread_crumb: [:sites, site, :posts]
+      bread_crumb: bread_crumb
     )
   end
 
