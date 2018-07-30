@@ -450,7 +450,7 @@ defmodule ElephantInTheRoom.Sites do
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
-        Featured.invalidate_cache()
+        Featured.invalidate_cache(site.id)
         inserted_post
 
       _ ->
@@ -481,7 +481,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def update_post(%Post{} = post, attrs) do
-    Featured.invalidate_cache()
+    Featured.invalidate_cache(post.site_id)
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
@@ -500,7 +500,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_post(%Post{} = post) do
-    Featured.invalidate_cache()
+    Featured.invalidate_cache(post.site_id)
     Repo.delete(post)
   end
 
@@ -514,7 +514,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_post(%Post{} = post) do
-    Featured.invalidate_cache()
+    Featured.invalidate_cache(post.site_id)
     Post.changeset(post, %{})
   end
 
