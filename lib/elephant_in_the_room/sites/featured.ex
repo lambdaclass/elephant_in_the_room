@@ -164,15 +164,23 @@ defmodule ElephantInTheRoom.Sites.Featured do
     fill_featured_with_aditional(featured_posts, aditional_posts)
   end
 
+  defp sort_posts_list_by_date(post_list) do
+    Enum.sort(post_list, fn(a, b) ->
+      NaiveDateTime.diff(a.inserted_at, b.inserted_at) >= 0
+    end)
+  end
+
   defp get_posts_from_list(featured_level, posts), do: get_posts_from_list(featured_level, posts, [], [])
-  defp get_posts_from_list(%FeaturedLevel{fetch_limit: limit}, posts, rem, result) when
-    limit >= length(result) or limit == :no_fetch, do:
-    {result, Enum.reverse(rem) ++ posts}
-  defp get_posts_from_list(%FeaturedLevel{level: level} = featured_level, [post | posts], rem, result) do
-    if level == post.featured_level do
-      get_posts_from_list(featured_level, posts, rem, [post | result])
+  defp get_posts_from_list(%FeaturedLevel{fetch_limit: limit}, posts, rem, res) when
+    length(res) >= limit or posts == [] do
+      sorted_posts_res = sort_posts_list_by_date(res)
+      {sorted_posts_res, posts ++ rem}
+    end
+  defp get_posts_from_list(%FeaturedLevel{level: level} = featured_level, [post | posts], rem, res) do
+    if post.featured_level == level do
+      get_posts_from_list(featured_level, posts, rem, [post | res])
     else
-      get_posts_from_list(featured_level, posts, [post | rem], [post | result])
+      get_posts_from_list(featured_level, posts, [post | rem], res)
     end
   end
 
@@ -187,8 +195,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
   def read_all_stored_cached_posts_from_db(site_id) do
     posts = from post in Post,
       join: cache in FeaturedCachedPosts,
-      on: cache.id == post.id and cache.site_id == ^site_id,
-      order_by: [desc: post.inserted_at],
+      on: cache.post_id == post.id and cache.site_id == ^site_id,
       preload: ^@default_post_preload
     Repo.all(posts)
   end
