@@ -15,7 +15,9 @@ defmodule ElephantInTheRoom.Sites.Feedback do
   @doc false
   def changeset(%Feedback{} = feedback, attrs) do
     feedback
-    |> cast(attrs, [:email, :text])
-    |> validate_required([:email, :text])
+    |> cast(attrs, [:email, :text, :site_id])
+    |> validate_required([:text])
+    |> validate_length(:text, max: 300)
+    |> validate_format(:email, ~r/.+@.+\..+/i, message: "El e-mail con formato incorrecto.")
   end
 end
