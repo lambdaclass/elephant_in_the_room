@@ -11,10 +11,11 @@ defmodule ElephantInTheRoom.Sites.Featured do
 
   defmodule FeaturedCachedPosts do
     use Ecto.Schema
+    @primary_key {:id, :binary_id, autogenerate: true}
     schema "featured_cached_posts" do
       field(:level, :integer)
-      field(:post_id, :integer)
-      field(:site_id, :integer)
+      field(:post_id, Ecto.UUID)
+      field(:site_id, Ecto.UUID)
     end
   end
 
@@ -200,6 +201,7 @@ defmodule ElephantInTheRoom.Sites.Featured do
   end
 
   def read_all_stored_cached_posts_from_db(site_id) do
+    IO.inspect(site_id)
     posts = from post in Post,
       join: cache in FeaturedCachedPosts,
       on: cache.post_id == post.id and cache.site_id == ^site_id,

@@ -345,7 +345,7 @@ defmodule ElephantInTheRoom.Sites do
 
     scores =
       Enum.chunk(data, 2)
-      |> Enum.map(fn [id, score] -> {String.to_integer(id), String.to_integer(score)} end)
+      |> Enum.map(fn [id, score] -> {id, String.to_integer(score)} end)
       |> Map.new()
 
     Post

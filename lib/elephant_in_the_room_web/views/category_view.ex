@@ -34,7 +34,7 @@ defmodule ElephantInTheRoomWeb.CategoryView do
   def number_of_posts(category) do
     from(
       p in "posts_categories",
-      where: p.category_id == ^category.id,
+      where: p.category_id == type(^category.id, Ecto.UUID),
       select: count(p.post_id)
     )
     |> Repo.one()

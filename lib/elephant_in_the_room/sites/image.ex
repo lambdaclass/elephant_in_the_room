@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoom.Sites.Image do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
 
   schema "images" do

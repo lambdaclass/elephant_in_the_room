@@ -5,7 +5,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateCategories do
     create table(:categories) do
       add(:name, :string)
       add(:description, :string)
-      add(:site_id, references(:sites, on_delete: :delete_all))
+      add(:site_id, references(:sites, on_delete: :delete_all, type: :uuid))
 
       timestamps()
     end
