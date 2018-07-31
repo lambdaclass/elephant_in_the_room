@@ -21,6 +21,7 @@
     <body>
       <div class="uk-offcanvas-content">
         <%= render "_navbar.html", assigns %>
+        <button class="uk-button uk-button-primary feedback-button">Feedback</button>
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
         </div>
@@ -31,5 +32,4 @@
     </body>
     <%= render "_deps.html", assigns %>
   <% end %>
-
 </html>
