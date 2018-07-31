@@ -1,10 +1,7 @@
 <div class="admin-title">
   <span class="title-text">Posts</span>
   <div "admin-title-options">
-    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-      href="<%= site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine_title]) %>">
-      Crear nuevo
-    </a>
+    <%= link "crear nuevo", to: URI.encode(site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine_title])), class: "uk-button uk-button-primary uk-button-small admin-mini-button" %>
   </div>
 </div>
 

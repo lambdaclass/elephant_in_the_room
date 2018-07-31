@@ -318,7 +318,7 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
-  def get_posts_paginated({:site, site_id}, page) do
+  def get_posts_paginated(%Site{id: site_id}, page) do
     case page do
       nil ->
         Post
@@ -332,7 +332,7 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
-  def get_posts_paginated({:magazine, magazine_id}, page) do
+  def get_posts_paginated(%Magazine{id: magazine_id}, page) do
     case page do
       nil ->
         Post
@@ -351,7 +351,8 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  def get_magazine_post_by_slug!(magazine_id, slug, preload \\ @default_post_preload) do
+  def get_magazine_post_by_slug!(%Magazine{id: magazine_id}, slug, preload) do
+    preload = Map.merge([], preload)
     Repo.get_by!(Post, slug: slug, magazine_id: magazine_id)
     |> Repo.preload(preload)
   end
@@ -469,9 +470,9 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
-  def create_post(site, attrs) do
+  def create_post(%Site{id: site_id}, attrs) do
     post_attrs =
-      Map.put(attrs, "site_id", site.id)
+      Map.put(attrs, "site_id", site_id)
       |> ensure_author_exists
 
     inserted_post =
@@ -487,6 +488,16 @@ defmodule ElephantInTheRoom.Sites do
       _ ->
         inserted_post
     end
+  end
+
+  def create_post(%Magazine{id: magazine_id}, attrs) do
+    post_attrs =
+      Map.put(attrs, "magazine_id", magazine_id)
+      |> ensure_author_exists
+
+    %Post{}
+    |> Post.changeset(post_attrs)
+    |> Repo.insert()
   end
 
   def create_magazine_post(attrs) do
