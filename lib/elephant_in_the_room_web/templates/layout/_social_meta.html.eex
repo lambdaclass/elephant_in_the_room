@@ -1,5 +1,5 @@
 <%= if assigns[:meta] do %>
-  <%= if @meta.title do %>
+  <%= if Map.has_key?(@meta, :title) and @meta.title do %>
     <meta property="og:title" content="<%= @meta.title %>" />
     <title> <%= @meta.title %> </title>
   <% else %>
@@ -8,18 +8,18 @@
     <% end %>
   <% end %>
 
-  <%= if @meta.url do %>
+  <%= if Map.has_key?(@meta, :url) and @meta.url do %>
     <meta property="og:url" content="<%= @meta.url %>" />
   <% end %>
   <%= if @meta.type do %>
     <meta property="og:type" content="<%= @meta.type %>" />
   <% end %>
 
-  <%= if @meta.description do %>
+  <%= if Map.has_key?(@meta, :description) and @meta.description do %>
     <meta property="og:description" content="<%= @meta.description %>" />
   <% end %>
 
-  <%= if @meta.image do %>
+  <%= if Map.has_key?(@meta, :image) and @meta.image do %>
     <meta property="og:image" content="<%= @meta.image %>" />
   <% end %>
 

@@ -23,6 +23,8 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   @doc false
   def changeset(%Site{} = site, attrs) do
+    IO.inspect(attrs)
+
     site
     |> cast(attrs, [:name, :host, :description, :title])
     |> validate_required([:name, :host])
@@ -33,10 +35,11 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> check_title(attrs)
   end
 
-  def check_title(%Changeset{} = changeset, %{"title" => _title}), do: changeset
+  def check_title(%Changeset{} = changeset, %{"title" => title})
+      when title != "", do: changeset
 
   def check_title(%Changeset{} = changeset, %{"name" => name}),
-    do: Map.put(changeset, :title, name)
+    do: Changeset.put_change(changeset, :title, name)
 
   def check_title(%Changeset{} = changeset, _attrs), do: changeset
 
@@ -45,12 +48,12 @@ defmodule ElephantInTheRoom.Sites.Site do
   end
 
   def store_image(%Changeset{} = changeset, %{"image" => nil}),
-    do: put_change(changeset, :image, nil)
+    do: Changeset.put_change(changeset, :image, nil)
 
   def store_image(%Changeset{} = changeset, %{"image" => image}) do
     {:ok, image_name} = Image.store(%{image | filename: Ecto.UUID.generate()})
 
-    put_change(changeset, :image, "/images/#{image_name}")
+    Changeset.put_change(changeset, :image, "/images/#{image_name}")
   end
 
   def store_image(%Changeset{} = changeset, _attrs), do: changeset
@@ -69,7 +72,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     if valid_favicon?(ct) do
       {:ok, favicon_name} = Image.store(%{favicon | filename: Ecto.UUID.generate()})
 
-      put_change(changeset, :favicon, "/images/#{favicon_name}")
+      Changeset.put_change(changeset, :favicon, "/images/#{favicon_name}")
     else
       Changeset.add_error(changeset, :favicon, "El icono debe tener extensión .ico")
     end
