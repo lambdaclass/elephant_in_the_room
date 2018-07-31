@@ -6,7 +6,8 @@ config = %{
   authors: 5,
   tags: 6,
   users: 6,
-  posts: 15
+  posts: 15,
+  ads: 14
 }
 
 authors = ElephantFaker.Author.insert_many(config.authors)
@@ -15,6 +16,7 @@ _users = ElephantFaker.User.insert_many(config.users)
 for site <- ElephantFaker.Site.insert_many(config.sites) do
   categories = ElephantFaker.Category.insert_many(config.categories, %{"site" => site})
   tags = ElephantFaker.Tag.insert_many(config.tags, %{"site" => site})
+  _ads = ElephantFaker.Ad.insert_many(config.ads, %{"site" => site})
 
   for _post <- 1..config.posts do
     random_author = Enum.random(authors)

@@ -323,7 +323,7 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  defp pagination_opts(opts) do
+  def pagination_opts(opts) do
     page = Keyword.get(opts, :page, 1) - 1
     amount = Keyword.get(opts, :amount, 10)
     index_from = page * amount

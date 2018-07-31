@@ -42,7 +42,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     Enum.join(paragraphs, "\n\n")
   end
 
-  defp gen_md_image() do
+  def gen_md_image() do
     description = Faker.Lorem.word()
     image_content = File.read!(Utils.get_image_path())
 
