@@ -139,7 +139,7 @@ defmodule ElephantInTheRoomWeb.PostView do
       """
     end
 
-    datetime_select(form, field, [builder: builder] ++ opts)
+    datetime_select(form, field, [builder: builder, value: nil] ++ opts)
   end
 
   def default_date(%Post{inserted_at: date}) do
