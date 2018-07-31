@@ -44,13 +44,9 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
   end
 
   def complete_zeros(:hour, date) do
-    complete = fn n ->
-      if String.length(n) == 1, do: "0" <> n, else: n
-    end
-
-    hour = complete.("#{date.hour}")
-    minute = complete.("#{date.minute}")
-    second = complete.("#{date.second}")
+    hour = "#{date.hour}"
+    minute = "#{date.minute}"
+    second = "#{date.second}"
 
     %{hour: hour, minute: minute, second: second}
   end

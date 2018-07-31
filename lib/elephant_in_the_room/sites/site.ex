@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoom.Sites.Site do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoomWeb.Uploaders.Image

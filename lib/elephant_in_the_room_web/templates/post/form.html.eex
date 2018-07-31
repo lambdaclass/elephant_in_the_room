@@ -1,3 +1,5 @@
+<% alias ElephantInTheRoomWeb.FeaturedView %>
+
 <script>
   $(document).ready(function() {
     $("#post_author_id").select2({
@@ -11,6 +13,7 @@
       tokenSeparators: [","]
     });
     $("#post_categories").select2();
+    $("#post_featured_level").select2();
   });
 </script>
 
@@ -75,7 +78,7 @@
     <% selected_tags = get_selected_tags(assigns[:post]) %>
     <%= label f, "tags", "Etiquetas", class: "uk-form-label" %>
     <%= multiple_select f, :tags, selected_tags, class: "uk-input uk-form-small",
-        selected: selected_tags %>
+        selected: selected_tags, style: "width: 100%"%>
     <%= error_tag f, :tags %>
   </div>
 
@@ -102,6 +105,14 @@
     <%= label f, :slug, class: "uk-form-label" %>
     <%= text_input f, :slug, class: "uk-input uk-form-small" %>
     <%= error_tag f, :slug %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :featured_level, "Nivel de destacado", class: "uk-form-label" %>
+    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small", 
+          selected: assigns[:featured_level], 
+          prompt: "", style: "width: 100%" %>
+    <%= error_tag f, :featured_level %>
   </div>
 
   <div class="uk-margin">
