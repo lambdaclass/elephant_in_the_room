@@ -23,10 +23,10 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   @doc false
   def changeset(%Site{} = site, attrs) do
-    IO.inspect(attrs)
+    new_attrs = put_title(attrs)
 
     site
-    |> cast(attrs, [:name, :host, :description, :title])
+    |> cast(new_attrs, [:name, :host, :description, :title])
     |> validate_required([:name, :host])
     |> unique_constraint(:name)
     |> unique_constraint(:host)
@@ -35,8 +35,15 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> check_title(attrs)
   end
 
+  defp put_title(attrs) do
+    if Map.has_key?(attrs, :title),
+      do: Map.put(attrs, :title, nil),
+      else: attrs
+  end
+
   def check_title(%Changeset{} = changeset, %{"title" => title})
-      when title != "", do: changeset
+      when title != "" and title != nil,
+      do: changeset
 
   def check_title(%Changeset{} = changeset, %{"name" => name}),
     do: Changeset.put_change(changeset, :title, name)
