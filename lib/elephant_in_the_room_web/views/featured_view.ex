@@ -15,6 +15,6 @@ defmodule ElephantInTheRoomWeb.FeaturedView do
   defp get_featured_level_name(%FeaturedLevel{level: 1}), do: "Tapa"
   defp get_featured_level_name(%FeaturedLevel{level: 2}), do: "Primeros destacados"
   defp get_featured_level_name(%FeaturedLevel{level: 3}), do: "Segundos destacados"
-  defp get_featured_level_name(%FeaturedLevel{level: 4}), do: "Imporantes"
+  defp get_featured_level_name(%FeaturedLevel{level: 4}), do: "Importantes"
 
 end
