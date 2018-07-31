@@ -5,6 +5,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
+  alias ElephantInTheRoom.Sites.Markdown
 
   schema "posts" do
     field(:title, :string)
@@ -49,7 +50,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
-    |> put_rendered_content
+    |> Markdown.put_rendered_content
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
@@ -108,19 +109,6 @@ defmodule ElephantInTheRoom.Sites.Post do
     put_change(changeset, :thumbnail, url)
   end
 
-  def put_rendered_content(%Changeset{valid?: valid?} = changeset)
-      when not valid? do
-    changeset
-  end
-
-  def put_rendered_content(%Changeset{} = changeset) do
-    content = get_field(changeset, :content)
-    rendered_content = generate_markdown(content)
-
-    put_change(changeset, :rendered_content, rendered_content)
-    |> validate_length(:rendered_content, min: 1)
-  end
-
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
     changeset
@@ -137,10 +125,6 @@ defmodule ElephantInTheRoom.Sites.Post do
       end
 
     put_change(changeset, :slug, slug)
-  end
-
-  def generate_markdown(input) do
-    Cmark.to_html(input, [:safe, :hardbreaks])
   end
 
   def parse_categories(params) do
