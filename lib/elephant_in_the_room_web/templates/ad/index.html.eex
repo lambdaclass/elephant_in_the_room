@@ -1,0 +1,24 @@
+<div class="admin-title">
+  <span class="title-text">Promociones</span>
+  <div "admin-title-options">
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+      href="<%= site_post_path(@conn, :new, @site.name) %>">
+      Crear nuevo
+    </a>
+  </div>
+</div>
+
+<ul class="uk-list uk-list-striped admin-site-list">
+  <%= for ad <- @ads do %>
+      <li class="site-item"
+          onclick="window.location = '<%= site_ad_path(@conn, :edit, @site.name, ad.name) %>'">
+      <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
+        editar
+      </a>
+      <a class="site-link">
+        <%= ad.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+

@@ -38,6 +38,9 @@ defmodule ElephantInTheRoomWeb.AdminView do
       %Tag{} = tag ->
         bread_crumb_get_link(Map.put(data, :tag, tag), rest,
           [bread_crumb_tag_edit(data.conn, data.site, tag) | acc])
+      :ads ->
+        bread_crumb_get_link(data, rest,
+          [bread_crumb_ads(data.conn, data.site) | acc])
       _ ->
         bread_crumb_get_link(data, rest, acc)
     end
@@ -82,6 +85,10 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
     {"\##{tag_name}", site_tag_path(conn, :edit, URI.encode(site_name), URI.encode(tag_name))}
+  end
+
+  defp bread_crumb_ads(conn, %Site{name: site_name}) do
+    {"Promociones", site_ad_path(conn, :index, URI.encode(site_name))}
   end
 
 end
