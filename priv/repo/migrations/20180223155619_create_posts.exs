@@ -11,6 +11,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreatePosts do
       add(:image, :text)
       add(:site_id, references(:sites, on_replace: :delete, on_delete: :delete_all, type: :uuid))
       add(:author_id, references(:authors, type: :uuid))
+      add(:featured_level, :integer)
 
       timestamps()
     end
