@@ -24,7 +24,7 @@ services:
     container_name: elephant_in_the_room_redis
     image: redis:4.0.10
     ports:
-      - 6379:6379
+      - "127.0.0.1:6379:6379"
 
 volumes:
   elephant_in_the_room_db_data:
