@@ -61,8 +61,7 @@
   videos = document.querySelectorAll('iframe[src^="https://www.youtube.com/embed/"]');
   videos.forEach(function(video){
     video.width="100%";
-    video.style.minHeight=315;
-    video.style.height="50vh";
+    video.height=400;
   })
 })();
 </script>
