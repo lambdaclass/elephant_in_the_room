@@ -29,9 +29,7 @@ defmodule ElephantInTheRoom.Sites.Author do
   end
 
   def ensure_author_exists(author_id) when is_binary(author_id) do
-    with {_, _} <- Integer.parse(author_id),
-         %Author{} = author <- Repo.get_by(Author, id: author_id)
-    do
+    with %Author{} = author <- Repo.get_by(Author, id: author_id) do
       author
     else
       _ ->

@@ -16,7 +16,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:thumbnail, :string)
 
     belongs_to(:site, Site, foreign_key: :site_id)
-    belongs_to(:author, Author, on_replace: :nilify)
+    belongs_to(:author, Author, foreign_key: :author_id, on_replace: :nilify)
 
     many_to_many(
       :categories,
