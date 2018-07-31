@@ -1,3 +1,5 @@
+<%= link "ver revista", to: URI.encode(magazine_path(@conn, :public_show, @magazine.title)), class: "uk-button uk-button-primary uk-button-small admin-mini-button", target: "_blank" %>
+
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -14,7 +16,7 @@
   <div class="uk-margin">
     <%= label f, :cover, "Portada", class: "uk-form-label" %>
     <%= if @changeset.data.cover do %>
-      <img src="<%= @changeset.data.cover %>" width="200">
+      <img src="/images/<%= @changeset.data.cover %>" width="200">
     <% end %>
     <%= file_input f, :cover%>
     <%= error_tag f, :cover %>

@@ -923,8 +923,8 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_magazine!(id, preloads \\ []) do
-    Repo.get!(Magazine, id)
+  def get_magazine!(title, preloads \\ []) do
+    Repo.get_by!(Magazine, title: title)
     |> Repo.preload(preloads)
   end
   @doc """

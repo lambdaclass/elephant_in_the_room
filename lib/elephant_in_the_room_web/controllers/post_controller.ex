@@ -3,10 +3,10 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.{Sites, Sites.Post}
   alias Phoenix.Controller
 
-  def index(conn, %{"magazine_id" => magazine_id} = params) do
-    page = Sites.get_posts_paginated({:magazine, magazine_id}, params["page"])
+  def index(conn, %{"magazine_title" => magazine_title} = params) do
+    page = Sites.get_posts_paginated({:magazine, magazine_title}, params["page"])
 
-    index(conn, params, page, magazine_id, nil)
+    index(conn, params, page, magazine_title, nil)
   end
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -15,11 +15,11 @@ defmodule ElephantInTheRoomWeb.PostController do
     index(conn, params, page, nil, [:sites, site, :posts])
   end
 
-  def index(conn, _params, page, magazine_id, bread_crumb) do
+  def index(conn, _params, page, magazine_title, bread_crumb) do
     render(
       conn,
       "index.html",
-      magazine_id: magazine_id,
+      magazine_title: magazine_title,
       posts: page.entries,
       page_number: page.page_number,
       page_size: page.page_size,
@@ -63,8 +63,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
-  def public_show(conn, %{"magazine_id" => magazine_id, "slug" => slug}) do
-    post = Sites.get_magazine_post_by_slug!(magazine_id, slug)
+  def public_show(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
+    post = Sites.get_magazine_post_by_slug!(magazine_title, slug)
     meta = Post.generate_og_meta(conn, post)
     render(conn, "public_show.html", post: post, meta: meta)
   end

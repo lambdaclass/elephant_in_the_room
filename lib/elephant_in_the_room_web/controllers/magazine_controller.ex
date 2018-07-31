@@ -21,42 +21,48 @@ defmodule ElephantInTheRoomWeb.MagazineController do
       {:ok, magazine} ->
         conn
         |> put_flash(:info, "Magazine created successfully.")
-        |> redirect(to: magazine_path(conn, :public_show, magazine))
+        |> redirect(to: URI.encode(magazine_path(conn, :public_show, magazine.title)))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def public_show(conn, %{"id" => id}) do
-    magazine = Sites.get_magazine!(id, [posts: :author])
+  def public_show(conn, %{"title" => title}) do
+    magazine = get_magazine(title)
+
     render(conn, "public_show.html", magazine: magazine)
   end
 
-  def edit(conn, %{"id" => id}) do
-    magazine = Sites.get_magazine!(id)
+  def edit(conn, %{"title" => title}) do
+    magazine = get_magazine(title)
     changeset = Sites.change_magazine(magazine)
     render(conn, "edit.html", magazine: magazine, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "magazine" => magazine_params}) do
-    magazine = Sites.get_magazine!(id)
+  def update(conn, %{"title" => title, "magazine" => magazine_params}) do
+    magazine = get_magazine(title)
 
     case Sites.update_magazine(magazine, magazine_params) do
       {:ok, magazine} ->
         conn
         |> put_flash(:info, "Magazine updated successfully.")
-        |> redirect(to: magazine_path(conn, :public_show, magazine))
+        |> redirect(to: URI.encode(magazine_path(conn, :public_show, magazine.title)))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", magazine: magazine, changeset: changeset)
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    magazine = Sites.get_magazine!(id)
+  def delete(%{assigns: %{site: site}} = conn, %{"title" => title}) do
+    magazine = get_magazine(title)
     {:ok, _magazine} = Sites.delete_magazine(magazine)
 
     conn
     |> put_flash(:info, "Magazine deleted successfully.")
     |> redirect(to: site_magazine_path(conn, :index, site.name))
+  end
+
+  defp get_magazine(enc_title) do
+    URI.decode(enc_title)
+    |> Sites.get_magazine!([posts: :author])
   end
 end

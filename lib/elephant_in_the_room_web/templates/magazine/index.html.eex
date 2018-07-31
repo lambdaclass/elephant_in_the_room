@@ -11,11 +11,11 @@
   <tbody>
     <%= for magazine <- @magazines do %>
       <tr>
-        <td><%= link magazine.title, to: site_magazine_post_path(@conn, :index, @site.name, magazine) %></td>
+        <td><%= link magazine.title, to: URI.encode(site_magazine_post_path(@conn, :index, @site.name, magazine)) %></td>
         <td><%= magazine.description %></td>
         <td class="text-right">
-          <span><%= link "", to: site_magazine_path(@conn, :edit, @site.name, magazine), class: "fa fa-edit" %></span>
-          <span><%= link "", to: site_magazine_path(@conn, :delete, @site.name, magazine), method: :delete, data: [confirm: "¿Estás seguro?"], class: "fa fa-trash-alt" %></span>
+          <span><%= link "", to: URI.encode(site_magazine_path(@conn, :edit, @site.name, magazine.title)), class: "fa fa-edit" %></span>
+          <span><%= link "", to: URI.encode(site_magazine_path(@conn, :delete, @site.name, magazine.title)), method: :delete, data: [confirm: "¿Estás seguro?"], class: "fa fa-trash-alt" %></span>
         </td>
       </tr>
     <% end %>

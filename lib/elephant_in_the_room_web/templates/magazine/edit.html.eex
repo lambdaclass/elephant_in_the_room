@@ -1,5 +1,5 @@
 <h2>Editar Revista</h2>
 
-<%= render "form.html", Map.put(assigns, :action, site_magazine_path(@conn, :update, @site.name, @magazine)) %>
+<%= render "form.html", Map.put(assigns, :action, URI.encode(site_magazine_path(@conn, :update, @site.name, @magazine.title))) %>
 
 <span><%= link "Regresar", to: site_magazine_path(@conn, :index, @site.name) %></span>
