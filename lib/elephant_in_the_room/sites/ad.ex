@@ -53,4 +53,9 @@ defmodule ElephantInTheRoom.Sites.Ad do
     Repo.all(ads)
   end
 
+  def update(ad, attrs) do
+    changeset = changeset(ad, attrs)
+    Repo.update(changeset)
+  end
+
 end
