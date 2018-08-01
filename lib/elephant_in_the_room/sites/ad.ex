@@ -33,13 +33,9 @@ defmodule ElephantInTheRoom.Sites.Ad do
 
   def get(%Site{id: site_id}, ad_name) when is_binary(ad_name) do
     ad_query = from a in Ad,
-      where: a.name == ^ad_name and a.site_id == ^site_id,
-      limit: 1
+      where: a.name == ^ad_name and a.site_id == ^site_id
 
-    case Repo.all(ad_query) do
-      [ad] -> ad
-      _ -> nil
-    end
+    Repo.one(ad_query)
   end
 
   def get(%Site{id: site_id}, options) do
@@ -56,6 +52,13 @@ defmodule ElephantInTheRoom.Sites.Ad do
   def update(ad, attrs) do
     changeset = changeset(ad, attrs)
     Repo.update(changeset)
+  end
+
+  def delete(%Site{} = site, ad_name) when is_binary(ad_name) do
+    case Ad.get(site, ad_name) do
+      %Ad{} = ad -> Repo.delete(ad)
+      _ -> {:error, :not_exists}
+    end
   end
 
 end

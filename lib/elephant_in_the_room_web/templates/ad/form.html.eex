@@ -37,7 +37,7 @@
 <% end %>
 
 <%= if assigns[:ad] do %>
-  <%= link to: site_post_path(@conn, :delete, @site.name, @ad.name),
+  <%= link to: site_ad_path(@conn, :delete, @site.name, @ad.name),
           method: :delete, data: [confirm: "Esta seguro que quiere borrar la promocion?"],
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>
