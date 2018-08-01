@@ -33,6 +33,12 @@ defmodule ElephantInTheRoomWeb.MagazineController do
     render(conn, "public_show.html", magazine: magazine)
   end
 
+  def current(conn, _params) do
+    magazine = Sites.get_current_magazine([posts: :author])
+
+    render(conn, "public_show.html", magazine: magazine)
+  end
+
   def edit(conn, %{"title" => title}) do
     magazine = get_magazine(title)
     changeset = Sites.change_magazine(magazine)

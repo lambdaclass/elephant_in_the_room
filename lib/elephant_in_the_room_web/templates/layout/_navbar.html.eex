@@ -46,7 +46,7 @@
         <div uk-dropdown="pos: bottom-center; offset: 0"
              class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li><a href="#">Edición</a></li>
+            <li><%= link "Edición actual", to: magazine_path(@conn, :current) %></li>
             <li><a href="#">Todas las ediciones</a></li>
           </ul>
         </div>
@@ -139,7 +139,7 @@
     <h3>Revista</h3>
     <div class="nav-divider"></div>
     <ul class="uk-nav uk-nav-default">
-      <li><a href="#">Edición</a></li>
+      <li><%= link "Edición actual", to: magazine_path(@conn, :current) %></li>
       <li><a href="#">Todas las ediciones</a></li>
     </ul>
   </div>

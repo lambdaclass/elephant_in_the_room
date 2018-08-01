@@ -937,6 +937,16 @@ defmodule ElephantInTheRoom.Sites do
     Repo.get_by!(Magazine, title: title)
     |> Repo.preload(preloads)
   end
+
+  def get_current_magazine(preloads) do
+    [current] = Magazine
+      |> order_by(desc: :inserted_at)
+      |> limit(1)
+      |> Repo.all()
+
+    current
+    |> Repo.preload(preloads)
+  end
   @doc """
   Creates a magazine.
 
