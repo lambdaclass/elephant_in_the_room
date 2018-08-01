@@ -8,8 +8,16 @@ defmodule ElephantInTheRoomWeb.Faker.Ad do
     %{
       "name" => Faker.Pokemon.name,
       "pos" => :rand.uniform(10),
-      "content" => PostFaker.gen_md_image_path(Utils.get_image_path_ads())
+      "content" => default_content()
     }
+  end
+
+  defp default_content() do
+    random_image = PostFaker.gen_md_image_path(Utils.get_image_path_ads())
+    random_link = Faker.Internet.url()
+    "[
+      #{random_image}
+    ](#{random_link})"
   end
 
   defp insert_one(attrs) do
