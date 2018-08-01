@@ -1,0 +1,32 @@
+<% import ElephantInTheRoomWeb.Router.Helpers %>
+
+<button class="uk-modal-close-default" type="button" uk-close></button>    
+<h2 class="uk-modal-title">Sugerencias</h2>
+
+<%= form_for @conn, feedback_path(@conn, :create), [class: "uk-form-stacked"], fn f -> %>
+  <%= if Map.has_key?(@conn.assigns, :errors) do %>
+    <div class="alert alert-danger">
+      <p>Por favor revisa los errores a continuación.</p>
+    </div>
+  <% end %>
+
+  <fieldset class="uk-fieldset">
+    <div class="uk-margin">
+      <%= label f, :text, "Texto", class: "uk-form-label" %>
+      <%= textarea f, :text, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :text %>
+    </div>
+
+    <div class="uk-margin">
+      <%= label f, :email, "E-mail", class: "uk-form-label" %>
+      <%= text_input f, :email, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :email %>
+    </div>
+
+    <div class="uk-margin">
+      <center>
+        <%= submit "Enviar", class: "uk-button uk-button-primary" %>
+      </center>
+    </div>
+  </fieldset>
+<% end %>

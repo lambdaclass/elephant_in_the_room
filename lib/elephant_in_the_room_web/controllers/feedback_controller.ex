@@ -15,12 +15,12 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(%{assigns: %{site: site}} = conn, %{"feedback" => feedback_params}) do
-    case Sites.create_feedback(site, feedback_params) do
+  def create(%{assigns: %{site: site}} = conn, params) do
+    case Sites.create_feedback(site, params) do
       {:ok, _feedback} ->
         conn
         |> put_flash(:info, "Feedback creado satisfactoriamente.")
-        |> redirect(to: site_path(conn, :public_show, URI.encode(site.name)))
+        |> redirect(to: site_path(conn, :public_show))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
