@@ -1,13 +1,14 @@
 defmodule ElephantInTheRoomWeb.Faker.Ad do
   alias ElephantInTheRoom.Sites.Ad
   alias ElephantInTheRoomWeb.Faker.Post, as: PostFaker
+  alias ElephantInTheRoomWeb.Faker.Utils
   require Logger
 
   defp default_attrs do
     %{
       "name" => Faker.Pokemon.name,
       "pos" => :rand.uniform(10),
-      "content" => PostFaker.gen_md_image()
+      "content" => PostFaker.gen_md_image_path(Utils.get_image_path_ads())
     }
   end
 

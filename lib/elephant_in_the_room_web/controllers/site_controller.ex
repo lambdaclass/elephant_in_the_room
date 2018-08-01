@@ -2,6 +2,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.{Sites, Sites.Site, Repo}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
+  alias ElephantInTheRoom.Sites.Ad
 
   def index(conn, params) do
     page =
@@ -126,13 +127,16 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
+    ads = Ad.get(site, amount: 1000)
+
     render(
       conn,
       "public_show.html",
       site: site,
       latest_posts: Sites.get_latest_posts(site, amount: 15),
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
-      popular_posts: Sites.get_popular_posts(site, amount: 10)
+      popular_posts: Sites.get_popular_posts(site, amount: 10),
+      ads: ads
     )
   end
 
