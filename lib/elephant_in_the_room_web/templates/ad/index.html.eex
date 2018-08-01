@@ -2,7 +2,7 @@
   <span class="title-text">Promociones</span>
   <div "admin-title-options">
     <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-      href="<%= site_post_path(@conn, :new, @site.name) %>">
+      href="<%= site_ad_path(@conn, :new, @site.name) %>">
       Crear nuevo
     </a>
   </div>

@@ -1,0 +1,45 @@
+<div class="admin-title">
+  <span class="title-text"><%= assigns[:title] %></span>
+</div>
+
+<%= form_for @changeset, @action, [multipart: true], fn f -> %>
+<fieldset class="uk-fieldset">
+
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Por favor revisa los errores a continuación.</p>
+    </div>
+  <% end %>
+
+  <div class="no-uk-margin">
+    <%= label f, :name, "Título", class: "uk-form-label" %>
+    <%= text_input f, :name, class: "uk-input uk-form-large", placeholder: "Título" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :pos, "Posicion", class: "uk-form-label" %>
+    <%= text_input f, :pos, class: "uk-input", type: "number" %>
+    <%= error_tag f, :pos %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :content, "Contenido", class: "uk-form-label" %>
+    <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
+    <%= error_tag f, :content %>
+  </div>
+
+  <div class="uk-margin">
+    <%= submit "Enviar", class: "uk-button uk-button-primary uk-width-1-1" %>
+  </div>
+
+</fieldset>
+<% end %>
+
+<%= if assigns[:ad] do %>
+  <%= link to: site_post_path(@conn, :delete, @site.name, @ad.name),
+          method: :delete, data: [confirm: "Esta seguro que quiere borrar la promocion?"],
+          class: "uk-button uk-button-danger uk-width-1-1" do %>
+    <i class="fas fa-trash"></i>
+  <% end%>
+<% end %>

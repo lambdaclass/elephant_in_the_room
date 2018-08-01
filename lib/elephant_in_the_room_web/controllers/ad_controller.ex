@@ -12,4 +12,17 @@ defmodule ElephantInTheRoomWeb.AdController do
       bread_crumb: [:sites, site, :ads])
   end
 
+  def edit(conn, %{"ad_name" => ad_name}) do
+    site = conn.assigns.site
+    ad = Ad.get(site, ad_name)
+    changeset = Ad.changeset(ad)
+    render(conn, "edit.html",
+      ad: ad,
+      changeset: changeset)
+  end
+
+  def new(conn, _params) do
+    render(conn, "new.html")
+  end
+
 end

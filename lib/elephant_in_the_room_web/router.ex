@@ -78,7 +78,7 @@ defmodule ElephantInTheRoomWeb.Router do
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
-        resources("/ads", AdController, param: "ad")
+        resources("/ads", AdController, param: "ad_name")
       end
     end
   end

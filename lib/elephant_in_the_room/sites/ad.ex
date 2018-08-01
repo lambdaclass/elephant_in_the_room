@@ -17,7 +17,8 @@ defmodule ElephantInTheRoom.Sites.Ad do
     timestamps()
   end
 
-  def changeset(%Ad{} = ad, attrs \\ []) do
+  def changeset(), do: changeset(%Ad{}, %{})
+  def changeset(%Ad{} = ad, attrs \\ %{}) do
     ad
     |> Changeset.cast(attrs, [:name, :content, :pos, :site_id])
     |> Changeset.validate_required([:name, :content, :pos, :site_id])
@@ -30,11 +31,22 @@ defmodule ElephantInTheRoom.Sites.Ad do
     Repo.insert(changeset)
   end
 
+  def get(%Site{id: site_id}, ad_name) when is_binary(ad_name) do
+    ad_query = from a in Ad,
+      where: a.name == ^ad_name and a.site_id == ^site_id,
+      limit: 1
+
+    case Repo.all(ad_query) do
+      [ad] -> ad
+      _ -> nil
+    end
+  end
+
   def get(%Site{id: site_id}, options) do
     %{index: {index_from, _}, amount: amount} = Sites.pagination_opts(options)
     ads = from a in Ad,
       where: a.site_id == ^site_id,
-      order_by: [desc: a.pos, desc: a.updated_at],
+      order_by: [asc: a.pos, desc: a.updated_at],
       limit: ^amount,
       offset: ^index_from
 
