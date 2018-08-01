@@ -127,6 +127,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
+    meta = Sites.gen_og_meta_for_site(conn)
+
     {featured_posts_with_levels, aditional_posts} =
       Featured.get_all_featured_posts_ensure_filled_cached(site.id, 15)
 
@@ -134,6 +136,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
       conn,
       "public_show.html",
       site: site,
+      meta: meta,
+      latest_posts: Sites.get_latest_posts(site, amount: 15),
       section_1_posts: Featured.get_posts_from_level_pair(1, featured_posts_with_levels),
       section_2_posts: Featured.get_posts_from_level_pair(2, featured_posts_with_levels),
       section_3_posts: Featured.get_posts_from_level_pair(3, featured_posts_with_levels),
@@ -153,8 +157,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def public_show_latest(conn, params) do
     page = get_page(params)
-    latest_posts =
-      Sites.get_latest_posts(conn.assigns.site, page: page, amount: 10)
+    latest_posts = Sites.get_latest_posts(conn.assigns.site, page: page, amount: 10)
 
     render(conn, "public_show_latest.html", posts: latest_posts, page: page)
   end
@@ -180,6 +183,20 @@ defmodule ElephantInTheRoomWeb.SiteController do
     site = Sites.get_site_by_name!(URI.decode(name))
     changeset = Sites.change_site(site)
     render(conn, "edit.html", site: site, changeset: changeset)
+  end
+
+  def update(conn, %{"image_delete" => "true", "name" => name}) do
+    site = Sites.from_name!(name, Site)
+    {:ok, site_no_image} = Sites.delete_site_field(site, "image")
+    changeset = Sites.change_site(site_no_image)
+    render(conn, "edit.html", site: site_no_image, changeset: changeset)
+  end
+
+  def update(conn, %{"favicon_delete" => "true", "name" => name}) do
+    site = Sites.from_name!(name, Site)
+    {:ok, site_no_image} = Sites.delete_site_field(site, "favicon")
+    changeset = Sites.change_site(site_no_image)
+    render(conn, "edit.html", site: site_no_image, changeset: changeset)
   end
 
   def update(conn, %{"name" => name, "site" => site_params}) do

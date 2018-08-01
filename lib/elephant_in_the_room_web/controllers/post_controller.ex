@@ -66,7 +66,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
   def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
     post = Sites.get_post_by_slug!(site.id, slug)
-    meta = Post.generate_og_meta(conn, post)
+    meta = Sites.gen_og_meta_for_post(conn, post)
     Post.increase_views_for_popular_by_1(post)
     render(conn, "public_show.html", site: site, post: post, meta: meta)
   end

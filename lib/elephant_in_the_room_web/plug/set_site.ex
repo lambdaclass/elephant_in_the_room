@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Plugs.SetSite do
-  alias ElephantInTheRoom.{Repo, Sites.Site}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Site}
   alias Plug.Conn
   alias ElephantInTheRoomWeb.Router.Helpers, as: Routes
   import Phoenix.Controller, only: [redirect: 2]
@@ -13,7 +13,13 @@ defmodule ElephantInTheRoomWeb.Plugs.SetSite do
 
       site ->
         site = Repo.preload(site, categories: [])
-        Conn.assign(conn, :site, site)
+
+        new_conn = Conn.assign(conn, :site, site)
+
+        meta = Sites.gen_og_meta_for_site(new_conn)
+
+        new_conn
+        |> Conn.assign(:meta, meta)
     end
   end
 end

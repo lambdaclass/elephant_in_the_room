@@ -4,7 +4,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
+  alias ElephantInTheRoomWeb. Uploaders.Image
 
   schema "posts" do
     field(:title, :string)
@@ -206,14 +206,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   defp parse_date(attrs) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
     Map.put(attrs, "inserted_at", now)
-  end
-
-  def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
-    type = "article"
-    title = "#{title} - #{conn.assigns.site.name}"
-    url = PostView.show_link(conn, post)
-    image = PostView.show_thumb_link(conn, post)
-    %{url: url, type: type, title: title, description: description, image: image}
   end
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do

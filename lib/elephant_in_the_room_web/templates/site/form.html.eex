@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "uk-form-stacked"], fn f -> %>
+<%= form_for @changeset, @action, [class: "uk-form-stacked", multipart: true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Por favor revisa los errores a continuación.</p>
@@ -13,11 +13,42 @@
     </div>
 
     <div class="uk-margin">
+      <%= label f, :title, "Titulo del Sitio", class: "uk-form-label" %>
+      <%= text_input f, :title, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :title %>
+    </div>
+    
+    <div class="form-group uk-width-1-1">
+      <%= label f, :favicon, "Icono", class: "uk-form-label"%>
+      <%= if @changeset.data.favicon do %>
+        <img src="<%= @changeset.data.favicon %>" width="200">
+        <%= submit "Eliminar icono", name: "favicon_delete", value: "true" %>
+      <% end %>
+      <%= file_input f, :favicon %>
+      <%= error_tag f, :favicon %>
+    </div>
+
+    <div class="uk-margin">
+      <%= label f, :description, "Descripción", class: "uk-form-label" %>
+      <%= textarea f, :description, class: "uk-textarea uk-form-width-large" %>
+      <%= error_tag f, :description %>
+    </div>
+
+    <div class="uk-margin">
       <%= label f, :host, "Dominio", class: "uk-form-label" %>
       <%= text_input f, :host, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :host %>
     </div>
 
+    <div class="form-group uk-width-1-1">
+      <%= label f, :image, "Imagen", class: "uk-form-label"%>
+      <%= if @changeset.data.image do %>
+        <img src="<%= @changeset.data.image %>" width="200">
+        <%= submit "Eliminar imagen", name: "image_delete", value: "true" %>
+      <% end %>
+      <%= file_input f, :image %>
+      <%= error_tag f, :image %>
+    </div>
 
     <div class="uk-margin">
       <%= submit "Enviar", class: "uk-button uk-button-primary" %>
@@ -27,9 +58,9 @@
 <% end %>
 
 <%= if assigns[:site] do %>
-  <%= link to: site_path(@conn, :delete, @site.id),
+  <%= link to: site_path(@conn, :delete, URI.encode(@site.name)),
         method: :delete,
-        data: [confirm: "Are you sure your want to delete this site"],
+        data: [confirm: "¿Estás seguro que quieres borrar el sitio?"],
         class: "uk-button uk-button-danger uk-width-1-1" do %>
         <i class="fas fa-trash"></i>
   <% end %>
