@@ -1,6 +1,15 @@
+<%
+  import ElephantInTheRoomWeb.LayoutView, only: [get_logged_user: 1]
+%>
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @magazine.title %></h1>
+
+  <%= case get_logged_user(@conn) do %>
+    <%= {:ok, _user, _} -> %>
+      <%= link "Editar", to: site_magazine_path(@conn, :edit, @site.name, @magazine.title), class: "post-edit-button"%>
+    <% _ -> %>
+ <% end %>
 
   <div class="uk-margin-large-top uk-margin-large-bottom">
     <div class="uk-width-3-4">

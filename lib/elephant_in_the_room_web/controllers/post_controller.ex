@@ -87,7 +87,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     post = Sites.get_post_by_slug!(site.id, slug)
     meta = Post.generate_og_meta(conn, post)
     Post.increase_views_for_popular_by_1(post)
-    render(conn, "public_show.html", site: site, post: post, meta: meta)
+    render(conn, "public_show.html", magazine: nil, post: post, meta: meta)
   end
 
   def edit(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do

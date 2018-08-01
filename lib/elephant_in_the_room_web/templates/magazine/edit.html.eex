@@ -1,4 +1,5 @@
 <h2>Editar Revista</h2>
+<%= link "ver revista", to: URI.encode(magazine_path(@conn, :public_show, @magazine.title)), class: "uk-button uk-button-primary uk-button-small admin-mini-button", target: "_blank" %>
 
 <%= render "form.html", Map.put(assigns, :action, URI.encode(site_magazine_path(@conn, :update, @site.name, @magazine.title))) %>
 
