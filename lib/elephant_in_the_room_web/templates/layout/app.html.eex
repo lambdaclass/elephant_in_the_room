@@ -21,7 +21,14 @@
     <body>
       <div class="uk-offcanvas-content">
         <%= render "_navbar.html", assigns %>
-        <button class="uk-button uk-button-primary feedback-button">Feedback</button>
+        <button uk-toggle="target: #feedback-form" type="button" class="uk-button uk-button-secondary uk-button-small feedback-button">Feedback</button>
+        <div id="feedback-form" uk-modal>
+          <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title"></h2>
+            <button class="uk-modal-close" type="button"></button>
+          </div>
+        </div>
+        </div>
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
         </div>
