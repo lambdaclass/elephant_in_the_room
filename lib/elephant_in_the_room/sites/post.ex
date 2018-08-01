@@ -46,7 +46,16 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :featured_level])
+    |> cast(new_attrs, [
+      :title,
+      :content,
+      :slug,
+      :inserted_at,
+      :abstract,
+      :site_id,
+      :author_id,
+      :featured_level
+    ])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
@@ -56,11 +65,12 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> set_thumbnail
   end
 
-
   def put_site_id(%{site_name: site_name}) do
     Sites.get_site_by_name!(site_name)
   end
+
   def put_site_id(attrs), do: attrs
+
   def unique_slug_constraint(changeset) do
     put_slugified_title(changeset)
     |> unique_constraint(:slug, name: :slug_unique_index)
@@ -194,7 +204,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   defp parse_date(attrs) do
-    now = NaiveDateTime.utc_now |> NaiveDateTime.truncate(:second)
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
     Map.put(attrs, "inserted_at", now)
   end
 
