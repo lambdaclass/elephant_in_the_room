@@ -351,7 +351,7 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preload)
   end
 
-  def get_magazine_post_by_slug!(%Magazine{id: magazine_id}, slug, preload) do
+  def get_magazine_post_by_slug!(%Magazine{id: magazine_id}, slug, preload \\ @default_post_preload) do
     preload = Map.merge([], preload)
     Repo.get_by!(Post, slug: slug, magazine_id: magazine_id)
     |> Repo.preload(preload)
