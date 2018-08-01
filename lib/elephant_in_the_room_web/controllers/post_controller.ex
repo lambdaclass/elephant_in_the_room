@@ -7,7 +7,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     magazine = get_magazine!(magazine_title)
     page = Sites.get_posts_paginated(magazine, params["page"])
 
-    index(conn, params, page, magazine_title, nil)
+    index(conn, params, page, magazine, nil)
   end
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -16,11 +16,11 @@ defmodule ElephantInTheRoomWeb.PostController do
     index(conn, params, page, nil, [:sites, site, :posts])
   end
 
-  def index(conn, _params, page, magazine_title, bread_crumb) do
+  def index(conn, _params, page, magazine, bread_crumb) do
     render(
       conn,
       "index.html",
-      magazine_title: magazine_title,
+      magazine: magazine,
       posts: page.entries,
       page_number: page.page_number,
       page_size: page.page_size,
@@ -80,7 +80,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     magazine = get_magazine!(magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
     meta = Post.generate_og_meta(conn, post)
-    render(conn, "public_show.html", post: post, meta: meta)
+    render(conn, "public_show.html", post: post, magazine: magazine, meta: meta)
   end
 
   def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
@@ -90,8 +90,18 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "public_show.html", site: site, post: post, meta: meta)
   end
 
+  def edit(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
+    magazine = get_magazine!(magazine_title)
+    post = Sites.get_magazine_post_by_slug!(magazine, slug)
+    edit(conn, magazine, post, [])
+  end
+
   def edit(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
     post = Sites.get_post_by_slug!(site.id, slug)
+    edit(conn, nil, post, [:sites, site, :posts, post, :post_edit])
+  end
+
+  def edit(%{assigns: %{site: site}} = conn, magazine, post, bread_crumb) do
     categories = Sites.list_categories(site)
     changeset = Sites.change_post(post)
 
@@ -99,12 +109,26 @@ defmodule ElephantInTheRoomWeb.PostController do
       conn,
       "edit.html",
       site: site,
+      magazine: magazine,
       post: post,
       changeset: changeset,
       categories: categories,
       info: Controller.get_flash(conn, :info),
-      bread_crumb: [:sites, site, :posts, post, :post_edit]
+      bread_crumb: bread_crumb
     )
+  end
+
+  def update(conn, %{
+        "magazine_title" => magazine_title,
+        "cover_delete" => "true",
+        "slug" => slug
+      }) do
+    magazine = get_magazine!(magazine_title)
+    post = Sites.get_magazine_post_by_slug!(magazine, slug)
+
+    {:ok, post_no_cover} = Sites.delete_cover(post)
+
+    render(conn, "edit.html", post: post_no_cover, changeset: Sites.change_post(post_no_cover), magazine: magazine)
   end
 
   def update(%{assigns: %{site: site}} = conn, %{
@@ -116,6 +140,24 @@ defmodule ElephantInTheRoomWeb.PostController do
     {:ok, post_no_cover} = Sites.delete_cover(post)
 
     render(conn, "edit.html", post: post_no_cover, changeset: Sites.change_post(post_no_cover))
+  end
+
+  def update(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug, "post" => post_params}) do
+    magazine = get_magazine!(magazine_title)
+    post = Sites.get_magazine_post_by_slug!(magazine, slug)
+
+    case Sites.update_post(post, post_params) do
+      {:ok, post} ->
+        path =
+          "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, magazine, post)}"
+          |> URI.encode()
+
+        conn
+        |> redirect(external: path)
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", post: post, changeset: changeset, magazine: magazine)
+    end
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"slug" => slug, "post" => post_params}) do

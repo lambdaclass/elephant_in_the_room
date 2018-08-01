@@ -1,14 +1,14 @@
 <div class="admin-title">
   <span class="title-text">Posts</span>
   <div "admin-title-options">
-    <%= link "crear nuevo", to: URI.encode(site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine_title])), class: "uk-button uk-button-primary uk-button-small admin-mini-button" %>
+    <%= link "crear nuevo", to: URI.encode(site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine])), class: "uk-button uk-button-primary uk-button-small admin-mini-button" %>
   </div>
 </div>
 
 <ul class="uk-list uk-list-striped admin-site-list">
   <%= for post <- @posts do %>
       <li class="site-item">
-        <%= link to: site_or_magazine_path(@conn, :edit, @site.name, assigns[:magazine_title], post.slug) do %>
+        <%= link to: site_or_magazine_path(@conn, :edit, @site.name, assigns[:magazine], post.slug) do %>
           <span class="uk-button uk-button-primary uk-button-small admin-mini-button">
             editar
           </span>

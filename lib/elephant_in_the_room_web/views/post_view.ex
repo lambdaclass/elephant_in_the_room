@@ -166,15 +166,15 @@ defmodule ElephantInTheRoomWeb.PostView do
     site_post_path(conn, action, site_name)
   end
 
-  def site_or_magazine_path(conn, action, site_name, magazine_title) do
-    site_magazine_post_path(conn, action, site_name, magazine_title)
+  def site_or_magazine_path(conn, action, site_name, magazine) do
+    site_magazine_post_path(conn, action, site_name, magazine.title)
   end
 
   def site_or_magazine_path(conn, action, site_name, nil, post_slug) do
     site_post_path(conn, action, site_name, post_slug)
   end
 
-  def site_or_magazine_path(conn, action, site_name, magazine_title, post_slug) do
-    site_magazine_post_path(conn, action, site_name, magazine_title, post_slug)
+  def site_or_magazine_path(conn, action, site_name, magazine, post_slug) do
+    site_magazine_post_path(conn, action, site_name, magazine.title, post_slug)
   end
 end

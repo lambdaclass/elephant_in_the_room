@@ -25,7 +25,7 @@
   <h1 class="uk-text-uppercase uk-text-bold post-main-title"><%= @post.title %></h1>
    <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Editar", to: site_post_path(@conn, :edit, @site.name, @post.slug),
+        <%= link "Editar", to: site_or_magazine_path(@conn, :edit, @site.name, @magazine, @post.slug),
               class: "post-edit-button"%>
       <% _ -> %>
    <% end %>
