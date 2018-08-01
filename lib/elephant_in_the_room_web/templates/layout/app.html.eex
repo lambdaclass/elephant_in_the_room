@@ -9,7 +9,7 @@
     <%= render "_social_meta.html", assigns %>
 
     <%= if Map.has_key?(assigns, :site) and @site.favicon != nil do %>
-      <link rel="icon" type="image/x-icon" href="<%= "/images/#{@site.favicon}" %>">
+      <link rel="icon" type="image/x-icon" href="<%= "#{@site.favicon}" %>">
     <% end %>
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
