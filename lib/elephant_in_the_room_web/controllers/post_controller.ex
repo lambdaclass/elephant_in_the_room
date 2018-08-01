@@ -178,6 +178,16 @@ defmodule ElephantInTheRoomWeb.PostController do
     end
   end
 
+  def delete(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
+    magazine = get_magazine!(magazine_title)
+    post = Sites.get_magazine_post_by_slug!(magazine, slug)
+    {:ok, _post} = Sites.delete_post(post)
+
+    conn
+    |> put_flash(:info, "Post deleted successfully.")
+    |> redirect(to: site_magazine_post_path(conn, :index, site.name, magazine.title))
+  end
+
   def delete(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
     post = Sites.get_post_by_slug!(site.id, slug)
     {:ok, _post} = Sites.delete_post(post)
