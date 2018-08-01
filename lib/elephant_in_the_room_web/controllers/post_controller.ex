@@ -4,7 +4,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias Phoenix.Controller
 
   def index(conn, %{"magazine_title" => magazine_title} = params) do
-    magazine = get_magazine(magazine_title)
+    magazine = get_magazine!(magazine_title)
     page = Sites.get_posts_paginated(magazine, params["page"])
 
     index(conn, params, page, magazine_title, nil)
@@ -30,16 +30,15 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def new(%{assigns: %{site: site}} = conn, _) do
+  def new(%{assigns: %{site: site}} = conn, params) do
+    magazine = if params["magazine_title"], do: get_magazine!(params["magazine_title"]), else: nil
     categories = Sites.list_categories(site)
-
-    changeset =
-      %Post{site_id: site.id}
-      |> Sites.change_post()
+    changeset = Sites.change_post(%Post{})
 
     render(
       conn,
       "new.html",
+      magazine: magazine,
       changeset: changeset,
       site: site,
       info: Controller.get_flash(conn, :info),
@@ -48,15 +47,15 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "post" => post_params}) do
-    magazine = Sites.get_magazine!(magazine_title)
+    magazine = get_magazine!(magazine_title)
     case Sites.create_post(magazine, post_params) do
       {:ok, post} ->
-        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, magazine, post)}"
 
         redirect(conn, external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, magazine: magazine)
     end
   end
 
@@ -68,7 +67,7 @@ defmodule ElephantInTheRoomWeb.PostController do
         redirect(conn, external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, magazine: nil)
     end
   end
 
@@ -78,14 +77,14 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def public_show(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
-    magazine = get_magazine(magazine_title)
+    magazine = get_magazine!(magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
     meta = Post.generate_og_meta(conn, post)
     render(conn, "public_show.html", post: post, meta: meta)
   end
 
   def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
-    post = Sites.get_post_by_slug!(site, slug)
+    post = Sites.get_post_by_slug!(site.id, slug)
     meta = Post.generate_og_meta(conn, post)
     Post.increase_views_for_popular_by_1(post)
     render(conn, "public_show.html", site: site, post: post, meta: meta)
@@ -125,7 +124,9 @@ defmodule ElephantInTheRoomWeb.PostController do
 
     case Sites.update_post(post, post_params_with_site_id) do
       {:ok, post} ->
-        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+        path =
+          "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, post)}"
+          |> URI.encode()
 
         conn
         |> redirect(external: path)
@@ -148,7 +149,11 @@ defmodule ElephantInTheRoomWeb.PostController do
     post_path(conn, :public_show, date.year, date.month, date.day, slug)
   end
 
-  defp get_magazine(enc_title) do
+  defp relative_path(conn, %{title: magazine_title}, %Post{inserted_at: date, slug: slug}) do
+    magazine_post_path(conn, :public_show, magazine_title, date.year, date.month, date.day, slug)
+  end
+
+  defp get_magazine!(enc_title) do
     URI.decode(enc_title)
     |> Sites.get_magazine!([posts: :author])
   end

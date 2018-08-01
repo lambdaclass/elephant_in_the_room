@@ -3,4 +3,4 @@
   title: "Editar artículo"
 })%>
 
-<span><%= link "Regresar", to: site_post_path(@conn, :index, @site) %></span>
+<span><%= link "Regresar", to: site_post_path(@conn, :index, @site.name) %></span>
