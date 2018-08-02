@@ -38,7 +38,6 @@ defmodule ElephantInTheRoom.Sites.Ad do
 
     Repo.one(ad_query)
   end
-
   def get(%Site{id: site_id}, :all) do
     ads = from a in Ad,
       where: a.site_id == ^site_id,

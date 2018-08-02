@@ -127,7 +127,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
-    ads = Ad.get(site, amount: 1000)
+    ads = Ad.get(site, :all)
 
     render(
       conn,
