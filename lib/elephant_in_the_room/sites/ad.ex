@@ -39,15 +39,23 @@ defmodule ElephantInTheRoom.Sites.Ad do
     Repo.one(ad_query)
   end
 
+  def get(%Site{id: site_id}, :all) do
+    ads = from a in Ad,
+      where: a.site_id == ^site_id,
+      order_by: [asc: a.pos, desc: a.updated_at]
+    Repo.all(ads)
+  end
   def get(%Site{id: site_id}, options) do
-    %{index: {index_from, _}, amount: amount} = Sites.pagination_opts(options)
+    %{index: {index_from, _}, bigger_amount: amount} = pagination =
+      Sites.pagination_opts(options)
     ads = from a in Ad,
       where: a.site_id == ^site_id,
       order_by: [asc: a.pos, desc: a.updated_at],
       limit: ^amount,
       offset: ^index_from
 
-    Repo.all(ads)
+    ads_query_result = Repo.all(ads)
+    Sites.pagination_result(ads_query_result, pagination)
   end
 
   def update(ad, attrs) do

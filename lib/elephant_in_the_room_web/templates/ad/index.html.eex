@@ -9,7 +9,7 @@
 </div>
 
 <ul class="uk-list uk-list-striped admin-site-list">
-  <%= for ad <- @ads do %>
+  <%= for ad <- @ads.result do %>
       <li class="site-item"
           onclick="window.location = '<%= site_ad_path(@conn, :edit, @site.name, ad.name) %>'">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
@@ -22,3 +22,11 @@
   <% end %>
 </ul>
 
+<%=
+render ElephantInTheRoomWeb.AdminView,
+  "_bottom_pagination_wo_numbers.html", 
+  Map.merge(assigns, %{
+    url: &site_ad_path(@conn, :index, @site.name, page: &1),
+    pagination: @ads
+  }) 
+%>
