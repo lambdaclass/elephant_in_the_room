@@ -3,6 +3,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   alias ElephantInTheRoom.{Sites, Repo}
   alias ElephantInTheRoom.Sites.{Site, Featured}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
+  alias ElephantInTheRoom.Sites.Ad
 
   def index(conn, params) do
     page =
@@ -127,6 +128,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
       Repo.get_by!(Site, host: conn.host)
       |> Repo.preload(Sites.default_site_preload())
 
+    ads = Ad.get(site, :all)
     meta = Sites.gen_og_meta_for_site(conn)
 
     {featured_posts_with_levels, aditional_posts} =
@@ -144,7 +146,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
       section_4_posts: Featured.get_posts_from_level_pair(4, featured_posts_with_levels),
       latest_posts: aditional_posts,
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
-      popular_posts: Sites.get_popular_posts(site, amount: 10)
+      popular_posts: Sites.get_popular_posts(site, amount: 10),
+      ads: ads
     )
   end
 
