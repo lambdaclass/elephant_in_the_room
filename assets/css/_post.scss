@@ -40,12 +40,9 @@
     p {
       color: $black;
       hyphens: none;
-      font-size: 20px;
-      @media all and (max-width:1240px){ font-size: 19px; }
-      @media all and (max-width:840px){ font-size: 18px; }
-      @media all and (max-width:720px){ font-size: 19px; }
+      font-size: 22px;
       margin-top: 0;
-      margin-bottom: 0.4em;
+      margin-bottom: 1.2em;
     }
 
     img {
