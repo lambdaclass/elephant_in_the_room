@@ -6,7 +6,7 @@ config = %{
   authors: 5,
   tags: 6,
   users: 6,
-  posts: 15,
+  posts: 30,
   ads: 14
 }
 

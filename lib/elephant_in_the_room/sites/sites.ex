@@ -7,7 +7,8 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image}
+  alias ElephantInTheRoomWeb.{SiteView, PostView, Utils.Utils}
+  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image, Featured}
 
   @doc """
   Returns the list of sites.
@@ -147,6 +148,12 @@ defmodule ElephantInTheRoom.Sites do
     Repo.delete(site)
   end
 
+  def delete_site_field(%Site{} = site, field) do
+    site
+    |> Site.changeset(%{"#{field}" => nil})
+    |> Repo.update()
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking site changes.
 
@@ -273,6 +280,25 @@ defmodule ElephantInTheRoom.Sites do
     Category.changeset(category, %{})
   end
 
+  def gen_og_meta_for_site(conn) do
+    [url, image] =
+      [SiteView.show_site_link(conn), conn.assigns.site.image]
+      |> Enum.map(fn path -> Utils.generate_absolute_url(path, conn) end)
+
+    meta_tags = %{
+      url: url,
+      type: "website",
+      title: "#{conn.assigns.site.title}",
+      description: conn.assigns.site.description
+    }
+
+    if conn.assigns.site.image do
+      Map.put(meta_tags, :image, image)
+    else
+      meta_tags
+    end
+  end
+
   @doc """
   Returns the list of posts.
 
@@ -352,8 +378,11 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def get_popular_posts_from_db(site_id, index_from, index_to) do
-    {:ok, data} = Redix.command(:redix,
-      ["ZREVRANGE", "site:#{site_id}", index_from, index_to, "WITHSCORES"])
+    {:ok, data} =
+      Redix.command(
+        :redix,
+        ["ZREVRANGE", "site:#{site_id}", index_from, index_to, "WITHSCORES"]
+      )
 
     scores =
       Enum.chunk(data, 2)
@@ -368,45 +397,55 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def get_latest_posts(%Site{id: site_id}, opts \\ []) do
-    %{index: {index_from, _},
-      amount: amount} = pagination_opts(opts)
-    query = from post in Post,
-      where: post.site_id == ^site_id,
-      order_by: [desc: post.inserted_at],
-      offset: ^index_from,
-      limit: ^amount,
-      preload: [:author]
+    %{index: {index_from, _}, amount: amount} = pagination_opts(opts)
+
+    query =
+      from(
+        post in Post,
+        where: post.site_id == ^site_id,
+        order_by: [desc: post.inserted_at],
+        offset: ^index_from,
+        limit: ^amount,
+        preload: [:author]
+      )
+
     Repo.all(query)
   end
 
   def get_category_with_posts(%Site{id: site_id}, category_id, opts \\ []) do
-    %{index: {index_from, _},
-      amount: amount} = pagination_opts(opts)
-    posts = from c in Category,
-      where: c.id == ^category_id and c.site_id == ^site_id,
-      left_join: posts_categories in "posts_categories",
-      where: c.id == posts_categories.category_id,
-      left_join: p in Post,
-      where: p.id == posts_categories.post_id,
-      offset: ^index_from,
-      limit: ^amount,
-      select: p
+    %{index: {index_from, _}, amount: amount} = pagination_opts(opts)
+
+    posts =
+      from(
+        c in Category,
+        where: c.id == ^category_id and c.site_id == ^site_id,
+        left_join: posts_categories in "posts_categories",
+        where: c.id == posts_categories.category_id,
+        left_join: p in Post,
+        where: p.id == posts_categories.post_id,
+        offset: ^index_from,
+        limit: ^amount,
+        select: p
+      )
 
     Repo.preload(Repo.all(posts), [:author])
   end
 
   def get_tag_with_posts(%Site{id: site_id}, tag_id, opts \\ []) do
-    %{index: {index_from, _},
-      amount: amount} = pagination_opts(opts)
-    posts = from t in Tag,
-      where: t.id == ^tag_id and t.site_id == ^site_id,
-      left_join: posts_tags in "posts_tags",
-      where: t.id == posts_tags.tag_id,
-      left_join: p in Post,
-      where: p.id == posts_tags.post_id,
-      offset: ^index_from,
-      limit: ^amount,
-      select: p
+    %{index: {index_from, _}, amount: amount} = pagination_opts(opts)
+
+    posts =
+      from(
+        t in Tag,
+        where: t.id == ^tag_id and t.site_id == ^site_id,
+        left_join: posts_tags in "posts_tags",
+        where: t.id == posts_tags.tag_id,
+        left_join: p in Post,
+        where: p.id == posts_tags.post_id,
+        offset: ^index_from,
+        limit: ^amount,
+        select: p
+      )
 
     Repo.preload(Repo.all(posts), [:author])
   end
@@ -420,20 +459,23 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def get_columnists_and_posts(%{id: site_id}, amount) do
-    query = from post in Post,
-      where: post.site_id == ^site_id,
-      order_by: [desc: post.inserted_at],
-      distinct: post.author_id,
-      left_join: author in Author,
-      on: post.author_id == author.id,
-      limit: ^amount,
-      where: author.is_columnist == true,
-      select: %{
-        author: author,
-        post: post
-      }
+    query =
+      from(
+        post in Post,
+        where: post.site_id == ^site_id,
+        order_by: [desc: post.inserted_at],
+        distinct: post.author_id,
+        left_join: author in Author,
+        on: post.author_id == author.id,
+        limit: ^amount,
+        where: author.is_columnist == true,
+        select: %{
+          author: author,
+          post: post
+        }
+      )
 
-    Repo.all(query) |> Enum.reverse
+    Repo.all(query) |> Enum.reverse()
   end
 
   @doc """
@@ -462,6 +504,7 @@ defmodule ElephantInTheRoom.Sites do
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
+        Featured.invalidate_cache(site.id)
         inserted_post
 
       _ ->
@@ -492,6 +535,8 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def update_post(%Post{} = post, attrs) do
+    Featured.invalidate_cache(post.site_id)
+
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
@@ -510,6 +555,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_post(%Post{} = post) do
+    Featured.invalidate_cache(post.site_id)
     Repo.delete(post)
   end
 
@@ -523,6 +569,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_post(%Post{} = post) do
+    Featured.invalidate_cache(post.site_id)
     Post.changeset(post, %{})
   end
 
@@ -530,6 +577,23 @@ defmodule ElephantInTheRoom.Sites do
     post
     |> Post.changeset(%{"cover" => nil})
     |> Repo.update()
+  end
+
+  def gen_og_meta_for_post(
+        conn,
+        %Post{title: title, thumbnail: _image, abstract: description} = post
+      ) do
+    type = "article"
+    title = "#{title} - #{conn.assigns.site.name}"
+
+    url = PostView.show_link(conn, post)
+    image = PostView.show_thumb_link(conn, post)
+
+    if image != nil do
+      %{url: url, type: type, title: title, description: description, image: image}
+    else
+      %{url: url, type: type, title: title, description: description}
+    end
   end
 
   @doc """

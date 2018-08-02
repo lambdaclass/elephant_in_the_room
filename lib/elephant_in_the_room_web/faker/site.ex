@@ -8,7 +8,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
       |> Enum.take_random(Faker.random_between(1, 2))
       |> Enum.join(" ")
 
-    %{name: name}
+    %{"name" => name}
   end
 
   def insert_one(site_number, attrs \\ %{}) do
@@ -17,7 +17,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
     changes =
       default_attrs()
       |> Map.merge(attrs)
-      |> Map.put(:host, host)
+      |> Map.put("host", host)
 
     case Sites.create_site(changes) do
       {:ok, site} ->

@@ -4,8 +4,9 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
+  alias ElephantInTheRoomWeb.{Uploaders.Image}
   alias ElephantInTheRoom.Sites.Markdown
+  alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
     field(:title, :string)
@@ -15,6 +16,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:rendered_content, :string)
     field(:cover, :string)
     field(:thumbnail, :string)
+    field(:featured_level, :integer, default: 0)
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, foreign_key: :author_id, on_replace: :nilify)
@@ -46,7 +48,16 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id])
+    |> cast(new_attrs, [
+      :title,
+      :content,
+      :slug,
+      :inserted_at,
+      :abstract,
+      :site_id,
+      :author_id,
+      :featured_level
+    ])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
@@ -56,11 +67,12 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> set_thumbnail
   end
 
-
   def put_site_id(%{site_name: site_name}) do
     Sites.get_site_by_name!(site_name)
   end
+
   def put_site_id(attrs), do: attrs
+
   def unique_slug_constraint(changeset) do
     put_slugified_title(changeset)
     |> unique_constraint(:slug, name: :slug_unique_index)
@@ -127,6 +139,10 @@ defmodule ElephantInTheRoom.Sites.Post do
     put_change(changeset, :slug, slug)
   end
 
+  def generate_markdown(input) do
+    Cmark.to_html(input, [:hardbreaks])
+  end
+
   def parse_categories(params) do
     site_id = params["site_id"]
 
@@ -176,14 +192,9 @@ defmodule ElephantInTheRoom.Sites.Post do
     Map.put(attrs, "inserted_at", datetime)
   end
 
-  defp parse_date(attrs), do: attrs
-
-  def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
-    type = "article"
-    title = "#{title} - #{conn.assigns.site.name}"
-    url = PostView.show_link(conn, post)
-    image = PostView.show_thumb_link(conn, post)
-    %{url: url, type: type, title: title, description: description, image: image}
+  defp parse_date(attrs) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    Map.put(attrs, "inserted_at", now)
   end
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
