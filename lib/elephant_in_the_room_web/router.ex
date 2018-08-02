@@ -76,6 +76,9 @@ defmodule ElephantInTheRoomWeb.Router do
 
       resources "/sites", SiteController, param: "name" do
         pipe_through(:load_site_info)
+        get("/feedback", FeedbackController, :index)
+        get("/feedback/:id", FeedbackController, :show)
+        delete("/feedback/:id", FeedbackController, :delete)
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")

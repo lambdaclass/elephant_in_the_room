@@ -1,10 +1,32 @@
 defmodule ElephantInTheRoomWeb.FeedbackController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Sites}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Feedback}
+  import Ecto.Query
 
-  def index(%{assigns: %{site: site}} = conn, _params) do
-    feedbacks = Sites.list_feedbacks(site)
-    render(conn, "index.html", feedbacks: feedbacks)
+  def index(%{assigns: %{site: site}} = conn, params) do
+    page =
+      case params do
+        %{"page" => page_number} ->
+          Feedback
+          |> where([f], f.site_id == ^site.id)
+          |> Repo.paginate(page: page_number)
+
+        %{} ->
+          Feedback
+          |> where([c], c.site_id == ^site.id)
+          |> Repo.paginate(page: 1)
+      end
+
+    render(
+      conn,
+      "index.html",
+      feedbacks: page.entries,
+      site: site,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+    )
   end
 
   def create(%{assigns: %{site: site}} = conn, params) do
@@ -21,12 +43,17 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     end
   end
 
-
-
+  def show(conn, %{"site_name" => site_name, "feedback_id" => id}) do
+    feedback_site = Sites.from_name!(site_name, Site)
+    feedback = Sites.get_feedback!(feedback_site, id)
+    render(conn, "show.html", feedback: feedback, site: feedback_site)
+  end
 
   defp put_errors(conn, changeset) do
     changeset.errors
-    |> Enum.map(fn {k, v} -> {k, (elem(v, 0))} end)
-    |> Enum.reduce(conn, fn ({_k, err}, connection) -> put_flash(connection, :feedback_error, "Error: #{err}") end)
+    |> Enum.map(fn {k, v} -> {k, elem(v, 0)} end)
+    |> Enum.reduce(conn, fn {_k, err}, connection ->
+      put_flash(connection, :feedback_error, "Error: #{err}")
+    end)
   end
 end

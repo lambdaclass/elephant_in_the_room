@@ -1,0 +1,43 @@
+<h2><%= @site.name %>&nbsp;&lt;&nbsp;Sugerencias</h2>
+<p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
+<table class="uk-table uk-table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Texto</th>
+      <th>E-mail</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for feedback <- @feedbacks do %>
+    <tr>
+      <td>
+        <%= link feedback.id, to: site_feedback_path(@conn, :show, URI.encode(@site.name), feedback.id), 
+          class: "a" %>
+      </td>
+       <td class="text-right">
+        <span>
+          <%= link "", to: site_category_path(@conn, :delete, URI.encode(@site.name), feedback.id), 
+            method: :delete, data: [confirm: "¿Estás seguro?"], 
+            class: "el-menu-icon fa fa-trash-alt" %>
+        </span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= case compare(@page_number, @total_pages) do %>
+  <% :equal -> %>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+  <% :lesser -> %>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
+  <% :first -> %>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
+  <% _ -> %>
+<% end %>
+
+<br>
+
+<span><%= link "Regresar", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>
