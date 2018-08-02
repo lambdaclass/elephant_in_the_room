@@ -29,19 +29,6 @@
             <%= render "_feedback_form.html", assigns %>
           </div>
         </div>
-        <%= unless Enum.empty?(Phoenix.Controller.get_flash(@conn)) do %>
-          <%= if Enum.empty?(Phoenix.Controller.get_flash(@conn, :feedback_error)) do %>
-            <div class="uk-alert-danger uk-animation-toggle uk-animation-slide-top" uk-alert>
-              <a class="uk-alert-close" uk-close></a>
-              <p><%= get_flash(@conn, :feedback_error) %></p>
-            </div>
-          <% else %>
-            <div class="uk-alert-danger uk-animation-toggle uk-animation-slide-top" uk-alert>
-              <a class="uk-alert-close" uk-close></a>
-              <p><%= get_flash(@conn, :feedback_ok) %></p>
-            </div>
-          <% end %>
-        <% end %>
         </div>
         <div role="main">
           <%= render @view_module, @view_template, assigns %>

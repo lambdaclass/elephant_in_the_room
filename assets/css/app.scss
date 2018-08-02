@@ -16,10 +16,18 @@ html {
   font-size: 22px;
   hyphens: auto;
 
-  @media all and (max-width:1240px){ font-size: 20px; }
-  @media all and (max-width:840px){ font-size: 20px; }
-  @media all and (max-width:800px){ font-size: 19px; }
-  @media all and (max-width:720px){ font-size: 18px; }
+  @media all and (max-width: 1240px) {
+    font-size: 20px;
+  }
+  @media all and (max-width: 840px) {
+    font-size: 20px;
+  }
+  @media all and (max-width: 800px) {
+    font-size: 19px;
+  }
+  @media all and (max-width: 720px) {
+    font-size: 18px;
+  }
 }
 
 a {
@@ -31,7 +39,18 @@ a:hover {
   text-decoration: none;
 }
 
-.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+.uk-h1,
+.uk-h2,
+.uk-h3,
+.uk-h4,
+.uk-h5,
+.uk-h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #000;
   font-family: $title-font;
   hyphens: none;
@@ -125,9 +144,9 @@ a:hover {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   transform-origin: right;
-  transition: all .3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   opacity: 1;
-  transform: rotate(270deg) translate(100%,-50%);
+  transform: rotate(270deg) translate(100%, -50%);
   right: -3px;
   top: 50%;
   bottom: auto;
@@ -135,28 +154,18 @@ a:hover {
   z-index: 1999999998 !important;
   overflow: visible !important;
 
-  // @media all and (max-width:1240px){ 
-    
+  // @media all and (max-width:1240px){
+
   // }
-  @media all and (max-width:1168px){ 
-    transform: none;
-    transform-origin: bottom;
-    top: 97%;
-
-   }
-  @media all and (max-width:800px){ 
-    transform: none;
-    transform-origin: bottom;
-    top: 97%;
-
-   }
-  @media all and (max-width:720px){
-    transform: none;
-    transform-origin: bottom;
-    top: 97%;
-
-   }
-
+  @media all and (max-width: 1168px) {
+    display: none;
+  }
+  @media all and (max-width: 800px) {
+    display: none;
+  }
+  @media all and (max-width: 720px) {
+    display: none;
+  }
 }
 
 .el-title {
@@ -208,6 +217,6 @@ a:hover {
 
 .site-content {
   @media (min-width: 1376px) {
-      min-width: 1280px;
+    min-width: 1280px;
   }
 }
