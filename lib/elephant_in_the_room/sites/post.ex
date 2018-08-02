@@ -4,7 +4,6 @@ defmodule ElephantInTheRoom.Sites.Post do
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.{Uploaders.Image}
   alias ElephantInTheRoom.Sites.Markdown
   alias ElephantInTheRoomWeb.Uploaders.Image
 
