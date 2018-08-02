@@ -10,5 +10,6 @@ defmodule ElephantInTheRoom.Repo.Migrations.AddAdsTable do
       add(:site_id, references(:sites, on_delete: :delete_all, type: :uuid), null: false)
       timestamps()
     end
+    create unique_index(:ads, [:name])
   end
 end

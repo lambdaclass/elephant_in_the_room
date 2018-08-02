@@ -22,6 +22,7 @@ defmodule ElephantInTheRoom.Sites.Ad do
     ad
     |> Changeset.cast(attrs, [:name, :content, :pos, :site_id])
     |> Changeset.validate_required([:name, :content, :pos, :site_id])
+    |> Changeset.unique_constraint(:name)
     |> Markdown.put_rendered_content
   end
 
