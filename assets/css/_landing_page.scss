@@ -10,6 +10,14 @@
   }
 }
 
+%landing-title {
+  hyphens: none;
+  text-transform: capitalize;
+  font-weight: 600;
+  line-height: 21px;
+  font-family: unset;
+}
+
 .post {
   position: relative;
 
@@ -39,7 +47,7 @@
     font-size: 70%;
   }
   .author {
-    font-size: 75%;
+    font-size: 65%;
   }
   .date {
     font-size: 70%;
@@ -88,10 +96,12 @@
   .image {
     float: right;
     width: 80px;
-    height: 80px
+    height: 80px;
+    margin-left: 5px;
   }
   .title {
-    font-size: 85%;
+    @extend %landing-title;
+    font-size: 82%;
     line-height: 1rem;
   }
 
@@ -109,6 +119,7 @@
   }
 
   .title {
+    @extend %landing-title;
     line-height: 1.2;
 
     @media screen and (min-width: 640px) {
@@ -159,8 +170,8 @@
   }
 
   .author {
-    color: #666;
-    font-size: 70%;
+    color: #777;
+    font-size: 65%;
   }
 
 }
@@ -201,8 +212,7 @@
   padding: 10px;
 
   p:first-child {
-    font-family: $title-font;
-    hyphens: none;
+    @extend %landing-title 
   }
   p:nth-child(2) {
     font-size: 80%;
