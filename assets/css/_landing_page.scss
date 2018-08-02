@@ -81,6 +81,7 @@
     margin-bottom: 0px;
   }
   .title {
+    @extend %landing-title;
     padding: 0;
     font-size: 1.6em;
     line-height: 1em;
