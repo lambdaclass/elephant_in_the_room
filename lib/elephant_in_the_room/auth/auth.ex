@@ -117,7 +117,7 @@ defmodule ElephantInTheRoom.Auth do
 
   """
   def delete_user(%User{} = user) do
-    Repo.delete(user)
+    User.delete_user(user)
   end
 
   @doc """
