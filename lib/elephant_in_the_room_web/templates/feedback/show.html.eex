@@ -1,0 +1,14 @@
+<h2><%= @feedback.id%></h2>
+
+<ul>
+  <li>
+    <strong>E-Mail:</strong>
+    <%= @feedback.email %>
+  </li>
+  <li>
+    <strong>Texto:</strong>
+    <%= @feedback.text %>
+  </li>
+</ul>
+
+<span><%= link "Regresar", to: site_feedback_path(@conn, :index, @site) %></span>

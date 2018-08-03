@@ -25,19 +25,19 @@
   <fieldset class="uk-fieldset">
     <div class="uk-margin">
       <%= label f, :text, "Texto", class: "uk-form-label" %>
-      <%= textarea f, :text, class: "uk-form-controls uk-input" %>
+      <%= textarea f, :text, class: "feedback-text uk-form-controls uk-input" %>
       <%= error_tag f, :text %>
     </div>
 
     <div class="uk-margin">
       <%= label f, :email, "E-mail", class: "uk-form-label" %>
-      <%= text_input f, :email, class: "uk-form-controls uk-input" %>
+      <%= text_input f, :email, class: "feedback-email uk-form-controls uk-input" %>
       <%= error_tag f, :email %>
     </div>
 
     <div class="uk-margin">
       <center>
-        <%= submit "Enviar", class: "uk-button uk-button-primary" %>
+        <%= submit "Enviar", class: "feedback-submit uk-button uk-button-primary" %>
       </center>
     </div>
   </fieldset>

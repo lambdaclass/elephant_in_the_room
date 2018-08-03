@@ -1,4 +1,6 @@
-<% alias ElephantInTheRoom.Sites %>
+<% alias ElephantInTheRoom.Sites 
+   alias ElephantInTheRoomWeb.FeedbackView
+%>
 
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
@@ -26,7 +28,7 @@
         </button>
         <div id="feedback-form" uk-modal>
           <div class="uk-modal-dialog uk-modal-body">
-            <%= render "_feedback_form.html", assigns %>
+            <%= FeedbackView.render "feedback_form.html", assigns %>
           </div>
         </div>
         </div>
