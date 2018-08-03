@@ -27,8 +27,8 @@ defmodule ElephantInTheRoomWeb.MagazineController do
     end
   end
 
-  def public_show(conn, %{"title" => title}) do
-    magazine = get_magazine(title)
+  def public_show(%{assigns: %{site: site}} = conn, %{"title" => title}) do
+    magazine = get_magazine(site.id, title)
 
     render(conn, "public_show.html", magazine: magazine)
   end
@@ -39,14 +39,14 @@ defmodule ElephantInTheRoomWeb.MagazineController do
     render(conn, "public_show.html", magazine: magazine)
   end
 
-  def edit(conn, %{"title" => title}) do
-    magazine = get_magazine(title)
+  def edit(%{assigns: %{site: site}} = conn, %{"title" => title}) do
+    magazine = get_magazine(site.id, title)
     changeset = Sites.change_magazine(magazine)
     render(conn, "edit.html", magazine: magazine, changeset: changeset)
   end
 
-  def update(conn, %{"title" => title, "magazine" => magazine_params}) do
-    magazine = get_magazine(title)
+  def update(%{assigns: %{site: site}} = conn, %{"title" => title, "magazine" => magazine_params}) do
+    magazine = get_magazine(site.id, title)
 
     case Sites.update_magazine(magazine, magazine_params) do
       {:ok, magazine} ->
@@ -59,16 +59,16 @@ defmodule ElephantInTheRoomWeb.MagazineController do
   end
 
   def delete(%{assigns: %{site: site}} = conn, %{"title" => title}) do
-    magazine = get_magazine(title)
+    magazine = get_magazine(site.id, title)
     {:ok, _magazine} = Sites.delete_magazine(magazine)
 
     conn
     |> put_flash(:info, "Magazine deleted successfully.")
-    |> redirect(to: site_magazine_path(conn, :index, site.name))
+    |> redirect(to: site_magazine_path(conn, :index, site.id))
   end
 
-  defp get_magazine(enc_title) do
+  defp get_magazine(site_id, enc_title) do
     URI.decode(enc_title)
-    |> Sites.get_magazine!([posts: :author])
+    |> Sites.get_magazine!(site_id, [posts: :author])
   end
 end

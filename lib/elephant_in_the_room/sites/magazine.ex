@@ -22,6 +22,7 @@ defmodule ElephantInTheRoom.Sites.Magazine do
     |> cast(attrs, [:title, :description, :site_id])
     |> validate_required([:title, :description, :site_id])
     |> assoc_constraint(:site)
+    |> unique_constraint(:title, name: :title_unique_index)
     |> validate_cover(attrs)
   end
 

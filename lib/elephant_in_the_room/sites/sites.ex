@@ -1010,8 +1010,8 @@ defmodule ElephantInTheRoom.Sites do
       ** (Ecto.NoResultsError)
 
   """
-  def get_magazine!(title, preloads \\ []) do
-    Repo.get_by!(Magazine, title: title)
+  def get_magazine!(title, site_id, preloads \\ []) do
+    Repo.get_by!(Magazine, site_id: site_id, title: title)
     |> Repo.preload(preloads)
   end
 

@@ -3,8 +3,8 @@ defmodule ElephantInTheRoomWeb.PostController do
   alias ElephantInTheRoom.{Sites, Sites.Post}
   alias Phoenix.Controller
 
-  def index(conn, %{"magazine_title" => magazine_title} = params) do
-    magazine = get_magazine!(magazine_title)
+  def index(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title} = params) do
+    magazine = get_magazine!(site.id, magazine_title)
     page = Sites.get_posts_paginated(magazine, params["page"])
 
     index(conn, params, page, magazine, nil)
@@ -31,7 +31,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def new(%{assigns: %{site: site}} = conn, params) do
-    magazine = if params["magazine_title"], do: get_magazine!(params["magazine_title"]), else: nil
+    magazine = if params["magazine_title"], do: get_magazine!(site.id, params["magazine_title"]), else: nil
     categories = Sites.list_categories(site)
     changeset = Sites.change_post(%Post{})
 
@@ -47,7 +47,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "post" => post_params}) do
-    magazine = get_magazine!(magazine_title)
+    magazine = get_magazine!(site.id, magazine_title)
     case Sites.create_post(magazine, post_params) do
       {:ok, post} ->
         path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, magazine, post)}"
@@ -76,8 +76,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "show.html", site: site, post: post, bread_crumb: [:sites, site, :posts, post])
   end
 
-  def public_show(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
-    magazine = get_magazine!(magazine_title)
+  def public_show(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
+    magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
     meta = Sites.gen_og_meta_for_post(conn, post)
     render(conn, "public_show.html", post: post, magazine: magazine, meta: meta)
@@ -90,8 +90,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     render(conn, "public_show.html", magazine: nil, post: post, meta: meta)
   end
 
-  def edit(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
-    magazine = get_magazine!(magazine_title)
+  def edit(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
+    magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
     edit(conn, magazine, post, [])
   end
@@ -118,12 +118,12 @@ defmodule ElephantInTheRoomWeb.PostController do
     )
   end
 
-  def update(conn, %{
+  def update(%{assigns: %{site: site}} = conn, %{
         "magazine_title" => magazine_title,
         "cover_delete" => "true",
         "slug" => slug
       }) do
-    magazine = get_magazine!(magazine_title)
+    magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
 
     {:ok, post_no_cover} = Sites.delete_cover(post)
@@ -143,7 +143,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug, "post" => post_params}) do
-    magazine = get_magazine!(magazine_title)
+    magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
 
     case Sites.update_post(post, post_params) do
@@ -179,7 +179,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   end
 
   def delete(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
-    magazine = get_magazine!(magazine_title)
+    magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
     {:ok, _post} = Sites.delete_post(post)
 
@@ -205,8 +205,8 @@ defmodule ElephantInTheRoomWeb.PostController do
     magazine_post_path(conn, :public_show, magazine_title, date.year, date.month, date.day, slug)
   end
 
-  defp get_magazine!(enc_title) do
+  defp get_magazine!(site_id, enc_title) do
     URI.decode(enc_title)
-    |> Sites.get_magazine!([posts: :author])
+    |> Sites.get_magazine!(site_id, [posts: :author])
   end
 end

@@ -11,6 +11,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateMagazines do
       timestamps()
     end
 
+    create(unique_index(:magazines, [:title, :site_id], name: :title_unique_index))
     create(index(:magazines, [:site_id]))
 
     alter table(:posts) do
