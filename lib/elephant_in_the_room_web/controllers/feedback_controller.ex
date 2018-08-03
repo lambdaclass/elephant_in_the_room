@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.FeedbackController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Feedback}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Feedback, Sites.Site}
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -25,7 +25,8 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :feedbacks]
     )
   end
 
@@ -47,6 +48,15 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     feedback_site = Sites.from_name!(site_name, Site)
     feedback = Sites.get_feedback!(feedback_site, id)
     render(conn, "show.html", feedback: feedback, site: feedback_site)
+  end
+
+  def delete(conn, %{"site_name" => site_name, "id" => id}) do
+    feedback_site = Sites.from_name!(site_name, Site)
+    feedback = Sites.get_feedback!(feedback_site, id)
+    {:ok, _feedback} = Sites.delete_feedback(feedback)
+
+    conn
+    |> redirect(to: site_feedback_path(conn, :index, site_name))
   end
 
   defp put_errors(conn, changeset) do

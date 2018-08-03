@@ -1,4 +1,12 @@
-<h2><%= @site.name %>&nbsp;&lt;&nbsp;Categorías</h2>
+<div class="admin-title">
+  <span class="title-text"> Categorías </span>
+  <div "admin-title-options">
+    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
+       href="<%= site_category_path(@conn, :new, URI.encode(@site.name)) %>">
+      Crear categoría
+    </a>
+  </div>
+</div>
 <p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
@@ -43,5 +51,4 @@
 
 <br>
 
-<span><%= link "Crear Categoría", to: site_category_path(@conn, :new, URI.encode(@site.name)) %></span>
 <span><%= link "Regresar", to: site_path(@conn, :show, URI.encode(@site.name)) %></span>
