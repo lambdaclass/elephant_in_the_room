@@ -1,0 +1,6 @@
+<%= 
+render "form.html", Map.merge(assigns, %{
+  action: site_ad_path(@conn, :create, @site.name),
+  title: "Crear nueva promocion"
+})
+%>

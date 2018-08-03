@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoom.Sites.Tag do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Site, Tag, Post}
 

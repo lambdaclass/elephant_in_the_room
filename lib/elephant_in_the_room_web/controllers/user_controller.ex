@@ -71,10 +71,7 @@ defmodule ElephantInTheRoomWeb.UserController do
 
   def delete(conn, %{"user_name" => name}) do
     user = Auth.from_username!(name)
-    {:ok, _user} = Auth.delete_user(user)
-
-    conn
-    |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: user_path(conn, :index))
+    Auth.delete_user(user)
+    redirect(conn,to: user_path(conn, :index))
   end
 end

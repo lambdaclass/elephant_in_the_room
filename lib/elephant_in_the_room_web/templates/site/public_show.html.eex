@@ -1,36 +1,27 @@
-<%
-  %{
-    section1: section_1_posts,
-    section2: section_2_posts,
-    section3: section_3_posts
-  } = get_posts(@site, %{section_1_amount: 3,
-                         section_2_amount: 4,
-                         section_3_amount: 8})
-%>
 <div class="site-content uk-container">
   <div class="main-body-public-content " uk-grid>
     <div class="uk-width-2-3@s uk-width-1-2@m main-post">
-      <%= render "_main_post.html", conn: @conn, post: Enum.at(section_1_posts, 0) %>
+      <%= render "_main_post.html", conn: @conn, post: Enum.at(@section_1_posts, 0) %>
     </div>
 
     <div class="uk-width-1-1@s uk-width-1-4@m uk-flex-first@m regular-posts">
       <div class="right-regular-post" uk-grid>
         <div class="uk-width-1-2@s uk-width-1-1@m">
-          <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 1) %>
+          <%= render "_regular_post.html", conn: @conn, post: Enum.at(@section_2_posts, 0) %>
         </div>
         <div class="uk-width-1-2@s uk-width-1-1@m">
-          <%= render "_regular_post.html", conn: @conn, post: Enum.at(section_1_posts, 2) %>
+          <%= render "_regular_post.html", conn: @conn, post: Enum.at(@section_2_posts, 1) %>
         </div>
       </div>
     </div>
 
     <div class="uk-width-1-3@s uk-width-1-4@m uk-flex uk-flex-column low-posts">
-      <%= for post <- Enum.take(section_2_posts, 4) do %>
+      <%= for post <- Enum.take(@section_3_posts, 4) do %>
         <%= render "_low_post.html", conn: @conn, post: post %>
       <% end %>
     </div>
 
-    <%= for post <- Enum.take(section_3_posts, 8) do %>
+    <%= for post <- Enum.take(@section_4_posts, 8) do %>
       <div class="uk-width-1-2@s uk-width-1-4@m">
         <%= render "_regular_post.html", conn: @conn, post: post, abstract: true %>
       </div>
@@ -42,7 +33,8 @@
     <div class="uk-width-1-2@m list-latest">
       <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
     </div>
-    <div class="uk-width-1-4@m list-authors">
+    <div class="uk-width-1-4@m">
+      <%= render "_ads.html", conn: @conn, ads: assigns[:ads] %>
       <%= render "_authors.html", conn: @conn,
             columnists_and_posts: @columnists_and_posts%>
     </div>

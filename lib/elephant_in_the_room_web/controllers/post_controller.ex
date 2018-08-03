@@ -79,13 +79,13 @@ defmodule ElephantInTheRoomWeb.PostController do
   def public_show(conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
     magazine = get_magazine!(magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
-    meta = Post.generate_og_meta(conn, post)
+    meta = Sites.gen_og_meta_for_post(conn, post)
     render(conn, "public_show.html", post: post, magazine: magazine, meta: meta)
   end
 
   def public_show(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do
     post = Sites.get_post_by_slug!(site.id, slug)
-    meta = Post.generate_og_meta(conn, post)
+    meta = Sites.gen_og_meta_for_post(conn, post)
     Post.increase_views_for_popular_by_1(post)
     render(conn, "public_show.html", magazine: nil, post: post, meta: meta)
   end

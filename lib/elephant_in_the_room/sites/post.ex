@@ -1,10 +1,11 @@
 defmodule ElephantInTheRoom.Sites.Post do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author, Magazine}
   alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoomWeb.{PostView, Uploaders.Image}
+  alias ElephantInTheRoom.Sites.Markdown
+  alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
     field(:title, :string)
@@ -14,9 +15,10 @@ defmodule ElephantInTheRoom.Sites.Post do
     field(:rendered_content, :string)
     field(:cover, :string)
     field(:thumbnail, :string)
+    field(:featured_level, :integer, default: 0)
 
     belongs_to(:site, Site, foreign_key: :site_id)
-    belongs_to(:author, Author, on_replace: :nilify)
+    belongs_to(:author, Author, foreign_key: :author_id, on_replace: :nilify)
     belongs_to(:magazine, Magazine)
 
     many_to_many(
@@ -46,18 +48,18 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level])
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content])
-    |> validate_site_or_magazine
-    |> put_rendered_content
+    |> validate_required_site_or_magazine
+    |> Markdown.put_rendered_content
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
   end
 
-  def validate_site_or_magazine(changeset) do
+  def validate_required_site_or_magazine(changeset) do
     case get_field(changeset, :site_id) do
       nil ->
         case get_field(changeset, :magazine_id) do
@@ -130,19 +132,6 @@ defmodule ElephantInTheRoom.Sites.Post do
     put_change(changeset, :thumbnail, url)
   end
 
-  def put_rendered_content(%Changeset{valid?: valid?} = changeset)
-      when not valid? do
-    changeset
-  end
-
-  def put_rendered_content(%Changeset{} = changeset) do
-    content = get_field(changeset, :content)
-    rendered_content = generate_markdown(content)
-
-    put_change(changeset, :rendered_content, rendered_content)
-    |> validate_length(:rendered_content, min: 1)
-  end
-
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
     changeset
@@ -162,7 +151,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def generate_markdown(input) do
-    Cmark.to_html(input, [:safe, :hardbreaks])
+    Cmark.to_html(input, [:hardbreaks])
   end
 
   def parse_categories(params) do
@@ -214,14 +203,9 @@ defmodule ElephantInTheRoom.Sites.Post do
     Map.put(attrs, "inserted_at", datetime)
   end
 
-  defp parse_date(attrs), do: attrs
-
-  def generate_og_meta(conn, %Post{title: title, thumbnail: _image, abstract: description} = post) do
-    type = "article"
-    title = "#{title} - #{conn.assigns.site.name}"
-    url = PostView.show_link(conn, post)
-    image = PostView.show_thumb_link(conn, post)
-    %{url: url, type: type, title: title, description: description, image: image}
+  defp parse_date(attrs) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+    Map.put(attrs, "inserted_at", now)
   end
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do

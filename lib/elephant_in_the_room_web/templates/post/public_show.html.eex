@@ -55,3 +55,13 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+(function() {
+  videos = document.querySelectorAll('iframe[src^="https://www.youtube.com/embed/"]');
+  videos.forEach(function(video){
+    video.width="100%";
+    video.height=400;
+  })
+})();
+</script>

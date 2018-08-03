@@ -51,9 +51,10 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     Enum.join(paragraphs, "\n\n")
   end
 
-  defp gen_md_image() do
+  def gen_md_image(), do: gen_md_image_path(Utils.get_image_path())
+  def gen_md_image_path(path) do
     description = Faker.Lorem.word()
-    image_content = File.read!(Utils.get_image_path())
+    image_content = File.read!(path)
 
     {:ok, image} = Sites.create_image(%{name: Ecto.UUID.generate(), binary: image_content})
     "![#{description}](/images/#{image.name})"
