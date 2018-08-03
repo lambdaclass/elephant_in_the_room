@@ -23,6 +23,15 @@ defmodule ElephantInTheRoomWeb.AdminView do
       %Site{} = site ->
         bread_crumb_get_link(Map.put(data, :site, site), rest,
           [bread_crumb_site(data.conn, site) | acc])
+      :roles ->
+        bread_crumb_get_link(data, rest,
+          [bread_crumb_roles(data.conn) | acc])
+      :authors ->
+        bread_crumb_get_link(data, rest,
+          [bread_crumb_authors(data.conn) | acc])
+      :users ->
+        bread_crumb_get_link(data, rest,
+          [bread_crumb_users(data.conn) | acc])
       :posts ->
         bread_crumb_get_link(data, rest,
           [bread_crumb_posts(data.conn,  data.site) | acc])
@@ -58,6 +67,18 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_site(conn, %Site{name: name}) do
     {name, site_path(conn, :show, name)}
+  end
+
+  defp bread_crumb_authors(conn) do
+    {"Autores", author_path(conn, :index)}
+  end
+
+  defp bread_crumb_roles(conn) do
+    {"Roles", role_path(conn, :index)}
+  end
+
+  defp bread_crumb_users(conn) do
+    {"Usuarios", user_path(conn, :index)}
   end
 
   defp bread_crumb_posts(conn, %Site{name: site_name}) do

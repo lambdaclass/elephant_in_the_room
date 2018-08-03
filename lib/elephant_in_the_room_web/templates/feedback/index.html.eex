@@ -11,27 +11,27 @@
     </tr>
   </thead>
   <tbody>
-<%= for feedback <- @feedbacks do %>
-    <tr>
-      <td>
-        <%= link feedback.id, to: site_feedback_path(@conn, :show, URI.encode(@site.name), feedback.id), 
-          class: "a" %>
-      </td>
-      <td>
-        <%= feedback.text %>
-      </td>
-      <td>
-        <%= feedback.email %>
-      </td>
-       <td class="text-right">
-        <span>
-          <%= link "", to: site_feedback_path(@conn, :delete, URI.encode(@site.name), feedback.id), 
-            method: :delete, data: [confirm: "¿Estás seguro?"], 
-            class: "el-menu-icon fa fa-trash-alt" %>
-        </span>
-      </td>
-    </tr>
-<% end %>
+    <%= for feedback <- @feedbacks do %>
+        <tr>
+          <td>
+            <%= link feedback.id, to: site_feedback_path(@conn, :show, URI.encode(@site.name), feedback.id), 
+              class: "a" %>
+          </td>
+          <td>
+            <%= feedback.text %>
+          </td>
+          <td>
+            <%= feedback.email %>
+          </td>
+          <td class="text-right">
+            <span>
+              <%= link "", to: site_feedback_path(@conn, :delete, URI.encode(@site.name), feedback.id), 
+                method: :delete, data: [confirm: "¿Estás seguro?"], 
+                class: "el-menu-icon fa fa-trash-alt" %>
+            </span>
+          </td>
+        </tr>
+    <% end %>
   </tbody>
 </table>
 
