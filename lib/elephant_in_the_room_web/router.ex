@@ -63,6 +63,7 @@ defmodule ElephantInTheRoomWeb.Router do
       get("/magazine", MagazineController, :current)
       get("/magazine/:title", MagazineController, :public_show)
       get("/magazine/:magazine_title/post/:year/:month/:day/:slug", PostController, :public_show, as: "magazine_post")
+      get("/magazines", MagazineController, :public_index)
     end
 
     scope "/admin" do
