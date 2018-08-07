@@ -12,6 +12,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     field(:description, :string)
     field(:favicon, :string)
     field(:title, :string)
+    field(:post_default_image, :string)
 
     has_many(:categories, Category, on_delete: :delete_all)
     has_many(:posts, Post, on_delete: :delete_all)
@@ -26,7 +27,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     new_attrs = put_title(attrs)
 
     site
-    |> cast(new_attrs, [:name, :host, :description, :title])
+    |> cast(new_attrs, [:name, :host, :description, :title, :post_default_image])
     |> validate_required([:name, :host])
     |> unique_constraint(:name)
     |> unique_constraint(:host)

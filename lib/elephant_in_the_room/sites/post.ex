@@ -100,11 +100,17 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def set_thumbnail(%Changeset{} = changeset) do
+    site =
+      changeset
+      |> get_field(:site_id)
+      |> Sites.get_site()
+
     url =
       case get_field(changeset, :cover) do
         nil ->
           case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
             nil ->
+              # site.post_image_placeholder
               "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
 
             [img] ->
