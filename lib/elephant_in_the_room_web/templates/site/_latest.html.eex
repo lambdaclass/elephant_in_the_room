@@ -16,7 +16,7 @@
             <% end %>
           </div>
           <div class="uk-width-expand uk-text-left">
-            <p class="uk-text-uppercase uk-margin-remove-bottom">
+            <p class="uk-margin-remove-bottom">
               <%= link post.title, to: SiteView.show_link_with_date(@conn, post) %>
             </p>
             <p class="uk-margin-small-top">
