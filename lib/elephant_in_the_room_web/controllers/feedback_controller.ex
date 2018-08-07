@@ -34,13 +34,18 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     case Sites.create_feedback(site, params) do
       {:ok, _feedback} ->
         conn
-        |> put_flash(:feedback_ok, "Feedback creado satisfactoriamente.")
-        |> redirect(to: site_path(conn, :public_show))
+        |> put_resp_content_type("application/json")
+        |> resp(200, Poison.encode!("Feedback creado satisfactoriamente."))
+        |> send_resp()
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        conn
-        |> put_errors(changeset)
-        |> redirect(to: site_path(conn, :public_show))
+        conn_with_errors = put_errors(conn, changeset)
+        errors = get_flash(conn_with_errors, :feedback_error)
+
+        conn_with_errors
+        |> put_resp_content_type("application/json")
+        |> resp(422, Poison.encode!(errors))
+        |> send_resp()
     end
   end
 
