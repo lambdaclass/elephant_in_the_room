@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.AdminView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.{Site, Post, Tag}
-  alias ElephantInTheRoom.Sites.Ad
-
+  alias ElephantInTheRoom.Sites.{Site, Post, Tag, Ad}
 
   def bread_crumb(conn, path) when is_list(path) do
     bread_crumb_get_link(conn, path)
@@ -102,6 +100,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_action(:new), do: "Nuevo"
+  defp bread_crumb_action(:root), do: ""
   defp bread_crumb_action(_), do: "Undefined Action"
 
 end
