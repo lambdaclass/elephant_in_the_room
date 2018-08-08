@@ -55,7 +55,7 @@ defmodule ElephantInTheRoom.Sites.Site do
 
     if Map.has_key?(attrs, :post_default_image),
       do: changeset,
-      else: Changeset.put_change(changeset, :post_default_image, default.name)
+      else: Changeset.put_change(changeset, :post_default_image, "/images/#{default.name}")
   end
 
   defp put_title(attrs) do
