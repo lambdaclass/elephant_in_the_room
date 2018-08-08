@@ -11,7 +11,7 @@
     <% _ -> %>
  <% end %>
 
-  <div class="uk-margin-large-top uk-margin-large-bottom">
+  <div class="uk-margin-large-top uk-margin-large-bottom" uk-grid>
     <div class="uk-width-3-4">
       <div class="category-main-post">
         <div class="uk-width-1-1 uk-text-center uk-text-left@s">
@@ -44,6 +44,21 @@
         </div>
         <hr>
       <% end %>
+    </div>
+
+    <div class="uk-width-1-4">
+      <div>
+        <%= link "Ediciones", to: magazine_path(@conn, :public_index) %>
+        <div class="uk-child-width-1-2" uk-grid>
+          <%= for magazine <- @magazines do %>
+            <div>
+              <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+                <img class="magazine-index-cover" data-src="<%= image_link(magazine.cover) %>" uk-img>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

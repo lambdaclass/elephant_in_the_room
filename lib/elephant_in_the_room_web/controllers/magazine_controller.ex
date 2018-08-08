@@ -29,8 +29,9 @@ defmodule ElephantInTheRoomWeb.MagazineController do
 
   def public_show(%{assigns: %{site: site}} = conn, %{"title" => title}) do
     magazine = get_magazine(site.id, title)
+    magazines = Sites.list_magazines(site, 0)
 
-    render(conn, "public_show.html", magazine: magazine)
+    render(conn, "public_show.html", magazine: magazine, magazines: magazines)
   end
 
   def public_index(%{assigns: %{site: site}} = conn, params) do
@@ -38,10 +39,11 @@ defmodule ElephantInTheRoomWeb.MagazineController do
     render(conn, "public_index.html", magazines: magazines)
   end
 
-  def current(conn, _params) do
+  def current(%{assigns: %{site: site}} = conn, _params) do
     magazine = Sites.get_current_magazine([posts: :author])
+    magazines = Sites.list_magazines(site, 0)
 
-    render(conn, "public_show.html", magazine: magazine)
+    render(conn, "public_show.html", magazine: magazine, magazines: magazines)
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"title" => title}) do
