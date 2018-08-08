@@ -1,12 +1,9 @@
 defmodule ElephantInTheRoom.Sites.Ad do
   import Ecto.Query, warn: false
   use ElephantInTheRoom.Schema
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Markdown
-  alias ElephantInTheRoom.Sites.Ad
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Sites
-  alias Ecto.Changeset
+  import Ecto.Changeset
+  alias ElephantInTheRoom.{Sites, Repo}
+  alias ElephantInTheRoom.Sites.{Markdown, Ad, Site}
 
   schema "ads" do
     field(:name, :string)
@@ -18,12 +15,15 @@ defmodule ElephantInTheRoom.Sites.Ad do
   end
 
   def changeset(), do: changeset(%Ad{}, %{})
+
   def changeset(%Ad{} = ad, attrs \\ %{}) do
     ad
-    |> Changeset.cast(attrs, [:name, :content, :pos, :site_id])
-    |> Changeset.validate_required([:name, :content, :pos, :site_id])
-    |> Changeset.unique_constraint(:name)
-    |> Markdown.put_rendered_content
+    |> cast(attrs, [:name, :content, :pos, :site_id])
+    |> validate_required([:name, :content, :pos, :site_id])
+    |> unique_constraint(:name)
+
+    unique_constraint(:slug, name: :slug_unique_index)
+    |> Markdown.put_rendered_content()
   end
 
   def create(%Site{id: site_id}, attrs) do
@@ -33,25 +33,37 @@ defmodule ElephantInTheRoom.Sites.Ad do
   end
 
   def get(%Site{id: site_id}, ad_name) when is_binary(ad_name) do
-    ad_query = from a in Ad,
-      where: a.name == ^ad_name and a.site_id == ^site_id
+    ad_query =
+      from(
+        a in Ad,
+        where: a.name == ^ad_name and a.site_id == ^site_id
+      )
 
     Repo.one(ad_query)
   end
+
   def get(%Site{id: site_id}, :all) do
-    ads = from a in Ad,
-      where: a.site_id == ^site_id,
-      order_by: [asc: a.pos, desc: a.updated_at]
+    ads =
+      from(
+        a in Ad,
+        where: a.site_id == ^site_id,
+        order_by: [asc: a.pos, desc: a.updated_at]
+      )
+
     Repo.all(ads)
   end
+
   def get(%Site{id: site_id}, options) do
-    %{index: {index_from, _}, bigger_amount: amount} = pagination =
-      Sites.pagination_opts(options)
-    ads = from a in Ad,
-      where: a.site_id == ^site_id,
-      order_by: [asc: a.pos, desc: a.updated_at],
-      limit: ^amount,
-      offset: ^index_from
+    %{index: {index_from, _}, bigger_amount: amount} = pagination = Sites.pagination_opts(options)
+
+    ads =
+      from(
+        a in Ad,
+        where: a.site_id == ^site_id,
+        order_by: [asc: a.pos, desc: a.updated_at],
+        limit: ^amount,
+        offset: ^index_from
+      )
 
     ads_query_result = Repo.all(ads)
     Sites.pagination_result(ads_query_result, pagination)
@@ -68,5 +80,4 @@ defmodule ElephantInTheRoom.Sites.Ad do
       _ -> {:error, :not_exists}
     end
   end
-
 end
