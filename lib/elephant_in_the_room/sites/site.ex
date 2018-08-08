@@ -26,7 +26,6 @@ defmodule ElephantInTheRoom.Sites.Site do
   @doc false
   def changeset(%Site{} = site, attrs) do
     new_attrs = put_title(attrs)
-    IO.inspect(attrs)
 
     site
     |> cast(new_attrs, [:name, :host, :description, :title, :post_default_image])
@@ -39,8 +38,17 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> check_post_default_image(attrs)
   end
 
-  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => _image}),
+  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => nil}),
+    do: Changeset.put_change(changeset, :post_default_image, nil)
+
+  defp check_post_default_image(%Changeset{valid?: false} = changeset, _attrs),
     do: changeset
+
+  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => post_image})
+       when post_image != nil do
+    {:ok, image_name} = Image.store(%{post_image | filename: Ecto.UUID.generate()})
+    Changeset.put_change(changeset, :post_default_image, "/images/#{image_name}")
+  end
 
   defp check_post_default_image(%Changeset{} = changeset, attrs) do
     default = Sites.get_image_by_name!("grey_placeholder")
