@@ -990,10 +990,12 @@ defmodule ElephantInTheRoom.Sites do
       [%Magazine{}, ...]
 
   """
-  def list_magazines(site) do
+  def list_magazines(site, page) do
+    page_number = if page, do: page, else: 0
     Magazine
     |> where([m], m.site_id == ^site.id)
-    |> Repo.all()
+    |> order_by(desc: :inserted_at)
+    |> Repo.paginate(page: page_number)
   end
 
   @doc """

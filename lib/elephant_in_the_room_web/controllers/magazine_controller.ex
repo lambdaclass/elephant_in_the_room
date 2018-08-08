@@ -4,8 +4,8 @@ defmodule ElephantInTheRoomWeb.MagazineController do
   alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.Magazine
 
-  def index(%{assigns: %{site: site}} = conn, _params) do
-    magazines = Sites.list_magazines(site)
+  def index(%{assigns: %{site: site}} = conn, params) do
+    magazines = Sites.list_magazines(site, params["page"])
     render(conn, "index.html", magazines: magazines)
   end
 
@@ -33,8 +33,8 @@ defmodule ElephantInTheRoomWeb.MagazineController do
     render(conn, "public_show.html", magazine: magazine)
   end
 
-  def public_index(%{assigns: %{site: site}} = conn, _params) do
-    magazines = Sites.list_magazines(site)
+  def public_index(%{assigns: %{site: site}} = conn, params) do
+    magazines = Sites.list_magazines(site, params["page"])
     render(conn, "public_index.html", magazines: magazines)
   end
 

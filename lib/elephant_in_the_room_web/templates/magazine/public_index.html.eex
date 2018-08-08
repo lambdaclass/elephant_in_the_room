@@ -19,4 +19,24 @@
     </div>
     <hr>
   <% end %>
+
+  <ul class="uk-pagination uk-flex-center">
+    <%= if @magazines.page_number > 1 do %>
+      <li>
+        <%= link to: magazine_path(@conn, :public_index, page: @magazines.page_number-1) do %>
+          <span uk-pagination-previous></span>
+          Anterior
+        <% end %>
+      </li>
+    <% end %>
+    <li><%= @magazines.page_number %></li>
+    <%= if @magazines.page_number < @magazines.total_pages do %>
+      <li>
+        <%= link to: magazine_path(@conn, :public_index, page: @magazines.page_number+1) do %>
+          Siguiente
+          <span uk-pagination-next></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>

@@ -22,5 +22,25 @@
   </tbody>
 </table>
 
+<ul class="uk-pagination uk-flex-center">
+  <%= if @magazines.page_number > 1 do %>
+    <li>
+      <%= link to: site_magazine_path(@conn, :index, @site.name, page: @magazines.page_number-1) do %>
+        <span uk-pagination-previous></span>
+        Anterior
+      <% end %>
+    </li>
+  <% end %>
+  <li><%= @magazines.page_number %></li>
+  <%= if @magazines.page_number < @magazines.total_pages do %>
+    <li>
+      <%= link to: site_magazine_path(@conn, :index, @site.name, page: @magazines.page_number+1) do %>
+        Siguiente
+        <span uk-pagination-next></span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
 <p><%= link "Crear Revista", to: site_magazine_path(@conn, :new, @site.name) %></p>
 <p><%= link "Regresar", to: site_path(@conn, :show, @site.name) %></p>
