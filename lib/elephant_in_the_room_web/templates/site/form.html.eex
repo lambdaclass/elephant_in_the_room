@@ -49,6 +49,17 @@
       <%= file_input f, :image %>
       <%= error_tag f, :image %>
     </div>
+    <br/>
+    <div class="form-group uk-width-1-1">
+      <%= label f, :post_default_image, "Imagen por defecto de los articulos", class: "uk-form-label"%>
+      <%= if @changeset.data.post_default_image do %>
+        <img src="<%= @changeset.data.post_default_image %>" width="200">
+        <%= submit "Eliminar imagen", name: "post_image_delete", value: "true" %>
+      <% end %>
+      <%= file_input f, :post_default_image %>
+      <%= error_tag f, :post_default_image %>
+    </div>
+
 
     <div class="uk-margin">
       <%= submit "Enviar", class: "uk-button uk-button-primary" %>

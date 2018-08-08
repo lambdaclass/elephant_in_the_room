@@ -3,6 +3,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
   schema "sites" do
@@ -25,6 +26,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   @doc false
   def changeset(%Site{} = site, attrs) do
     new_attrs = put_title(attrs)
+    IO.inspect(attrs)
 
     site
     |> cast(new_attrs, [:name, :host, :description, :title, :post_default_image])
@@ -34,6 +36,18 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> store_image(attrs)
     |> validate_favicon(attrs)
     |> check_title(attrs)
+    |> check_post_default_image(attrs)
+  end
+
+  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => _image}),
+    do: changeset
+
+  defp check_post_default_image(%Changeset{} = changeset, attrs) do
+    default = Sites.get_image_by_name!("grey_placeholder")
+
+    if Map.has_key?(attrs, :post_default_image),
+      do: changeset,
+      else: Changeset.put_change(changeset, :post_default_image, default.name)
   end
 
   defp put_title(attrs) do
