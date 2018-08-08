@@ -10,7 +10,8 @@ defmodule ElephantInTheRoom.Sites.Ad do
     field(:content, :string)
     field(:rendered_content, :string)
     field(:pos, :integer)
-    belongs_to(:site, Site, foreign_key: :site_id)
+    belongs_to(:site, Site)
+
     timestamps()
   end
 
@@ -20,9 +21,7 @@ defmodule ElephantInTheRoom.Sites.Ad do
     ad
     |> cast(attrs, [:name, :content, :pos, :site_id])
     |> validate_required([:name, :content, :pos, :site_id])
-    |> unique_constraint(:name)
-
-    unique_constraint(:slug, name: :slug_unique_index)
+    |> unique_constraint(:name, name: :unique_ad_name)
     |> Markdown.put_rendered_content()
   end
 
