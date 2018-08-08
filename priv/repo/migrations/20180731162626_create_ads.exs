@@ -11,6 +11,6 @@ defmodule ElephantInTheRoom.Repo.Migrations.AddAdsTable do
       timestamps()
     end
 
-    create(unique_index(:ads, [:name, :site_id]), name: :unique_ad_name)
+    create(unique_index(:ads, [:name, :site_id], name: :unique_ad_name))
   end
 end
