@@ -28,7 +28,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     new_attrs = put_title(attrs)
 
     site
-    |> cast(new_attrs, [:name, :host, :description, :title, :post_default_image])
+    |> cast(new_attrs, [:name, :host, :description, :title])
     |> validate_required([:name, :host])
     |> unique_constraint(:name)
     |> unique_constraint(:host)
