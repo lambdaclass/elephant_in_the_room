@@ -47,7 +47,8 @@
              class="uk-navbar-dropdown dropdown-container">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><%= link "Edición actual", to: magazine_path(@conn, :current) %></li>
-            <li><a href="#">Todas las ediciones</a></li>
+            <li><a href="#"></a></li>
+            <li><%= link "Todas las ediciones", to: magazine_path(@conn, :public_index) %></li>
           </ul>
         </div>
       </li>

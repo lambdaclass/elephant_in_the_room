@@ -1,0 +1,22 @@
+<div class="uk-container uk-container-small uk-margin-large-top uk-margin-large-bottom">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase category-title">Ediciones</h1>
+
+  <%= for magazine <- @magazines do %>
+    <div class="magazine" uk-grid>
+      <div class="uk-width-1-6">
+        <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+          <img class="magazine-index-cover" data-src="<%= image_link(magazine.cover) %>" uk-img>
+        <% end %>
+      </div>
+      <div class="uk-width-4-5">
+        <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+          <p class="uk-margin-small-bottom uk-text-bold">
+            <%= magazine.title %>
+          </p>
+        <% end %>
+        <p class="uk-visible@s"><%= magazine.description %></p>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
