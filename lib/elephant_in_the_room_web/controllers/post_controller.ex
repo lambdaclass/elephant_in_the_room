@@ -7,7 +7,7 @@ defmodule ElephantInTheRoomWeb.PostController do
     magazine = get_magazine!(site.id, magazine_title)
     page = Sites.get_posts_paginated(magazine, params["page"])
 
-    index(conn, params, page, magazine, nil)
+    index(conn, params, page, magazine, [:sites, site, :magazines, magazine, :posts])
   end
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -93,7 +93,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   def edit(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug}) do
     magazine = get_magazine!(site.id, magazine_title)
     post = Sites.get_magazine_post_by_slug!(magazine, slug)
-    edit(conn, magazine, post, [])
+    edit(conn, magazine, post, [:sites, site, :magazines, magazine, :posts, post])
   end
 
   def edit(%{assigns: %{site: site}} = conn, %{"slug" => slug}) do

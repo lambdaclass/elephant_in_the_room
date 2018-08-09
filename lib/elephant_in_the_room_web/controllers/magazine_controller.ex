@@ -6,7 +6,7 @@ defmodule ElephantInTheRoomWeb.MagazineController do
 
   def index(%{assigns: %{site: site}} = conn, params) do
     magazines = Sites.list_magazines(site, params["page"])
-    render(conn, "index.html", magazines: magazines)
+    render(conn, "index.html", magazines: magazines, bread_crumb: [:sites, site, :magazines])
   end
 
   def new(conn, _params) do
