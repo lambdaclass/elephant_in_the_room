@@ -33,7 +33,7 @@ defmodule ElephantInTheRoomWeb.PostController do
   def new(%{assigns: %{site: site}} = conn, params) do
     magazine = if params["magazine_title"], do: get_magazine!(site.id, params["magazine_title"]), else: nil
     categories = Sites.list_categories(site)
-    changeset = Sites.change_post(%Post{})
+    changeset = Post.changeset(%Post{}, %{})
 
     render(
       conn,

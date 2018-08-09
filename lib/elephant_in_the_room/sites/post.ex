@@ -49,10 +49,10 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     post
     |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level])
-    |> put_assoc(:tags, parse_tags(attrs))
-    |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content])
     |> validate_required_site_or_magazine
+    |> do_put_assoc(:tags, attrs)
+    |> do_put_assoc(:categories, attrs)
+    |> validate_required([:title, :content])
     |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
@@ -75,6 +75,32 @@ defmodule ElephantInTheRoom.Sites.Post do
           _ ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
+    end
+  end
+
+  def do_put_assoc(%Changeset{valid?: false} = changeset, _assoc, _attrs) do
+    changeset
+  end
+
+  def do_put_assoc(changeset, assoc, attrs) do
+    site_id = case get_field(changeset, :site_id) do
+      nil ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            nil
+          magazine_id ->
+            magazine = Sites.get_magazine(magazine_id)
+            magazine.site_id
+        end
+      site_id ->
+        site_id
+    end
+
+    case assoc do
+      :tags ->
+        put_assoc(changeset, :tags, parse_tags(site_id, attrs))
+      :categories ->
+        put_assoc(changeset, :categories, parse_categories(site_id, attrs))
     end
   end
 
@@ -154,9 +180,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     Cmark.to_html(input, [:hardbreaks])
   end
 
-  def parse_categories(params) do
-    site_id = params["site_id"]
-
+  def parse_categories(site_id, params) do
     (params["categories"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.map(fn name -> get_category(name, site_id) end)
@@ -166,9 +190,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     Repo.get_by!(Category, name: name, site_id: site_id)
   end
 
-  defp parse_tags(params) do
-    site_id = params["site_id"]
-
+  defp parse_tags(site_id, params) do
     (params["tags"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.uniq()
