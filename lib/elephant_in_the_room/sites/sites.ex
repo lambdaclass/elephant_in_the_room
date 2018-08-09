@@ -586,13 +586,13 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def update_post(%Post{magazine_id: nil} = post, attrs) do
+    Featured.invalidate_cache(post.site_id)
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
   end
 
   def update_post(%Post{} = post, attrs) do
-    Featured.invalidate_cache(post.site_id)
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
@@ -611,11 +611,11 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def delete_post(%Post{magazine_id: nil} = post) do
+    Featured.invalidate_cache(post.site_id)
     Repo.delete(post)
   end
 
   def delete_post(%Post{} = post) do
-    Featured.invalidate_cache(post.site_id)
     Repo.delete(post)
   end
 
@@ -629,11 +629,11 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_post(%Post{magazine_id: nil} = post) do
+    Featured.invalidate_cache(post.site_id)
     Post.changeset(post, %{})
   end
 
   def change_post(%Post{} = post) do
-    Featured.invalidate_cache(post.site_id)
     Post.changeset(post, %{})
   end
 
