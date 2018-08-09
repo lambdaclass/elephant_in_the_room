@@ -13,6 +13,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
+      "inserted_at" => generate_inserted_at(),
       "slug" => ""
     }
   end
@@ -37,6 +38,17 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def insert_many(n, attrs \\ %{}) do
     Enum.to_list(1..n)
     |> Enum.map(fn _ -> insert_one(attrs) end)
+  end
+
+  defp generate_inserted_at() do
+    now = NaiveDateTime.utc_now
+    hour = :rand.uniform(23)
+    minute = :rand.uniform(59)
+    second = :rand.uniform(59)
+    case NaiveDateTime.new(now.year, now.month, now.day, hour, minute, second) do
+      {:ok, time} -> time
+      _ -> generate_inserted_at()
+    end
   end
 
   defp generate_content() do

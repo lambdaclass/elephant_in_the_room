@@ -202,11 +202,7 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     Map.put(attrs, "inserted_at", datetime)
   end
-
-  defp parse_date(attrs) do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
-    Map.put(attrs, "inserted_at", now)
-  end
+  defp parse_date(attrs), do: attrs
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
