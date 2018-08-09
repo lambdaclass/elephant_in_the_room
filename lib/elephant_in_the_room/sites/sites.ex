@@ -630,7 +630,6 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def change_post(%Post{magazine_id: nil} = post) do
-    Featured.invalidate_cache(post.site_id)
     Post.changeset(post, %{})
   end
 
