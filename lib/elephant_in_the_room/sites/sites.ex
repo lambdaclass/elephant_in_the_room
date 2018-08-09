@@ -1017,8 +1017,9 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.preload(preloads)
   end
 
-  def get_current_magazine(preloads) do
+  def get_current_magazine(site_id, preloads) do
     [current] = Magazine
+      |> where(site_id: ^site_id)
       |> order_by(desc: :inserted_at)
       |> limit(1)
       |> Repo.all()

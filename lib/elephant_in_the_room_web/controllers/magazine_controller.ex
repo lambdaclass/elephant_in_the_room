@@ -40,7 +40,7 @@ defmodule ElephantInTheRoomWeb.MagazineController do
   end
 
   def current(%{assigns: %{site: site}} = conn, _params) do
-    magazine = Sites.get_current_magazine([posts: :author])
+    magazine = Sites.get_current_magazine(site.id, [posts: :author])
     magazines = Sites.list_magazines(site, 0)
 
     render(conn, "public_show.html", magazine: magazine, magazines: magazines)
