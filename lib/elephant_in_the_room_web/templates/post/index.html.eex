@@ -1,5 +1,5 @@
 <div class="admin-title">
-  <span class="title-text">Posts</span>
+  <span class="title-text">Artículos</span>
   <div "admin-title-options">
     <%= link "crear nuevo", to: URI.encode(site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine])), class: "uk-button uk-button-primary uk-button-small admin-mini-button" %>
   </div>
