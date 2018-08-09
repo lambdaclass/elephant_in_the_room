@@ -7,7 +7,7 @@
 
   <%= case get_logged_user(@conn) do %>
     <%= {:ok, _user, _} -> %>
-      <%= link "Editar", to: site_magazine_path(@conn, :edit, @site.name, @magazine.title), class: "post-edit-button"%>
+      <%= link "Editar", to: URI.encode(site_magazine_path(@conn, :edit, @site.name, @magazine.title)), class: "post-edit-button"%>
     <% _ -> %>
  <% end %>
 
@@ -47,13 +47,15 @@
     </div>
 
     <div class="uk-width-1-4">
-      <div>
+      <div class="uk-text-center magazine-archive">
         <%= link "Ediciones", to: magazine_path(@conn, :public_index) %>
+        <hr>
         <div class="uk-child-width-1-2" uk-grid>
           <%= for magazine <- @magazines do %>
-            <div>
-              <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+            <div class="uk-margin-remove-top">
+              <%= link to: URI.encode(magazine_path(@conn, :public_show, magazine.title)) do %>
                 <img class="magazine-index-cover" data-src="<%= image_link(magazine.cover) %>" uk-img>
+                <p><%= magazine.title %></p>
               <% end %>
             </div>
           <% end %>

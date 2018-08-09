@@ -10,6 +10,6 @@ defmodule ElephantInTheRoomWeb.MagazineView do
     month = post.inserted_at.month
     day = post.inserted_at.day
 
-    magazine_post_path(conn, :public_show, magazine, year, month, day, post.slug)
+    URI.encode(magazine_post_path(conn, :public_show, magazine.title, year, month, day, post.slug))
   end
 end
