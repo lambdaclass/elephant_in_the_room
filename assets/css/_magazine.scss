@@ -1,0 +1,28 @@
+.magazine-cover {
+  height: 840px;
+  object-fit: cover;
+}
+
+.magazine-index-cover {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.magazine {
+  p {
+    font-size: 90%;
+  }
+}
+
+.magazine-archive {
+  p {
+    margin-top: 10px;
+    font-size: 60%;
+    hyphens: none;
+  }
+}
+
+.magazine-author {
+  font-size: 80%;
+}

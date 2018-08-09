@@ -2,7 +2,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
+  alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author, Magazine}
   alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoom.Sites.Markdown
   alias ElephantInTheRoomWeb.Uploaders.Image
@@ -19,6 +19,7 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     belongs_to(:site, Site, foreign_key: :site_id)
     belongs_to(:author, Author, foreign_key: :author_id, on_replace: :nilify)
+    belongs_to(:magazine, Magazine)
 
     many_to_many(
       :categories,
@@ -47,23 +48,60 @@ defmodule ElephantInTheRoom.Sites.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [
-      :title,
-      :content,
-      :slug,
-      :inserted_at,
-      :abstract,
-      :site_id,
-      :author_id,
-      :featured_level
-    ])
-    |> put_assoc(:tags, parse_tags(attrs))
-    |> put_assoc(:categories, parse_categories(attrs))
-    |> validate_required([:title, :content, :site_id])
+    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level])
+    |> validate_required_site_or_magazine
+    |> do_put_assoc(:tags, attrs)
+    |> do_put_assoc(:categories, attrs)
+    |> validate_required([:title, :content])
     |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
+  end
+
+  def validate_required_site_or_magazine(changeset) do
+    case get_field(changeset, :site_id) do
+      nil ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            add_error(changeset, :site_id, "Site does not exist")
+          _ ->
+            changeset
+        end
+      _ ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            changeset
+          _ ->
+            add_error(changeset, :site_id, "Post can't belong to site and magazine")
+        end
+    end
+  end
+
+  def do_put_assoc(%Changeset{valid?: false} = changeset, _assoc, _attrs) do
+    changeset
+  end
+
+  def do_put_assoc(changeset, assoc, attrs) do
+    site_id = case get_field(changeset, :site_id) do
+      nil ->
+        case get_field(changeset, :magazine_id) do
+          nil ->
+            nil
+          magazine_id ->
+            magazine = Sites.get_magazine(magazine_id)
+            magazine.site_id
+        end
+      site_id ->
+        site_id
+    end
+
+    case assoc do
+      :tags ->
+        put_assoc(changeset, :tags, parse_tags(site_id, attrs))
+      :categories ->
+        put_assoc(changeset, :categories, parse_categories(site_id, attrs))
+    end
   end
 
   def put_site_id(%{site_name: site_name}) do
@@ -100,17 +138,12 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def set_thumbnail(%Changeset{} = changeset) do
-    {:ok, site} =
-      changeset
-      |> get_field(:site_id)
-      |> Sites.get_site()
-
     url =
       case get_field(changeset, :cover) do
         nil ->
           case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
             nil ->
-              site.post_default_image
+              get_default_image(changeset)
 
             [img] ->
               img
@@ -147,9 +180,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     Cmark.to_html(input, [:hardbreaks])
   end
 
-  def parse_categories(params) do
-    site_id = params["site_id"]
-
+  def parse_categories(site_id, params) do
     (params["categories"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.map(fn name -> get_category(name, site_id) end)
@@ -159,9 +190,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     Repo.get_by!(Category, name: name, site_id: site_id)
   end
 
-  defp parse_tags(params) do
-    site_id = params["site_id"]
-
+  defp parse_tags(site_id, params) do
     (params["tags"] || [])
     |> Enum.reject(fn s -> s == "" end)
     |> Enum.uniq()
@@ -201,5 +230,16 @@ defmodule ElephantInTheRoom.Sites.Post do
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
+  end
+
+  def get_default_image(%Changeset{} = changeset) do
+    case get_field(changeset, :site_id) do
+      nil ->
+        magazine = Sites.get_magazine(get_field(changeset, :magazine_id), [:site])
+        magazine.site.post_default_image
+      site_id ->
+        {:ok, site} = Sites.get_site(site_id)
+        site.post_default_image
+    end
   end
 end

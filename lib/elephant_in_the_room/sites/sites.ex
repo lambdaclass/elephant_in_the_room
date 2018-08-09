@@ -7,8 +7,8 @@ defmodule ElephantInTheRoom.Sites do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoomWeb.{SiteView, PostView, Utils.Utils}
-  alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author, Image, Featured}
+  alias ElephantInTheRoomWeb.{PostView, SiteView, Utils.Utils}
+  alias ElephantInTheRoom.Sites.{Author, Category, Featured, Image, Magazine, Post, Site, Tag}
 
   @doc """
   Returns the list of sites.
@@ -344,8 +344,41 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
+  def get_posts_paginated(%Site{id: site_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: page_number)
+    end
+  end
+
+  def get_posts_paginated(%Magazine{id: magazine_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: page_number)
+    end
+  end
+
   def get_post_by_slug!(site_id, slug, preload \\ @default_post_preload) do
     Repo.get_by!(Post, slug: slug, site_id: site_id)
+    |> Repo.preload(preload)
+  end
+
+  def get_magazine_post_by_slug!(%Magazine{id: magazine_id}, slug, preload \\ @default_post_preload) do
+    Repo.get_by!(Post, slug: slug, magazine_id: magazine_id)
     |> Repo.preload(preload)
   end
 
@@ -491,9 +524,9 @@ defmodule ElephantInTheRoom.Sites do
 
   """
 
-  def create_post(site, attrs) do
+  def create_post(%Site{id: site_id}, attrs) do
     post_attrs =
-      Map.put(attrs, "site_id", site.id)
+      Map.put(attrs, "site_id", site_id)
       |> ensure_author_exists
 
     inserted_post =
@@ -504,12 +537,30 @@ defmodule ElephantInTheRoom.Sites do
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
-        Featured.invalidate_cache(site.id)
+        Featured.invalidate_cache(site_id)
         inserted_post
 
       _ ->
         inserted_post
     end
+  end
+
+  def create_post(%Magazine{id: magazine_id}, attrs) do
+    post_attrs =
+      Map.put(attrs, "magazine_id", magazine_id)
+      |> ensure_author_exists
+
+    %Post{}
+    |> Post.changeset(post_attrs)
+    |> Repo.insert()
+  end
+
+  def create_magazine_post(attrs) do
+    new_attrs = ensure_author_exists(attrs)
+
+    %Post{}
+    |> Post.changeset(new_attrs)
+    |> Repo.insert
   end
 
   def ensure_author_exists(attrs) do
@@ -534,9 +585,14 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_post(%Post{} = post, attrs) do
+  def update_post(%Post{magazine_id: nil} = post, attrs) do
     Featured.invalidate_cache(post.site_id)
+    post
+    |> Post.changeset(ensure_author_exists(attrs))
+    |> Repo.update()
+  end
 
+  def update_post(%Post{} = post, attrs) do
     post
     |> Post.changeset(ensure_author_exists(attrs))
     |> Repo.update()
@@ -554,8 +610,12 @@ defmodule ElephantInTheRoom.Sites do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_post(%Post{} = post) do
+  def delete_post(%Post{magazine_id: nil} = post) do
     Featured.invalidate_cache(post.site_id)
+    Repo.delete(post)
+  end
+
+  def delete_post(%Post{} = post) do
     Repo.delete(post)
   end
 
@@ -568,8 +628,12 @@ defmodule ElephantInTheRoom.Sites do
       %Ecto.Changeset{source: %Post{}}
 
   """
-  def change_post(%Post{} = post) do
+  def change_post(%Post{magazine_id: nil} = post) do
     Featured.invalidate_cache(post.site_id)
+    Post.changeset(post, %{})
+  end
+
+  def change_post(%Post{} = post) do
     Post.changeset(post, %{})
   end
 
@@ -928,6 +992,122 @@ defmodule ElephantInTheRoom.Sites do
   """
   def change_image(%Image{} = image) do
     Image.changeset(image, %{})
+  end
+
+  @doc """
+  Returns the list of magazines.
+
+  ## Examples
+
+      iex> list_magazines()
+      [%Magazine{}, ...]
+
+  """
+  def list_magazines(site, page) do
+    page_number = if page, do: page, else: 0
+    Magazine
+    |> where([m], m.site_id == ^site.id)
+    |> order_by(desc: :inserted_at)
+    |> Repo.paginate(page: page_number)
+  end
+
+  @doc """
+  Gets a single magazine.
+
+  Raises `Ecto.NoResultsError` if the Magazine does not exist.
+
+  ## Examples
+
+      iex> get_magazine!(123)
+      %Magazine{}
+
+      iex> get_magazine!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_magazine(magazine_id, preloads \\ []) do
+    Repo.get(Magazine, magazine_id)
+    |> Repo.preload(preloads)
+  end
+
+  def get_magazine!(title, site_id, preloads \\ []) do
+    Repo.get_by!(Magazine, site_id: site_id, title: title)
+    |> Repo.preload(preloads)
+  end
+
+  def get_current_magazine(site_id, preloads) do
+    [current] = Magazine
+      |> where(site_id: ^site_id)
+      |> order_by(desc: :inserted_at)
+      |> limit(1)
+      |> Repo.all()
+
+    current
+    |> Repo.preload(preloads)
+  end
+  @doc """
+  Creates a magazine.
+
+  ## Examples
+
+      iex> create_magazine(%{field: value})
+      {:ok, %Magazine{}}
+
+      iex> create_magazine(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_magazine(attrs \\ %{}) do
+    %Magazine{}
+    |> Magazine.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a magazine.
+
+  ## Examples
+
+      iex> update_magazine(magazine, %{field: new_value})
+      {:ok, %Magazine{}}
+
+      iex> update_magazine(magazine, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_magazine(%Magazine{} = magazine, attrs) do
+    magazine
+    |> Magazine.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Magazine.
+
+  ## Examples
+
+      iex> delete_magazine(magazine)
+      {:ok, %Magazine{}}
+
+      iex> delete_magazine(magazine)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_magazine(%Magazine{} = magazine) do
+    Repo.delete(magazine)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking magazine changes.
+
+  ## Examples
+
+      iex> change_magazine(magazine)
+      %Ecto.Changeset{source: %Magazine{}}
+
+  """
+  def change_magazine(%Magazine{} = magazine) do
+    Magazine.changeset(magazine, %{})
   end
 
   def get_by_name!(name, model) do

@@ -109,7 +109,12 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_link(conn, post) do
-    relative_link(conn, post)
+    relative_link(conn, post, nil)
+    |> Utils.generate_absolute_url(conn)
+  end
+
+  def show_link(conn, post, magazine) do
+    relative_link(conn, post, magazine)
     |> Utils.generate_absolute_url(conn)
   end
 
@@ -118,11 +123,18 @@ defmodule ElephantInTheRoomWeb.PostView do
     |> Utils.generate_absolute_url(conn)
   end
 
-  def relative_link(conn, post) do
+  def relative_link(conn, post, nil) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
     post_path(conn, :public_show, year, month, day, post.slug)
+  end
+
+  def relative_link(conn, post, magazine) do
+    year = post.inserted_at.year
+    month = post.inserted_at.month
+    day = post.inserted_at.day
+    magazine_post_path(conn, :public_show, magazine.title, year, month, day, post.slug)
   end
 
   def post_hour_select(form, field, opts \\ []) do
@@ -157,5 +169,21 @@ defmodule ElephantInTheRoomWeb.PostView do
     now = NaiveDateTime.utc_now()
 
     Utils.complete_zeros(:hour, now)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, nil) do
+    site_post_path(conn, action, site_name)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine) do
+    site_magazine_post_path(conn, action, site_name, magazine.title)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, nil, post_slug) do
+    site_post_path(conn, action, site_name, post_slug)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine, post_slug) do
+    site_magazine_post_path(conn, action, site_name, magazine.title, post_slug)
   end
 end

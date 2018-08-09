@@ -67,13 +67,6 @@
     }
   }
 
-  .post-edit-button {
-    text-transform: uppercase;
-    font-size: 0.6em;
-    font-weight: bolder;
-    color: #2217d7;
-  }
-
   .post-main-title {
     margin-top: 1rem;
     margin-bottom: 0;
@@ -81,6 +74,13 @@
     font-size: 170%;
   }
 
+}
+
+.post-edit-button {
+  text-transform: uppercase;
+  font-size: 0.6em;
+  font-weight: bolder;
+  color: #2217d7;
 }
 
 .post-main-tags {

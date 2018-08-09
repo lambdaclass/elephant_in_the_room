@@ -1,0 +1,66 @@
+<%
+  import ElephantInTheRoomWeb.LayoutView, only: [get_logged_user: 1]
+%>
+
+<div class="uk-container uk-container-small">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @magazine.title %></h1>
+
+  <%= case get_logged_user(@conn) do %>
+    <%= {:ok, _user, _} -> %>
+      <%= link "Editar", to: URI.encode(site_magazine_path(@conn, :edit, @site.name, @magazine.title)), class: "post-edit-button"%>
+    <% _ -> %>
+ <% end %>
+
+  <div class="uk-margin-large-top uk-margin-large-bottom" uk-grid>
+    <div class="uk-width-3-4">
+      <div class="category-main-post">
+        <div class="uk-width-1-1 uk-text-center uk-text-left@s">
+          <h2 class="uk-margin-small-bottom uk-text-bold uk-text-uppercase">
+            <%= @magazine.title %> issue
+          </h2>
+          <p class="uk-visible@s"><%= @magazine.description %></p>
+        </div>
+        <div class="uk-width-1-1 uk-margin-bottom">
+          <img class="magazine-cover" data-src="<%= image_link(@magazine.cover) %>" uk-img>
+        </div>
+      </div>
+      <hr>
+
+      <%= for post <- @magazine.posts do %>
+        <% link_post = show_link_with_date(@conn, @magazine, post) %>
+        <div class="category-posts" uk-grid>
+          <div class="uk-width-1-3">
+            <%= link to: link_post do %>
+              <img data-src="<%= post.thumbnail %>" uk-img>
+            <% end %>
+          </div>
+          <div class="uk-width-2-3">
+            <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
+            <p class="uk-visible@s"><%= post.abstract %></p>
+            <%= if post.author do %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold magazine-author" %>
+            <% end %>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+
+    <div class="uk-width-1-4">
+      <div class="uk-text-center magazine-archive">
+        <%= link "Ediciones", to: magazine_path(@conn, :public_index) %>
+        <hr>
+        <div class="uk-child-width-1-2" uk-grid>
+          <%= for magazine <- @magazines do %>
+            <div class="uk-margin-remove-top">
+              <%= link to: URI.encode(magazine_path(@conn, :public_show, magazine.title)) do %>
+                <img class="magazine-index-cover" data-src="<%= image_link(magazine.cover) %>" uk-img>
+                <p><%= magazine.title %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

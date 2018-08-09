@@ -438,4 +438,68 @@ defmodule ElephantInTheRoom.SitesTest do
       assert %Ecto.Changeset{} = Sites.change_image(image)
     end
   end
+
+  describe "magazines" do
+    alias ElephantInTheRoom.Sites.Magazine
+
+    @valid_attrs %{cover: "some cover", description: "some description", title: "some title"}
+    @update_attrs %{cover: "some updated cover", description: "some updated description", title: "some updated title"}
+    @invalid_attrs %{cover: nil, description: nil, title: nil}
+
+    def magazine_fixture(attrs \\ %{}) do
+      {:ok, magazine} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Sites.create_magazine()
+
+      magazine
+    end
+
+    test "list_magazines/0 returns all magazines" do
+      magazine = magazine_fixture()
+      assert Sites.list_magazines() == [magazine]
+    end
+
+    test "get_magazine!/1 returns the magazine with given id" do
+      magazine = magazine_fixture()
+      assert Sites.get_magazine!(magazine.id) == magazine
+    end
+
+    test "create_magazine/1 with valid data creates a magazine" do
+      assert {:ok, %Magazine{} = magazine} = Sites.create_magazine(@valid_attrs)
+      assert magazine.cover == "some cover"
+      assert magazine.description == "some description"
+      assert magazine.title == "some title"
+    end
+
+    test "create_magazine/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Sites.create_magazine(@invalid_attrs)
+    end
+
+    test "update_magazine/2 with valid data updates the magazine" do
+      magazine = magazine_fixture()
+      assert {:ok, magazine} = Sites.update_magazine(magazine, @update_attrs)
+      assert %Magazine{} = magazine
+      assert magazine.cover == "some updated cover"
+      assert magazine.description == "some updated description"
+      assert magazine.title == "some updated title"
+    end
+
+    test "update_magazine/2 with invalid data returns error changeset" do
+      magazine = magazine_fixture()
+      assert {:error, %Ecto.Changeset{}} = Sites.update_magazine(magazine, @invalid_attrs)
+      assert magazine == Sites.get_magazine!(magazine.id)
+    end
+
+    test "delete_magazine/1 deletes the magazine" do
+      magazine = magazine_fixture()
+      assert {:ok, %Magazine{}} = Sites.delete_magazine(magazine)
+      assert_raise Ecto.NoResultsError, fn -> Sites.get_magazine!(magazine.id) end
+    end
+
+    test "change_magazine/1 returns a magazine changeset" do
+      magazine = magazine_fixture()
+      assert %Ecto.Changeset{} = Sites.change_magazine(magazine)
+    end
+  end
 end
