@@ -53,7 +53,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content])
     |> validate_required_site_or_magazine
-    |> Markdown.put_rendered_content
+    |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
@@ -117,7 +117,7 @@ defmodule ElephantInTheRoom.Sites.Post do
         nil ->
           case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
             nil ->
-              "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+              get_default_image(changeset)
 
             [img] ->
               img
@@ -202,10 +202,22 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     Map.put(attrs, "inserted_at", datetime)
   end
+
   defp parse_date(attrs), do: attrs
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do
     Redix.command(:redix, ["ZINCRBY", "site:#{site_id}", 1, post_id])
     post
+  end
+
+  def get_default_image(%Changeset{} = changeset) do
+    case get_field(changeset, :site_id) do
+      nil ->
+        {:ok, magazine} = Sites.get_magazine(get_field(changeset, :magazine_id))
+        magazine.site.post_default_image
+      site_id ->
+        {:ok, site} = Sites.get_site(site_id)
+        site.post_default_image
+    end
   end
 end

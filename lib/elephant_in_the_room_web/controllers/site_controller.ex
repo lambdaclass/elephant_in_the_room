@@ -195,6 +195,13 @@ defmodule ElephantInTheRoomWeb.SiteController do
     render(conn, "edit.html", site: site_no_image, changeset: changeset)
   end
 
+  def update(conn, %{"post_image_delete" => "true", "name" => name}) do
+    site = Sites.from_name!(name, Site)
+    {:ok, site_no_post_image} = Sites.delete_site_field(site, "post_default_image")
+    changeset = Sites.change_site(site_no_post_image)
+    render(conn, "edit.html", site: site_no_post_image, changeset: changeset)
+  end
+
   def update(conn, %{"favicon_delete" => "true", "name" => name}) do
     site = Sites.from_name!(name, Site)
     {:ok, site_no_image} = Sites.delete_site_field(site, "favicon")
