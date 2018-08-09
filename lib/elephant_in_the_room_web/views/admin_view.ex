@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.AdminView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.{Site, Ad}
+  alias ElephantInTheRoom.Sites.{Site, Ad, Magazine}
   alias ElephantInTheRoom.Posts.{Post, Tag}
 
   def bread_crumb(conn, path) when is_list(path) do
@@ -52,6 +52,14 @@ defmodule ElephantInTheRoomWeb.AdminView do
           bread_crumb_ads(data.conn, data.site, ad) | acc
         ])
 
+      :magazines ->
+        bread_crumb_get_link(data, rest, [bread_crumb_magazines(data.conn, data.site) | acc])
+
+      %Magazine{} = magazine ->
+        bread_crumb_get_link(data, rest, [
+          bread_crumb_magazines(data.conn, data.site, magazine) | acc
+        ])
+
       action ->
         bread_crumb_get_link(data, rest, [{bread_crumb_action(action), "#"} | acc])
     end
@@ -96,6 +104,14 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_ads(conn, %Site{name: site_name}, %Ad{name: ad_name}) do
     {ad_name, site_ad_path(conn, :edit, URI.encode(site_name), URI.encode(ad_name))}
+  end
+
+  defp bread_crumb_magazines(conn, %Site{name: site_name}) do
+    {"Revistas", site_magazine_path(conn, :index, URI.encode(site_name))}
+  end
+
+  defp bread_crumb_magazines(conn, %Site{name: site_name}, %Magazine{title: magazine_title}) do
+    {magazine_title, site_magazine_path(conn, :index, URI.encode(site_name))}
   end
 
   defp bread_crumb_action(:new), do: "Nuevo"

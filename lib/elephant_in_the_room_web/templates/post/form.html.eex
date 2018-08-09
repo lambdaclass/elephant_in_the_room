@@ -22,7 +22,7 @@
   <%= if assigns[:post] do %>
     <div "admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-        href="<%= show_link(@conn, @post) %>"
+        href="<%= show_link(@conn, @post, @magazine) %>"
         target="_blank">
         ver artículo
       </a>
@@ -123,7 +123,7 @@
 <% end %>
 
 <%= if assigns[:post] do %>
-  <%= link to: site_post_path(@conn, :delete, @site.name, @post.slug),
+  <%= link to: site_or_magazine_path(@conn, :delete, @site.name, @magazine, @post.slug),
           method: :delete, data: [confirm: "Are you sure your want to delete this post?"],
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>

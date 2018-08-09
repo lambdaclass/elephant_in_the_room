@@ -3,7 +3,7 @@ defmodule ElephantInTheRoom.Posts do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoomWeb.PostView
-  alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Sites.Magazine}
   alias ElephantInTheRoom.Posts.{Post, Category, Tag, Featured}
 
   @default_post_preload [:author, :tags, :categories]
@@ -44,9 +44,9 @@ defmodule ElephantInTheRoom.Posts do
     |> Repo.preload(preload)
   end
 
-  def create_post(site, attrs) do
+  def create_post(%Site{id: site_id}, attrs) do
     post_attrs =
-      Map.put(attrs, "site_id", site.id)
+      Map.put(attrs, "site_id", site_id)
       |> Sites.ensure_author_exists
 
     inserted_post =
@@ -57,7 +57,7 @@ defmodule ElephantInTheRoom.Posts do
     case inserted_post do
       {:ok, post} ->
         Post.increase_views_for_popular_by_1(post)
-        Featured.invalidate_cache(site.id)
+        Featured.invalidate_cache(site_id)
         inserted_post
 
       _ ->
@@ -65,7 +65,25 @@ defmodule ElephantInTheRoom.Posts do
     end
   end
 
-  def update_post(%Post{} = post, attrs) do
+  def create_post(%Magazine{id: magazine_id}, attrs) do
+    post_attrs =
+      Map.put(attrs, "magazine_id", magazine_id)
+      |> Sites.ensure_author_exists
+
+    %Post{}
+    |> Post.changeset(post_attrs)
+    |> Repo.insert()
+  end
+
+  def create_magazine_post(attrs) do
+    new_attrs = Sites.ensure_author_exists(attrs)
+
+    %Post{}
+    |> Post.changeset(new_attrs)
+    |> Repo.insert()
+  end
+
+  def update_post(%Post{magazine_id: nil} = post, attrs) do
     Featured.invalidate_cache(post.site_id)
 
     post
@@ -73,13 +91,27 @@ defmodule ElephantInTheRoom.Posts do
     |> Repo.update()
   end
 
-  def delete_post(%Post{} = post) do
+  def update_post(%Post{} = post, attrs) do
+    post
+    |> Post.changeset(Sites.ensure_author_exists(attrs))
+    |> Repo.update()
+  end
+
+  def delete_post(%Post{magazine_id: nil} = post) do
     Featured.invalidate_cache(post.site_id)
     Repo.delete(post)
   end
 
-  def change_post(%Post{} = post) do
+  def delete_post(%Post{} = post) do
+    Repo.delete(post)
+  end
+
+  def change_post(%Post{magazine_id: nil} = post) do
     Featured.invalidate_cache(post.site_id)
+    Post.changeset(post, %{})
+  end
+
+  def change_post(%Post{} = post) do
     Post.changeset(post, %{})
   end
 
@@ -161,7 +193,6 @@ defmodule ElephantInTheRoom.Posts do
 
   def change_tag(%Tag{} = tag), do: Tag.changeset(tag, %{})
 
-
   def delete_cover(%Post{} = post) do
     post
     |> Post.changeset(%{"cover" => nil})
@@ -195,7 +226,8 @@ defmodule ElephantInTheRoom.Posts do
   end
 
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
-      when not valid?, do: changeset
+      when not valid?,
+      do: changeset
 
   def put_slugified_field(%Changeset{} = changeset, field) when is_atom(field) do
     slug = get_field(changeset, :slug)
@@ -205,6 +237,43 @@ defmodule ElephantInTheRoom.Posts do
       put_change(changeset, :slug, slug)
     else
       changeset
+    end
+  end
+
+  def get_magazine_post_by_slug!(
+        %Magazine{id: magazine_id},
+        slug,
+        preload \\ @default_post_preload
+      ) do
+    Repo.get_by!(Post, slug: slug, magazine_id: magazine_id)
+    |> Repo.preload(preload)
+  end
+
+  def get_posts_paginated(%Site{id: site_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.site_id == ^site_id)
+        |> Repo.paginate(page: page_number)
+    end
+  end
+
+  def get_posts_paginated(%Magazine{id: magazine_id}, page) do
+    case page do
+      nil ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: 1)
+
+      page_number ->
+        Post
+        |> where([p], p.magazine_id == ^magazine_id)
+        |> Repo.paginate(page: page_number)
     end
   end
 end

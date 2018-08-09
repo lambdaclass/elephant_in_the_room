@@ -18,7 +18,16 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     }
   end
 
-  def insert_one(attrs \\ %{}) do
+  def insert_one(%{"magazine_id" => _magazine_id} = attrs) do
+    {:ok, post} =
+      Map.merge(default_attrs(), attrs)
+      |> Utils.fake_image_upload
+      |> Posts.create_magazine_post
+
+    post
+  end
+
+  def insert_one(attrs) do
     changes = Map.merge(default_attrs(), attrs)
     new_changes = Utils.fake_image_upload(changes)
     {:ok, post} = Posts.create_post(attrs["site"], new_changes)

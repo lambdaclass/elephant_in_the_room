@@ -1,0 +1,32 @@
+<%= form_for @changeset, @action, [multipart: true], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Por favor revisa los errores a continuación.</p>
+    </div>
+  <% end %>
+
+  <div class="uk-margin">
+    <%= label f, :title, "Título", class: "uk-form-label" %>
+    <%= text_input f, :title, class: "uk-input uk-form-large" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="uk-margin">
+    <%= label f, :cover, "Portada", class: "uk-form-label" %>
+    <%= if @changeset.data.cover do %>
+      <img src="/images/<%= @changeset.data.cover %>" width="200">
+    <% end %>
+    <%= file_input f, :cover%>
+    <%= error_tag f, :cover %>
+  </div>
+
+  <div class="uk-margin">
+    <%= label f, :description, "Descripción", class: "uk-form-label" %>
+    <%= textarea f, :description, class: "uk-textarea uk-form-large", rows: "3" %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="uk-margin">
+    <%= submit "Enviar", class: "uk-button uk-button-primary" %>
+  </div>
+<% end %>

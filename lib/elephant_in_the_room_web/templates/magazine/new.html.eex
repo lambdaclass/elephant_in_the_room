@@ -1,0 +1,5 @@
+<h2>Nueva Revista</h2>
+
+<%= render "form.html", Map.put(assigns, :action, site_magazine_path(@conn, :create, @site.name)) %>
+
+<span><%= link "Regresar", to: site_magazine_path(@conn, :index, @site.name) %></span>
