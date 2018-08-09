@@ -9,6 +9,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
       add(:image, :string)
       add(:favicon, :string)
       add(:title, :string)
+      add(:post_default_image, :string)
       timestamps()
     end
 

@@ -3,9 +3,8 @@ defmodule ElephantInTheRoom.Sites.Markdown do
   alias Ecto.Changeset
 
   def put_rendered_content(%Changeset{valid?: valid?} = changeset)
-      when not valid? do
-    changeset
-  end
+      when not valid?,
+      do: changeset
 
   def put_rendered_content(%Changeset{} = changeset) do
     content = get_field(changeset, :content)
@@ -15,8 +14,5 @@ defmodule ElephantInTheRoom.Sites.Markdown do
     |> validate_length(:rendered_content, min: 1)
   end
 
-  def generate_markdown(input) do
-    Cmark.to_html(input, [:safe, :hardbreaks])
-  end
-
+  def generate_markdown(input), do: Cmark.to_html(input, [:safe, :hardbreaks])
 end

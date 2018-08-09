@@ -6,8 +6,6 @@ defmodule ElephantInTheRoom.Sites.Author do
   alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoom.Repo
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-
   schema "authors" do
     field(:description, :string)
     field(:image, Image.Type)

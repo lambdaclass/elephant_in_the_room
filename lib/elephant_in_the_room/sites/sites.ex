@@ -176,20 +176,20 @@ defmodule ElephantInTheRoom.Sites do
     amount = Keyword.get(opts, :amount, 10)
     index_from = page * amount
     index_to = index_from + amount - 1
-    %{page: page,
-      amount: amount,
-      bigger_amount: amount + 1,
-      index: {index_from, index_to}}
+    %{page: page, amount: amount, bigger_amount: amount + 1, index: {index_from, index_to}}
   end
 
   def pagination_result(query_result, pagination) do
     query_reduced_result = Enum.take(query_result, pagination.amount)
     is_next_page = length(query_result) > pagination.amount
     is_previous_page = pagination.page >= 1
-    %{result: query_reduced_result,
+
+    %{
+      result: query_reduced_result,
       page: pagination.page + 1,
       next_page: is_next_page,
-      previous_page: is_previous_page}
+      previous_page: is_previous_page
+    }
   end
 
   def get_popular_posts(%Site{id: site_id}, opts \\ []) do

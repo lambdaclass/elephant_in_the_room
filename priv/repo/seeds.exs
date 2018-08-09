@@ -12,6 +12,11 @@
 
 alias ElephantInTheRoom.{Repo, Auth, Auth.Role}
 
+
+img_binary = File.read!("./images/grey_placeholder.jpg")
+
+ElephantInTheRoom.Sites.create_image(%{"name" => "grey_placeholder", "binary" => img_binary})
+
 case Repo.get_by(Role, name: "admin") do
   nil ->
     IO.puts("Creating admin role")

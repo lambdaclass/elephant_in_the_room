@@ -41,7 +41,7 @@ defmodule ElephantInTheRoomWeb.Router do
       post("/binary", ImageController, :save_binary_image)
     end
 
-    get("/:id", ImageController, :get_image)
+    get("/:name", ImageController, :get_image)
   end
 
   scope "/", ElephantInTheRoomWeb do
