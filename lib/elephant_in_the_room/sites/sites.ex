@@ -1023,7 +1023,7 @@ defmodule ElephantInTheRoom.Sites do
 
   """
   def get_magazine(magazine_id, preloads \\ []) do
-    Repo.get_by(Magazine, magazine_id)
+    Repo.get(Magazine, magazine_id)
     |> Repo.preload(preloads)
   end
 

@@ -213,7 +213,7 @@ defmodule ElephantInTheRoom.Sites.Post do
   def get_default_image(%Changeset{} = changeset) do
     case get_field(changeset, :site_id) do
       nil ->
-        {:ok, magazine} = Sites.get_magazine(get_field(changeset, :magazine_id))
+        magazine = Sites.get_magazine(get_field(changeset, :magazine_id), [:site])
         magazine.site.post_default_image
       site_id ->
         {:ok, site} = Sites.get_site(site_id)
