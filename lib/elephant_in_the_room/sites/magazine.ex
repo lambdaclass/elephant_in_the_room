@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoom.Sites.Magazine do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Site, Post}
+  alias ElephantInTheRoom.{Sites.Site, Posts.Post}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
 

@@ -1,9 +1,7 @@
 defmodule ElephantInTheRoomWeb.SiteController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.{Site, Featured}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Sites.Ad, Posts.Featured}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
-  alias ElephantInTheRoom.Sites.Ad
 
   def index(conn, params) do
     page =

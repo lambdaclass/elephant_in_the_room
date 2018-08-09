@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Posts, Sites}
   alias ElephantInTheRoomWeb.Faker.Utils
   require Logger
 
@@ -22,7 +22,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     {:ok, post} =
       Map.merge(default_attrs(), attrs)
       |> Utils.fake_image_upload
-      |> Sites.create_magazine_post
+      |> Posts.create_magazine_post
 
     post
   end
@@ -30,7 +30,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def insert_one(attrs) do
     changes = Map.merge(default_attrs(), attrs)
     new_changes = Utils.fake_image_upload(changes)
-    {:ok, post} = Sites.create_post(attrs["site"], new_changes)
+    {:ok, post} = Posts.create_post(attrs["site"], new_changes)
 
     post
   end
