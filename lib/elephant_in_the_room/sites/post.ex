@@ -60,7 +60,7 @@ defmodule ElephantInTheRoom.Sites.Post do
     |> put_assoc(:tags, parse_tags(attrs))
     |> put_assoc(:categories, parse_categories(attrs))
     |> validate_required([:title, :content, :site_id])
-    |> Markdown.put_rendered_content
+    |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail
@@ -100,12 +100,17 @@ defmodule ElephantInTheRoom.Sites.Post do
   end
 
   def set_thumbnail(%Changeset{} = changeset) do
+    {:ok, site} =
+      changeset
+      |> get_field(:site_id)
+      |> Sites.get_site()
+
     url =
       case get_field(changeset, :cover) do
         nil ->
           case Regex.run(~r/src="\S+"/, get_field(changeset, :rendered_content)) do
             nil ->
-              "http://cdn.gearpatrol.com/wp-content/uploads/2015/12/grey_placeholder.jpg"
+              site.post_default_image
 
             [img] ->
               img
@@ -190,6 +195,7 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     Map.put(attrs, "inserted_at", datetime)
   end
+
   defp parse_date(attrs), do: attrs
 
   def increase_views_for_popular_by_1(%Post{id: post_id, site_id: site_id} = post) do

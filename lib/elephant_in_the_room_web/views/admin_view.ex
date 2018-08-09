@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.AdminView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.{Site, Post, Tag}
-  alias ElephantInTheRoom.Sites.Ad
-
+  alias ElephantInTheRoom.Sites.{Site, Post, Tag, Ad}
 
   def bread_crumb(conn, path) when is_list(path) do
     bread_crumb_get_link(conn, path)
@@ -19,35 +17,44 @@ defmodule ElephantInTheRoomWeb.AdminView do
   def bread_crumb_get_link(data, [element | rest], acc) do
     case element do
       :sites ->
-        bread_crumb_get_link(data, rest,
-          [bread_crumb_sites(data.conn) | acc])
+        bread_crumb_get_link(data, rest, [bread_crumb_sites(data.conn) | acc])
+
       %Site{} = site ->
-        bread_crumb_get_link(Map.put(data, :site, site), rest,
-          [bread_crumb_site(data.conn, site) | acc])
+        bread_crumb_get_link(Map.put(data, :site, site), rest, [
+          bread_crumb_site(data.conn, site) | acc
+        ])
+
       :posts ->
-        bread_crumb_get_link(data, rest,
-          [bread_crumb_posts(data.conn,  data.site) | acc])
+        bread_crumb_get_link(data, rest, [bread_crumb_posts(data.conn, data.site) | acc])
+
       %Post{} = post ->
-        bread_crumb_get_link(Map.put(data, :post, post), rest,
-          [bread_crumb_post(data.conn, data.site, post) | acc])
+        bread_crumb_get_link(Map.put(data, :post, post), rest, [
+          bread_crumb_post(data.conn, data.site, post) | acc
+        ])
+
       :post_edit ->
-        bread_crumb_get_link(data, rest,
-          [bread_crumb_post_edit(data.conn, data.site, data.post) | acc])
+        bread_crumb_get_link(data, rest, [
+          bread_crumb_post_edit(data.conn, data.site, data.post) | acc
+        ])
+
       :tags ->
-        bread_crumb_get_link(data, rest,
-          [bread_crumb_tags(data.conn, data.site) | acc])
+        bread_crumb_get_link(data, rest, [bread_crumb_tags(data.conn, data.site) | acc])
+
       %Tag{} = tag ->
-        bread_crumb_get_link(Map.put(data, :tag, tag), rest,
-          [bread_crumb_tag_edit(data.conn, data.site, tag) | acc])
+        bread_crumb_get_link(Map.put(data, :tag, tag), rest, [
+          bread_crumb_tag_edit(data.conn, data.site, tag) | acc
+        ])
+
       :ads ->
-        bread_crumb_get_link(data, rest,
-          [bread_crumb_ads(data.conn, data.site) | acc])
+        bread_crumb_get_link(data, rest, [bread_crumb_ads(data.conn, data.site) | acc])
+
       %Ad{} = ad ->
-        bread_crumb_get_link(Map.put(data, :ad, ad), rest,
-          [bread_crumb_ads(data.conn, data.site, ad) | acc])
+        bread_crumb_get_link(Map.put(data, :ad, ad), rest, [
+          bread_crumb_ads(data.conn, data.site, ad) | acc
+        ])
+
       action ->
-        bread_crumb_get_link(data, rest,
-          [{bread_crumb_action(action), "#"} | acc])
+        bread_crumb_get_link(data, rest, [{bread_crumb_action(action), "#"} | acc])
     end
   end
 
@@ -58,7 +65,6 @@ defmodule ElephantInTheRoomWeb.AdminView do
       [h | t] -> {Enum.reverse(t), h}
     end
   end
-
 
   defp bread_crumb_sites(conn) do
     {"Sitios", site_path(conn, :index)}
@@ -85,7 +91,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
-    {"Etiqueta",""}
+    {"Etiqueta", ""}
   end
 
   defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
@@ -97,11 +103,10 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_ads(conn, %Site{name: site_name}, %Ad{name: ad_name}) do
-    {ad_name, site_ad_path(conn, :edit,
-      URI.encode(site_name), URI.encode(ad_name))}
+    {ad_name, site_ad_path(conn, :edit, URI.encode(site_name), URI.encode(ad_name))}
   end
 
   defp bread_crumb_action(:new), do: "Nuevo"
+  defp bread_crumb_action(:root), do: ""
   defp bread_crumb_action(_), do: "Undefined Action"
-
 end

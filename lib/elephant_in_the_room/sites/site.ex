@@ -3,6 +3,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   import Ecto.Changeset
   alias Ecto.Changeset
   alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoom.Sites
   alias ElephantInTheRoom.Sites.{Site, Category, Post, Tag, Author}
 
   schema "sites" do
@@ -12,6 +13,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     field(:description, :string)
     field(:favicon, :string)
     field(:title, :string)
+    field(:post_default_image, :string)
 
     has_many(:categories, Category, on_delete: :delete_all)
     has_many(:posts, Post, on_delete: :delete_all)
@@ -33,6 +35,27 @@ defmodule ElephantInTheRoom.Sites.Site do
     |> store_image(attrs)
     |> validate_favicon(attrs)
     |> check_title(attrs)
+    |> check_post_default_image(attrs)
+  end
+
+  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => nil}),
+    do: Changeset.put_change(changeset, :post_default_image, nil)
+
+  defp check_post_default_image(%Changeset{valid?: false} = changeset, _attrs),
+    do: changeset
+
+  defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => post_image})
+       when post_image != nil do
+    {:ok, image_name} = Image.store(%{post_image | filename: Ecto.UUID.generate()})
+    Changeset.put_change(changeset, :post_default_image, "/images/#{image_name}")
+  end
+
+  defp check_post_default_image(%Changeset{} = changeset, attrs) do
+    default = Sites.get_image_by_name!("grey_placeholder")
+
+    if Map.has_key?(attrs, :post_default_image),
+      do: changeset,
+      else: Changeset.put_change(changeset, :post_default_image, "/images/#{default.name}")
   end
 
   defp put_title(attrs) do
