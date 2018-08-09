@@ -112,7 +112,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def show_link(conn, post) do
-    relative_link(conn, post)
+    relative_link(conn, post, nil)
     |> Utils.generate_absolute_url(conn)
   end
 
@@ -126,7 +126,7 @@ defmodule ElephantInTheRoomWeb.PostView do
     |> Utils.generate_absolute_url(conn)
   end
 
-  def relative_link(conn, post) do
+  def relative_link(conn, post, nil) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
