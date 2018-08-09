@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.CategoryView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Repo, Sites.Post}
+  alias ElephantInTheRoom.{Repo, Posts.Post}
   alias ElephantInTheRoomWeb.Utils.Utils
   import Ecto.Query
 

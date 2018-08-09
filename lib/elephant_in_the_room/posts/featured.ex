@@ -1,8 +1,9 @@
-defmodule ElephantInTheRoom.Sites.Featured do
+defmodule ElephantInTheRoom.Posts.Featured do
   import Ecto.Query, warn: false
-  alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.Posts.Post
   alias ElephantInTheRoom.Repo
   alias Ecto.Multi
+
   @default_post_preload [:author, :categories]
 
   defmodule FeaturedLevel do

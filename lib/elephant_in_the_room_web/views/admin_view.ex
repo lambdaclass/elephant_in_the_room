@@ -1,16 +1,13 @@
 defmodule ElephantInTheRoomWeb.AdminView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.{Site, Post, Tag}
-  alias ElephantInTheRoom.Sites.Ad
-
+  alias ElephantInTheRoom.Sites.{Site, Ad}
+  alias ElephantInTheRoom.Posts.{Post, Tag}
 
   def bread_crumb(conn, path) when is_list(path) do
     bread_crumb_get_link(conn, path)
   end
 
-  def bread_crumb(conn, _) do
-    bread_crumb_get_link(conn, [])
-  end
+  def bread_crumb(conn, _), do: bread_crumb_get_link(conn, [])
 
   def bread_crumb_get_link(conn, path) do
     bread_crumb_get_link(%{conn: conn}, path, [])
@@ -60,17 +57,12 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
 
-  defp bread_crumb_sites(conn) do
-    {"Sitios", site_path(conn, :index)}
-  end
+  defp bread_crumb_sites(conn), do: {"Sitios", site_path(conn, :index)}
 
-  defp bread_crumb_site(conn, %Site{name: name}) do
-    {name, site_path(conn, :show, name)}
-  end
+  defp bread_crumb_site(conn, %Site{name: name}), do: {name, site_path(conn, :show, name)}
 
-  defp bread_crumb_posts(conn, %Site{name: site_name}) do
-    {"Artículos", site_post_path(conn, :index, site_name)}
-  end
+  defp bread_crumb_posts(conn, %Site{name: site_name}),
+    do: {"Artículos", site_post_path(conn, :index, site_name)}
 
   defp bread_crumb_post(conn, _site, %Post{inserted_at: date, title: title} = post) do
     {"#{title}", post_path(conn, :public_show, date.year, date.month, date.day, post.slug)}
@@ -84,9 +76,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {"Etiquetas", site_tag_path(conn, :index, URI.encode(site_name))}
   end
 
-  defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}) do
-    {"Etiqueta",""}
-  end
+  defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}), do: {"Etiqueta",""}
 
   defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
     {"\##{tag_name}", site_tag_path(conn, :edit, URI.encode(site_name), URI.encode(tag_name))}
@@ -97,11 +87,9 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   defp bread_crumb_ads(conn, %Site{name: site_name}, %Ad{name: ad_name}) do
-    {ad_name, site_ad_path(conn, :edit,
-      URI.encode(site_name), URI.encode(ad_name))}
+    {ad_name, site_ad_path(conn, :edit, URI.encode(site_name), URI.encode(ad_name))}
   end
 
   defp bread_crumb_action(:new), do: "Nuevo"
   defp bread_crumb_action(_), do: "Undefined Action"
-
 end

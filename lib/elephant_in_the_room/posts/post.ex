@@ -1,10 +1,10 @@
-defmodule ElephantInTheRoom.Sites.Post do
+defmodule ElephantInTheRoom.Posts.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Post, Site, Category, Tag, Author}
-  alias ElephantInTheRoom.{Repo, Sites}
-  alias ElephantInTheRoom.Sites.Markdown
+  alias ElephantInTheRoom.{Repo, Sites, Posts}
+  alias ElephantInTheRoom.Sites.{Site, Author, Markdown}
+  alias ElephantInTheRoom.Posts.{Post, Category, Tag}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
@@ -130,7 +130,7 @@ defmodule ElephantInTheRoom.Sites.Post do
 
     slug =
       if slug == nil || String.length(slug) == 0 do
-        get_field(changeset, :title) |> Sites.to_slug()
+        get_field(changeset, :title) |> Posts.to_slug()
       else
         slug
       end

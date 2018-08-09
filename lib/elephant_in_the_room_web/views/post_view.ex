@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Post, Sites.Tag}
+  alias ElephantInTheRoom.{Repo, Sites, Posts.Post, Posts.Tag}
   alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
@@ -96,17 +96,12 @@ defmodule ElephantInTheRoomWeb.PostView do
     msg
   end
 
-  def show_tag_link(conn, tag) do
-    tag_path(conn, :public_show, URI.encode(tag.name))
-  end
+  def show_tag_link(conn, tag), do: tag_path(conn, :public_show, URI.encode(tag.name))
 
-  def show_site_link(conn) do
-    site_path(conn, :public_show)
-  end
+  def show_site_link(conn), do: site_path(conn, :public_show)
 
-  def show_category_link(conn, category) do
-    category_path(conn, :public_show, URI.encode(category.name))
-  end
+  def show_category_link(conn, category),
+    do: category_path(conn, :public_show, URI.encode(category.name))
 
   def show_link(conn, post) do
     relative_link(conn, post)
@@ -139,9 +134,7 @@ defmodule ElephantInTheRoomWeb.PostView do
     datetime_select(form, field, [builder: builder, value: nil] ++ opts)
   end
 
-  def default_date(%Post{inserted_at: date}) do
-    Utils.complete_zeros(:date, date)
-  end
+  def default_date(%Post{inserted_at: date}), do: Utils.complete_zeros(:date, date)
 
   def default_date(_new_post) do
     now = NaiveDateTime.utc_now()
@@ -149,9 +142,7 @@ defmodule ElephantInTheRoomWeb.PostView do
     Utils.complete_zeros(:date, now)
   end
 
-  def default_hour(%Post{inserted_at: date}) do
-    Utils.complete_zeros(:hour, date)
-  end
+  def default_hour(%Post{inserted_at: date}), do: Utils.complete_zeros(:hour, date)
 
   def default_hour(_new_post) do
     now = NaiveDateTime.utc_now()
