@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoomWeb.FeedbackController do
   use ElephantInTheRoomWeb, :controller
+  plug :put_layout, false when action == :create
   alias ElephantInTheRoom.{Repo, Sites, Sites.Feedback, Sites.Site}
   import Ecto.Query
 
@@ -34,18 +35,13 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     case Sites.create_feedback(site, params) do
       {:ok, _feedback} ->
         conn
-        |> put_resp_content_type("application/json")
-        |> resp(200, Poison.encode!("Feedback creado satisfactoriamente."))
-        |> send_resp()
+        |> put_flash(:feedback_ok, "Feedback creado satisfactoriamente.")
+        |> render("feedback_form.html")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        conn_with_errors = put_errors(conn, changeset)
-        errors = get_flash(conn_with_errors, :feedback_error)
-
-        conn_with_errors
-        |> put_resp_content_type("application/json")
-        |> resp(422, Poison.encode!(errors))
-        |> send_resp()
+        conn
+        |> put_errors(changeset)
+        |> render("feedback_form.html", changeset: changeset)
     end
   end
 
