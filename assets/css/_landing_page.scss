@@ -213,7 +213,7 @@
   padding: 10px;
 
   p:first-child {
-    @extend %landing-title 
+    @extend %landing-title
   }
   p:nth-child(2) {
     font-size: 80%;
@@ -226,4 +226,8 @@
   a {
     color: #000;
   }
+}
+
+.promotions {
+  padding: 10px;
 }

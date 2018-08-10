@@ -1,5 +1,5 @@
 <%= unless Enum.empty?(@ads) do %>
-  <div>
+  <div class="promotions">
     <h3 class="uk-text-bold uk-text-left">Promociones<hr></h3>
     <%= for ad <- @ads do %>
       <%= raw ad.rendered_content %>
