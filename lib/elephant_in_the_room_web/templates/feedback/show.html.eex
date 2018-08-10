@@ -11,4 +11,4 @@
   </li>
 </ul>
 
-<span><%= link "Regresar", to: site_feedback_path(@conn, :index, @site) %></span>
+<span><%= link "Regresar", to: site_feedback_path(@conn, :index, URI.encode(@site.name)) %></span>

@@ -1,11 +1,11 @@
 defmodule ElephantInTheRoomWeb.FeedbackController do
   use ElephantInTheRoomWeb, :controller
-  plug :put_layout, false when action == :create
+  plug(:put_layout, false when action == :create)
   alias ElephantInTheRoom.{Repo, Sites, Sites.Feedback, Sites.Site}
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
-    page =
+    feedbacks =
       case params do
         %{"page" => page_number} ->
           Feedback
@@ -21,12 +21,8 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     render(
       conn,
       "index.html",
-      feedbacks: page.entries,
+      feedbacks: feedbacks,
       site: site,
-      page_number: page.page_number,
-      page_size: page.page_size,
-      total_pages: page.total_pages,
-      total_entries: page.total_entries,
       bread_crumb: [:sites, site, :feedbacks]
     )
   end
@@ -45,7 +41,7 @@ defmodule ElephantInTheRoomWeb.FeedbackController do
     end
   end
 
-  def show(conn, %{"site_name" => site_name, "feedback_id" => id}) do
+  def show(conn, %{"site_name" => site_name, "id" => id}) do
     feedback_site = Sites.from_name!(site_name, Site)
     feedback = Sites.get_feedback!(feedback_site, id)
     render(conn, "show.html", feedback: feedback, site: feedback_site)

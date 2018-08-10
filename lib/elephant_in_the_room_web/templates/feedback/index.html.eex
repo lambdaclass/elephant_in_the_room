@@ -1,7 +1,7 @@
 <div class="admin-title">
   <span class="title-text"> Sugerencias </span>
 </div>
-<p><%= "Página: #{@page_number}/#{@total_pages}" %></p>
+<p><%= "Página: #{@feedbacks.page_number}/#{@feedbacks.total_pages}" %></p>
 <table class="uk-table uk-table-striped">
   <thead>
     <tr>
@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= for feedback <- @feedbacks do %>
+    <%= for feedback <- @feedbacks.entries do %>
         <tr>
           <td>
             <%= link feedback.id, to: site_feedback_path(@conn, :show, URI.encode(@site.name), feedback.id), 
@@ -35,14 +35,14 @@
   </tbody>
 </table>
 
-<%= case compare(@page_number, @total_pages) do %>
+<%= case compare(@feedbacks.page_number, @feedbacks.total_pages) do %>
   <% :equal -> %>
-    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @feedbacks.page_number - 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
   <% :lesser -> %>
-    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
-    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @feedbacks.page_number + 1), class: "el-arrow-icon fa fa-arrow-left fa-2x" %></span>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @feedbacks.page_number - 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% :first -> %>
-    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
+    <span><%= link "", to: site_feedback_path(@conn, :index, @site, page: @feedbacks.page_number + 1), class: "el-arrow-icon fa fa-arrow-right fa-2x" %></span>
   <% _ -> %>
 <% end %>
 
