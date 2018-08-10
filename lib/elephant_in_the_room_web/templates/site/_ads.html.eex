@@ -1,12 +1,8 @@
-<%= if assigns[:ads] do %>
-<div class="list-ads">
- <h3 class="uk-text-bold uk-text-left">Promociones<hr></h3>
-  <%= for ad <- @ads do %>
-    <%= raw ad.rendered_content %>
-  <% end %>
-</div>
+<%= unless Enum.empty?(@ads) do %>
+  <div>
+    <h3 class="uk-text-bold uk-text-left">Promociones<hr></h3>
+    <%= for ad <- @ads do %>
+      <%= raw ad.rendered_content %>
+    <% end %>
+  </div>
 <% end %>
-
-
-
- 
