@@ -10,6 +10,7 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
       add(:favicon, :string)
       add(:title, :string)
       add(:post_default_image, :string)
+      add(:ads_title, :string)
       timestamps()
     end
 

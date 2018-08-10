@@ -17,7 +17,7 @@
       <%= text_input f, :title, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :title %>
     </div>
-    
+
     <div class="form-group uk-width-1-1">
       <%= label f, :favicon, "Icono", class: "uk-form-label"%>
       <%= if @changeset.data.favicon do %>
@@ -38,6 +38,12 @@
       <%= label f, :host, "Dominio", class: "uk-form-label" %>
       <%= text_input f, :host, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :host %>
+    </div>
+
+    <div class="uk-margin">
+      <%= label f, :ads_title, "Titulo de la sección de publicidad", class: "uk-form-label" %>
+      <%= text_input f, :ads_title, class: "uk-form-controls uk-input" %>
+      <%= error_tag f, :ads_title %>
     </div>
 
     <div class="form-group uk-width-1-1">

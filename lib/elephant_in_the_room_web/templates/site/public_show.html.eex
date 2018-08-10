@@ -36,7 +36,7 @@
       <%= render "_latest.html", conn: @conn, posts: @latest_posts %>
     </div>
     <div class="uk-width-1-4@m">
-      <%= render "_ads.html", conn: @conn, ads: assigns[:ads] %>
+      <%= render "_ads.html", conn: @conn, ads_title: @site.ads_title, ads: assigns[:ads] %>
       <%= render "_authors.html", conn: @conn,
             columnists_and_posts: @columnists_and_posts%>
     </div>
