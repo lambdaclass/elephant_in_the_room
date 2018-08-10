@@ -8,7 +8,10 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
       |> Enum.take_random(Faker.random_between(1, 2))
       |> Enum.join(" ")
 
-    %{"name" => name}
+    %{
+      "name" => name,
+      "ads_title" => "Promociones"
+    }
   end
 
   def insert_one(site_number, attrs \\ %{}) do
