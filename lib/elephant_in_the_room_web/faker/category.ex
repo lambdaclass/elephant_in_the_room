@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Faker.Category do
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Posts
 
   defp default_attrs do
     %{
@@ -11,7 +11,7 @@ defmodule ElephantInTheRoomWeb.Faker.Category do
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    case Sites.create_category(attrs["site"], changes) do
+    case Posts.create_category(attrs["site"], changes) do
       {:ok, category} ->
         category
       {:error, _} ->

@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Category, Sites.Site}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Posts, Posts.Category}
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
   import Ecto.Query
 
@@ -34,13 +34,13 @@ defmodule ElephantInTheRoomWeb.CategoryController do
   def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Category{site_id: site.id}
-      |> Sites.change_category()
+      |> Posts.change_category()
 
     render(conn, "new.html", changeset: changeset, site: site)
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"category" => category_params}) do
-    case Sites.create_category(site, category_params) do
+    case Posts.create_category(site, category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
@@ -76,7 +76,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
   def edit(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
     category = Sites.from_name!(name, Category)
-    changeset = Sites.change_category(category)
+    changeset = Posts.change_category(category)
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
 
@@ -86,7 +86,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       }) do
     category = Sites.from_name!(name, Category)
 
-    case Sites.update_category(category, category_params) do
+    case Posts.update_category(category, category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
@@ -101,7 +101,7 @@ defmodule ElephantInTheRoomWeb.CategoryController do
 
   def delete(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
     category = Sites.from_name!(name, Category)
-    {:ok, _category} = Sites.delete_category(category)
+    {:ok, _category} = Posts.delete_category(category)
 
     conn
     |> put_flash(:info, "Category deleted successfully.")

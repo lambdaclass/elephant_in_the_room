@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.TagController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Tag, Sites.Site}
+  alias ElephantInTheRoom.{Repo, Sites, Posts, Posts.Tag, Sites.Site}
   import Ecto.Query
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
@@ -33,7 +33,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Tag{site_id: site.id}
-      |> Sites.change_tag()
+      |> Posts.change_tag()
 
     render(
       conn,
@@ -45,7 +45,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
-    case Sites.create_tag(site, tag_params) do
+    case Posts.create_tag(site, tag_params) do
       {:ok, _tag} ->
         redirect(conn, to: site_tag_path(conn, :index, URI.encode(site.name)))
 
@@ -80,7 +80,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   def edit(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "tag_name" => name}) do
     tag_site = Sites.from_name!(URI.decode(site_name), Site)
     tag = Sites.from_name!(name, tag_site.id, Tag)
-    changeset = Sites.change_tag(tag)
+    changeset = Posts.change_tag(tag)
 
     render(
       conn,
@@ -95,7 +95,7 @@ defmodule ElephantInTheRoomWeb.TagController do
   def update(%{assigns: %{site: site}} = conn, %{"tag_name" => name, "tag" => tag_params}) do
     tag = Sites.from_name!(name, Tag)
 
-    case Sites.update_tag(tag, tag_params) do
+    case Posts.update_tag(tag, tag_params) do
       {:ok, tag} ->
         path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, tag)}"
 
@@ -108,13 +108,13 @@ defmodule ElephantInTheRoomWeb.TagController do
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"tage_name" => name}) do
+  def delete(%{assigns: %{site: site}} = conn, %{"tag_name" => name}) do
     tag = Sites.from_name!(name, site.id, Tag)
-    {:ok, _tag} = Sites.delete_tag(tag)
+    {:ok, _tag} = Posts.delete_tag(tag)
 
     conn
     |> put_flash(:info, "Tag deleted successfully.")
-    |> redirect(to: site_tag_path(conn, :index, site))
+    |> redirect(to: site_tag_path(conn, :index, URI.encode(site.name)))
   end
 
   defp relative_path(conn, %Tag{name: name}) do

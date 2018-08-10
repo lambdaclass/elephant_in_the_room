@@ -40,12 +40,9 @@
     p {
       color: $black;
       hyphens: none;
-      font-size: 20px;
-      @media all and (max-width:1240px){ font-size: 19px; }
-      @media all and (max-width:840px){ font-size: 18px; }
-      @media all and (max-width:720px){ font-size: 19px; }
+      font-size: 22px;
       margin-top: 0;
-      margin-bottom: 0.4em;
+      margin-bottom: 1.2em;
     }
 
     img {
@@ -70,13 +67,6 @@
     }
   }
 
-  .post-edit-button {
-    text-transform: uppercase;
-    font-size: 0.6em;
-    font-weight: bolder;
-    color: #2217d7;
-  }
-
   .post-main-title {
     margin-top: 1rem;
     margin-bottom: 0;
@@ -84,6 +74,13 @@
     font-size: 170%;
   }
 
+}
+
+.post-edit-button {
+  text-transform: uppercase;
+  font-size: 0.6em;
+  font-weight: bolder;
+  color: #2217d7;
 }
 
 .post-main-tags {

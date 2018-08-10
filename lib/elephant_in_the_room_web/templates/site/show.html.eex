@@ -42,7 +42,6 @@
     </div>
   </div>
 
-
   <div>
     <div class="uk-card uk-card-default uk-card-small uk-card-body"
          onclick="window.location='<%= site_tag_path(@conn, :index, @site.name) %>'">
@@ -63,4 +62,25 @@
     </div>
   </div>
 
+  <div>
+    <%= link  to: URI.encode(site_magazine_path(@conn, :index, @site.name)) do %>
+      <div class="uk-card uk-card-default uk-card-small uk-card-body">
+        <h3 class="uk-card-title">
+          <i class="fas fa-book-open"></i>
+          Revistas
+        </h3>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= link  to: URI.encode(site_ad_path(@conn, :index, @site.name)) do %>
+      <div class="uk-card uk-card-default uk-card-small uk-card-body">
+        <h3 class="uk-card-title">
+          <i class="fas fa-bars"></i>
+          Promociones
+        </h3>
+      </div>
+    <% end %>
+  </div>
 </div>

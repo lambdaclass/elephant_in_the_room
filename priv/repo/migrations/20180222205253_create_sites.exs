@@ -5,6 +5,11 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateSites do
     create table(:sites) do
       add(:name, :string)
       add(:host, :string)
+      add(:description, :string)
+      add(:image, :string)
+      add(:favicon, :string)
+      add(:title, :string)
+      add(:post_default_image, :string)
       timestamps()
     end
 

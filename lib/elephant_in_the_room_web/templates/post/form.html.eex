@@ -1,3 +1,5 @@
+<% alias ElephantInTheRoomWeb.FeaturedView %>
+
 <script>
   $(document).ready(function() {
     $("#post_author_id").select2({
@@ -11,6 +13,7 @@
       tokenSeparators: [","]
     });
     $("#post_categories").select2();
+    $("#post_featured_level").select2();
   });
 </script>
 
@@ -19,7 +22,7 @@
   <%= if assigns[:post] do %>
     <div "admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-        href="<%= show_link(@conn, @post) %>"
+        href="<%= show_link(@conn, @post, @magazine) %>"
         target="_blank">
         ver artículo
       </a>
@@ -75,7 +78,7 @@
     <% selected_tags = get_selected_tags(assigns[:post]) %>
     <%= label f, "tags", "Etiquetas", class: "uk-form-label" %>
     <%= multiple_select f, :tags, selected_tags, class: "uk-input uk-form-small",
-        selected: selected_tags %>
+        selected: selected_tags, style: "width: 100%"%>
     <%= error_tag f, :tags %>
   </div>
 
@@ -104,6 +107,14 @@
     <%= error_tag f, :slug %>
   </div>
 
+  <div class="form-group">
+    <%= label f, :featured_level, "Nivel de destacado", class: "uk-form-label" %>
+    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small", 
+          selected: assigns[:featured_level], 
+          prompt: "", style: "width: 100%" %>
+    <%= error_tag f, :featured_level %>
+  </div>
+
   <div class="uk-margin">
     <%= submit "Enviar", class: "uk-button uk-button-primary uk-width-1-1" %>
   </div>
@@ -112,7 +123,7 @@
 <% end %>
 
 <%= if assigns[:post] do %>
-  <%= link to: site_post_path(@conn, :delete, @site.name, @post.slug),
+  <%= link to: site_or_magazine_path(@conn, :delete, @site.name, @magazine, @post.slug),
           method: :delete, data: [confirm: "Are you sure your want to delete this post?"],
           class: "uk-button uk-button-danger uk-width-1-1" do %>
     <i class="fas fa-trash"></i>

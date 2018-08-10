@@ -15,7 +15,7 @@
 
     <div class="author">
       <%= if @post.author do %>
-        <%= link @post.author.name, to: author_path(@conn, :public_show, @post.author.id) %>
+        <%= link @post.author.name, to: author_path(@conn, :public_show, URI.encode(@post.author.name)) %>
       <% else %>
         &ensp;
       <% end %>

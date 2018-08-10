@@ -12,11 +12,11 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
     end
   end
 
-  def generate_absolute_url(relative_path, conn), do:
-    absolute_url_str(conn, conn.assigns.site.host, relative_path)
+  def generate_absolute_url(relative_path, conn),
+    do: absolute_url_str(conn, conn.assigns.site.host, relative_path)
 
-  def generate_absolute_url(relative_path, conn, %Site{host: host}), do:
-    absolute_url_str(conn, host, relative_path)
+  def generate_absolute_url(relative_path, conn, %Site{host: host}),
+    do: absolute_url_str(conn, host, relative_path)
 
   defp absolute_url_str(%Conn{scheme: scheme} = conn, domain, relative_path) do
     port = get_port(conn)
@@ -44,19 +44,13 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
   end
 
   def complete_zeros(:hour, date) do
-    complete = fn n ->
-      if String.length(n) == 1, do: "0" <> n, else: n
-    end
-
-    hour = complete.("#{date.hour}")
-    minute = complete.("#{date.minute}")
-    second = complete.("#{date.second}")
+    hour = "#{date.hour}"
+    minute = "#{date.minute}"
+    second = "#{date.second}"
 
     %{hour: hour, minute: minute, second: second}
   end
 
-
   def get_page(%{"page" => page}), do: String.to_integer(page)
   def get_page(_), do: 1
-
 end

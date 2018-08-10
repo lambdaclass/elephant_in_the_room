@@ -7,7 +7,5 @@ defmodule ElephantInTheRoomWeb.UserView do
     |> Enum.map(fn role -> {role.name, role.id} end)
   end
 
-  def get_rolename(role) do
-    role.name
-  end
+  def get_rolename(role), do: role.name
 end

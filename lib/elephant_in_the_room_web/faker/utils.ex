@@ -25,15 +25,21 @@ defmodule ElephantInTheRoomWeb.Faker.Utils do
     %{attrs | "cover" => image}
   end
 
-  def get_image_path() do
-    File.ls!("./images")
+  def get_image_path_ads(), do: get_image_path("for_ads")
+  def get_image_path(), do: get_image_path("for_posts")
+  def get_image_path(path) do
+    File.ls!("./images/#{path}")
     |> Enum.random()
-    |> (fn image -> "./images/#{image}" end).()
+    |> (fn image -> "./images/#{path}/#{image}" end).()
   end
 
-  def fake_image_upload(attrs, format \\ "png") do
+  def fake_image_upload_ads(attrs, format \\ "png"), do:
+    fake_image_upload(attrs, &get_image_path_ads/0, format)
+  def fake_image_upload(attrs, format \\ "png"), do:
+    fake_image_upload(attrs, &get_image_path/0, format)
+  def fake_image_upload(attrs, image_path, format) do
     {:ok, file} = Plug.Upload.random_file("gen")
-    content = File.read!(get_image_path())
+    content = File.read!(image_path.())
     File.write(file, content)
 
     uploaded_image = %Plug.Upload{

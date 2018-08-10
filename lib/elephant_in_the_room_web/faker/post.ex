@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Posts, Sites}
   alias ElephantInTheRoomWeb.Faker.Utils
   require Logger
 
@@ -13,14 +13,24 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
+      "inserted_at" => generate_inserted_at(),
       "slug" => ""
     }
   end
 
-  def insert_one(attrs \\ %{}) do
+  def insert_one(%{"magazine_id" => _magazine_id} = attrs) do
+    {:ok, post} =
+      Map.merge(default_attrs(), attrs)
+      |> Utils.fake_image_upload
+      |> Posts.create_magazine_post
+
+    post
+  end
+
+  def insert_one(attrs) do
     changes = Map.merge(default_attrs(), attrs)
     new_changes = Utils.fake_image_upload(changes)
-    {:ok, post} = Sites.create_post(attrs["site"], new_changes)
+    {:ok, post} = Posts.create_post(attrs["site"], new_changes)
 
     post
   end
@@ -28,6 +38,17 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def insert_many(n, attrs \\ %{}) do
     Enum.to_list(1..n)
     |> Enum.map(fn _ -> insert_one(attrs) end)
+  end
+
+  defp generate_inserted_at() do
+    now = NaiveDateTime.utc_now
+    hour = :rand.uniform(23)
+    minute = :rand.uniform(59)
+    second = :rand.uniform(59)
+    case NaiveDateTime.new(now.year, now.month, now.day, hour, minute, second) do
+      {:ok, time} -> time
+      _ -> generate_inserted_at()
+    end
   end
 
   defp generate_content() do
@@ -42,9 +63,10 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     Enum.join(paragraphs, "\n\n")
   end
 
-  defp gen_md_image() do
+  def gen_md_image(), do: gen_md_image_path(Utils.get_image_path())
+  def gen_md_image_path(path) do
     description = Faker.Lorem.word()
-    image_content = File.read!(Utils.get_image_path())
+    image_content = File.read!(path)
 
     {:ok, image} = Sites.create_image(%{name: Ecto.UUID.generate(), binary: image_content})
     "![#{description}](/images/#{image.name})"

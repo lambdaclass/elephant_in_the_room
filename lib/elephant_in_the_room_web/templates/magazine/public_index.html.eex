@@ -1,0 +1,42 @@
+<div class="uk-container uk-container-small uk-margin-large-top uk-margin-large-bottom">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase category-title">Ediciones</h1>
+
+  <%= for magazine <- @magazines do %>
+    <div class="magazine" uk-grid>
+      <div class="uk-width-1-6">
+        <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+          <img class="magazine-index-cover" data-src="<%= image_link(magazine.cover) %>" uk-img>
+        <% end %>
+      </div>
+      <div class="uk-width-4-5">
+        <%= link to: magazine_path(@conn, :public_show, magazine.title) do %>
+          <p class="uk-margin-small-bottom uk-text-bold">
+            <%= magazine.title %>
+          </p>
+        <% end %>
+        <p class="uk-visible@s"><%= magazine.description %></p>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+
+  <ul class="uk-pagination uk-flex-center">
+    <%= if @magazines.page_number > 1 do %>
+      <li>
+        <%= link to: magazine_path(@conn, :public_index, page: @magazines.page_number-1) do %>
+          <span uk-pagination-previous></span>
+          Anterior
+        <% end %>
+      </li>
+    <% end %>
+    <li><%= @magazines.page_number %></li>
+    <%= if @magazines.page_number < @magazines.total_pages do %>
+      <li>
+        <%= link to: magazine_path(@conn, :public_index, page: @magazines.page_number+1) do %>
+          Siguiente
+          <span uk-pagination-next></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Faker.Tag do
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Posts
   require Logger
 
   defp default_attrs do
@@ -11,7 +11,7 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
   def insert_one(attrs \\ %{}) do
     changes = Map.merge(default_attrs(), attrs)
 
-    case Sites.create_tag(attrs["site"], changes) do
+    case Posts.create_tag(attrs["site"], changes) do
       {:ok, tag} ->
         tag
       {:error, error} ->

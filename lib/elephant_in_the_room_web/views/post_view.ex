@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Post, Sites.Tag}
+  alias ElephantInTheRoom.{Repo, Sites, Posts.Post, Posts.Tag}
   alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
@@ -74,9 +74,6 @@ defmodule ElephantInTheRoomWeb.PostView do
   @one_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 
-  defp format_diff(diff, date) when diff < 0,
-    do: {:date, "el #{date.day}-#{date.month}-#{date.year}"}
-
   defp format_diff(diff, _date) when diff <= @five_minutes, do: {:now, "justo ahora"}
 
   defp format_diff(diff, _date) when diff < @one_hour,
@@ -99,20 +96,20 @@ defmodule ElephantInTheRoomWeb.PostView do
     msg
   end
 
-  def show_tag_link(conn, tag) do
-    tag_path(conn, :public_show, URI.encode(tag.name))
-  end
+  def show_tag_link(conn, tag), do: tag_path(conn, :public_show, URI.encode(tag.name))
 
-  def show_site_link(conn) do
-    site_path(conn, :public_show)
-  end
+  def show_site_link(conn), do: site_path(conn, :public_show)
 
-  def show_category_link(conn, category) do
-    category_path(conn, :public_show, URI.encode(category.name))
-  end
+  def show_category_link(conn, category),
+    do: category_path(conn, :public_show, URI.encode(category.name))
 
   def show_link(conn, post) do
-    relative_link(conn, post)
+    relative_link(conn, post, nil)
+    |> Utils.generate_absolute_url(conn)
+  end
+
+  def show_link(conn, post, magazine) do
+    relative_link(conn, post, magazine)
     |> Utils.generate_absolute_url(conn)
   end
 
@@ -121,11 +118,18 @@ defmodule ElephantInTheRoomWeb.PostView do
     |> Utils.generate_absolute_url(conn)
   end
 
-  def relative_link(conn, post) do
+  def relative_link(conn, post, nil) do
     year = post.inserted_at.year
     month = post.inserted_at.month
     day = post.inserted_at.day
     post_path(conn, :public_show, year, month, day, post.slug)
+  end
+
+  def relative_link(conn, post, magazine) do
+    year = post.inserted_at.year
+    month = post.inserted_at.month
+    day = post.inserted_at.day
+    magazine_post_path(conn, :public_show, magazine.title, year, month, day, post.slug)
   end
 
   def post_hour_select(form, field, opts \\ []) do
@@ -139,12 +143,10 @@ defmodule ElephantInTheRoomWeb.PostView do
       """
     end
 
-    datetime_select(form, field, [builder: builder] ++ opts)
+    datetime_select(form, field, [builder: builder, value: nil] ++ opts)
   end
 
-  def default_date(%Post{inserted_at: date}) do
-    Utils.complete_zeros(:date, date)
-  end
+  def default_date(%Post{inserted_at: date}), do: Utils.complete_zeros(:date, date)
 
   def default_date(_new_post) do
     now = NaiveDateTime.utc_now()
@@ -152,13 +154,27 @@ defmodule ElephantInTheRoomWeb.PostView do
     Utils.complete_zeros(:date, now)
   end
 
-  def default_hour(%Post{inserted_at: date}) do
-    Utils.complete_zeros(:hour, date)
-  end
+  def default_hour(%Post{inserted_at: date}), do: Utils.complete_zeros(:hour, date)
 
   def default_hour(_new_post) do
     now = NaiveDateTime.utc_now()
 
     Utils.complete_zeros(:hour, now)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, nil) do
+    site_post_path(conn, action, site_name)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine) do
+    site_magazine_post_path(conn, action, site_name, magazine.title)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, nil, post_slug) do
+    site_post_path(conn, action, site_name, post_slug)
+  end
+
+  def site_or_magazine_path(conn, action, site_name, magazine, post_slug) do
+    site_magazine_post_path(conn, action, site_name, magazine.title, post_slug)
   end
 end

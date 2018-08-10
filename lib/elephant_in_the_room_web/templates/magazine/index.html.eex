@@ -1,0 +1,46 @@
+<h2>Revistas</h2>
+
+<table class="uk-table uk-table-striped">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for magazine <- @magazines do %>
+      <tr>
+        <td><%= link magazine.title, to: URI.encode(site_magazine_post_path(@conn, :index, @site.name, magazine.title)) %></td>
+        <td><%= magazine.description %></td>
+        <td class="text-right">
+          <span><%= link "", to: URI.encode(site_magazine_path(@conn, :edit, @site.name, magazine.title)), class: "fa fa-edit" %></span>
+          <span><%= link "", to: URI.encode(site_magazine_path(@conn, :delete, @site.name, magazine.title)), method: :delete, data: [confirm: "¿Estás seguro?"], class: "fa fa-trash-alt" %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<ul class="uk-pagination uk-flex-center">
+  <%= if @magazines.page_number > 1 do %>
+    <li>
+      <%= link to: site_magazine_path(@conn, :index, @site.name, page: @magazines.page_number-1) do %>
+        <span uk-pagination-previous></span>
+        Anterior
+      <% end %>
+    </li>
+  <% end %>
+  <li><%= @magazines.page_number %></li>
+  <%= if @magazines.page_number < @magazines.total_pages do %>
+    <li>
+      <%= link to: site_magazine_path(@conn, :index, @site.name, page: @magazines.page_number+1) do %>
+        Siguiente
+        <span uk-pagination-next></span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<p><%= link "Crear Revista", to: site_magazine_path(@conn, :new, @site.name) %></p>
+<p><%= link "Regresar", to: site_path(@conn, :show, @site.name) %></p>

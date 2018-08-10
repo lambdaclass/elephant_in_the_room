@@ -9,6 +9,7 @@
 @import "_post";
 @import "_landing_page";
 @import "_category";
+@import "_magazine";
 @import "_administration";
 
 html {
@@ -202,7 +203,7 @@ h6 {
   font-size: 25vw;
 }
 
-.main-body-public-content {
+div[role=main] {
   min-height: 70vh;
 }
 
