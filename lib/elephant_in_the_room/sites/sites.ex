@@ -205,7 +205,8 @@ defmodule ElephantInTheRoom.Sites do
       )
 
     scores =
-      Enum.chunk(data, 2)
+      data
+      |> Enum.chunk_every(2)
       |> Enum.map(fn [id, score] -> {id, String.to_integer(score)} end)
       |> Map.new()
 
@@ -451,6 +452,4 @@ defmodule ElephantInTheRoom.Sites do
   def change_feedback(%Feedback{} = feedback) do
     Feedback.changeset(feedback, %{})
   end
-
-
 end

@@ -102,7 +102,7 @@ defmodule ElephantInTheRoom.Posts.Featured do
     amount_of_needed_featured_posts = amount_of_needed_featured_posts(featured_posts)
     limit = amount_of_needed_featured_posts + additive_limit
     post_query = from p in Post,
-      where: p.site_id == ^site_id  and not p.id in ^featured_posts_ids,
+      where: p.site_id == ^site_id  and p.id not in ^featured_posts_ids,
       order_by: [desc: p.inserted_at, desc: p.updated_at],
       limit: ^limit,
       preload: ^@default_post_preload
