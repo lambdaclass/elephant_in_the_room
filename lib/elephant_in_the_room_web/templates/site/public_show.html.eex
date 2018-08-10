@@ -21,11 +21,13 @@
       <% end %>
     </div>
 
-    <%= for post <- Enum.take(@section_4_posts, 8) do %>
-      <div class="uk-width-1-2@s uk-width-1-4@m">
-        <%= render "_regular_post.html", conn: @conn, post: post, abstract: true %>
-      </div>
-    <% end %>
+    <div class="uk-width-1-1 uk-margin-remove-left uk-padding-remove-left" uk-grid>
+      <%= for post <- Enum.take(@section_4_posts, 8) do %>
+        <div class="uk-width-1-2@s uk-width-1-4@m">
+          <%= render "_regular_post.html", conn: @conn, post: post, abstract: true %>
+        </div>
+      <% end %>
+    </div>
 
     <div class="uk-width-1-4@m list-popular">
       <%= render "_popular.html", conn: @conn, site: @site, posts: @popular_posts %>
