@@ -3,7 +3,7 @@ defmodule ElephantInTheRoom.Sites do
   alias ElephantInTheRoom.{Repo, Posts}
   alias ElephantInTheRoomWeb.{SiteView, Utils.Utils}
   alias ElephantInTheRoom.Posts.{Category, Post, Tag}
-  alias ElephantInTheRoom.Sites.{Site, Author, Magazine, Image}
+  alias ElephantInTheRoom.Sites.{Site, Author, Magazine, Image, Feedback}
 
   @default_site_preload [
     :categories,
@@ -205,7 +205,8 @@ defmodule ElephantInTheRoom.Sites do
       )
 
     scores =
-      Enum.chunk(data, 2)
+      data
+      |> Enum.chunk_every(2)
       |> Enum.map(fn [id, score] -> {id, String.to_integer(score)} end)
       |> Map.new()
 
@@ -308,111 +309,147 @@ defmodule ElephantInTheRoom.Sites do
     end
   end
 
-def list_magazines(site, page) do
-  page_number = if page, do: page, else: 0
-  Magazine
-  |> where([m], m.site_id == ^site.id)
-  |> order_by(desc: :inserted_at)
-  |> Repo.paginate(page: page_number)
-end
+  def list_magazines(site, page) do
+    page_number = if page, do: page, else: 0
 
-@doc """
-Gets a single magazine.
-
-Raises `Ecto.NoResultsError` if the Magazine does not exist.
-
-## Examples
-
-    iex> get_magazine!(123)
-    %Magazine{}
-
-    iex> get_magazine!(456)
-    ** (Ecto.NoResultsError)
-
-"""
-def get_magazine(magazine_id, preloads \\ []) do
-  Repo.get(Magazine, magazine_id)
-  |> Repo.preload(preloads)
-end
-
-def get_magazine!(title, site_id, preloads \\ []) do
-  Repo.get_by!(Magazine, site_id: site_id, title: title)
-  |> Repo.preload(preloads)
-end
-
-def get_current_magazine(site_id, preloads) do
-  [current] = Magazine
-    |> where(site_id: ^site_id)
+    Magazine
+    |> where([m], m.site_id == ^site.id)
     |> order_by(desc: :inserted_at)
-    |> limit(1)
+    |> Repo.paginate(page: page_number)
+  end
+
+  @doc """
+  Gets a single magazine.
+
+  Raises `Ecto.NoResultsError` if the Magazine does not exist.
+
+  ## Examples
+
+      iex> get_magazine!(123)
+      %Magazine{}
+
+      iex> get_magazine!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_magazine(magazine_id, preloads \\ []) do
+    Repo.get(Magazine, magazine_id)
+    |> Repo.preload(preloads)
+  end
+
+  def get_magazine!(title, site_id, preloads \\ []) do
+    Repo.get_by!(Magazine, site_id: site_id, title: title)
+    |> Repo.preload(preloads)
+  end
+
+  def get_current_magazine(site_id, preloads) do
+    [current] =
+      Magazine
+      |> where(site_id: ^site_id)
+      |> order_by(desc: :inserted_at)
+      |> limit(1)
+      |> Repo.all()
+
+    current
+    |> Repo.preload(preloads)
+  end
+
+  @doc """
+  Creates a magazine.
+
+  ## Examples
+
+      iex> create_magazine(%{field: value})
+      {:ok, %Magazine{}}
+
+      iex> create_magazine(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_magazine(attrs \\ %{}) do
+    %Magazine{}
+    |> Magazine.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a magazine.
+
+  ## Examples
+
+      iex> update_magazine(magazine, %{field: new_value})
+      {:ok, %Magazine{}}
+
+      iex> update_magazine(magazine, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_magazine(%Magazine{} = magazine, attrs) do
+    magazine
+    |> Magazine.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Magazine.
+
+  ## Examples
+
+      iex> delete_magazine(magazine)
+      {:ok, %Magazine{}}
+
+      iex> delete_magazine(magazine)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_magazine(%Magazine{} = magazine) do
+    Repo.delete(magazine)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking magazine changes.
+
+  ## Examples
+
+      iex> change_magazine(magazine)
+      %Ecto.Changeset{source: %Magazine{}}
+  """
+  def change_magazine(%Magazine{} = magazine) do
+    Magazine.changeset(magazine, %{})
+  end
+
+  def list_feedbacks(site) do
+    Feedback
+    |> where([f], f.site_id == ^site.id)
+    |> preload(:site)
     |> Repo.all()
+  end
 
-  current
-  |> Repo.preload(preloads)
-end
-@doc """
-Creates a magazine.
+  def get_feedback!(site, id) do
+    Feedback
+    |> where([f], f.site_id == ^site.id)
+    |> Repo.get!(id)
+  end
 
-## Examples
+  def create_feedback(site, attrs) do
+    feedback_attrs = Map.put(attrs, "site_id", site.id)
 
-    iex> create_magazine(%{field: value})
-    {:ok, %Magazine{}}
+    %Feedback{}
+    |> Feedback.changeset(feedback_attrs)
+    |> Repo.insert()
+  end
 
-    iex> create_magazine(%{field: bad_value})
-    {:error, %Ecto.Changeset{}}
+  def update_feedback(%Feedback{} = feedback, attrs) do
+    feedback
+    |> Feedback.changeset(attrs)
+    |> Repo.update()
+  end
 
-"""
-def create_magazine(attrs \\ %{}) do
-  %Magazine{}
-  |> Magazine.changeset(attrs)
-  |> Repo.insert()
-end
+  def delete_feedback(%Feedback{} = feedback) do
+    Repo.delete(feedback)
+  end
 
-@doc """
-Updates a magazine.
-
-## Examples
-
-    iex> update_magazine(magazine, %{field: new_value})
-    {:ok, %Magazine{}}
-
-    iex> update_magazine(magazine, %{field: bad_value})
-    {:error, %Ecto.Changeset{}}
-
-"""
-def update_magazine(%Magazine{} = magazine, attrs) do
-  magazine
-  |> Magazine.changeset(attrs)
-  |> Repo.update()
-end
-
-@doc """
-Deletes a Magazine.
-
-## Examples
-
-    iex> delete_magazine(magazine)
-    {:ok, %Magazine{}}
-
-    iex> delete_magazine(magazine)
-    {:error, %Ecto.Changeset{}}
-
-"""
-def delete_magazine(%Magazine{} = magazine) do
-  Repo.delete(magazine)
-end
-
-@doc """
-Returns an `%Ecto.Changeset{}` for tracking magazine changes.
-
-## Examples
-
-    iex> change_magazine(magazine)
-    %Ecto.Changeset{source: %Magazine{}}
-
-"""
-def change_magazine(%Magazine{} = magazine) do
-  Magazine.changeset(magazine, %{})
-end
-
+  def change_feedback(%Feedback{} = feedback) do
+    Feedback.changeset(feedback, %{})
+  end
 end

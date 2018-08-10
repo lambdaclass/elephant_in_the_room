@@ -1,0 +1,46 @@
+<% import ElephantInTheRoomWeb.Router.Helpers %>
+
+<div class="feedback-form-body">
+  <button class="uk-modal-close-default" type="button" uk-close></button>    
+  <h2 class="uk-modal-title">Sugerencias</h2>
+  <%= unless Enum.empty?(Phoenix.Controller.get_flash(@conn)) do %>
+    <%= if (Phoenix.Controller.get_flash(@conn, :feedback_error)) != nil do %>
+      <div class="uk-alert-danger uk-animation-toggle uk-animation-slide-top" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p><%= get_flash(@conn, :feedback_error) %></p>
+      </div>
+    <% else %>
+      <div class="uk-alert-success uk-animation-toggle uk-animation-slide-top" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p><%= get_flash(@conn, :feedback_ok) %></p>
+      </div>
+    <% end %>
+  <% end %>
+  <%= form_for @conn, feedback_path(@conn, :create), [class: "uk-form-stacked"], fn f -> %>
+    <%= if Map.has_key?(@conn.assigns, :errors) do %>
+      <div class="alert alert-danger">
+        <p>Por favor revisa los errores a continuación.</p>
+      </div>
+    <% end %>
+
+    <fieldset class="uk-fieldset">
+      <div class="uk-margin">
+        <%= label f, :text, "Texto", class: "uk-form-label" %>
+        <%= textarea f, :text, class: "feedback-text uk-form-controls uk-input" %>
+        <%= error_tag f, :text %>
+      </div>
+
+      <div class="uk-margin">
+        <%= label f, :email, "E-mail", class: "uk-form-label" %>
+        <%= text_input f, :email, class: "feedback-email uk-form-controls uk-input" %>
+        <%= error_tag f, :email %>
+      </div>
+
+      <div class="uk-margin">
+        <center>
+          <%= submit "Enviar", class: "feedback-submit uk-button uk-button-primary" %>
+        </center>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

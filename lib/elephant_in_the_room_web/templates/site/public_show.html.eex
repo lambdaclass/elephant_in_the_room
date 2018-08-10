@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    
 
     <div class="uk-width-1-3@s uk-width-1-4@m uk-flex uk-flex-column low-posts">
       <%= for post <- Enum.take(@section_3_posts, 4) do %>
@@ -42,3 +43,32 @@
     </div>
   </div>
 </div>
+
+<script>
+const CSRFToken = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
+const submitButton = document.getElementsByClassName("feedback-submit").item(0);
+const feedbackForm = document.getElementsByClassName("feedback-form-body").item(0);
+
+feedbackForm.addEventListener("click", event => handleFeedbackSubmit(CSRFToken)(event))
+
+const handleFeedbackSubmit = csrfToken => event => {
+  if (event.target && event.target.className.includes("feedback-submit")) {
+    event.stopPropagation();
+    event.preventDefault();
+    const feedbackTextField = document.getElementsByClassName("feedback-text").item(0);
+    const feedbackEmailField = document.getElementsByClassName("feedback-email").item(0);
+    const feedbackText = feedbackTextField.value;
+    const feedbackEmail = feedbackEmailField.value;
+    const XHR = new XMLHttpRequest();
+
+    XHR.onloadend = () => {
+      feedbackForm.innerHTML = XHR.response;
+    };
+
+    XHR.open("POST", "/feedback");
+    XHR.setRequestHeader("X-CSRF-Token", csrfToken);
+    XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    XHR.send("text="+feedbackText+"&email="+feedbackEmail);
+  }
+};
+</script>

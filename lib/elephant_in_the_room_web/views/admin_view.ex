@@ -23,6 +23,18 @@ defmodule ElephantInTheRoomWeb.AdminView do
           bread_crumb_site(data.conn, site) | acc
         ])
 
+      :roles ->
+        bread_crumb_get_link(data, rest, [bread_crumb_roles(data.conn) | acc])
+
+      :authors ->
+        bread_crumb_get_link(data, rest, [bread_crumb_authors(data.conn) | acc])
+
+      :feedbacks ->
+        bread_crumb_get_link(data, rest, [bread_crumb_feedbacks(data.conn, data.site) | acc])
+
+      :users ->
+        bread_crumb_get_link(data, rest, [bread_crumb_users(data.conn) | acc])
+
       :posts ->
         bread_crumb_get_link(data, rest, [bread_crumb_posts(data.conn, data.site) | acc])
 
@@ -77,6 +89,22 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_site(conn, %Site{name: name}), do: {name, site_path(conn, :show, name)}
 
+  defp bread_crumb_authors(conn) do
+    {"Autores", author_path(conn, :index)}
+  end
+
+  defp bread_crumb_roles(conn) do
+    {"Roles", role_path(conn, :index)}
+  end
+
+  defp bread_crumb_users(conn) do
+    {"Usuarios", user_path(conn, :index)}
+  end
+
+  defp bread_crumb_feedbacks(conn, %Site{name: site_name}) do
+    {"Sugerencias", site_feedback_path(conn, :index, URI.encode(site_name))}
+  end
+
   defp bread_crumb_posts(conn, %Site{name: site_name}),
     do: {"Artículos", site_post_path(conn, :index, site_name)}
 
@@ -92,7 +120,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
     {"Etiquetas", site_tag_path(conn, :index, URI.encode(site_name))}
   end
 
-  defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}), do: {"Etiqueta",""}
+  defp bread_crumb_tag_edit(_conn, _, %Tag{id: nil}), do: {"Etiqueta", ""}
 
   defp bread_crumb_tag_edit(conn, %Site{name: site_name}, %Tag{name: tag_name}) do
     {"\##{tag_name}", site_tag_path(conn, :edit, URI.encode(site_name), URI.encode(tag_name))}

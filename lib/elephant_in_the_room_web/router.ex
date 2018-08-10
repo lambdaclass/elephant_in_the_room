@@ -54,6 +54,7 @@ defmodule ElephantInTheRoomWeb.Router do
     scope "/" do
       pipe_through([:site_required])
       get("/", SiteController, :public_show)
+      post("/feedback", FeedbackController, :create)
       get("/latest", SiteController, :public_show_latest)
       get("/popular", SiteController, :public_show_popular)
       get("/author/:author_name", AuthorController, :public_show)
@@ -79,6 +80,9 @@ defmodule ElephantInTheRoomWeb.Router do
 
       resources "/sites", SiteController, param: "name" do
         pipe_through(:load_site_info)
+        get("/feedback", FeedbackController, :index)
+        get("/feedback/:id", FeedbackController, :show)
+        delete("/feedback/:id", FeedbackController, :delete)
         resources("/categories", CategoryController, param: "category_name")
         resources("/posts", PostController, param: "slug")
         resources("/tags", TagController, param: "tag_name")
