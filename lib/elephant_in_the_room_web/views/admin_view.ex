@@ -29,6 +29,9 @@ defmodule ElephantInTheRoomWeb.AdminView do
       :authors ->
         bread_crumb_get_link(data, rest, [bread_crumb_authors(data.conn) | acc])
 
+      :feedbacks ->
+        bread_crumb_get_link(data, rest, [bread_crumb_feedbacks(data.conn, data.site) | acc])
+
       :users ->
         bread_crumb_get_link(data, rest, [bread_crumb_users(data.conn) | acc])
 
@@ -96,6 +99,10 @@ defmodule ElephantInTheRoomWeb.AdminView do
 
   defp bread_crumb_users(conn) do
     {"Usuarios", user_path(conn, :index)}
+  end
+
+  defp bread_crumb_feedbacks(conn, %Site{name: site_name}) do
+    {"Sugerencias", site_feedback_path(conn, :index, URI.encode(site_name))}
   end
 
   defp bread_crumb_posts(conn, %Site{name: site_name}),

@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoom.Sites.Feedback do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.Sites.{Site, Feedback}
 
