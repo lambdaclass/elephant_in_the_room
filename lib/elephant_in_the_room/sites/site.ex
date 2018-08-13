@@ -2,6 +2,7 @@ defmodule ElephantInTheRoom.Sites.Site do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
+  alias Ecto.UUID
   alias ElephantInTheRoom.Posts.{Category, Post, Tag}
   alias ElephantInTheRoom.{Sites, Sites.Author, Sites.Site}
   alias ElephantInTheRoomWeb.Uploaders.Image
@@ -47,7 +48,7 @@ defmodule ElephantInTheRoom.Sites.Site do
 
   defp check_post_default_image(%Changeset{} = changeset, %{"post_default_image" => post_image})
        when post_image != nil do
-    {:ok, image_name} = Image.store(%{post_image | filename: Ecto.UUID.generate()})
+    {:ok, image_name} = Image.store(%{post_image | filename: UUID.generate()})
     Changeset.put_change(changeset, :post_default_image, "/images/#{image_name}")
   end
 
@@ -82,7 +83,7 @@ defmodule ElephantInTheRoom.Sites.Site do
     do: Changeset.put_change(changeset, :image, nil)
 
   def store_image(%Changeset{} = changeset, %{"image" => image}) do
-    {:ok, image_name} = Image.store(%{image | filename: Ecto.UUID.generate()})
+    {:ok, image_name} = Image.store(%{image | filename: UUID.generate()})
 
     Changeset.put_change(changeset, :image, "/images/#{image_name}")
   end
@@ -101,7 +102,7 @@ defmodule ElephantInTheRoom.Sites.Site do
         %{"favicon" => %Plug.Upload{content_type: ct} = favicon}
       ) do
     if valid_favicon?(ct) do
-      {:ok, favicon_name} = Image.store(%{favicon | filename: Ecto.UUID.generate()})
+      {:ok, favicon_name} = Image.store(%{favicon | filename: UUID.generate()})
 
       Changeset.put_change(changeset, :favicon, "/images/#{favicon_name}")
     else

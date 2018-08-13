@@ -1,5 +1,6 @@
 defmodule ElephantInTheRoom.Sites do
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
   alias ElephantInTheRoom.Posts
   alias ElephantInTheRoom.Posts.{Category, Post, Tag}
   alias ElephantInTheRoom.Repo
@@ -63,14 +64,14 @@ defmodule ElephantInTheRoom.Sites do
   def create_site(attrs \\ %{}) do
     %Site{}
     |> Site.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
+    |> Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.insert()
   end
 
   def update_site(%Site{} = site, attrs) do
     site
     |> Site.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
+    |> Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.update()
   end
 
@@ -364,7 +365,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> create_magazine(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def create_magazine(attrs \\ %{}) do
@@ -382,7 +383,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> update_magazine(magazine, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def update_magazine(%Magazine{} = magazine, attrs) do
@@ -400,7 +401,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> delete_magazine(magazine)
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def delete_magazine(%Magazine{} = magazine) do
@@ -408,12 +409,12 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking magazine changes.
+  Returns an `%Changeset{}` for tracking magazine changes.
 
   ## Examples
 
       iex> change_magazine(magazine)
-      %Ecto.Changeset{source: %Magazine{}}
+      %Changeset{source: %Magazine{}}
   """
   def change_magazine(%Magazine{} = magazine) do
     Magazine.changeset(magazine, %{})
