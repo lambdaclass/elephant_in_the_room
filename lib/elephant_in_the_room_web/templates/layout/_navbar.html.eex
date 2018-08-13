@@ -13,6 +13,8 @@
   <div class="nav-overlay uk-navbar-right">
     <ul class="uk-navbar-nav ul-reduced">
 
+      <li><%= link "Media", to: site_path(@conn, :public_show_media), class: "a-reduced top-link hide-on-small"%></li>
+
       <li><%= link "Popular", to: site_path(@conn, :public_show_popular), class: "a-reduced top-link hide-on-small"%></li>
 
       <li><%= link "Recientes", to: site_path(@conn, :public_show_latest), class: "a-reduced top-link hide-on-small" %></li>

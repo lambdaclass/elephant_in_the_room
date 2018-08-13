@@ -199,6 +199,10 @@ defmodule ElephantInTheRoom.Sites do
     get_popular_posts_from_db(site_id, index_from, index_to)
   end
 
+  def get_media_posts(%Site{id: site_id}, opts \\ []) do
+    :todo
+  end
+
   def get_popular_posts_from_db(site_id, index_from, index_to) do
     {:ok, data} =
       Redix.command(
