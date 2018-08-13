@@ -14,5 +14,5 @@ defmodule ElephantInTheRoom.Sites.Markdown do
     |> validate_length(:rendered_content, min: 1)
   end
 
-  def generate_markdown(input), do: Cmark.to_html(input, [:safe, :hardbreaks])
+  def generate_markdown(input), do: Cmark.to_html(input, [:hardbreaks])
 end
