@@ -48,6 +48,7 @@ defmodule ElephantInTheRoom.Mixfile do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
       {:redix, "~> 0.7.1"},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
 
       # markdown
       {:cmark, "~> 0.7"},
