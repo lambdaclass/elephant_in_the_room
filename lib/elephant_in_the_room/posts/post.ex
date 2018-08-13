@@ -76,7 +76,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       |> String.split()
       |> length()
 
-    if number_of_words < max,
+    if number_of_words <= max,
       do: changeset,
       else: add_error(changeset, :abstract, "The abstract should contain 30 words or less")
   end
