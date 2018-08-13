@@ -11,10 +11,10 @@ defmodule ElephantInTheRoomWeb.PostView do
   end
 
   def mk_assigns(conn, assigns, site) do
-    if !Map.has_key?(assigns, "categories") do
-      Map.put(assigns, :action, site_post_path(conn, :create, site))
-    else
+    if Map.has_key?(assigns, "categories") do
       Map.put(assigns, :action, site_post_path(conn, :create, site, assigns.categories))
+    else
+      Map.put(assigns, :action, site_post_path(conn, :create, site))
     end
   end
 
