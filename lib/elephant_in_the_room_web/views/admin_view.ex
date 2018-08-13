@@ -26,7 +26,7 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   def bread_crumb_get_link(data, [:feedbacks | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_feedbacks(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_feedbacks(data.conn, data.site) | acc])
   end
 
   def bread_crumb_get_link(data, [:users | rest], acc) do
@@ -34,23 +34,23 @@ defmodule ElephantInTheRoomWeb.AdminView do
   end
 
   def bread_crumb_get_link(data, [:posts | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_posts(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_posts(data.conn, data.site) | acc])
   end
 
   def bread_crumb_get_link(data, [:post_edit | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_post_edit(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_post_edit(data.conn, data.site, data.post) | acc])
   end
 
   def bread_crumb_get_link(data, [:tags | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_tags(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_tags(data.conn, data.site) | acc])
   end
 
   def bread_crumb_get_link(data, [:ads | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_ads(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_ads(data.conn, data.site) | acc])
   end
 
   def bread_crumb_get_link(data, [:magazines | rest], acc) do
-    bread_crumb_get_link(data, rest, [bread_crumb_magazines(data.conn) | acc])
+    bread_crumb_get_link(data, rest, [bread_crumb_magazines(data.conn, data.site) | acc])
   end
 
   def bread_crumb_get_link(data, [%Site{} = site | rest], acc) do
@@ -59,31 +59,31 @@ defmodule ElephantInTheRoomWeb.AdminView do
     ])
   end
 
-  def bread_crumb_get_link(data, [%Post{} = site | rest], acc) do
+  def bread_crumb_get_link(data, [%Post{} = post | rest], acc) do
     bread_crumb_get_link(Map.put(data, :post, post), rest, [
       bread_crumb_post(data.conn, data.site, post) | acc
     ])
   end
 
-  def bread_crumb_get_link(data, [%Tag{} = site | rest], acc) do
+  def bread_crumb_get_link(data, [%Tag{} = tag | rest], acc) do
     bread_crumb_get_link(Map.put(data, :tag, tag), rest, [
       bread_crumb_tag_edit(data.conn, data.site, tag) | acc
     ])
   end
 
-  def bread_crumb_get_link(data, [%Ad{} = site | rest], acc) do
+  def bread_crumb_get_link(data, [%Ad{} = ad | rest], acc) do
     bread_crumb_get_link(Map.put(data, :ad, ad), rest, [
       bread_crumb_ads(data.conn, data.site, ad) | acc
     ])
   end
 
-  def bread_crumb_get_link(data, [%Magazine{} = site | rest], acc) do
+  def bread_crumb_get_link(data, [%Magazine{} = magazine | rest], acc) do
     bread_crumb_get_link(data, rest, [
       bread_crumb_magazines(data.conn, data.site, magazine) | acc
     ])
   end
 
-  def bread_crumb_get_link(data, [_ | rest], acc) do
+  def bread_crumb_get_link(data, [action | rest], acc) do
     bread_crumb_get_link(data, rest, [{bread_crumb_action(action), "#"} | acc])
   end
 

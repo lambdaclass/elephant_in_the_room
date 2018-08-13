@@ -166,7 +166,7 @@ defmodule ElephantInTheRoomWeb.SiteController do
   def show_default_site(conn, _params) do
     sites = Sites.list_sites()
 
-    case Enum.epmty?(sites) do
+    case Enum.empty?(sites) do
       true ->
         render(conn, "no_site_created")
 

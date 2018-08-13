@@ -71,7 +71,7 @@ defmodule ElephantInTheRoom.Backup do
   defp status_string(_), do: "idle"
 
   def dump do
-    if check_if_pg_dump_is_installed do
+    if check_if_pg_dump_is_installed() do
       call_pg_dump()
     else
       {:error, :no_pg_tools}
