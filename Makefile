@@ -48,4 +48,4 @@ attach_prod:
 	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room attach"
 
 stop_prod: 
-	bash -c "_build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room stop"
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room stop"
