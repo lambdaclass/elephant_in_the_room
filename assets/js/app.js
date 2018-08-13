@@ -26,3 +26,4 @@ import "./navbar";
 import "./posts";
 import "./markdown_editor";
 import "./posts_image_upload";
+import "./feedback.js";
