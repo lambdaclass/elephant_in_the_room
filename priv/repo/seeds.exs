@@ -37,7 +37,7 @@ case Repo.get_by(Role, name: "user") do
     IO.puts("user role already created!")
 end
 
-create_admin_user_data = fn ->
+admin_user_data =
   %{
     username: "admin",
     password: to_string(Kernel.trunc(:rand.uniform() * 1_000_000_000)),
@@ -46,15 +46,13 @@ create_admin_user_data = fn ->
     email: "admin@lambdaclass.com",
     role_id: admin_role_id
   }
-end
 
-admin_user_created = fn ->
+admin_user_created =
   Auth.list_users()
   |> Enum.any?(fn user -> user.username == "admin" end)
-end
 
-unless admin_user_created. do
-  admin_data = create_admin_user_data.()
+unless admin_user_created do
+  admin_data = admin_user_data
   admin = Auth.create_user!(admin_data)
   inform_str = "user: #{admin_data.username}\npassword: #{admin_data.password}\n"
   file_name = "admin_data.txt"
