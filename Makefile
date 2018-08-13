@@ -35,7 +35,6 @@ dev:
 	mix compile
 	mix phx.server
 
-
 lint_css:
 	cd assets && node_modules/stylelint/bin/stylelint.js css/*
 
@@ -46,7 +45,7 @@ prod:
 	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room start"
  
 attach_prod: 
-	bash -c "_build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room attach"
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room attach"
 
 stop_prod: 
 	bash -c "_build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room stop"

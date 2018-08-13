@@ -44,7 +44,7 @@ defmodule ElephantInTheRoom.Mixfile do
       {:cowboy, "~> 1.0"},
 
       # releases
-      {:distillery, "~> 1.5.3", runtime: false},
+      {:distillery, "~> 2.0.0-rc.11", runtime: false},
 
       # added deps
       {:guardian, "~> 1.0.1"},
