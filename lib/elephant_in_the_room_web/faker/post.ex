@@ -12,7 +12,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       "content" => generate_content(),
       "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
-      "abstract" => Faker.Lorem.paragraph(10),
+      "abstract" => generate_abstract(30),
       "inserted_at" => generate_inserted_at(),
       "slug" => ""
     }
@@ -53,6 +53,13 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
 
   defp generate_content() do
     [gen_text(20), gen_md_image(), gen_text(20)] |> Enum.join("\n\n")
+  end
+
+  defp generate_abstract(max_words) do
+    max_words
+    |> :rand.uniform()
+    |> Faker.Lorem.words()
+    |> Enum.join(" ")
   end
 
   defp gen_text(length), do: gen_text(length, :rand.uniform(5))
