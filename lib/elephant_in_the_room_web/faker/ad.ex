@@ -12,7 +12,7 @@ defmodule ElephantInTheRoomWeb.Faker.Ad do
     }
   end
 
-  defp default_content() do
+  defp default_content do
     random_image = PostFaker.gen_md_image_path(Utils.get_image_path_ads())
     random_link = Faker.Internet.url()
     "[\n#{random_image}\n](#{random_link})"

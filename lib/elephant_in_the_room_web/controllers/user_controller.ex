@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.UserController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Auth, Auth.User}
+  alias ElephantInTheRoom.{Auth, Auth.User, Repo}
 
   def index(conn, params) do
     page =
@@ -73,6 +73,6 @@ defmodule ElephantInTheRoomWeb.UserController do
   def delete(conn, %{"user_name" => name}) do
     user = Auth.from_username!(name)
     Auth.delete_user(user)
-    redirect(conn,to: user_path(conn, :index))
+    redirect(conn, to: user_path(conn, :index))
   end
 end

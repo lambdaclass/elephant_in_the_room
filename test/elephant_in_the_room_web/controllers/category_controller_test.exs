@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.CategoryControllerTest do
   use ElephantInTheRoomWeb.ConnCase
-  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.FakeSession
 
   @create_attrs %{"name" => "some name", "description" => "some description"}
   @update_attrs %{"name" => "some updated name", "description" => "some description"}

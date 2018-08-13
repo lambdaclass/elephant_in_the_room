@@ -2,9 +2,11 @@ defmodule ElephantInTheRoom.Posts.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoom.{Repo, Sites, Posts}
-  alias ElephantInTheRoom.Sites.{Site, Author, Markdown, Magazine}
-  alias ElephantInTheRoom.Posts.{Post, Category, Tag}
+  alias ElephantInTheRoom.Posts
+  alias ElephantInTheRoom.Posts.{Category, Post, Tag}
+  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.{Author, Magazine, Markdown, Site}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do

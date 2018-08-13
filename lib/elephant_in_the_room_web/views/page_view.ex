@@ -3,7 +3,7 @@ defmodule ElephantInTheRoomWeb.PageView do
 
   alias ElephantInTheRoom.Sites
 
-  def get_sites() do
+  def get_sites do
     Sites.list_sites()
   end
 

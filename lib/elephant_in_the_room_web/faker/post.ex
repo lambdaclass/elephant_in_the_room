@@ -40,7 +40,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     |> Enum.map(fn _ -> insert_one(attrs) end)
   end
 
-  defp generate_inserted_at() do
+  defp generate_inserted_at do
     now = NaiveDateTime.utc_now
     hour = :rand.uniform(23)
     minute = :rand.uniform(59)
@@ -51,7 +51,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     end
   end
 
-  defp generate_content() do
+  defp generate_content do
     [gen_text(20), gen_md_image(), gen_text(20)] |> Enum.join("\n\n")
   end
 
@@ -70,7 +70,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     Enum.join(paragraphs, "\n\n")
   end
 
-  def gen_md_image(), do: gen_md_image_path(Utils.get_image_path())
+  def gen_md_image, do: gen_md_image_path(Utils.get_image_path())
   def gen_md_image_path(path) do
     description = Faker.Lorem.word()
     image_content = File.read!(path)

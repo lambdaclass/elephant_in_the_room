@@ -2,9 +2,9 @@ defmodule ElephantInTheRoom.Posts do
   import Ecto.Query, warn: false
   import Ecto.Changeset
   alias Ecto.Changeset
+  alias ElephantInTheRoom.Posts.{Category, Featured, Post, Tag}
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Magazine, Sites.Site}
   alias ElephantInTheRoomWeb.PostView
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Sites.Magazine}
-  alias ElephantInTheRoom.Posts.{Post, Category, Tag, Featured}
 
   @default_post_preload [:author, :tags, :categories]
 

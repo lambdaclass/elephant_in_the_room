@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoom.Posts.Tag do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
+  alias ElephantInTheRoom.Posts.{Post, Tag}
   alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Posts.{Tag, Post}
 
   schema "tags" do
     field(:name, :string)

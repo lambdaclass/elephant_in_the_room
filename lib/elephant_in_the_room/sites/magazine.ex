@@ -1,9 +1,9 @@
 defmodule ElephantInTheRoom.Sites.Magazine do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.{Sites.Site, Posts.Post}
+  alias ElephantInTheRoom.Posts.Post
+  alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoomWeb.Uploaders.Image
-
 
   schema "magazines" do
     field :cover, :string

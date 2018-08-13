@@ -1,9 +1,9 @@
 defmodule ElephantInTheRoom.AuthTest do
   use ElephantInTheRoom.DataCase
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
+  alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoom.Auth.{Role, User}
+  alias ElephantInTheRoom.Repo
 
   describe "roles" do
     @valid_attrs %{"name" => "some name"}
