@@ -75,9 +75,9 @@ defmodule ElephantInTheRoom.Sites do
 
   def delete_site(%Site{} = site) do
     Repo.transaction(fn ->
-      site.categories |> Enum.map(fn c -> Posts.delete_category(c) end)
-      site.posts |> Enum.map(fn p -> Posts.delete_post(p) end)
-      site.tags |> Enum.map(fn t -> Posts.delete_tag(t) end)
+      site.categories |> Enum.each(fn c -> Posts.delete_category(c) end)
+      site.posts |> Enum.each(fn p -> Posts.delete_post(p) end)
+      site.tags |> Enum.each(fn t -> Posts.delete_tag(t) end)
     end)
 
     Repo.delete(site)

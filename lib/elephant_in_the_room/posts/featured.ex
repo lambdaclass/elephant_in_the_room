@@ -80,7 +80,7 @@ defmodule ElephantInTheRoom.Posts.Featured do
 
   defp is_featured_list_empty({_, [_|_]}), do: false
   defp is_featured_list_empty({featured_list,_}), do: is_featured_list_empty(featured_list)
-  defp is_featured_list_empty([{_, [ _|_]} | _]), do: false
+  defp is_featured_list_empty([{_, [_ | _]} | _]), do: false
   defp is_featured_list_empty([]), do: true
   defp is_featured_list_empty([{_, []} | rest]), do: is_featured_list_empty(rest)
 
