@@ -1,8 +1,9 @@
 defmodule ElephantInTheRoomWeb.Plugs.SetSite do
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Site}
-  alias Plug.Conn
-  alias ElephantInTheRoomWeb.Router.Helpers, as: Routes
   import Phoenix.Controller, only: [redirect: 2]
+  alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoom.Sites.Site
+  alias ElephantInTheRoomWeb.Router.Helpers, as: Routes
+  alias Plug.Conn
 
   def set_site(conn, _params) do
     case Repo.get_by(Site, host: conn.host) do

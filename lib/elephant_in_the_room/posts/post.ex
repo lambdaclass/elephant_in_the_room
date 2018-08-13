@@ -2,9 +2,11 @@ defmodule ElephantInTheRoom.Posts.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias ElephantInTheRoom.{Repo, Sites, Posts}
-  alias ElephantInTheRoom.Sites.{Site, Author, Markdown, Magazine}
-  alias ElephantInTheRoom.Posts.{Post, Category, Tag}
+  alias ElephantInTheRoom.Posts
+  alias ElephantInTheRoom.Posts.{Category, Post, Tag}
+  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.{Author, Magazine, Markdown, Site}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "posts" do
@@ -48,7 +50,9 @@ defmodule ElephantInTheRoom.Posts.Post do
       |> put_site_id()
 
     post
-    |> cast(new_attrs, [:title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level])
+    |> cast(new_attrs, [
+      :title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level
+    ])
     |> validate_required_site_or_magazine
     |> do_put_assoc(:tags, attrs)
     |> do_put_assoc(:categories, attrs)

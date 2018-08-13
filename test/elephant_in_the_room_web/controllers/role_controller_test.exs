@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.RoleControllerTest do
   use ElephantInTheRoomWeb.ConnCase
-  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Auth
+  alias ElephantInTheRoomWeb.FakeSession
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}

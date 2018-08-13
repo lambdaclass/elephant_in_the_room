@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoom.Posts.Category do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.Site
   alias ElephantInTheRoom.Posts.{Category, Post}
+  alias ElephantInTheRoom.Sites.Site
 
   schema "categories" do
     field(:description, :string)

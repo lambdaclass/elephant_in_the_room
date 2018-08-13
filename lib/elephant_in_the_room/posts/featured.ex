@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoom.Posts.Featured do
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias ElephantInTheRoom.Posts.Post
   alias ElephantInTheRoom.Repo
-  alias Ecto.Multi
 
   @default_post_preload [:author, :categories]
 
@@ -23,7 +23,7 @@ defmodule ElephantInTheRoom.Posts.Featured do
     [_|fetcheable] = get_featured_levels()
     fetcheable
   end
-  def get_featured_levels() do
+  def get_featured_levels do
     [
       %FeaturedLevel{level: 0, fetch_limit: :no_fetch},
       %FeaturedLevel{level: 1, fetch_limit: 1},
@@ -42,7 +42,7 @@ defmodule ElephantInTheRoom.Posts.Featured do
 
   def get_posts_from_level_pair(level, [{%FeaturedLevel{level: level}, posts} | _]), do: posts
   def get_posts_from_level_pair(level, [{_, _} | moreFeatured]), do: get_posts_from_level_pair(level, moreFeatured)
-  def get_posts_from_level_pair(_,_), do: []
+  def get_posts_from_level_pair(_, _), do: []
 
   def get_featured_posts(%FeaturedLevel{fetch_limit: :no_fetch}, _), do: []
   def get_featured_posts(%FeaturedLevel{level: level, fetch_limit: limit}, site_id) do
@@ -79,8 +79,8 @@ defmodule ElephantInTheRoom.Posts.Featured do
   end
 
   defp is_featured_list_empty({_, [_|_]}), do: false
-  defp is_featured_list_empty({featured_list,_}), do: is_featured_list_empty(featured_list)
-  defp is_featured_list_empty([{_, [ _|_]} | _]), do: false
+  defp is_featured_list_empty({featured_list, _}), do: is_featured_list_empty(featured_list)
+  defp is_featured_list_empty([{_, [_ | _]} | _]), do: false
   defp is_featured_list_empty([]), do: true
   defp is_featured_list_empty([{_, []} | rest]), do: is_featured_list_empty(rest)
 

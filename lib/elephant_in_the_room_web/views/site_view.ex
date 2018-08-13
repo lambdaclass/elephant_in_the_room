@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Posts.Post, Sites.Site, Sites.Author}
+  alias ElephantInTheRoom.{Posts.Post, Sites.Author, Sites.Site}
   alias ElephantInTheRoomWeb.SharedPostCardView
 
   def get_top_featured_post(_conn, posts) do

@@ -53,7 +53,7 @@ admin_user_created = fn ->
   |> Enum.any?(fn user -> user.username == "admin" end)
 end
 
-unless admin_user_created.() do
+unless admin_user_created. do
   admin_data = create_admin_user_data.()
   admin = Auth.create_user!(admin_data)
   inform_str = "user: #{admin_data.username}\npassword: #{admin_data.password}\n"

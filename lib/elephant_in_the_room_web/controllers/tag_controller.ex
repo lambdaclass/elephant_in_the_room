@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoomWeb.TagController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Posts, Posts.Tag, Sites.Site}
   import Ecto.Query
   import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
+  alias ElephantInTheRoom.{Posts, Posts.Tag, Repo, Sites, Sites.Site}
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =

@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoom.SitesTest do
   use ElephantInTheRoom.DataCase
-  alias ElephantInTheRoom.Sites.{Site, Post, Author, Tag, Category}
   alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.Sites.{Author, Category, Post, Site, Tag}
 
   describe "sites" do
     alias ElephantInTheRoom.Sites.Site

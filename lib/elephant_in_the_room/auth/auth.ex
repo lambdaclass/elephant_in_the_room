@@ -4,9 +4,9 @@ defmodule ElephantInTheRoom.Auth do
   """
 
   import Ecto.Query, warn: false
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Auth.{User, Role, Guardian}
   alias Comeonin.Bcrypt
+  alias ElephantInTheRoom.Auth.{Guardian, Role, User}
+  alias ElephantInTheRoom.Repo
   alias Plug.Conn
 
   @doc """

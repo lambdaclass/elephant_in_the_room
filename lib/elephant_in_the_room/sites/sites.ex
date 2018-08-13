@@ -1,9 +1,11 @@
 defmodule ElephantInTheRoom.Sites do
   import Ecto.Query, warn: false
-  alias ElephantInTheRoom.{Repo, Posts}
-  alias ElephantInTheRoomWeb.{SiteView, Utils.Utils}
+  alias Ecto.Changeset
+  alias ElephantInTheRoom.Posts
   alias ElephantInTheRoom.Posts.{Category, Post, Tag}
-  alias ElephantInTheRoom.Sites.{Site, Author, Magazine, Image, Feedback}
+  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites.{Author, Feedback, Image, Magazine, Site}
+  alias ElephantInTheRoomWeb.{SiteView, Utils.Utils}
 
   @default_site_preload [
     :categories,
@@ -22,7 +24,7 @@ defmodule ElephantInTheRoom.Sites do
 
   def list_site_no_preload, do: Repo.all(Site)
 
-  def default_site_preload() do
+  def default_site_preload do
     [
       :categories,
       {:posts, from(p in Post, order_by: p.inserted_at)},
@@ -62,22 +64,22 @@ defmodule ElephantInTheRoom.Sites do
   def create_site(attrs \\ %{}) do
     %Site{}
     |> Site.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
+    |> Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.insert()
   end
 
   def update_site(%Site{} = site, attrs) do
     site
     |> Site.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:categories, with: &Category.changeset/2)
+    |> Changeset.cast_assoc(:categories, with: &Category.changeset/2)
     |> Repo.update()
   end
 
   def delete_site(%Site{} = site) do
     Repo.transaction(fn ->
-      site.categories |> Enum.map(fn c -> Posts.delete_category(c) end)
-      site.posts |> Enum.map(fn p -> Posts.delete_post(p) end)
-      site.tags |> Enum.map(fn t -> Posts.delete_tag(t) end)
+      site.categories |> Enum.each(fn c -> Posts.delete_category(c) end)
+      site.posts |> Enum.each(fn p -> Posts.delete_post(p) end)
+      site.tags |> Enum.each(fn t -> Posts.delete_tag(t) end)
     end)
 
     Repo.delete(site)
@@ -363,7 +365,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> create_magazine(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def create_magazine(attrs \\ %{}) do
@@ -381,7 +383,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> update_magazine(magazine, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def update_magazine(%Magazine{} = magazine, attrs) do
@@ -399,7 +401,7 @@ defmodule ElephantInTheRoom.Sites do
       {:ok, %Magazine{}}
 
       iex> delete_magazine(magazine)
-      {:error, %Ecto.Changeset{}}
+      {:error, %Changeset{}}
 
   """
   def delete_magazine(%Magazine{} = magazine) do
@@ -407,12 +409,12 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking magazine changes.
+  Returns an `%Changeset{}` for tracking magazine changes.
 
   ## Examples
 
       iex> change_magazine(magazine)
-      %Ecto.Changeset{source: %Magazine{}}
+      %Changeset{source: %Magazine{}}
   """
   def change_magazine(%Magazine{} = magazine) do
     Magazine.changeset(magazine, %{})
