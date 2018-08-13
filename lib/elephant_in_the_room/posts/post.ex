@@ -51,9 +51,18 @@ defmodule ElephantInTheRoom.Posts.Post do
 
     post
     |> cast(new_attrs, [
-      :title, :content, :slug, :inserted_at, :abstract, :site_id, :author_id, :magazine_id, :featured_level
+      :title,
+      :content,
+      :slug,
+      :inserted_at,
+      :abstract,
+      :site_id,
+      :author_id,
+      :magazine_id,
+      :featured_level
     ])
     |> validate_required_site_or_magazine
+    |> validate_abstract_max_length(new_attrs, 30)
     |> do_put_assoc(:tags, attrs)
     |> do_put_assoc(:categories, attrs)
     |> validate_required([:title, :content])
@@ -63,19 +72,35 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> set_thumbnail
   end
 
+  defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
+    number_of_words =
+      abstract
+      |> String.split()
+      |> length()
+
+    if number_of_words <= max,
+      do: changeset,
+      else: add_error(changeset, :abstract, "The abstract should contain 30 words or less")
+  end
+
+  defp validate_abstract_max_length(changeset, _attrs, _max), do: changeset
+
   def validate_required_site_or_magazine(changeset) do
     case get_field(changeset, :site_id) do
       nil ->
         case get_field(changeset, :magazine_id) do
           nil ->
             add_error(changeset, :site_id, "Site does not exist")
+
           _ ->
             changeset
         end
+
       _ ->
         case get_field(changeset, :magazine_id) do
           nil ->
             changeset
+
           _ ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
@@ -87,22 +112,26 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   def do_put_assoc(changeset, assoc, attrs) do
-    site_id = case get_field(changeset, :site_id) do
-      nil ->
-        case get_field(changeset, :magazine_id) do
-          nil ->
-            nil
-          magazine_id ->
-            magazine = Sites.get_magazine(magazine_id)
-            magazine.site_id
-        end
-      site_id ->
-        site_id
-    end
+    site_id =
+      case get_field(changeset, :site_id) do
+        nil ->
+          case get_field(changeset, :magazine_id) do
+            nil ->
+              nil
+
+            magazine_id ->
+              magazine = Sites.get_magazine(magazine_id)
+              magazine.site_id
+          end
+
+        site_id ->
+          site_id
+      end
 
     case assoc do
       :tags ->
         put_assoc(changeset, :tags, parse_tags(site_id, attrs))
+
       :categories ->
         put_assoc(changeset, :categories, parse_categories(site_id, attrs))
     end
@@ -241,6 +270,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       nil ->
         magazine = Sites.get_magazine(get_field(changeset, :magazine_id), [:site])
         magazine.site.post_default_image
+
       site_id ->
         {:ok, site} = Sites.get_site(site_id)
         site.post_default_image
