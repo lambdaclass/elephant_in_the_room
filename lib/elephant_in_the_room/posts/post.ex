@@ -13,6 +13,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     field(:title, :string)
     field(:slug, :string)
     field(:abstract, :string)
+    field(:type, :string)
     field(:content, :string)
     field(:rendered_content, :string)
     field(:cover, :string)
@@ -54,6 +55,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       :title,
       :content,
       :slug,
+      :type,
       :inserted_at,
       :abstract,
       :site_id,
@@ -65,7 +67,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> validate_abstract_max_length(new_attrs, 30)
     |> do_put_assoc(:tags, attrs)
     |> do_put_assoc(:categories, attrs)
-    |> validate_required([:title, :content])
+    |> validate_required([:title, :content, :type])
     |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)

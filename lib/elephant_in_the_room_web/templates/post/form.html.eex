@@ -46,6 +46,12 @@
   </div>
 
   <div class="no-uk-margin">
+    <%= label f, :type, "Tipo de Articulo", class: "uk-form-label" %>
+    <%= select f, :type, ["Texto": "texto", "Audio": "audio", "Video": "video"],  class: "uk-input uk-form-large" %>
+    <%= error_tag f, :type %>
+  </div>
+
+  <div class="no-uk-margin">
     <%= label f, :author, "Autor", class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", selected: get_selected_author(assigns[:post]), prompt: "", style: "width: 100%" %>
     <%= error_tag f, :author %>
