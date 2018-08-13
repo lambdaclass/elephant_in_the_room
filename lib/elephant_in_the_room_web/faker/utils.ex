@@ -25,8 +25,8 @@ defmodule ElephantInTheRoomWeb.Faker.Utils do
     %{attrs | "cover" => image}
   end
 
-  def get_image_path_ads(), do: get_image_path("for_ads")
-  def get_image_path(), do: get_image_path("for_posts")
+  def get_image_path_ads, do: get_image_path("for_ads")
+  def get_image_path, do: get_image_path("for_posts")
   def get_image_path(path) do
     File.ls!("./images/#{path}")
     |> Enum.random()

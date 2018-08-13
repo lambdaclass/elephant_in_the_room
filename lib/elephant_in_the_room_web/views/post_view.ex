@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.PostView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Repo, Sites, Posts.Post, Posts.Tag}
+  alias ElephantInTheRoom.{Posts.Post, Posts.Tag, Repo, Sites}
   alias ElephantInTheRoomWeb.Utils.Utils
 
   def mk_assigns(conn, assigns, title, site, post) do
@@ -28,7 +28,7 @@ defmodule ElephantInTheRoomWeb.PostView do
 
   def show_selected_categories(_), do: []
 
-  def get_authors() do
+  def get_authors do
     Sites.list_authors() |> Enum.map(fn author -> {author.name, author.id} end)
   end
 
@@ -70,7 +70,7 @@ defmodule ElephantInTheRoomWeb.PostView do
   @one_minute 60
   @five_minutes 300
   @one_hour 3600
-  @one_day 86400
+  @one_day 86_400
   @one_day_and_few_hours @one_day + 5 * @one_hour
   @two_weeks 1_209_600
 

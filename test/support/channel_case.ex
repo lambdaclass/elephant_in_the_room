@@ -25,7 +25,6 @@ defmodule ElephantInTheRoomWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElephantInTheRoom.Repo)
     unless tags[:async] do

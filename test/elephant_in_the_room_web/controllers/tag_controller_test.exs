@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.TagControllerTest do
   use ElephantInTheRoomWeb.ConnCase
-  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.FakeSession
 
   @create_attrs %{"name" => "some name"}
   @update_attrs %{"name" => "some updated name"}

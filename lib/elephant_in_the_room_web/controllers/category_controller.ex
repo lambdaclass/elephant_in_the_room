@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Posts, Posts.Category}
-  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
   import Ecto.Query
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
+  alias ElephantInTheRoom.{Posts, Posts.Category, Repo, Sites, Sites.Site}
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =

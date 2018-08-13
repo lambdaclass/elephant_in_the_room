@@ -2,7 +2,7 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
   use ElephantInTheRoomWeb.ConnCase
   alias ElephantInTheRoom.Sites.Post
 
-  describe "markdown" do 
+  describe "markdown" do
     test "& input" do
       assert "<p>&amp;</p>\n" = Post.generate_markdown("&")
     end
@@ -12,5 +12,4 @@ defmodule ElephantInTheRoomWeb.SiteControllerTest do
     end
 
   end
-
 end

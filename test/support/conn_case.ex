@@ -14,9 +14,9 @@ defmodule ElephantInTheRoomWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
-  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Auth
   alias ElephantInTheRoom.Auth.User
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoom.Sites
 
   using do
@@ -80,8 +80,8 @@ defmodule ElephantInTheRoomWeb.ConnCase do
     }
   end
 
-  def ensure_default_site_exists() do
-    case get_default_site_from_db() do
+  def ensure_default_site_exists do
+    case get_default_site_from_db do
       {:ok, site} ->
         site
 
@@ -92,11 +92,11 @@ defmodule ElephantInTheRoomWeb.ConnCase do
     end
   end
 
-  def get_default_site_from_db() do
+  def get_default_site_from_db do
     Sites.get_site_by_name(default_site().name)
   end
 
-  def default_site() do
+  def default_site do
     %{name: "default_site", categories: [], posts: [], tags: []}
   end
 end

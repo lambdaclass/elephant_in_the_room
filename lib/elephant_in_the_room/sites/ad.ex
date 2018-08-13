@@ -2,8 +2,8 @@ defmodule ElephantInTheRoom.Sites.Ad do
   import Ecto.Query, warn: false
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.{Sites, Repo}
-  alias ElephantInTheRoom.Sites.{Markdown, Ad, Site}
+  alias ElephantInTheRoom.{Repo, Sites}
+  alias ElephantInTheRoom.Sites.{Ad, Markdown, Site}
 
   schema "ads" do
     field(:name, :string)
@@ -15,7 +15,7 @@ defmodule ElephantInTheRoom.Sites.Ad do
     timestamps()
   end
 
-  def changeset(), do: changeset(%Ad{}, %{})
+  def changeset, do: changeset(%Ad{}, %{})
 
   def changeset(%Ad{} = ad, attrs \\ %{}) do
     ad

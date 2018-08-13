@@ -1,9 +1,10 @@
 defmodule ElephantInTheRoom.Sites do
   import Ecto.Query, warn: false
-  alias ElephantInTheRoom.{Repo, Posts}
-  alias ElephantInTheRoomWeb.{SiteView, Utils.Utils}
+  alias ElephantInTheRoom.Posts
   alias ElephantInTheRoom.Posts.{Category, Post, Tag}
-  alias ElephantInTheRoom.Sites.{Site, Author, Magazine, Image, Feedback}
+  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites.{Author, Feedback, Image, Magazine, Site}
+  alias ElephantInTheRoomWeb.{SiteView, Utils.Utils}
 
   @default_site_preload [
     :categories,
@@ -22,7 +23,7 @@ defmodule ElephantInTheRoom.Sites do
 
   def list_site_no_preload, do: Repo.all(Site)
 
-  def default_site_preload() do
+  def default_site_preload do
     [
       :categories,
       {:posts, from(p in Post, order_by: p.inserted_at)},

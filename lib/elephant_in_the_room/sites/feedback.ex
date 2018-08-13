@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoom.Sites.Feedback do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Site, Feedback}
+  alias ElephantInTheRoom.Sites.{Feedback, Site}
 
   schema "feedbacks" do
     field(:email, :string)
