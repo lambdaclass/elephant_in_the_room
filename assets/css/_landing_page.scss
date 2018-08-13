@@ -74,21 +74,29 @@
 .post.post-main {
   text-align: left;
   .image {
-    height: 30vh;
+    height: 49vh;
   }
 
   .date {
     margin-bottom: 0px;
   }
+
   .title {
     @extend %landing-title;
     padding: 0;
-    font-size: 1.6em;
+    font-size: 1.5em;
     line-height: 1em;
     font-weight: bolder;
   }
+
   .abstract, .author {
     margin-top: 10px;
+  }
+
+  .main-post-date-author {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
