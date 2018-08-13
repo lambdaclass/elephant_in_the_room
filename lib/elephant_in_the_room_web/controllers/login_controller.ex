@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.LoginController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.User
+  alias ElephantInTheRoom.{Auth, Auth.User}
 
   def index(conn, _params) do
     changeset = Auth.change_user(%User{})

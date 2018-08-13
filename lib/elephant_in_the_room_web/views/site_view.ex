@@ -1,9 +1,6 @@
 defmodule ElephantInTheRoomWeb.SiteView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Sites.Post
-  alias ElephantInTheRoom.Sites.Site
-  alias ElephantInTheRoom.Sites.Author
-
+  alias ElephantInTheRoom.{Posts.Post, Sites.Site, Sites.Author}
   alias ElephantInTheRoomWeb.SharedPostCardView
 
   def get_top_featured_post(_conn, posts) do
@@ -65,13 +62,10 @@ defmodule ElephantInTheRoomWeb.SiteView do
     post_path(conn, :public_show, year, month, day, post.slug)
   end
 
-  def show_site_link(conn) do
-    site_path(conn, :public_show)
-  end
+  def show_site_link(conn), do: site_path(conn, :public_show)
 
-  def render_shared(template, assigns \\ []) do
-    render(SharedPostCardView, template, assigns)
-  end
+  def render_shared(template, assigns \\ []),
+    do: render(SharedPostCardView, template, assigns)
 
   def get_abstract_to_display(%Post{abstract: abstract}, _count)
       when abstract == nil,
@@ -94,9 +88,7 @@ defmodule ElephantInTheRoomWeb.SiteView do
 
   def get_author_description_to_display(_), do: nil
 
-  def get_authors(%Site{authors: authors}, amount) do
-    Enum.take(authors, amount)
-  end
+  def get_authors(%Site{authors: authors}, amount), do: Enum.take(authors, amount)
 
   # This is a 'place-holder' function, the intent is that later this
   # will be replaced for a function that can determine which post
@@ -131,7 +123,5 @@ defmodule ElephantInTheRoomWeb.SiteView do
     end
   end
 
-  defp take_range_from_list([], acc, _current, _from, _to) do
-    acc
-  end
+  defp take_range_from_list([], acc, _current, _from, _to), do: acc
 end

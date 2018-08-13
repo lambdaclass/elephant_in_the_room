@@ -8,18 +8,18 @@
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-expand">
               <h3 class="uk-card-title uk-margin-remove-bottom">
-                <div><center><legend class="uk-legend">Edit Role</legend></center></div>
+                <div><center><legend class="uk-legend">Editar Rol</legend></center></div>
               </h3>
             </div>
           </div>
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, role_path(@conn, :update, @role)) %>
+          <%= render "form.html", Map.put(assigns, :action, role_path(@conn, :update, URI.encode(@role.name))) %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<span><%= link "Back", to: role_path(@conn, :index) %></span>
+<span><%= link "Regresar", to: role_path(@conn, :index) %></span>

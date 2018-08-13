@@ -1,26 +1,24 @@
 <div class="admin-title">
-  <span class="title-text"> Posts</span>
+  <span class="title-text">Artículos</span>
   <div "admin-title-options">
-    <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
-      href="<%= site_post_path(@conn, :new, @site) %>">
-      create new
-    </a>
+    <%= link "crear nuevo", to: URI.encode(site_or_magazine_path(@conn, :new, @site.name, assigns[:magazine])), class: "uk-button uk-button-primary uk-button-small admin-mini-button" %>
   </div>
 </div>
 
 <ul class="uk-list uk-list-striped admin-site-list">
   <%= for post <- @posts do %>
-      <li class="site-item"
-          onclick="window.location = '<%= site_post_path(@conn, :edit, @site, post) %>'">
-      <a class="uk-button uk-button-primary uk-button-small admin-mini-button">
-        edit
-      </a>
-      <a class="site-link">
-        <%= post.title %>
-      </a>
+      <li class="site-item">
+        <%= link to: site_or_magazine_path(@conn, :edit, @site.name, assigns[:magazine], post.slug) do %>
+          <span class="uk-button uk-button-primary uk-button-small admin-mini-button">
+            editar
+          </span>
+          <span class="site-link">
+            <%= post.title %>
+          </span>
+        <% end %>
     </li>
   <% end %>
 </ul>
 
 <%= render ElephantInTheRoomWeb.AdminView,
-      "_bottom_pagination.html", Map.put(assigns, :page, &site_post_path(@conn, :index, @site.id, page: &1)) %>
+      "_bottom_pagination.html", Map.put(assigns, :page, &site_post_path(@conn, :index, @site.name, page: &1)) %>

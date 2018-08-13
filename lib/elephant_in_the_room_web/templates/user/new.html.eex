@@ -1,4 +1,4 @@
 <%= render "form.html",
 Map.put(assigns, :action, user_path(@conn, :create))
-|> Map.put(:form_title, "Create new User Account")
+|> Map.put(:form_title, "Crear Usuario")
 %>

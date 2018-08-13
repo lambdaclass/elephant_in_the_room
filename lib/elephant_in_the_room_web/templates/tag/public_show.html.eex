@@ -4,12 +4,12 @@
   login = get_logged_user(@conn)
 %>
 
-<div class="uk-container uk-container-small">
+<div class="uk-container uk-container-small main-body-public-content">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @tag.name %></h1>
 
   <%= case login do %>
       <%= {:ok, _user, _} -> %>
-        <%= link "Edit tag", to: site_tag_path(@conn, :edit, @site.id, @tag.id),
+        <%= link "Editar etiqueta", to: site_tag_path(@conn, :edit, URI.encode(@site.name), URI.encode(@tag.name)),
               class: "uk-button uk-button-secondary uk-button-small" %>
       <% _ -> %>
    <% end %>
@@ -28,7 +28,7 @@
           <h2><%= link main_post.title, to: link_main_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
           <p class="uk-visible@s"><%= main_post.abstract %></p>
           <%= if main_post.author do %>
-            <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+            <%= link main_post.author.name, to: author_path(@conn, :public_show, URI.encode(main_post.author.name)), class: "uk-text-capitalize uk-text-bold" %>
           <% end %>
           <p><%= PostView.show_date(main_post.updated_at) %></p>
         </div>
@@ -47,13 +47,19 @@
             <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
             <p class="uk-visible@s"><%= post.abstract %></p>
             <%= if post.author do %>
-              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold author" %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, URI.encode(post.author.name)), class: "uk-text-capitalize uk-text-bold author" %>
             <% end %>
             <p><%= PostView.show_date(post.updated_at) %></p>
           </div>
         </div>
         <hr>
       <% end %>
+
+      <%= if Enum.at(other_posts,0) != nil do %>
+        <%= link "Siguiente",
+              to: "#{tag_path(@conn,:public_show, URI.encode(@tag.name))}?page=#{@page+1}" %>
+      <% end %>
+
     <% end %>
   </div>
 </div>

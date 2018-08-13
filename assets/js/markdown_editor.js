@@ -1,8 +1,15 @@
 import InscrybMDE from "inscrybmde"
 
 document.addEventListener("DOMContentLoaded", function() {
-  window.editor = new InscrybMDE({
-    element: document.getElementById("post_content"),
-    spellChecker: false
-  });
+  let enable_markdown_editor = function(id) {
+    let element = document.getElementById(id)
+    if(element) {
+      window.editor = new InscrybMDE({
+        element: element,
+        spellChecker: false
+      });
+    }
+  };
+  enable_markdown_editor("post_content");
+  enable_markdown_editor("ad_content");
 });

@@ -7,7 +7,7 @@
 In order to run this project you need to have already installed:
 
 * [Erlang](http://erlang.org/doc/installation_guide/INSTALL.html) 20.0
-* [Elixir](https://elixir-lang.org/install.html) 1.6 
+* [Elixir](https://elixir-lang.org/install.html) 1.6
 * [PostgreSQL](https://www.postgresql.org/download/linux/ubuntu/) 10.4
 * [Docker](https://docs.docker.com/install/) 17.12.1-ce
 * [Docker Compose](https://docs.docker.com/compose/install/) 1.21.2
@@ -26,16 +26,24 @@ make deps
 make ops
 ```
 
-The following commands need to be executed in separate shells.
+The following commands need to be executed in a separate shell:
 
-* Create elephant's database, run migrations, and fill with data:
+* Create elephant's database, run migrations, and seed data:
 ```
-make clean_init_db
+make create_db
 ```
 
 * Start the web server:
 ```
 make dev
+```
+
+### Populating with dummy data
+You can populate the database with dummy data using `make populate_db` or `make clean_populate_db` to reset the DB and populate. Both of this will create 4 default sites, one uses `localhost` as domain, but the others use custom domains (site-2.com, site-3.com, site-4.com) so you will need to add them to your `/etc/hosts` file to be able to access them. Append the following:
+```
+127.0.0.1       site-2.com
+127.0.0.1       site-3.com
+127.0.0.1       site-4.com
 ```
 
 ### Backup
@@ -51,5 +59,5 @@ psql -h <db_host>  -U <db_user> -v ON_ERROR_STOP=1 <database_name> < \
   <location_of_backup>.sql
 ```
 
-WARNING: This will first destroy the database and **all** its data before it recovers the backup.
+**WARNING**: This will first destroy the database and **all** its data before it recovers the backup.
 

@@ -34,5 +34,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: site_post_path(@conn, :edit, @site, @post) %></span>
+<span><%= link "Edit", to: site_post_path(@conn, :edit, @site, @post.slug) %></span>
 <span><%= link "Back", to: site_post_path(@conn, :index, @site) %></span>

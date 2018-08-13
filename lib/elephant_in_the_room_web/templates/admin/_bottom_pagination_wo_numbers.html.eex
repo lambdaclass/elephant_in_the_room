@@ -1,0 +1,22 @@
+<div class="admin-pagination">
+  <ul class="uk-pagination uk-flex-center">
+
+    <%= if @pagination.previous_page do %>
+      <li>
+        <a href="<%= @url.(@pagination.page - 1) %>">
+          <span class="uk-margin-small-right" uk-pagination-previous></span>
+          Anterior
+        </a>
+      </li>
+    <% end %>
+
+    <%= if @pagination.next_page do %>
+      <li>
+        <a href="<%= @url.(@pagination.page + 1) %>">
+          Siguiente
+          <span class="uk-margin-small-left" uk-pagination-next></span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

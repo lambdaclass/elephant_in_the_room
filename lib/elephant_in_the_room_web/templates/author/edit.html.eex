@@ -8,18 +8,18 @@
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-expand">
               <h3 class="uk-card-title uk-margin-remove-bottom">
-                <div><center><legend class="uk-legend">Edit Author</legend></center></div>
+                <div><center><legend class="uk-legend">Editar Autor</legend></center></div>
               </h3>
             </div>
           </div>
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, author_path(@conn, :update, @author)) %>
+          <%= render "form.html", Map.put(assigns, :action, author_path(@conn, :update, URI.encode(@author.name))) %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<span><%= link "Back", to: author_path(@conn, :index) %></span>
+<span><%= link "Regresar", to: author_path(@conn, :index) %></span>

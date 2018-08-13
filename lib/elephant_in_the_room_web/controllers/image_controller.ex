@@ -2,7 +2,7 @@ defmodule ElephantInTheRoomWeb.ImageController do
   use ElephantInTheRoomWeb, :controller
   alias ElephantInTheRoom.Sites
 
-  def get_image(conn, %{"id" => img_name}) do
+  def get_image(conn, %{"name" => img_name}) do
     img = Sites.get_image_by_name!(img_name)
 
     conn

@@ -3,7 +3,7 @@
   <% {:error,  _} -> %>
   <li>
     <a href="<%= login_path(@conn, :login) %>">
-      Login
+      Iniciar Sesión
     </a>
   </li>
   <% {:ok, user, _} -> %>
@@ -20,7 +20,7 @@
   <li>
     <%= link to: login_path(@conn, :logout) do %>
       <i class="fas fa-sign-out-alt"></i>
-      Logout
+      Cerrar Sesión
     <% end %>
   </li>
   <% _ -> %>
@@ -30,7 +30,7 @@
   <% {:ok, _user, :admin} -> %>
   <li>
     <a href="<%= admin_path(@conn, :index) %>">
-      Control panel
+      Administración
     </a>
   </li>
   <% _ -> %>

@@ -1,4 +1,7 @@
 defmodule ElephantInTheRoomWeb.Utils.Utils do
+  alias ElephantInTheRoom.Sites.Site
+  alias Plug.Conn
+
   def get_env(where, name) do
     conf = Application.get_env(:elephant_in_the_room, where)
     value = Keyword.get(conf, name)
@@ -9,17 +12,23 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
     end
   end
 
-  def generate_absolute_url(relative_path, conn) do
-    scheme = to_string(conn.scheme)
+  def generate_absolute_url(relative_path, conn),
+    do: absolute_url_str(conn, conn.assigns.site.host, relative_path)
 
-    port =
-      case {scheme, conn.port} do
-        {"http", 80} -> ""
-        {"https", 443} -> ""
-        {_, port} -> ":#{port}"
-      end
+  def generate_absolute_url(relative_path, conn, %Site{host: host}),
+    do: absolute_url_str(conn, host, relative_path)
 
-    "#{scheme}://#{conn.assigns.site.host}#{port}#{relative_path}"
+  defp absolute_url_str(%Conn{scheme: scheme} = conn, domain, relative_path) do
+    port = get_port(conn)
+    "#{scheme}://#{domain}#{port}#{relative_path}"
+  end
+
+  defp get_port(%Conn{scheme: scheme, port: port}) do
+    case {scheme, port} do
+      {"http", 80} -> ""
+      {"https", 443} -> ""
+      {_, port} -> ":#{port}"
+    end
   end
 
   def complete_zeros(:date, date) do
@@ -35,14 +44,13 @@ defmodule ElephantInTheRoomWeb.Utils.Utils do
   end
 
   def complete_zeros(:hour, date) do
-    complete = fn n ->
-      if String.length(n) == 1, do: "0" <> n, else: n
-    end
-
-    hour = complete.("#{date.hour}")
-    minute = complete.("#{date.minute}")
-    second = complete.("#{date.second}")
+    hour = "#{date.hour}"
+    minute = "#{date.minute}"
+    second = "#{date.second}"
 
     %{hour: hour, minute: minute, second: second}
   end
+
+  def get_page(%{"page" => page}), do: String.to_integer(page)
+  def get_page(_), do: 1
 end

@@ -1,10 +1,8 @@
 defmodule ElephantInTheRoomWeb.TagController do
   use ElephantInTheRoomWeb, :controller
-
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Tag
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites, Posts, Posts.Tag, Sites.Site}
   import Ecto.Query
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
 
   def index(%{assigns: %{site: site}} = conn, params) do
     page =
@@ -27,73 +25,99 @@ defmodule ElephantInTheRoomWeb.TagController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :tags]
     )
   end
 
   def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Tag{site_id: site.id}
-      |> Sites.change_tag()
+      |> Posts.change_tag()
 
-    render(conn, "new.html", changeset: changeset, site: site)
+    render(
+      conn,
+      "new.html",
+      changeset: changeset,
+      site: site,
+      bread_crumb: [:sites, site, :tags, %Tag{}]
+    )
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"tag" => tag_params}) do
-    case Sites.create_tag(site, tag_params) do
-      {:ok, tag} ->
-        conn
-        |> put_flash(:info, "Tag created successfully.")
-        |> redirect(to: site_tag_path(conn, :show, site, tag))
+    case Posts.create_tag(site, tag_params) do
+      {:ok, _tag} ->
+        redirect(conn, to: site_tag_path(conn, :index, URI.encode(site.name)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
     end
   end
 
-  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    tag = Sites.get_tag!(id)
-    render(conn, "show.html", tag: tag, site: site)
+  def show(conn, %{"site_name" => site_name, "tag_name" => name}) do
+    tag_site = Sites.from_name!(URI.decode(site_name), Site)
+    tag = Sites.from_name!(name, tag_site.id, Tag)
+    render(conn, "show.html", tag: tag, site: tag_site)
   end
 
-  def public_show(conn, %{"tag_id" => tag_id}) do
+  def public_show(conn, %{"tag_name" => name} = params) do
+    page = get_page(params)
     site_id = conn.assigns.site.id
 
     site = Sites.get_site!(site_id)
 
     tag =
-      Sites.get_tag!(tag_id)
+      name
+      |> Sites.from_name!(site_id, Tag)
       |> Repo.preload(posts: :author)
 
-    render(conn, "public_show.html", tag: tag, site: site)
+    posts = Sites.get_tag_with_posts(site, tag.id, amount: 10, page: page)
+    tag = %{tag | posts: posts}
+
+    render(conn, "public_show.html", tag: tag, site: site, page: page)
   end
 
-  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    tag = Sites.get_tag!(id)
-    changeset = Sites.change_tag(tag)
-    render(conn, "edit.html", site: site, tag: tag, changeset: changeset)
+  def edit(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "tag_name" => name}) do
+    tag_site = Sites.from_name!(URI.decode(site_name), Site)
+    tag = Sites.from_name!(name, tag_site.id, Tag)
+    changeset = Posts.change_tag(tag)
+
+    render(
+      conn,
+      "edit.html",
+      site: site,
+      tag: tag,
+      changeset: changeset,
+      bread_crumb: [:sites, site, :tags, tag]
+    )
   end
 
-  def update(conn, %{"id" => id, "tag" => tag_params}) do
-    tag = Sites.get_tag!(id)
+  def update(%{assigns: %{site: site}} = conn, %{"tag_name" => name, "tag" => tag_params}) do
+    tag = Sites.from_name!(name, Tag)
 
-    case Sites.update_tag(tag, tag_params) do
+    case Posts.update_tag(tag, tag_params) do
       {:ok, tag} ->
+        path = "#{conn.scheme}://#{site.host}:#{conn.port}#{relative_path(conn, tag)}"
+
         conn
         |> put_flash(:info, "Tag updated successfully.")
-        |> redirect(to: tag_path(conn, :public_show, tag.id))
+        |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tag: tag, changeset: changeset)
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    tag = Sites.get_tag!(id)
-    {:ok, _tag} = Sites.delete_tag(tag)
+  def delete(%{assigns: %{site: site}} = conn, %{"tag_name" => name}) do
+    tag = Sites.from_name!(name, site.id, Tag)
+    {:ok, _tag} = Posts.delete_tag(tag)
 
     conn
     |> put_flash(:info, "Tag deleted successfully.")
-    |> redirect(to: site_tag_path(conn, :index, site))
+    |> redirect(to: site_tag_path(conn, :index, URI.encode(site.name)))
+  end
+
+  defp relative_path(conn, %Tag{name: name}) do
+    tag_path(conn, :public_show, URI.encode(name))
   end
 end

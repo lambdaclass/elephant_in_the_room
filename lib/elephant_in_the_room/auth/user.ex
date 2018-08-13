@@ -1,9 +1,10 @@
 defmodule ElephantInTheRoom.Auth.User do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
-
+  import Ecto.Query, warn: false
   alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
+  alias ElephantInTheRoom.Repo
 
   schema "users" do
     field(:email, :string)
@@ -17,7 +18,7 @@ defmodule ElephantInTheRoom.Auth.User do
   end
 
   @doc false
-  def changeset(%User{} = user, attrs) do
+  def changeset(%User{} = user, attrs \\ %{}) do
     user
     |> cast(attrs, [:username, :firstname, :lastname, :email, :password, :role_id])
     |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id])
@@ -36,4 +37,22 @@ defmodule ElephantInTheRoom.Auth.User do
   defp put_pass_hash(changeset) do
     changeset
   end
+
+  def get_first_user() do
+    user = from user in User,
+      limit: 1,
+      order_by: [asc: user.inserted_at]
+    Repo.one!(user)
+  end
+
+  def delete_user(%User{id: user_id} = user) do
+    %User{id: first_user_id} = get_first_user()
+    if first_user_id == user_id do
+      changeset(user)
+      |> add_error(:fist_user, "can't delete first user")
+    else
+      Repo.delete(user)
+    end
+  end
+
 end

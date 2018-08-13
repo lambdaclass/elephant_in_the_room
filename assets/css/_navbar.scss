@@ -1,36 +1,46 @@
 $navbar-height: 3em;
 $mini-navbar-height: 4em;
 $navbar-break-s: 640px;
-$navbar-break-m: 9600px;
+$navbar-break-xs: $navbar-break-s /2;
+$navbar-break-m: 960px;
+
 
 .navbar-title{
     height: auto;
-    top: -0.4em;
-    left: -0.6em;
     position: relative;
-    .second, .first{
-        text-transform: capitalize;
-        color: white;
-        font-family: $title-font;
-        white-space: nowrap;
+    text-transform: capitalize;
+    color: white;
+    font-family: $title-font;
+    white-space: nowrap;
+    font-size: 0.9em !important;
+
+    @media screen and (min-width: $navbar-break-xs) {
+        font-size: 1.3em !important;
     }
 
-    .first{
+    @media screen and (min-width: $navbar-break-s) {
+        font-size: 1.6em !important;
+    }
+
+    @media screen and (min-width: $navbar-break-m) {
         font-size: 2em !important;
     }
 
-    .second{
-        font-size: 0.75em !important;
-        position: absolute;
-        top: 3em;
-        left: 6.1em;
+    &.a-title {
+        background: black !important;
     }
-
 }
 
 .navbar-container {
+    min-width: 0px;
     height: $navbar-height;
     background: black !important;
+    .uk-navbar-left {
+        max-width: 0px;
+    }
+    .uk-navbar-right {
+        overflow: hidden;
+    }
     .ul-reduced {
         height: $navbar-height;
     }
@@ -40,7 +50,7 @@ $navbar-break-m: 9600px;
         text-transform: capitalize;
         hyphens: none;
 
-        @media screen and (max-width: 700px) {
+        @media screen and (min-width: 700px) {
             // font-size: .8rem;
         }
 
@@ -126,21 +136,39 @@ $navbar-break-m: 9600px;
 }
 
 .mini-navbar-container {
+    max-width: 100vw;
+    overflow: hidden;
+    margin-left: 0;
     height: $mini-navbar-height;
     font-family: $text-font;
     color: black !important;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+    height: auto;
+
     @media screen and (min-width: $navbar-break-s) {
         display: none;
+    }
+    .uk-width-1-5{
+        padding-left: 0 !important;
     }
     .element {
         cursor: pointer;
         padding-top: 4px;
 
+        .mini-icon {
+            font-size: 0.7em;
+            @media screen and (min-width: $navbar-break-xs) {
+                 font-size: 1em;
+             }
+        }
+
         .mini-description {
-            font-size: 85%;
-            hyphens: none;
+            font-size: 0.5em;
+             @media screen and (min-width: $navbar-break-xs) {
+                 font-size: 0.8em;
+             }
+
         }
     }
 }

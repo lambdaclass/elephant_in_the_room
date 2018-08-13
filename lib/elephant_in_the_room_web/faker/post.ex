@@ -1,5 +1,5 @@
 defmodule ElephantInTheRoomWeb.Faker.Post do
-  alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoom.{Posts, Sites}
   alias ElephantInTheRoomWeb.Faker.Utils
   require Logger
 
@@ -13,14 +13,24 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "abstract" => Faker.Lorem.paragraph(10),
+      "inserted_at" => generate_inserted_at(),
       "slug" => ""
     }
   end
 
-  def insert_one(attrs \\ %{}) do
+  def insert_one(%{"magazine_id" => _magazine_id} = attrs) do
+    {:ok, post} =
+      Map.merge(default_attrs(), attrs)
+      |> Utils.fake_image_upload
+      |> Posts.create_magazine_post
+
+    post
+  end
+
+  def insert_one(attrs) do
     changes = Map.merge(default_attrs(), attrs)
     new_changes = Utils.fake_image_upload(changes)
-    {:ok, post} = Sites.create_post(attrs["site"], new_changes)
+    {:ok, post} = Posts.create_post(attrs["site"], new_changes)
 
     post
   end
@@ -30,19 +40,35 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     |> Enum.map(fn _ -> insert_one(attrs) end)
   end
 
+  defp generate_inserted_at() do
+    now = NaiveDateTime.utc_now
+    hour = :rand.uniform(23)
+    minute = :rand.uniform(59)
+    second = :rand.uniform(59)
+    case NaiveDateTime.new(now.year, now.month, now.day, hour, minute, second) do
+      {:ok, time} -> time
+      _ -> generate_inserted_at()
+    end
+  end
+
   defp generate_content() do
-    [gen_text(50), gen_md_image(), gen_text(40)] |> Enum.join(" ")
+    [gen_text(20), gen_md_image(), gen_text(20)] |> Enum.join("\n\n")
   end
 
-  defp gen_text(length) do
-    Faker.Lorem.paragraph(:rand.uniform(length))
+  defp gen_text(length), do: gen_text(length, :rand.uniform(5))
+  defp gen_text(length, paragraph_count) do
+    paragraphs = for _ <- 0 .. paragraph_count do
+      Faker.Lorem.paragraph(:rand.uniform(length))
+    end
+    Enum.join(paragraphs, "\n\n")
   end
 
-  defp gen_md_image() do
+  def gen_md_image(), do: gen_md_image_path(Utils.get_image_path())
+  def gen_md_image_path(path) do
     description = Faker.Lorem.word()
-    image_content = File.read!(Utils.get_image_path())
+    image_content = File.read!(path)
 
     {:ok, image} = Sites.create_image(%{name: Ecto.UUID.generate(), binary: image_content})
-    "\n![#{description}](/images/#{image.name})\n"
+    "![#{description}](/images/#{image.name})"
   end
 end

@@ -1,8 +1,7 @@
 defmodule ElephantInTheRoomWeb.CategoryController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Sites
-  alias ElephantInTheRoom.Sites.Category
-  alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.{Repo, Sites, Sites.Site, Posts, Posts.Category}
+  import ElephantInTheRoomWeb.Utils.Utils, only: [get_page: 1]
   import Ecto.Query
 
   def index(%{assigns: %{site: site}} = conn, params) do
@@ -27,73 +26,85 @@ defmodule ElephantInTheRoomWeb.CategoryController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:sites, site, :categories]
     )
   end
 
   def new(%{assigns: %{site: site}} = conn, _) do
     changeset =
       %Category{site_id: site.id}
-      |> Sites.change_category()
+      |> Posts.change_category()
 
     render(conn, "new.html", changeset: changeset, site: site)
   end
 
   def create(%{assigns: %{site: site}} = conn, %{"category" => category_params}) do
-    case Sites.create_category(site, category_params) do
+    case Posts.create_category(site, category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: site_category_path(conn, :show, site, category))
+        |> redirect(
+          to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name))
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, site: site)
     end
   end
 
-  def show(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    category = Sites.get_category!(id)
+  def show(%{assigns: %{site: site}} = conn, %{"site_name" => site_name, "category_name" => name}) do
+    cat_site = Sites.from_name!(site_name, Site)
+    category = Sites.from_name!(name, cat_site.id, Category)
     render(conn, "show.html", category: category, site: site)
   end
 
-  def public_show(conn, %{"category_id" => category_id}) do
-    site_id = conn.assigns.site.id
+  def public_show(conn, %{"category_name" => name} = params) do
+    page = get_page(params)
 
-    site = Sites.get_site!(site_id)
+    site = conn.assigns.site
 
     category =
-      Sites.get_category!(category_id)
+      Sites.from_name!(name, Category)
       |> Repo.preload(posts: :categories, posts: :author)
 
-    render(conn, "public_show.html", category: category, site: site)
+    posts = Sites.get_category_with_posts(site, category.id, amount: 10, page: page)
+    category = %{category | posts: posts}
+
+    render(conn, "public_show.html", category: category, site: site, page: page)
   end
 
-  def edit(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    category = Sites.get_category!(id)
-    changeset = Sites.change_category(category)
+  def edit(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
+    category = Sites.from_name!(name, Category)
+    changeset = Posts.change_category(category)
     render(conn, "edit.html", site: site, category: category, changeset: changeset)
   end
 
-  def update(%{assigns: %{site: site}} = conn, %{"id" => id, "category" => category_params}) do
-    category = Sites.get_category!(id)
+  def update(%{assigns: %{site: site}} = conn, %{
+        "category_name" => name,
+        "category" => category_params
+      }) do
+    category = Sites.from_name!(name, Category)
 
-    case Sites.update_category(category, category_params) do
+    case Posts.update_category(category, category_params) do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: site_category_path(conn, :show, site, category))
+        |> redirect(
+          to: site_category_path(conn, :show, URI.encode(site.name), URI.encode(category.name))
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end
   end
 
-  def delete(%{assigns: %{site: site}} = conn, %{"id" => id}) do
-    category = Sites.get_category!(id)
-    {:ok, _category} = Sites.delete_category(category)
+  def delete(%{assigns: %{site: site}} = conn, %{"category_name" => name}) do
+    category = Sites.from_name!(name, Category)
+    {:ok, _category} = Posts.delete_category(category)
 
     conn
     |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: site_category_path(conn, :index, site))
+    |> redirect(to: site_category_path(conn, :index, URI.encode(site.name)))
   end
 end

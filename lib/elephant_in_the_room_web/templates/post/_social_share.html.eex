@@ -1,0 +1,24 @@
+<%= if assigns[:post] do %>
+  <% url = show_link(@conn, @post) %>
+
+  <div class="social-share">
+    <a class="social-button facebook"
+       target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?u=<%= url %>">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a class="social-button twitter"
+       target="_blank"
+       href="https://twitter.com/home?status=<%= url %>">
+      <i class="fab fa-twitter"></i>
+    </a>
+
+    <a class="social-button email"
+       target="_blank"
+       href="mailto:?&body=<%= url %>">
+      <i class="far fa-envelope"></i>
+    </a>
+  </div>
+
+<% end %>

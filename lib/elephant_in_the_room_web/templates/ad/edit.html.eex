@@ -1,0 +1,6 @@
+<%= 
+render "form.html", Map.merge(assigns, %{
+  action: site_ad_path(@conn, :update, @site.name, @ad.name),
+  title: "Editando promocion '#{@ad.name}'"
+})
+%>

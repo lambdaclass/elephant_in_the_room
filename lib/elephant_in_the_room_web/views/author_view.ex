@@ -1,15 +1,11 @@
 defmodule ElephantInTheRoomWeb.AuthorView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites.Post
+  alias ElephantInTheRoom.{Repo, Posts.Post}
+  alias ElephantInTheRoomWeb.Utils.Utils
   import Ecto.Query
 
   def number_of_published_posts(author) do
-    from(
-      p in Post,
-      where: p.author_id == ^author.id,
-      select: count(p.id)
-    )
+    from(p in Post, where: p.author_id == ^author.id, select: count(p.id))
     |> Repo.one()
   end
 
@@ -19,10 +15,6 @@ defmodule ElephantInTheRoomWeb.AuthorView do
     day = post.inserted_at.day
 
     post_path(conn, :public_show, year, month, day, post.slug)
-    |> replace_host(conn, post)
-  end
-
-  defp replace_host(relative_path, conn, post) do
-    "#{conn.scheme}://#{post.site.host}:#{conn.port}#{relative_path}"
+    |> Utils.generate_absolute_url(conn, post.site)
   end
 end

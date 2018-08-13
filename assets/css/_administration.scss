@@ -77,6 +77,7 @@ $admin-light-grey: #cacaca;
     background-color: $admin-background-color;
     min-height: 100vh;
     font-family: $text-font;
+    font-size: 16px;
 }
 
 .admin-body-container {
@@ -258,3 +259,17 @@ $admin-light-grey: #cacaca;
     }
 }
 
+.admin-tag-list-table {
+    margin-top: 0.5em;
+    td {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+    .big-tag {
+        font-size: 16px;
+        &:hover {
+            color: white;
+            text-decoration: none;
+        }
+    }
+}

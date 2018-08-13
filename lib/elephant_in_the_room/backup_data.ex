@@ -1,8 +1,10 @@
 defmodule ElephantInTheRoom.BackupData do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   import Ecto.Changeset
   alias ElephantInTheRoom.BackupData
   alias ElephantInTheRoom.Repo
+
+  @uuid "f99264db-9df1-47cd-8942-701c31e03d0c"
 
   schema "backup_data" do
     field :last_backup_name, :string
@@ -17,9 +19,9 @@ defmodule ElephantInTheRoom.BackupData do
   def changeset(author), do: changeset(author, %{})
 
   def get_backup_data do
-    case Repo.get(BackupData, 1) do
-      nil -> 
-        default = %BackupData{id: 1}
+    case Repo.get(BackupData, @uuid) do
+      nil ->
+        default = %BackupData{id: @uuid}
         Repo.insert_or_update!(changeset(default))
         default
       r -> r
@@ -27,7 +29,7 @@ defmodule ElephantInTheRoom.BackupData do
   end
 
   def store_back_data(%BackupData{} = data) do
-    Repo.update!(changeset(%{data | id: 1}))
+    Repo.update!(changeset(%{data | id: @uuid}))
   end
 
 end

@@ -1,4 +1,6 @@
-<% alias ElephantInTheRoom.Sites %>
+<% alias ElephantInTheRoom.Sites 
+   alias ElephantInTheRoomWeb.FeedbackView
+%>
 
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
@@ -6,7 +8,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tag() %>
     <%= render "_social_meta.html", assigns %>
+
+    <%= if Map.has_key?(assigns, :site) and @site.favicon != nil do %>
+      <link rel="icon" type="image/x-icon" href="<%= "#{@site.favicon}" %>">
+    <% end %>
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
@@ -21,6 +28,15 @@
     <body>
       <div class="uk-offcanvas-content">
         <%= render "_navbar.html", assigns %>
+        <button uk-toggle="target: #feedback-form" type="button" class="uk-button uk-button-secondary uk-button-small feedback-button">
+          Sugerencias
+        </button>
+        <div id="feedback-form" uk-modal>
+          <div class="uk-modal-dialog uk-modal-body">
+            <%= FeedbackView.render "feedback_form.html", assigns %>
+          </div>
+        </div>
+        </div>
         <div role="main">
           <%= render @view_module, @view_template, assigns %>
         </div>
@@ -31,5 +47,4 @@
     </body>
     <%= render "_deps.html", assigns %>
   <% end %>
-
 </html>

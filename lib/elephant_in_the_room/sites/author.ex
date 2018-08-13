@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoom.Sites.Author do
-  use Ecto.Schema
+  use ElephantInTheRoom.Schema
   use Arc.Ecto.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.Sites.{Author, Post}
+  alias ElephantInTheRoom.{Sites.Author, Posts.Post}
   alias ElephantInTheRoomWeb.Uploaders.Image
   alias ElephantInTheRoom.Repo
 
@@ -27,9 +27,8 @@ defmodule ElephantInTheRoom.Sites.Author do
   end
 
   def ensure_author_exists(author_id) when is_binary(author_id) do
-    with {_, _} <- Integer.parse(author_id),
-         %Author{} = author <- Repo.get_by(Author, id: author_id)
-    do
+    with dumped_id when dumped_id != :error <- Ecto.UUID.dump(author_id),
+         %Author{} = author <- Repo.get_by(Author, id: author_id) do
       author
     else
       _ ->
@@ -38,6 +37,6 @@ defmodule ElephantInTheRoom.Sites.Author do
         |> Repo.insert()
     end
   end
-  def ensure_author_exists(_), do: {:error, :invalid_id}
 
+  def ensure_author_exists(_), do: {:error, :invalid_id}
 end

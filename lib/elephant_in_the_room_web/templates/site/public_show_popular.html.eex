@@ -3,7 +3,7 @@
 %>
 
 <div class="uk-container uk-container-small">
-  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Popular</h1>
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Populares</h1>
 
   <div class="uk-padding">
     <%= unless Enum.empty?(@posts) do %>
@@ -19,7 +19,7 @@
           <h2><%= link main_post.title, to: link_main_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
           <p class="uk-visible@s"><%= main_post.abstract %></p>
           <%= if main_post.author do %>
-            <%= link main_post.author.name, to: author_path(@conn, :public_show, main_post.author.id), class: "uk-text-capitalize uk-text-bold" %>
+            <%= link main_post.author.name, to: author_path(@conn, :public_show, URI.encode(main_post.author.name)), class: "uk-text-capitalize uk-text-bold" %>
           <% end %>
           <p><%= PostView.show_date(main_post.updated_at) %></p>
         </div>
@@ -38,13 +38,19 @@
             <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
             <p class="uk-visible@s"><%= post.abstract %></p>
             <%= if post.author do %>
-              <%= link post.author.name, to: author_path(@conn, :public_show, post.author.id), class: "uk-text-capitalize uk-text-bold author" %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, URI.encode(post.author.name)), class: "uk-text-capitalize uk-text-bold author" %>
             <% end %>
             <p><%= PostView.show_date(post.updated_at) %></p>
           </div>
         </div>
         <hr>
       <% end %>
+
+      <%= if Enum.at(other_posts,0) != nil do %>
+        <%= link "Siguiente",
+              to: "#{site_path(@conn, :public_show_popular)}?page=#{@page+1}" %>
+      <% end %>
+
     <% end %>
   </div>
 </div>

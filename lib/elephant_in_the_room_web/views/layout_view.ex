@@ -1,8 +1,7 @@
 defmodule ElephantInTheRoomWeb.LayoutView do
   use ElephantInTheRoomWeb, :view
-  alias ElephantInTheRoom.{Sites, Sites.Site}
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.{User, Role}
+  alias ElephantInTheRoom.{Sites, Sites.Site, Auth, Auth.User, Auth.Role}
+  alias ElephantInTheRoomWeb.Utils.Utils
 
   def get_categories(assigns, amount \\ 5)
 
@@ -61,15 +60,10 @@ defmodule ElephantInTheRoomWeb.LayoutView do
   def get_site_name(conn) do
     site = conn.assigns[:site]
 
-    name =
-      case site do
-        nil -> "Elephant in the room"
-        site -> site.name
-      end
-
-    [first | rest] = String.split(name, " ")
-    second = Enum.join(rest, " ")
-    {first, second}
+    case site do
+      nil -> "Elephant in the room"
+      site -> site.name
+    end
   end
 
   def show_site_link(%Site{} = site, conn) do
@@ -78,7 +72,8 @@ defmodule ElephantInTheRoomWeb.LayoutView do
 
   def show_site_link(conn), do: "http://" <> conn.host
 
-  def show_category_link(conn, category_id) do
-    category_path(conn, :public_show, category_id)
+  def show_category_link(conn, category_name) do
+    category_path(conn, :public_show, category_name)
+    |> Utils.generate_absolute_url(conn)
   end
 end

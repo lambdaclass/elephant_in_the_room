@@ -80,6 +80,12 @@ defmodule ElephantInTheRoom.Auth do
     |> Repo.insert()
   end
 
+  def create_user!(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert!()
+  end
+
   @doc """
   Updates a user.
 
@@ -111,7 +117,7 @@ defmodule ElephantInTheRoom.Auth do
 
   """
   def delete_user(%User{} = user) do
-    Repo.delete(user)
+    User.delete_user(user)
   end
 
   @doc """
@@ -174,6 +180,12 @@ defmodule ElephantInTheRoom.Auth do
     %Role{}
     |> Role.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def create_role!(attrs \\ %{}) do
+    %Role{}
+    |> Role.changeset(attrs)
+    |> Repo.insert!()
   end
 
   @doc """
@@ -239,5 +251,27 @@ defmodule ElephantInTheRoom.Auth do
       true -> {:ok, user}
       false -> {:error, "Incorrect username or password"}
     end
+  end
+
+  def get_by_name!(name, model) do
+    Repo.get_by!(model, name: name)
+  end
+
+  def get_by_name(name, model) do
+    Repo.get_by(model, name: name)
+  end
+
+  def from_name!(name, model) do
+    name
+    |> URI.decode()
+    |> get_by_name!(model)
+  end
+
+  def from_username!(username) do
+    name = URI.decode(username)
+
+    User
+    |> Repo.get_by!(username: name)
+    |> Repo.preload([:role])
   end
 end

@@ -1,8 +1,6 @@
 defmodule ElephantInTheRoomWeb.UserController do
   use ElephantInTheRoomWeb, :controller
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Auth
-  alias ElephantInTheRoom.Auth.User
+  alias ElephantInTheRoom.{Repo, Auth, Auth.User}
 
   def index(conn, params) do
     page =
@@ -25,7 +23,8 @@ defmodule ElephantInTheRoomWeb.UserController do
       page_number: page.page_number,
       page_size: page.page_size,
       total_pages: page.total_pages,
-      total_entries: page.total_entries
+      total_entries: page.total_entries,
+      bread_crumb: [:users]
     )
   end
 
@@ -46,37 +45,34 @@ defmodule ElephantInTheRoomWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+  def show(conn, %{"user_name" => name}) do
+    user = Auth.from_username!(name)
     render(conn, "show.html", user: user)
   end
 
-  def edit(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
+  def edit(conn, %{"user_name" => name}) do
+    user = Auth.from_username!(name)
     changeset = Auth.change_user(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Auth.get_user!(id)
+  def update(conn, %{"user_name" => name, "user" => user_params}) do
+    user = Auth.from_username!(name)
 
     case Auth.update_user(user, user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: user_path(conn, :show, URI.encode(user.username)))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Auth.get_user!(id)
-    {:ok, _user} = Auth.delete_user(user)
-
-    conn
-    |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: user_path(conn, :index))
+  def delete(conn, %{"user_name" => name}) do
+    user = Auth.from_username!(name)
+    Auth.delete_user(user)
+    redirect(conn,to: user_path(conn, :index))
   end
 end

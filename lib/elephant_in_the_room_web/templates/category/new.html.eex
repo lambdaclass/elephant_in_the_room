@@ -8,18 +8,18 @@
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-expand">
               <h3 class="uk-card-title uk-margin-remove-bottom">
-                <legend class="uk-legend">New Category</legend>
+                <legend class="uk-legend">Nueva Categoría</legend>
               </h3>
             </div>
           </div>
         </div>
 
         <div class="uk-card-body">
-          <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :create, @site)) %>
+          <%= render "form.html", Map.put(assigns, :action, site_category_path(@conn, :create, URI.encode(@site.name))) %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<span><%= link "Back", to: site_category_path(@conn, :index, @site) %></span>
+<span><%= link "Regresar", to: site_category_path(@conn, :index, URI.encode(@site.name)) %></span>
