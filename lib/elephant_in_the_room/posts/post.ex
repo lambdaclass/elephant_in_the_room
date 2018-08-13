@@ -95,7 +95,7 @@ defmodule ElephantInTheRoom.Posts.Post do
             add_error(changeset, :site_id, "Site does not exist")
 
           _ ->
-            changeset
+            check_type(changeset)
         end
 
       _ ->
@@ -106,6 +106,15 @@ defmodule ElephantInTheRoom.Posts.Post do
           _ ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
+    end
+  end
+
+  defp check_type(changeset) do
+    case get_field(changeset, :type) do
+      "texto" ->
+        changeset
+      _ ->
+        add_error(changeset, :type, "Magazine posts can't be of type Audio or Video")
     end
   end
 
