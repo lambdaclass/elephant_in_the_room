@@ -12,6 +12,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       "content" => generate_content(),
       "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
+      "type" => Enum.random(["text", "video", "audio"]),
       "abstract" => generate_abstract(30),
       "inserted_at" => generate_inserted_at(),
       "slug" => ""
