@@ -66,6 +66,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> validate_required_site_or_magazine
     |> validate_abstract_max_length(new_attrs, 30)
     |> do_put_assoc(:tags, attrs)
+    |> check_media(attrs)
     |> do_put_assoc(:categories, attrs)
     |> validate_required([:title, :content, :type])
     |> check_post_type()
@@ -121,6 +122,14 @@ defmodule ElephantInTheRoom.Posts.Post do
         end
     end
   end
+
+  def check_media(changeset, %{"content" => content}) do
+    IO.inspect(content)
+    # https://img.youtube.com/vi/<video-id-here>/0.jpg
+    changeset
+  end
+
+  def check_media(changeset, _attrs), do: changeset
 
   def do_put_assoc(%Changeset{valid?: false} = changeset, _assoc, _attrs) do
     changeset

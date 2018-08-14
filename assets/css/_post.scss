@@ -98,6 +98,31 @@
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
 }
 
+.media-play-button::before {
+  background: url("/images/play.png") no-repeat;
+  background-size: 86%;
+  bottom: 5px;
+  content: '';
+  display: block;
+  height: 29px;
+  left: 12px;
+  position: absolute;
+  width: 27px;
+  z-index: 1;
+  background-color: red;
+}
+
+.media-play-button::after {
+  content: "";
+  border: 1px solid rgba(0,0,0,0.05);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -1px;
+}
 
 .uk-cover-container {
   box-sizing: border-box;
