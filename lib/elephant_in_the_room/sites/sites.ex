@@ -200,10 +200,15 @@ defmodule ElephantInTheRoom.Sites do
   end
 
   def get_media_posts(%Site{id: site_id}) do
-    query = from p in Post,
-            where: p.site_id == ^site_id and p.type != "text",
-            select: p.title
-    Repo.all(query)
+    query =
+      from(p in Post,
+        where: p.site_id == ^site_id and p.type != "text",
+        select: p
+      )
+
+    query
+    |> Repo.all()
+    |> Repo.preload([:author])
   end
 
   def get_popular_posts_from_db(site_id, index_from, index_to) do
