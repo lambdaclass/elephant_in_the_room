@@ -1,14 +1,14 @@
 import $ from 'jquery';
 
-$(function() {
-  $(".article-content p img+img").each(function() {
-    var left_sibling = $(this.previousSibling);
-    if(left_sibling.is(".img-left, .img-right")) {
+$(() => {
+  $('.article-content p img+img').each(function () {
+    const leftSibling = $(this.previousSibling);
+    if (leftSibling.is('.img-left, .img-right')) {
       return;
     }
-    if(left_sibling.is("img")) {
-      left_sibling.addClass("img-left");
-      $(this).addClass("img-right");
+    if (leftSibling.is('img')) {
+      leftSibling.addClass('img-left');
+      $(this).addClass('img-right');
     }
   });
 });
