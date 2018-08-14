@@ -20,10 +20,15 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   def insert_one(%{"magazine_id" => _magazine_id} = attrs) do
+    new_attrs =
+      default_attrs()
+      |> Map.merge(attrs)
+      |> Map.put("type", "text")
+
     {:ok, post} =
-      Map.merge(default_attrs(), attrs)
-      |> Utils.fake_image_upload
-      |> Posts.create_magazine_post
+      new_attrs
+      |> Utils.fake_image_upload()
+      |> Posts.create_magazine_post()
 
     post
   end
@@ -42,10 +47,11 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp generate_inserted_at do
-    now = NaiveDateTime.utc_now
+    now = NaiveDateTime.utc_now()
     hour = :rand.uniform(23)
     minute = :rand.uniform(59)
     second = :rand.uniform(59)
+
     case NaiveDateTime.new(now.year, now.month, now.day, hour, minute, second) do
       {:ok, time} -> time
       _ -> generate_inserted_at()
@@ -64,14 +70,18 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp gen_text(length), do: gen_text(length, :rand.uniform(5))
+
   defp gen_text(length, paragraph_count) do
-    paragraphs = for _ <- 0 .. paragraph_count do
-      Faker.Lorem.paragraph(:rand.uniform(length))
-    end
+    paragraphs =
+      for _ <- 0..paragraph_count do
+        Faker.Lorem.paragraph(:rand.uniform(length))
+      end
+
     Enum.join(paragraphs, "\n\n")
   end
 
   def gen_md_image, do: gen_md_image_path(Utils.get_image_path())
+
   def gen_md_image_path(path) do
     description = Faker.Lorem.word()
     image_content = File.read!(path)

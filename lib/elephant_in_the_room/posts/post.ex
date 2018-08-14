@@ -68,6 +68,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> do_put_assoc(:tags, attrs)
     |> do_put_assoc(:categories, attrs)
     |> validate_required([:title, :content, :type])
+    |> check_post_type()
     |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
@@ -87,6 +88,18 @@ defmodule ElephantInTheRoom.Posts.Post do
 
   defp validate_abstract_max_length(changeset, _attrs, _max), do: changeset
 
+  defp check_post_type(changeset) do
+    case get_field(changeset, :magazine_id) do
+      nil ->
+        changeset
+
+      _magazine_id ->
+        if get_field(changeset, :type) != "text",
+          do: add_error(changeset, :type, "Magazine posts can't be of type Audio or Video"),
+          else: changeset
+    end
+  end
+
   def validate_required_site_or_magazine(changeset) do
     case get_field(changeset, :site_id) do
       nil ->
@@ -94,27 +107,18 @@ defmodule ElephantInTheRoom.Posts.Post do
           nil ->
             add_error(changeset, :site_id, "Site does not exist")
 
-          _ ->
-            check_type(changeset)
+          _magazine_id ->
+            changeset
         end
 
-      _ ->
+      _site_id ->
         case get_field(changeset, :magazine_id) do
           nil ->
             changeset
 
-          _ ->
+          _magazine_id ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
-    end
-  end
-
-  defp check_type(changeset) do
-    case get_field(changeset, :type) do
-      "texto" ->
-        changeset
-      _ ->
-        add_error(changeset, :type, "Magazine posts can't be of type Audio or Video")
     end
   end
 
