@@ -82,7 +82,7 @@ defmodule ElephantInTheRoomWeb.ConnCase do
   end
 
   def ensure_default_site_exists do
-    case get_default_site_from_db do
+    case get_default_site_from_db() do
       {:ok, site} ->
         site
 

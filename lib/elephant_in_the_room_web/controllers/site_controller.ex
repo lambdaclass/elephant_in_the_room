@@ -151,7 +151,8 @@ defmodule ElephantInTheRoomWeb.SiteController do
 
   def public_show_media(%{assigns: %{site: site}} = conn, params) do
     page = get_page(params)
-    media_posts = Sites.get_media_posts(site, page: page)
+    IO.inspect(page, label: "page")
+    media_posts = Sites.get_media_posts(site)
 
     render(conn, "public_show_media.html", posts: media_posts, page: page)
   end

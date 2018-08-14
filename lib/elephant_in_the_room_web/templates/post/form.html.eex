@@ -47,7 +47,7 @@
 
   <div class="no-uk-margin">
     <%= label f, :type, "Tipo de Articulo", class: "uk-form-label" %>
-    <%= select f, :type, ["Texto": "texto", "Audio": "audio", "Video": "video"],  class: "uk-input uk-form-large" %>
+    <%= select f, :type, ["Texto": "text", "Audio": "audio", "Video": "video"],  class: "uk-input uk-form-large" %>
     <%= error_tag f, :type %>
   </div>
 
