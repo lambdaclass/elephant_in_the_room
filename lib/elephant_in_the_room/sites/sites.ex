@@ -199,7 +199,7 @@ defmodule ElephantInTheRoom.Sites do
     get_popular_posts_from_db(site_id, index_from, index_to)
   end
 
-  def get_media_posts(%Site{id: site_id}) do
+  def get_media_posts(%Site{id: site_id}, page) do
     query =
       from(p in Post,
         where: p.site_id == ^site_id and p.type != "text",
@@ -209,6 +209,7 @@ defmodule ElephantInTheRoom.Sites do
     query
     |> Repo.all()
     |> Repo.preload([:author])
+    |> Repo.paginate(page: page)
   end
 
   def get_popular_posts_from_db(site_id, index_from, index_to) do
