@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.Plugs.Admin do
-  alias Plug.Conn
-  alias ElephantInTheRoomWeb.Router.Helpers
   use Phoenix.Router
+  alias ElephantInTheRoomWeb.Router.Helpers
+  alias Plug.Conn
 
   def on_admin_page(%Conn{:private => private} = conn, _) do
     if Map.has_key?(private, :guardian_default_resource) && role_name(private) == "admin" do

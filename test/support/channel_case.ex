@@ -14,6 +14,7 @@ defmodule ElephantInTheRoomWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -25,11 +26,10 @@ defmodule ElephantInTheRoomWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ElephantInTheRoom.Repo)
+    :ok = Sandbox.checkout(ElephantInTheRoom.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ElephantInTheRoom.Repo, {:shared, self()})
+      Sandbox.mode(ElephantInTheRoom.Repo, {:shared, self()})
     end
     :ok
   end

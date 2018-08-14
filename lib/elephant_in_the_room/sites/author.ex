@@ -2,9 +2,10 @@ defmodule ElephantInTheRoom.Sites.Author do
   use ElephantInTheRoom.Schema
   use Arc.Ecto.Schema
   import Ecto.Changeset
-  alias ElephantInTheRoom.{Sites.Author, Posts.Post}
-  alias ElephantInTheRoomWeb.Uploaders.Image
+  alias ElephantInTheRoom.Posts.Post
   alias ElephantInTheRoom.Repo
+  alias ElephantInTheRoom.Sites.Author
+  alias ElephantInTheRoomWeb.Uploaders.Image
 
   schema "authors" do
     field(:description, :string)

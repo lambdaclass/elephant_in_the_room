@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.PostControllerTest do
   use ElephantInTheRoomWeb.ConnCase
-  alias ElephantInTheRoomWeb.FakeSession
   alias ElephantInTheRoom.Sites
+  alias ElephantInTheRoomWeb.FakeSession
 
   @create_attrs %{
     "title" => "some title",

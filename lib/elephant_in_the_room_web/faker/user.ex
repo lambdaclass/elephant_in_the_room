@@ -1,7 +1,7 @@
 defmodule ElephantInTheRoomWeb.Faker.User do
   alias ElephantInTheRoom.{Auth, Repo}
 
-  defp choose_role() do
+  defp choose_role do
     admin_role = Repo.get_by!(Auth.Role, name: "admin")
     user_role = Repo.get_by!(Auth.Role, name: "user")
 

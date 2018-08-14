@@ -1,6 +1,6 @@
 defmodule ElephantInTheRoomWeb.FakeSession do
-  alias Phoenix.ConnTest
   alias ElephantInTheRoom.Auth.Guardian
+  alias Phoenix.ConnTest
 
   @default_user %{
     :id => 1,

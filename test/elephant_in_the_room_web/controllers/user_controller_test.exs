@@ -1,8 +1,8 @@
 defmodule ElephantInTheRoomWeb.UserControllerTest do
   use ElephantInTheRoomWeb.ConnCase
+  alias ElephantInTheRoom.{Auth, Auth.User}
+  alias ElephantInTheRoom.Repo
   alias ElephantInTheRoomWeb.FakeSession
-  alias ElephantInTheRoom.{Auth, Repo}
-  alias ElephantInTheRoom.Auth.User
 
   @create_attrs %{
     email: "some@email.com",

@@ -2,8 +2,8 @@ defmodule ElephantInTheRoom.Auth.User do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias ElephantInTheRoom.Auth.{User, Role}
   alias Comeonin.Bcrypt
+  alias ElephantInTheRoom.Auth.{Role, User}
   alias ElephantInTheRoom.Repo
 
   schema "users" do
@@ -38,7 +38,7 @@ defmodule ElephantInTheRoom.Auth.User do
     changeset
   end
 
-  def get_first_user() do
+  def get_first_user do
     user = from user in User,
       limit: 1,
       order_by: [asc: user.inserted_at]

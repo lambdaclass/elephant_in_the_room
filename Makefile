@@ -1,5 +1,5 @@
 .PHONY: deps ops ops_reset ops_backup_db create_db populate_db reset_redis \
-        clean_populate_db dev lint_css prod
+        clean_populate_db dev lint_css lint_elixir prod
 
 deps:
 	mix local.rebar --force
@@ -37,6 +37,9 @@ dev:
 
 lint_css:
 	cd assets && node_modules/stylelint/bin/stylelint.js css/*
+
+lint_elixir:
+	mix credo
 
 prod:
 	bash -c "cd assets && npx brunch build --production"

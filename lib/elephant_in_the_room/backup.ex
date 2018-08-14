@@ -33,12 +33,12 @@ defmodule ElephantInTheRoom.Backup do
   def handle_call({:set_interval, interval}, _from, state) do
     {:reply, :ok, %{state | interval: interval}}
   end
-  
+
   def handle_call(:get_status, _from, %{last_backup_location: location,
                                         last_backup_ready_at: ready_at} = state) do
     r = %{
       activated: true,
-      will_run_at: 231321,
+      will_run_at: 231_321,
       last_backup_location: location,
       last_backup_ready_at: ready_at,
       status: status_string(state)
@@ -55,7 +55,7 @@ defmodule ElephantInTheRoom.Backup do
     BackupData.store_back_data(%BackupData{
       last_backup_name: location,
       last_backup_moment: ready_at})
-    {:noreply, %{state | result: dump_result, 
+    {:noreply, %{state | result: dump_result,
                   working: false,
                   last_backup_ready_at: ready_at,
                   last_backup_location: location}}
@@ -87,14 +87,14 @@ defmodule ElephantInTheRoom.Backup do
 
   defp check_if_pg_dump_is_installed do
     try do
-      System.cmd("pg_dump", ["--version"]) 
+      System.cmd("pg_dump", ["--version"])
       true
     catch
       _, _ -> false
     end
   end
 
-  defp call_pg_dump() do
+  defp call_pg_dump do
     config = Application.get_env(:elephant_in_the_room, ElephantInTheRoom.Repo)
     try_call_pg_dump(%{
       :username => Keyword.fetch!(config, :username),
