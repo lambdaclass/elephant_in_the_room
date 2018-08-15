@@ -123,13 +123,46 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def check_media(changeset, %{"content" => content}) do
-    IO.inspect(content)
-    # https://img.youtube.com/vi/<video-id-here>/0.jpg
-    changeset
+  def check_media(%Changeset{} = changeset, %{"content" => content, "type" => "video"}) do
+    case youtube_pattern(content) do
+      {:ok, image_name} ->
+        Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
+
+      {:error, :no_video_found} ->
+        # add error
+        changeset
+    end
+  end
+
+  def check_media(%Changeset{} = changeset, %{"content" => content, "type" => "audio"}) do
+    case soundcloud_pattern(content) do
+      {:ok, image_name} ->
+        Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
+
+      {:error, :no_video_found} ->
+        # add error
+        changeset
+    end
   end
 
   def check_media(changeset, _attrs), do: changeset
+
+  defp soundcloud_pattern(_content) do
+    :todo
+  end
+
+  defp youtube_pattern(content) do
+    youtube_video_pattern =
+      ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
+
+    with [_video_link, video_id | _rest] <- Regex.run(youtube_video_pattern, content),
+         {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
+      image_name = Image.store(%{response.body | filename: Ecto.UUID.generate()})
+      {:ok, image_name}
+    else
+      _ -> {:error, :no_video_found}
+    end
+  end
 
   def do_put_assoc(%Changeset{valid?: false} = changeset, _assoc, _attrs) do
     changeset
