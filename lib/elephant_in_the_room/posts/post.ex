@@ -124,7 +124,7 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   def check_media(%Changeset{} = changeset, %{"content" => content, "type" => "video"}) do
-    case youtube_pattern(content) do
+    case get_youtube_thumbnail(content) do
       {:ok, image_name} ->
         Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
 
@@ -133,23 +133,15 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def check_media(%Changeset{} = changeset, %{"content" => content, "type" => "audio"}) do
-    case soundcloud_pattern(content) do
-      {:ok, image_name} ->
-        Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
-
-      {:error, :no_video_found} ->
-        add_error(changeset, :type, "Debe agregar un enlace a una audio de SoundCloud")
-    end
+  def check_media(%Changeset{} = changeset, %{"type" => "audio"}) do
+    get_soundcloud_thumbnail(changeset)
   end
 
   def check_media(changeset, _attrs), do: changeset
 
-  defp soundcloud_pattern(_content) do
-    :todo
-  end
+  defp get_soundcloud_thumbnail(changeset), do: get_default_image(changeset)
 
-  defp youtube_pattern(content) do
+  defp get_youtube_thumbnail(content) do
     youtube_video_pattern =
       ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
 
