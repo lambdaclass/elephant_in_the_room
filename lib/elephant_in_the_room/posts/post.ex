@@ -73,7 +73,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> Markdown.put_rendered_content()
     |> unique_slug_constraint
     |> store_cover(attrs)
-    |> set_thumbnail
+    |> set_thumbnail(attrs)
   end
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
@@ -129,8 +129,7 @@ defmodule ElephantInTheRoom.Posts.Post do
         Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
 
       {:error, :no_video_found} ->
-        # add error
-        changeset
+        add_error(changeset, :type, "Debe agregar un enlace a un video de Youtube")
     end
   end
 
@@ -140,8 +139,7 @@ defmodule ElephantInTheRoom.Posts.Post do
         Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
 
       {:error, :no_video_found} ->
-        # add error
-        changeset
+        add_error(changeset, :type, "Debe agregar un enlace a una audio de SoundCloud")
     end
   end
 
@@ -157,8 +155,16 @@ defmodule ElephantInTheRoom.Posts.Post do
 
     with [_video_link, video_id | _rest] <- Regex.run(youtube_video_pattern, content),
          {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
-      image_name = Image.store(%{response.body | filename: Ecto.UUID.generate()})
-      {:ok, image_name}
+      {:ok, filename} = Plug.Upload.random_file("thumbnail")
+      File.write(filename, response.body)
+
+      upload = %Plug.Upload{
+        path: filename,
+        content_type: "image/jpg",
+        filename: Ecto.UUID.generate()
+      }
+
+      Image.store(upload)
     else
       _ -> {:error, :no_video_found}
     end
@@ -223,11 +229,9 @@ defmodule ElephantInTheRoom.Posts.Post do
     changeset
   end
 
-  def set_thumbnail(%Changeset{valid?: false} = changeset) do
-    changeset
-  end
+  def set_thumbnail(%Changeset{valid?: false} = changeset, _attrs), do: changeset
 
-  def set_thumbnail(%Changeset{} = changeset) do
+  def set_thumbnail(%Changeset{} = changeset, %{"type" => "text"}) do
     url =
       case get_field(changeset, :cover) do
         nil ->
@@ -247,6 +251,8 @@ defmodule ElephantInTheRoom.Posts.Post do
 
     put_change(changeset, :thumbnail, url)
   end
+
+  def set_thumbnail(%Changeset{} = changeset, _attrs), do: changeset
 
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
