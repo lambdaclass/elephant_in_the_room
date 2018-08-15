@@ -42,6 +42,9 @@ lint_css:
 lint_elixir:
 	mix credo
 
+lint_js:
+	cd assets && npx eslint --max-warnings 0 js/
+
 prod:
 	mix deps.get --only prod
 	bash -c "MIX_ENV=prod mix compile"
