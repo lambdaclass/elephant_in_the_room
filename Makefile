@@ -35,7 +35,6 @@ dev:
 	mix compile
 	mix phx.server
 
-
 lint_css:
 	cd assets && node_modules/stylelint/bin/stylelint.js css/*
 
@@ -46,8 +45,13 @@ lint_js:
 	cd assets && npx eslint --max-warnings 0 js/
 
 prod:
-	mix deps.get --only prod
-	bash -c "MIX_ENV=prod mix compile"
 	bash -c "cd assets && npx brunch build --production"
-	mix phx.digest
-	bash -c "MIX_ENV=prod PORT=80 iex -S mix phx.server"
+	bash -c "MIX_ENV=prod mix phx.digest"
+	bash -c "MIX_ENV=prod mix release"
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room start"
+ 
+attach_prod: 
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room attach"
+
+stop_prod: 
+	bash -c "PORT=80 _build/prod/rel/elephant_in_the_room/bin/elephant_in_the_room stop"

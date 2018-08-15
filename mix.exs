@@ -21,7 +21,7 @@ defmodule ElephantInTheRoom.Mixfile do
   def application do
     [
       mod: {ElephantInTheRoom.Application, []},
-      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto, :redix]
+      extra_applications: [:logger, :runtime_tools, :scrivener_ecto, :arc_ecto, :redix, :elixir_make, :parse_trans]
     ]
   end
 
@@ -42,6 +42,9 @@ defmodule ElephantInTheRoom.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+
+      # releases
+      {:distillery, "~> 2.0.0-rc.11", runtime: false},
 
       # added deps
       {:guardian, "~> 1.0.1"},
