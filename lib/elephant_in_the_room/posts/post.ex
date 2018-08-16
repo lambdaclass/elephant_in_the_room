@@ -123,8 +123,8 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def check_media(%Changeset{} = changeset, %{"content" => content, "type" => "video"}) do
-    case get_youtube_thumbnail(content) do
+  def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "video"}) do
+    case get_youtube_thumbnail(media) do
       {:ok, image_name} ->
         Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
 
@@ -133,8 +133,10 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def check_media(%Changeset{} = changeset, %{"type" => "audio"}) do
-    get_soundcloud_thumbnail(changeset)
+  def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "audio"}) do
+    IO.inspect(media, label: "Media")
+    image = get_soundcloud_thumbnail(changeset)
+    Changeset.put_change(changeset, :thumbnail, image)
   end
 
   def check_media(changeset, _attrs), do: changeset

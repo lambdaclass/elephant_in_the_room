@@ -147,7 +147,12 @@
 const postType = document.getElementsByClassName('post-form-type').item(0)
 const mediaInput = document.getElementsByClassName('post-media-input').item(0)
 
+if (postType.value == 'text') {
+  mediaInput.style.display = 'none';  
+}
 
-postType.onchange = event => 
-  event.value === 'text' ? mediaInput.style.display = 'none' : mediaInput.style.display = 'block'
+postType.onchange = event =>
+  event.target.value === 'text' 
+  ? mediaInput.style.display = 'none' 
+  : mediaInput.style.display = 'block'
 </script>
