@@ -139,7 +139,7 @@ defmodule ElephantInTheRoomWeb.PostController do
 
     {:ok, post_no_cover} = Posts.delete_cover(post)
 
-    render(conn, "edit.html", post: post_no_cover, changeset: Posts.change_post(post_no_cover))
+    render(conn, "edit.html", post: post_no_cover, changeset: Posts.change_post(post_no_cover), magazine: nil)
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug, "post" => post_params}) do
@@ -174,7 +174,7 @@ defmodule ElephantInTheRoomWeb.PostController do
         |> redirect(external: path)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        render(conn, "edit.html", post: post, changeset: changeset, magazine: nil)
     end
   end
 
