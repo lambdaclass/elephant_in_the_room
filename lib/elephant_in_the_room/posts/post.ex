@@ -14,6 +14,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     field(:slug, :string)
     field(:abstract, :string)
     field(:type, :string)
+    field(:media, :string)
     field(:content, :string)
     field(:rendered_content, :string)
     field(:cover, :string)
@@ -56,6 +57,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       :content,
       :slug,
       :type,
+      :media,
       :inserted_at,
       :abstract,
       :site_id,
@@ -71,9 +73,45 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> validate_required([:title, :content, :type])
     |> check_post_type()
     |> Markdown.put_rendered_content()
+    |> put_media_content(attrs)
     |> unique_slug_constraint
     |> store_cover(attrs)
     |> set_thumbnail(attrs)
+  end
+
+  defp put_media_content(changeset, %{"type" => "text"}), do: changeset
+
+  defp put_media_content(changeset, %{"type" => type, "media" => media})
+       when type != "text" do
+    media_iframe = generate_iframe(type, media)
+
+    new_content =
+      changeset
+      |> get_field(:rendered_content)
+      |> (fn rendered_content -> "#{media_iframe} \n\n #{rendered_content}" end).()
+
+    put_change(changeset, :rendered_content, new_content)
+  end
+
+  defp put_media_content(changeset, _attrs), do: changeset
+
+  def generate_iframe("video", media) do
+    [_video_link, video_id | _rest] = parse_youtube_link(media)
+
+    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
+      frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>
+    </iframe>"
+  end
+
+  def generate_iframe("audio", media) do
+    soundcloud_id = parse_soundcloud_link(media)
+    "<iframe width=\"100%\" height=\"300\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\"
+     src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/#{soundcloud_id}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true\">
+    </iframe>"
+  end
+
+  def parse_soundcloud_link(_media) do
+    :todo
   end
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
@@ -125,6 +163,8 @@ defmodule ElephantInTheRoom.Posts.Post do
 
   def check_media(%Changeset{} = changeset, %{"media" => "", "type" => type}) do
     case type do
+      "text" ->
+        changeset
       "audio" ->
         add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
 
@@ -143,8 +183,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "audio"}) do
-    IO.inspect(media, label: "Media")
+  def check_media(%Changeset{} = changeset, %{"media" => _media, "type" => "audio"}) do
     image = get_soundcloud_thumbnail(changeset)
     Changeset.put_change(changeset, :thumbnail, image)
   end
@@ -153,11 +192,15 @@ defmodule ElephantInTheRoom.Posts.Post do
 
   defp get_soundcloud_thumbnail(changeset), do: get_default_image(changeset)
 
-  defp get_youtube_thumbnail(content) do
+  defp parse_youtube_link(link) do
     youtube_video_pattern =
       ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
 
-    with [_video_link, video_id | _rest] <- Regex.run(youtube_video_pattern, content),
+    Regex.run(youtube_video_pattern, link)
+  end
+
+  defp get_youtube_thumbnail(content) do
+    with [_video_link, video_id | _rest] <- parse_youtube_link(content),
          {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
       {:ok, filename} = Plug.Upload.random_file("thumbnail")
       File.write(filename, response.body)
