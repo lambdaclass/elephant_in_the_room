@@ -41,9 +41,17 @@
       "browser": true
     },
     "rules": {
-      "indent": ["error", 2],
-      "func-names": ["warn", "never"],
-      "no-alert": ["off"]
+      "indent": [
+        "error",
+        2
+      ],
+      "func-names": [
+        "warn",
+        "never"
+      ],
+      "no-alert": [
+        "off"
+      ]
     }
   }
 }
