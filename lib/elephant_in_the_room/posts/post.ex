@@ -123,6 +123,16 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
+  def check_media(%Changeset{} = changeset, %{"media" => "", "type" => type}) do
+    case type do
+      "audio" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
+
+      "video" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
+    end
+  end
+
   def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "video"}) do
     case get_youtube_thumbnail(media) do
       {:ok, image_name} ->
