@@ -13,37 +13,37 @@
     </fieldset>
 
     <div class="uk-margin">
-      <%= label f, :username, "Usuario", class: "uk-form-label" %>
+      <%= label f, :username, "Usuario", class: "uk-form-label field-required" %>
       <%= text_input f, :username, class: "uk-input uk-form-small" %>
       <%= error_tag f, :username %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :role, "Rol", class: "uk-form-label" %>
+      <%= label f, :role, "Rol", class: "uk-form-label field-required" %>
       <%= select f, :role_id, get_roles(), class: "uk-select uk-form-small" %>
       <%= error_tag f, :role_id %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :firstname, "Nombre", class: "uk-form-label" %>
+      <%= label f, :firstname, "Nombre", class: "uk-form-label field-required" %>
       <%= text_input f, :firstname, class: "uk-input uk-form-small" %>
       <%= error_tag f, :firstname %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :lastname, "Apellido", class: "uk-form-label" %>
+      <%= label f, :lastname, "Apellido", class: "uk-form-label field-required" %>
       <%= text_input f, :lastname, class: "uk-input uk-form-small" %>
       <%= error_tag f, :lastname %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :email, "Email", class: "uk-form-label" %>
+      <%= label f, :email, "Email", class: "uk-form-label field-required" %>
       <%= text_input f, :email, class: "uk-input uk-form-small" %>
       <%= error_tag f, :email %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :password, "Contraseña", class: "uk-form-label" %>
+      <%= label f, :password, "Contraseña", class: "uk-form-label field-required" %>
       <%= text_input f, :password, class: "uk-input uk-form-small", type: "password", value: "" %>
       <%= error_tag f, :password %>
     </div>

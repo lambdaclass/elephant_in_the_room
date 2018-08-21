@@ -40,7 +40,7 @@
   <% end %>
 
   <div class="no-uk-margin">
-    <%= label f, :title, "Título", class: "uk-form-label" %>
+    <%= label f, :title, "Título", class: "uk-form-label field-required" %>
     <%= text_input f, :title, class: "uk-input uk-form-large", placeholder: "Título" %>
     <%= error_tag f, :title %>
   </div>
@@ -58,7 +58,7 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :content, "Contenido", class: "uk-form-label" %>
+    <%= label f, :content, "Contenido", class: "uk-form-label field-required" %>
     <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
   </div>
@@ -109,8 +109,8 @@
 
   <div class="form-group">
     <%= label f, :featured_level, "Nivel de destacado", class: "uk-form-label" %>
-    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small", 
-          selected: assigns[:featured_level], 
+    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small",
+          selected: assigns[:featured_level],
           prompt: "", style: "width: 100%" %>
     <%= error_tag f, :featured_level %>
   </div>
