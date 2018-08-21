@@ -212,3 +212,8 @@ div[role=main] {
     min-width: 1280px;
   }
 }
+
+.field-required::after {
+  content: '*';
+  color: red;
+}
