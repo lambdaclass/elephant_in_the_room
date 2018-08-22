@@ -96,7 +96,7 @@ defmodule ElephantInTheRoom.Posts.Post do
         put_change(changeset, :rendered_content, new_content)
 
       _ ->
-        add_error(changeset, :media, "Enlace incorrecto")
+        add_error(changeset, :media, "Enlace incorrecto. ")
     end
   end
 
@@ -215,7 +215,7 @@ defmodule ElephantInTheRoom.Posts.Post do
         Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
 
       {:error, :no_video_found} ->
-        add_error(changeset, :type, "Debe agregar un enlace a un video de Youtube")
+        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
     end
   end
 
