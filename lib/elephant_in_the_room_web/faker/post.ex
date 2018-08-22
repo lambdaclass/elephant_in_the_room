@@ -3,10 +3,6 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   alias ElephantInTheRoomWeb.Faker.Utils
   require Logger
 
-  # author 1
-  # site 1
-  # categories N
-  # tags N
   def default_attrs do
     %{
       "content" => generate_content(),
@@ -34,9 +30,13 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   def insert_one(attrs) do
-    changes = Map.merge(default_attrs(), attrs)
-    new_changes = Utils.fake_image_upload(changes)
-    {:ok, post} = Posts.create_post(attrs["site"], new_changes)
+    changes =
+      default_attrs()
+      |> Map.merge(attrs)
+      |> Utils.fake_image_upload()
+      |> put_media()
+
+    {:ok, post} = Posts.create_post(attrs["site"], changes)
 
     post
   end
@@ -45,6 +45,32 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     Enum.to_list(1..n)
     |> Enum.map(fn _ -> insert_one(attrs) end)
   end
+
+  defp put_media(%{"type" => "audio"} = attrs) do
+    sample =
+      [
+        ~s(<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/481942059&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>),
+        ~s(<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/306467330&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>),
+        ~s(<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/414446448&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>),
+        ~s(<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/415745424&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>)
+      ]
+
+    Map.put(attrs, "media", Enum.random(sample))
+  end
+
+  defp put_media(%{"type" => "video"} = attrs) do
+    sample =
+      [
+        ~s(https://www.youtube.com/watch?v=kEPakJDkTOk),
+        ~s(https://www.youtube.com/watch?v=lj4WbJoFYlE),
+        ~s(https://www.youtube.com/watch?v=jrTMMG0zJyI),
+        ~s(https://www.youtube.com/watch?v=LsBrT6vbQa8)
+      ]
+
+    Map.put(attrs, "media", Enum.random(sample))
+  end
+
+  defp put_media(attrs), do: attrs
 
   defp generate_inserted_at do
     now = NaiveDateTime.utc_now()
