@@ -85,26 +85,51 @@ defmodule ElephantInTheRoom.Posts.Post do
        when type != "text" do
     media_iframe = generate_iframe(type, media)
 
-    new_content =
-      changeset
-      |> get_field(:rendered_content)
-      |> (fn rendered_content -> "#{media_iframe} \n\n #{rendered_content}" end).()
+    case media_iframe do
+      {:ok, iframe} ->
+        new_content =
+          changeset
+          |> get_field(:rendered_content)
+          |> (fn rendered_content -> "#{iframe} \n\n #{rendered_content}" end).()
 
-    put_change(changeset, :rendered_content, new_content)
+        put_change(changeset, :rendered_content, new_content)
+      _ ->
+        add_error(changeset, :media, "Enlace incorrecto")
+    end
+
   end
 
   defp put_media_content(changeset, _attrs), do: changeset
 
   def generate_iframe("video", media) do
-    [_video_link, video_id | _rest] = parse_youtube_link(media)
-
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
-      frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>
-    </iframe>"
+    case parse_youtube_link(media) do
+      {:ok, video_id} ->
+        {:ok, "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
+          frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>
+        </iframe>"}
+      _ ->
+        {:error, :no_video_found}
+      end
   end
 
   def generate_iframe("audio", media) do
-    media
+    case check_soundcloud_link(media) do
+      {:ok, media} ->
+        {:ok, media}
+      _ ->
+        {:error, :no_audio_found}
+    end
+  end
+
+  def check_soundcloud_link(media) do
+    soundcloud_pattern = ~r/https?:\/\/w.soundcloud\.com\/\S+\/\S+$/i
+
+    case Regex.run(soundcloud_pattern, media) do
+      nil ->
+        {:error, :no_audio_found}
+      _ ->
+        {:ok, media}
+    end
   end
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
@@ -189,11 +214,16 @@ defmodule ElephantInTheRoom.Posts.Post do
     youtube_video_pattern =
       ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
 
-    Regex.run(youtube_video_pattern, link)
+    case Regex.run(youtube_video_pattern, link) do
+      [_video_link, video_id | _rest] ->
+        {:ok, video_id}
+      _ ->
+        {:error, :no_video_found}
+    end
   end
 
   defp get_youtube_thumbnail(content) do
-    with [_video_link, video_id | _rest] <- parse_youtube_link(content),
+    with {:ok, video_id} <- parse_youtube_link(content),
          {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
       {:ok, filename} = Plug.Upload.random_file("thumbnail")
       File.write(filename, response.body)
@@ -310,10 +340,6 @@ defmodule ElephantInTheRoom.Posts.Post do
       end
 
     put_change(changeset, :slug, slug)
-  end
-
-  def generate_markdown(input) do
-    Cmark.to_html(input, [:hardbreaks])
   end
 
   def parse_categories(site_id, params) do
