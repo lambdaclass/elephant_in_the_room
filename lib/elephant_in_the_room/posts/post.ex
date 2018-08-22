@@ -104,14 +104,7 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   def generate_iframe("audio", media) do
-    soundcloud_id = parse_soundcloud_link(media)
-    "<iframe width=\"100%\" height=\"300\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\"
-     src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/#{soundcloud_id}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true\">
-    </iframe>"
-  end
-
-  def parse_soundcloud_link(_media) do
-    :todo
+    media
   end
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
