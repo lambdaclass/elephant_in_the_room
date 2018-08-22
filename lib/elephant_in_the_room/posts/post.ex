@@ -1,11 +1,9 @@
 defmodule ElephantInTheRoom.Posts.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias Ecto.Changeset
-  alias ElephantInTheRoom.Posts
-  alias ElephantInTheRoom.Posts.{Category, Post, Tag}
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites
+  alias Ecto.{Changeset, UUID}
+  alias ElephantInTheRoom.{Posts, Posts.Category, Posts.Post, Posts.Tag}
+  alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoom.Sites.{Author, Magazine, Markdown, Site}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
@@ -106,9 +104,9 @@ defmodule ElephantInTheRoom.Posts.Post do
     case parse_youtube_link(media) do
       {:ok, video_id} ->
         {:ok,
-         "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
-          frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>
-        </iframe>"}
+         ~s(<iframe width="560" height="315" src="https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>)}
 
       _ ->
         {:error, :no_video_found}
@@ -169,6 +167,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     else
       {:ok, type} when type == "audio" or type == "video" ->
         changeset
+
       _reason ->
         add_error(changeset, :content, "Debe ingresar contenido")
     end
@@ -250,7 +249,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       upload = %Plug.Upload{
         path: filename,
         content_type: "image/jpg",
-        filename: Ecto.UUID.generate()
+        filename: UUID.generate()
       }
 
       Image.store(upload)
@@ -309,7 +308,7 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
-    {:ok, cover_name} = Image.store(%{cover | filename: Ecto.UUID.generate()})
+    {:ok, cover_name} = Image.store(%{cover | filename: UUID.generate()})
 
     put_change(changeset, :cover, "/images/" <> cover_name)
   end
