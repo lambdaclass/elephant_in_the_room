@@ -70,7 +70,8 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> do_put_assoc(:tags, attrs)
     |> check_media(attrs)
     |> do_put_assoc(:categories, attrs)
-    |> validate_required([:title, :content, :type])
+    |> validate_required([:title, :type])
+    |> validate_required_content(attrs)
     |> check_post_type()
     |> Markdown.put_rendered_content()
     |> put_media_content(attrs)
@@ -93,10 +94,10 @@ defmodule ElephantInTheRoom.Posts.Post do
           |> (fn rendered_content -> "#{iframe} \n\n #{rendered_content}" end).()
 
         put_change(changeset, :rendered_content, new_content)
+
       _ ->
         add_error(changeset, :media, "Enlace incorrecto")
     end
-
   end
 
   defp put_media_content(changeset, _attrs), do: changeset
@@ -104,18 +105,21 @@ defmodule ElephantInTheRoom.Posts.Post do
   def generate_iframe("video", media) do
     case parse_youtube_link(media) do
       {:ok, video_id} ->
-        {:ok, "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
+        {:ok,
+         "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0\"
           frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>
         </iframe>"}
+
       _ ->
         {:error, :no_video_found}
-      end
+    end
   end
 
   def generate_iframe("audio", media) do
     case check_soundcloud_link(media) do
       {:ok, media} ->
         {:ok, media}
+
       _ ->
         {:error, :no_audio_found}
     end
@@ -127,6 +131,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     case Regex.run(soundcloud_pattern, media) do
       nil ->
         {:error, :no_audio_found}
+
       _ ->
         {:ok, media}
     end
@@ -157,6 +162,18 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
+  def validate_required_content(changeset, attrs) do
+    with {:ok, "text"} <- Map.fetch(attrs, "type"),
+         {:ok, content} when content != "" <- Map.fetch(attrs, "content") do
+      changeset
+    else
+      {:ok, type} when type == "audio" or type == "video" ->
+        changeset
+      _reason ->
+        add_error(changeset, :content, "Debe ingresar contenido")
+    end
+  end
+
   def validate_required_site_or_magazine(changeset) do
     case get_field(changeset, :site_id) do
       nil ->
@@ -183,6 +200,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     case type do
       "text" ->
         changeset
+
       "audio" ->
         add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
 
@@ -217,6 +235,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     case Regex.run(youtube_video_pattern, link) do
       [_video_link, video_id | _rest] ->
         {:ok, video_id}
+
       _ ->
         {:error, :no_video_found}
     end
