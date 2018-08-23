@@ -6,7 +6,6 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   def default_attrs do
     %{
       "content" => generate_content(),
-      "cover" => Utils.get_image_path(),
       "title" => Enum.join(Faker.Lorem.words(7), " "),
       "type" => Enum.random(["text", "video", "audio"]),
       "abstract" => generate_abstract(30),
@@ -20,6 +19,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
       default_attrs()
       |> Map.merge(attrs)
       |> Map.put("type", "text")
+      |> put_cover()
 
     {:ok, post} =
       new_attrs
@@ -33,6 +33,7 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
     changes =
       default_attrs()
       |> Map.merge(attrs)
+      |> put_cover()
       |> Utils.fake_image_upload()
       |> put_media()
 
@@ -71,6 +72,10 @@ defmodule ElephantInTheRoomWeb.Faker.Post do
   end
 
   defp put_media(attrs), do: attrs
+
+  defp put_cover(%{"type" => "text"} = attrs), do: Map.put(attrs, "cover", Utils.get_image_path())
+
+  defp put_cover(attrs), do: attrs
 
   defp generate_inserted_at do
     now = NaiveDateTime.utc_now()

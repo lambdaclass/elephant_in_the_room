@@ -307,6 +307,11 @@ defmodule ElephantInTheRoom.Posts.Post do
     put_change(changeset, :cover, nil)
   end
 
+  def store_cover(%Changeset{} = changeset, %{"cover" => _cover, "type" => type})
+      when type != "text" do
+    add_error(changeset, :cover, "Solo los articulos de tipo texto pueden tener portada")
+  end
+
   def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
     {:ok, cover_name} = Image.store(%{cover | filename: UUID.generate()})
 
