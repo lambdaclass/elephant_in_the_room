@@ -23,8 +23,8 @@ defmodule ElephantInTheRoom.Sites.Author do
     author
     |> cast(attrs, [:name, :description, :is_columnist])
     |> cast_attachments(attrs, [:image], [])
-    |> validate_required([:name, :is_columnist])
-    |> unique_constraint(:name)
+    |> validate_required([:name, :is_columnist], message: "Campo requerido.")
+    |> unique_constraint(:name, message: "Ya existe.")
   end
 
   def ensure_author_exists(author_id) when is_binary(author_id) do
