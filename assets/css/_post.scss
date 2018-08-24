@@ -100,16 +100,15 @@
 
 .media-play-button::before {
   background: url("/images/play.png") no-repeat;
-  background-size: 86%;
+  background-size: 86%;  
+  position: absolute;  
   bottom: 5px;
   content: '';
   display: block;
   height: 29px;
   left: 12px;
-  position: absolute;
   width: 27px;
   z-index: 1;
-  background-color: red;
 }
 
 .media-play-button::after {
@@ -122,6 +121,19 @@
   top: 0;
   left: 0;
   margin: -1px;
+}
+
+.media-volume-button::before {
+  background: url("/images/volume.png") no-repeat;
+  background-size: 86%;
+  position: absolute;
+  bottom: 5px;
+  content: '';
+  display: block;
+  height: 29px;
+  left: 12px;
+  width: 27px;
+  z-index: 1;
 }
 
 .uk-cover-container {

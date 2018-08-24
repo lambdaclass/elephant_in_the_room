@@ -1,0 +1,30 @@
+.media-posts {
+    h2 {
+      margin: 0;
+      font-size: 120%;
+  
+      > a, > a:hover {
+        color: $black;
+      }
+    }
+    .author {
+      @media screen and (max-width: 640px) {
+        font-weight: normal;
+      }
+    }
+  
+    p { 
+      margin: 5px 0;
+      font-size: 90%;
+    }
+
+    .image {
+      height: 250px;
+      position: relative;
+    }
+  }
+  
+  hr:last-child {
+    display: none;
+  }
+  

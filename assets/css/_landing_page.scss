@@ -38,6 +38,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
   }
   .category {
     font-size: 50%;
@@ -75,6 +76,7 @@
   text-align: left;
   .image {
     height: 49vh;
+    position: relative;
   }
 
   .date {
@@ -107,6 +109,7 @@
     width: 80px;
     height: 80px;
     margin-left: 5px;
+    position: relative;
   }
   .title {
     @extend %landing-title;
@@ -124,7 +127,8 @@
   text-align: left;
 
   .image {
-    height:200px;
+    height: 200px;
+    position: relative;
   }
 
   .title {
@@ -155,6 +159,7 @@
   @media screen and (min-width: $navbar-break-m) {
     .image {
       height: 17vh !important;
+      position: relative;
     }
   }
 }

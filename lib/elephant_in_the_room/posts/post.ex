@@ -89,7 +89,7 @@ defmodule ElephantInTheRoom.Posts.Post do
         new_content =
           changeset
           |> get_field(:rendered_content)
-          |> (fn rendered_content -> "#{iframe} \n\n #{rendered_content}" end).()
+          |> (fn rendered_content -> "#{iframe} <br/><br/> #{rendered_content}" end).()
 
         put_change(changeset, :rendered_content, new_content)
 
