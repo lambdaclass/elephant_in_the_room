@@ -3,28 +3,26 @@
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Media</h1>
-  <div class="uk-padding">
+  <div class="uk-column-1-4">
     <%= unless Enum.empty?(@posts) do %>
       <%= for post <- @posts do %>
         <% link_post = show_link_with_date @conn, post %>
-        <div class="media-posts" uk-grid>
-          <div class="uk-width-1-2">
+        <div class="media-posts uk-flex-column uk-grid-medium uk-flex" uk-grid>
+          <div class="uk-width-1-1">
             <%= link to: link_post do %>
               <div class="image" src="<%= post.thumbnail %>" style="background-image: url('<%= post.thumbnail %>')">
                 <div class="media-button <%= media_button_by_type(post) %>"></div>
               </div>
             <% end %>
           </div>
-          <div class="uk-width-1-2">
-            <h2><%= link post.title, to: link_post, class: "uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>
-            <p class="uk-visible@s"><%= post.abstract %></p>
+          <div class="uk-width-1-1">
+            <h2><%= link post.title, to: link_post, class: "media-title uk-margin-small-bottom uk-text-bold uk-text-uppercase" %></h2>  
             <%= if post.author do %>
-              <%= link post.author.name, to: author_path(@conn, :public_show, URI.encode(post.author.name)), class: "uk-text-capitalize uk-text-bold author" %>
+              <%= link post.author.name, to: author_path(@conn, :public_show, URI.encode(post.author.name)), class: "media-author uk-text-capitalize uk-text-bold author" %>
             <% end %>
-            <p><%= PostView.show_date(post.updated_at) %></p>
+            <p class="media-date"><%= PostView.show_date(post.updated_at) %></p>
           </div>
         </div>
-        <hr>
       <% end %>
 
       <%= if Enum.at(@posts, 1) != nil do %>

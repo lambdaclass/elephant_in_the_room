@@ -1,4 +1,8 @@
 .media-posts {
+  display: flex;
+  flex-wrap: nowrap;
+
+
     h2 {
       margin: 0;
       font-size: 120%;
@@ -12,19 +16,24 @@
         font-weight: normal;
       }
     }
-  
-    p { 
-      margin: 5px 0;
-      font-size: 90%;
-    }
 
     .image {
-      height: 250px;
+      height: 200px;
       position: relative;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
   }
   
-  hr:last-child {
-    display: none;
+  .media-author {
+    font-size: 65%;
   }
-  
+
+  .media-date {
+    font-size: 70%;
+  }
+
+  .media-title {
+    font-size: 80%;
+  }
