@@ -2,7 +2,6 @@
   display: flex;
   flex-wrap: nowrap;
 
-
     h2 {
       margin: 0;
       font-size: 120%;
@@ -11,6 +10,7 @@
         color: $black;
       }
     }
+    
     .author {
       @media screen and (max-width: 640px) {
         font-weight: normal;
@@ -31,9 +31,10 @@
   }
 
   .media-date {
+    margin-top: 0px;
     font-size: 70%;
   }
 
   .media-title {
-    font-size: 80%;
+    font-size: 70%;
   }

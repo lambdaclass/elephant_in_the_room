@@ -3,11 +3,11 @@
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Media</h1>
-  <div class="uk-column-1-4">
+  <div class="uk-grid-match uk-column-1-4@m uk-column-1-2@s uk-flex-column" uk-height-match>
     <%= unless Enum.empty?(@posts) do %>
       <%= for post <- @posts do %>
         <% link_post = show_link_with_date @conn, post %>
-        <div class="media-posts uk-flex-column uk-grid-medium uk-flex" uk-grid>
+        <div class="media-posts uk-flex-column uk-flex">
           <div class="uk-width-1-1">
             <%= link to: link_post do %>
               <div class="image" src="<%= post.thumbnail %>" style="background-image: url('<%= post.thumbnail %>')">
@@ -25,11 +25,10 @@
         </div>
       <% end %>
 
-      <%= if Enum.at(@posts, 1) != nil do %>
-        <%= link "Siguiente",
-              to: "#{site_path(@conn, :public_show_media)}?page=#{@page+1}" %>
-      <% end %>
-
     <% end %>
   </div>
+
+  <%= if Enum.at(@posts, 1) != nil do %>
+    <%= link "Siguiente", to: "#{site_path(@conn, :public_show_media)}?page=#{@page+1}" %>
+  <% end %>
 </div>

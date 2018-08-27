@@ -1,6 +1,4 @@
-<%
-  alias ElephantInTheRoomWeb.PostView
-%>
+<% alias ElephantInTheRoomWeb.PostView %>
 
 <%= if assigns[:post] do %>
   <div class="post post-regular uk-flex uk-flex-column">
