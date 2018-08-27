@@ -1,9 +1,8 @@
-
 <% alias ElephantInTheRoomWeb.PostView %>
 
-<div class="uk-container uk-container-small">
-  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title">Media</h1>
-  <div class="uk-grid-match uk-column-1-4@m uk-column-1-2@s uk-flex-column" uk-height-match>
+<div class="media-container uk-container">
+  <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase category-title">Media</h1>
+  <div class="uk-column-1-4@m uk-column-1-2@s uk-flex-column" uk-height-match>
     <%= unless Enum.empty?(@posts) do %>
       <%= for post <- @posts do %>
         <% link_post = show_link_with_date @conn, post %>
