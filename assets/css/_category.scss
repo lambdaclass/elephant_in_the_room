@@ -12,7 +12,16 @@
   }
 
   .image {
+    height: 625px;
     position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    @media screen and (max-width: 640px) {
+      height: 300px;
+      position: relative;
+    }
   }
 }
 
@@ -34,6 +43,18 @@
   p {
     margin: 5px 0;
     font-size: 90%;
+  }
+
+  .image {
+    height: 150px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+
+    @media screen and (min-width: 640px) {
+      height: 300px;
+    }
   }
 }
 
