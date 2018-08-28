@@ -61,7 +61,8 @@ defmodule ElephantInTheRoom.Posts.Post do
       :site_id,
       :author_id,
       :magazine_id,
-      :featured_level
+      :featured_level,
+      :thumbnail
     ])
     |> validate_required_site_or_magazine
     |> validate_abstract_max_length(new_attrs, 30)
@@ -160,7 +161,12 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  def validate_required_content(changeset, attrs) do
+
+  def validate_required_content(%Changeset{} = changeset, %{"thumbnail" => nil}) do
+    changeset
+  end
+
+  def validate_required_content(%Changeset{} = changeset, attrs) do
     with {:ok, "text"} <- Map.fetch(attrs, "type"),
          {:ok, content} when content != "" <- Map.fetch(attrs, "content") do
       changeset
@@ -323,6 +329,10 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   def set_thumbnail(%Changeset{valid?: false} = changeset, _attrs), do: changeset
+
+  def set_thumbnail(%Changeset{} = changeset, %{"changeset" => nil}) do
+    put_change(changeset, :thumbnail, nil)
+  end
 
   def set_thumbnail(%Changeset{} = changeset, %{"type" => "text"}) do
     url =

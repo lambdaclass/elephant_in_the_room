@@ -137,9 +137,20 @@ defmodule ElephantInTheRoomWeb.PostController do
       }) do
     post = Posts.get_post_by_slug!(site.id, slug)
 
-    {:ok, post_no_cover} = Posts.delete_cover(post)
+    {:ok, updated_post} = Posts.delete_cover(post)
 
-    render(conn, "edit.html", post: post_no_cover, changeset: Posts.change_post(post_no_cover), magazine: nil)
+    render(conn, "edit.html", post: updated_post, changeset: Posts.change_post(updated_post), magazine: nil)
+  end
+
+  def update(%{assigns: %{site: site}} = conn, %{
+    "thumbnail_delete" => "true",
+    "slug" => slug
+  }) do
+    post = Posts.get_post_by_slug!(site.id, slug)
+
+    {:ok, updated_post} = Posts.delete_thumbnail(post)
+
+    render(conn, "edit.html", post: updated_post, changeset: Posts.change_post(updated_post), magazine: nil)
   end
 
   def update(%{assigns: %{site: site}} = conn, %{"magazine_title" => magazine_title, "slug" => slug, "post" => post_params}) do
