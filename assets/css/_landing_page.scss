@@ -27,6 +27,10 @@
     hyphens: none;
     font-size: 125%;
 
+    @media screen and (max-width: 640px) {
+      padding-left: 10px;
+    }
+
     @media screen and (min-width: 640px) {
       font-size: 100%;
     }
@@ -49,9 +53,17 @@
   }
   .author {
     font-size: 65%;
+    
+    @media screen and (max-width: 640px) {
+      padding-left: 10px;
+    }
   }
   .date {
     font-size: 70%;
+
+    @media screen and (max-width: 640px) {
+      padding-left: 10px;
+    }
   }
 }
 
@@ -245,6 +257,10 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    @media screen and (max-width: 640px) {
+      height: 100px;
+    }
   }
 }
 
