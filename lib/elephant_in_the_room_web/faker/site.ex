@@ -14,25 +14,48 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
     }
   end
 
-  def insert_one(site_number, attrs \\ %{}) do
-    host = if site_number == 0, do: "localhost", else: "site-#{site_number}.com"
+  def insert_one(arg, attrs \\ %{})
+
+  def insert_one(site_number, attrs)
+    when is_integer(site_number) do
+    host = generate_local_name(site_number)
 
     changes =
       default_attrs()
       |> Map.merge(attrs)
       |> Map.put("host", host)
 
-    case Sites.create_site(changes) do
-      {:ok, site} ->
-        site
+      case Sites.create_site(changes) do
+        {:ok, site} ->
+          site
 
-      {:error, _reason} ->
-        insert_one(site_number + 1, attrs)
-    end
+        {:error, _reason} ->
+          insert_one(site_number + 1, attrs)
+      end
   end
 
-  def insert_many(n, attrs \\ %{}) do
+  def insert_one(host, attrs) when is_binary(host) do
+
+    changes =
+      default_attrs()
+      |> Map.merge(attrs)
+      |> Map.put("host", host)
+
+    Sites.create_site!(changes)
+  end
+
+  def insert_many(arg, hosts, attrs \\ %{})
+
+  def insert_many(n, nil, attrs) do
     Enum.to_list(0..n)
     |> Enum.map(fn n -> insert_one(n, attrs) end)
   end
+
+  def insert_many(_n, hosts, attrs) do
+    hosts
+    |> Enum.map(fn host -> insert_one(host, attrs) end)
+  end
+
+  defp generate_local_name(0), do: "localhost"
+  defp generate_local_name(site_number), do: "site-#{site_number}.com"
 end
