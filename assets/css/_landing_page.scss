@@ -187,7 +187,6 @@
     color: #777;
     font-size: 65%;
   }
-
 }
 
 .authors {
@@ -238,6 +237,14 @@
   }
   a {
     color: #000;
+  }
+
+  .image {
+    height: 150px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }
 

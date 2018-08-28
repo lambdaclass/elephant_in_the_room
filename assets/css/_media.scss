@@ -14,42 +14,55 @@
   }
 }
 
-.media-posts {
-  display: flex;
+.media-post {
+  h2 {
+    margin: 0;
+    font-size: 120%;
 
-    h2 {
-      margin: 0;
-      font-size: 120%;
-  
-      > a, > a:hover {
-        color: $black;
-      }
-    }
-
-    .author {
-      @media screen and (max-width: 640px) {
-        font-weight: normal;
-      }
-    }
-
-    .image {
-      height: 200px;
-      position: relative;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+    > a, > a:hover {
+      color: $black;
     }
   }
+
+  .author {
+    @media screen and (max-width: 640px) {
+      font-weight: normal;
+    }
+  }
+
+  .image {
+    height: 200px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
   
   .media-author {
     font-size: 65%;
+
+    @media screen and (max-width: $break-xs) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 
   .media-date {
     margin-top: 0px;
     font-size: 70%;
+
+    @media screen and (max-width: $break-xs) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 
   .media-title {
     font-size: 70%;
+
+    @media screen and (max-width: $break-xs) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
