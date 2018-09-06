@@ -20,8 +20,8 @@ defmodule ElephantInTheRoom.Sites.Ad do
   def changeset(%Ad{} = ad, attrs \\ %{}) do
     ad
     |> cast(attrs, [:name, :content, :pos, :site_id])
-    |> validate_required([:name, :content, :pos, :site_id])
-    |> unique_constraint(:name, name: :unique_ad_name)
+    |> validate_required([:name, :content, :pos, :site_id], message: "Campo requerido.")
+    |> unique_constraint(:name, name: :unique_ad_name, message: "Ya existe.")
     |> Markdown.put_rendered_content()
   end
 

@@ -25,7 +25,7 @@ defmodule ElephantInTheRoom.Posts.Category do
   def changeset(%Category{} = category, attrs) do
     category
     |> cast(attrs, [:name, :description, :site_id])
-    |> validate_required([:name, :description, :site_id])
-    |> unique_constraint(:name)
+    |> validate_required([:name, :description, :site_id], message: "Campo requerido.")
+    |> unique_constraint(:name, message: "Ya existe.")
   end
 end

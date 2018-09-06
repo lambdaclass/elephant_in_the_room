@@ -13,6 +13,6 @@ defmodule ElephantInTheRoom.Sites.Image do
   def changeset(image, attrs) do
     image
     |> cast(attrs, [:name, :binary])
-    |> validate_required([:name, :binary])
+    |> validate_required([:name, :binary], message: "Campo requerido.")
   end
 end

@@ -31,9 +31,9 @@ defmodule ElephantInTheRoom.Sites.Site do
 
     site
     |> cast(new_attrs, [:name, :host, :description, :title, :ads_title])
-    |> validate_required([:name, :host])
-    |> unique_constraint(:name)
-    |> unique_constraint(:host)
+    |> validate_required([:name, :host], message: "Campo requerido.")
+    |> unique_constraint(:name, message: "Ya existe.")
+    |> unique_constraint(:host, message: "Ya existe.")
     |> store_image(attrs)
     |> validate_favicon(attrs)
     |> check_title(attrs)

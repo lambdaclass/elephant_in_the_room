@@ -13,7 +13,7 @@ defmodule ElephantInTheRoom.Auth.Role do
   def changeset(%Role{} = role, attrs) do
     role
     |> cast(attrs, [:name])
-    |> validate_required([:name])
-    |> unique_constraint(:name)
+    |> validate_required([:name], message: "Campo requerido.")
+    |> unique_constraint(:name, message: "Ya existe.")
   end
 end

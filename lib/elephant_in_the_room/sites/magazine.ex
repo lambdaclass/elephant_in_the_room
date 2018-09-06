@@ -20,9 +20,9 @@ defmodule ElephantInTheRoom.Sites.Magazine do
   def changeset(magazine, attrs) do
     magazine
     |> cast(attrs, [:title, :description, :site_id])
-    |> validate_required([:title, :description, :site_id])
+    |> validate_required([:title, :description, :site_id], message: "Campo requerido.")
     |> assoc_constraint(:site)
-    |> unique_constraint(:title, name: :title_unique_index)
+    |> unique_constraint(:title, name: :title_unique_index, message: "Ya existe.")
     |> validate_cover(attrs)
   end
 

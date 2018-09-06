@@ -26,8 +26,8 @@ defmodule ElephantInTheRoom.Posts.Tag do
     tag
     |> cast(attrs, [:name, :color, :site_id])
     |> ensure_color(tag, attrs)
-    |> validate_required([:name, :color, :site_id])
-    |> unique_constraint(:name)
+    |> validate_required([:name, :color, :site_id], message: "Campo requerido.")
+    |> unique_constraint(:name, message: "Ya existe.")
   end
 
   defp ensure_color(changeset, tag, attrs) do

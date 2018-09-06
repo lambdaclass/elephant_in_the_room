@@ -21,12 +21,12 @@ defmodule ElephantInTheRoom.Auth.User do
   def changeset(%User{} = user, attrs \\ %{}) do
     user
     |> cast(attrs, [:username, :firstname, :lastname, :email, :password, :role_id])
-    |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id])
-    |> unique_constraint(:username)
-    |> unique_constraint(:email)
-    |> validate_format(:email, ~r/.+@.+\..+/i)
-    |> validate_length(:password, min: 6)
-    |> validate_length(:username, min: 4)
+    |> validate_required([:username, :firstname, :lastname, :email, :password, :role_id], message: "Campo requerido.")
+    |> unique_constraint(:username, message: "Ya existe.")
+    |> unique_constraint(:email, message: "Ya existe.")
+    |> validate_format(:email, ~r/.+@.+\..+/i, message: "E-mail con formato incorrecto.")
+    |> validate_length(:password, min: 6, message: "Minimo 6 caracteres")
+    |> validate_length(:username, min: 4, message: "Minimo 4 caracteres")
     |> put_pass_hash()
   end
 
