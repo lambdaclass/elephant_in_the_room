@@ -1,11 +1,9 @@
 defmodule ElephantInTheRoom.Posts.Post do
   use ElephantInTheRoom.Schema
   import Ecto.Changeset
-  alias Ecto.Changeset
-  alias ElephantInTheRoom.Posts
-  alias ElephantInTheRoom.Posts.{Category, Post, Tag}
-  alias ElephantInTheRoom.Repo
-  alias ElephantInTheRoom.Sites
+  alias Ecto.{Changeset, UUID}
+  alias ElephantInTheRoom.{Posts, Posts.Category, Posts.Post, Posts.Tag}
+  alias ElephantInTheRoom.{Repo, Sites}
   alias ElephantInTheRoom.Sites.{Author, Magazine, Markdown, Site}
   alias ElephantInTheRoomWeb.Uploaders.Image
 
@@ -13,6 +11,8 @@ defmodule ElephantInTheRoom.Posts.Post do
     field(:title, :string)
     field(:slug, :string)
     field(:abstract, :string)
+    field(:type, :string)
+    field(:media, :string)
     field(:content, :string)
     field(:rendered_content, :string)
     field(:cover, :string)
@@ -54,22 +54,86 @@ defmodule ElephantInTheRoom.Posts.Post do
       :title,
       :content,
       :slug,
+      :type,
+      :media,
       :inserted_at,
       :abstract,
       :site_id,
       :author_id,
       :magazine_id,
-      :featured_level
+      :featured_level,
+      :thumbnail
     ])
     |> validate_required_site_or_magazine
     |> validate_abstract_max_length(new_attrs, 30)
     |> do_put_assoc(:tags, attrs)
+    |> check_media(attrs)
     |> do_put_assoc(:categories, attrs)
-    |> validate_required([:title, :content])
+    |> validate_required([:title, :type])
+    |> validate_required_content(attrs)
+    |> check_post_type()
     |> Markdown.put_rendered_content()
+    |> put_media_content(attrs)
     |> unique_slug_constraint
     |> store_cover(attrs)
-    |> set_thumbnail
+    |> set_thumbnail(attrs)
+  end
+
+  defp put_media_content(changeset, %{"type" => "text"}), do: changeset
+
+  defp put_media_content(changeset, %{"type" => type, "media" => media})
+       when type != "text" do
+    media_iframe = generate_iframe(type, media)
+
+    case media_iframe do
+      {:ok, iframe} ->
+        new_content =
+          changeset
+          |> get_field(:rendered_content)
+          |> (fn rendered_content -> "#{iframe} <br/><br/> #{rendered_content}" end).()
+
+        put_change(changeset, :rendered_content, new_content)
+
+      _ ->
+        add_error(changeset, :media, "Enlace incorrecto. ")
+    end
+  end
+
+  defp put_media_content(changeset, _attrs), do: changeset
+
+  def generate_iframe("video", media) do
+    case parse_youtube_link(media) do
+      {:ok, video_id} ->
+        {:ok,
+         ~s(<iframe width="560" height="315" src="https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>)}
+
+      _ ->
+        {:error, :no_video_found}
+    end
+  end
+
+  def generate_iframe("audio", media) do
+    case check_soundcloud_link(media) do
+      {:ok, media} ->
+        {:ok, media}
+
+      _ ->
+        {:error, :no_audio_found}
+    end
+  end
+
+  def check_soundcloud_link(media) do
+    soundcloud_pattern = ~r/https?:\/\/w.soundcloud\.com\/\S+\/\S+$/i
+
+    case Regex.run(soundcloud_pattern, media) do
+      nil ->
+        {:error, :no_audio_found}
+
+      _ ->
+        {:ok, media}
+    end
   end
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
@@ -85,6 +149,36 @@ defmodule ElephantInTheRoom.Posts.Post do
 
   defp validate_abstract_max_length(changeset, _attrs, _max), do: changeset
 
+  defp check_post_type(changeset) do
+    case get_field(changeset, :magazine_id) do
+      nil ->
+        changeset
+
+      _magazine_id ->
+        if get_field(changeset, :type) != "text",
+          do: add_error(changeset, :type, "Magazine posts can't be of type Audio or Video"),
+          else: changeset
+    end
+  end
+
+
+  def validate_required_content(%Changeset{} = changeset, %{"thumbnail" => nil}) do
+    changeset
+  end
+
+  def validate_required_content(%Changeset{} = changeset, attrs) do
+    with {:ok, "text"} <- Map.fetch(attrs, "type"),
+         {:ok, content} when content != "" <- Map.fetch(attrs, "content") do
+      changeset
+    else
+      {:ok, type} when type == "audio" or type == "video" ->
+        changeset
+
+      _reason ->
+        add_error(changeset, :content, "Debe ingresar contenido")
+    end
+  end
+
   def validate_required_site_or_magazine(changeset) do
     case get_field(changeset, :site_id) do
       nil ->
@@ -92,18 +186,81 @@ defmodule ElephantInTheRoom.Posts.Post do
           nil ->
             add_error(changeset, :site_id, "Site does not exist")
 
-          _ ->
+          _magazine_id ->
             changeset
         end
 
-      _ ->
+      _site_id ->
         case get_field(changeset, :magazine_id) do
           nil ->
             changeset
 
-          _ ->
+          _magazine_id ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
+    end
+  end
+
+  def check_media(%Changeset{} = changeset, %{"media" => "", "type" => type}) do
+    case type do
+      "text" ->
+        changeset
+
+      "audio" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
+
+      "video" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
+    end
+  end
+
+  def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "video"}) do
+    case get_youtube_thumbnail(media) do
+      {:ok, image_name} ->
+        Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
+
+      {:error, :no_video_found} ->
+        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
+    end
+  end
+
+  def check_media(%Changeset{} = changeset, %{"media" => _media, "type" => "audio"}) do
+    image = get_soundcloud_thumbnail(changeset)
+    Changeset.put_change(changeset, :thumbnail, image)
+  end
+
+  def check_media(changeset, _attrs), do: changeset
+
+  defp get_soundcloud_thumbnail(changeset), do: get_default_image(changeset)
+
+  defp parse_youtube_link(link) do
+    youtube_video_pattern =
+      ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
+
+    case Regex.run(youtube_video_pattern, link) do
+      [_video_link, video_id | _rest] ->
+        {:ok, video_id}
+
+      _ ->
+        {:error, :no_video_found}
+    end
+  end
+
+  defp get_youtube_thumbnail(content) do
+    with {:ok, video_id} <- parse_youtube_link(content),
+         {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
+      {:ok, filename} = Plug.Upload.random_file("thumbnail")
+      File.write(filename, response.body)
+
+      upload = %Plug.Upload{
+        path: filename,
+        content_type: "image/jpg",
+        filename: UUID.generate()
+      }
+
+      Image.store(upload)
+    else
+      _ -> {:error, :no_video_found}
     end
   end
 
@@ -156,8 +313,13 @@ defmodule ElephantInTheRoom.Posts.Post do
     put_change(changeset, :cover, nil)
   end
 
+  def store_cover(%Changeset{} = changeset, %{"cover" => _cover, "type" => type})
+      when type != "text" do
+    add_error(changeset, :cover, "Solo los articulos de tipo texto pueden tener portada")
+  end
+
   def store_cover(%Changeset{} = changeset, %{"cover" => cover}) do
-    {:ok, cover_name} = Image.store(%{cover | filename: Ecto.UUID.generate()})
+    {:ok, cover_name} = Image.store(%{cover | filename: UUID.generate()})
 
     put_change(changeset, :cover, "/images/" <> cover_name)
   end
@@ -166,11 +328,13 @@ defmodule ElephantInTheRoom.Posts.Post do
     changeset
   end
 
-  def set_thumbnail(%Changeset{valid?: false} = changeset) do
-    changeset
+  def set_thumbnail(%Changeset{valid?: false} = changeset, _attrs), do: changeset
+
+  def set_thumbnail(%Changeset{} = changeset, %{"changeset" => nil}) do
+    put_change(changeset, :thumbnail, nil)
   end
 
-  def set_thumbnail(%Changeset{} = changeset) do
+  def set_thumbnail(%Changeset{} = changeset, %{"type" => "text"}) do
     url =
       case get_field(changeset, :cover) do
         nil ->
@@ -191,6 +355,8 @@ defmodule ElephantInTheRoom.Posts.Post do
     put_change(changeset, :thumbnail, url)
   end
 
+  def set_thumbnail(%Changeset{} = changeset, _attrs), do: changeset
+
   def put_slugified_title(%Changeset{valid?: valid?} = changeset)
       when not valid? do
     changeset
@@ -207,10 +373,6 @@ defmodule ElephantInTheRoom.Posts.Post do
       end
 
     put_change(changeset, :slug, slug)
-  end
-
-  def generate_markdown(input) do
-    Cmark.to_html(input, [:hardbreaks])
   end
 
   def parse_categories(site_id, params) do

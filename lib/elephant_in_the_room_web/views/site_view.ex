@@ -124,4 +124,8 @@ defmodule ElephantInTheRoomWeb.SiteView do
   end
 
   defp take_range_from_list([], acc, _current, _from, _to), do: acc
+
+  def media_button_by_type(%Post{type: "text"}), do: ""
+  def media_button_by_type(%Post{type: "audio"}), do: "media-volume-button"
+  def media_button_by_type(%Post{type: "video"}), do: "media-play-button"
 end

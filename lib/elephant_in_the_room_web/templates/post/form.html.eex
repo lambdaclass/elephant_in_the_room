@@ -20,7 +20,7 @@
 <div class="admin-title">
   <span class="title-text"><%= assigns[:title] %></span>
   <%= if assigns[:post] do %>
-    <div "admin-title-options">
+    <div class="admin-title-options">
       <a class="uk-button uk-button-primary uk-button-small admin-mini-button"
         href="<%= show_link(@conn, @post, @magazine) %>"
         target="_blank">
@@ -40,9 +40,15 @@
   <% end %>
 
   <div class="no-uk-margin">
-    <%= label f, :title, "Título", class: "uk-form-label" %>
+    <%= label f, :title, "Título", class: "uk-form-label field-required" %>
     <%= text_input f, :title, class: "uk-input uk-form-large", placeholder: "Título" %>
     <%= error_tag f, :title %>
+  </div>
+
+  <div class="no-uk-margin">
+    <%= label f, :type, "Tipo de Articulo", class: "uk-form-label" %>
+    <%= select f, :type, ["Texto": "text", "Audio": "audio", "Video": "video"],  class: "post-form-type uk-input uk-form-large" %>
+    <%= error_tag f, :type %>
   </div>
 
   <div class="no-uk-margin">
@@ -57,13 +63,29 @@
     <%= error_tag f, :abstract %>
   </div>
 
+  <div class="post-media-input form-group">
+    <%= label f, :media, "Media", class: "uk-form-label" %>
+    <%= text_input f, :media, class: "uk-input uk-form-small" %>
+    <%= error_tag f, :media %>
+  </div>
+
   <div class="form-group">
-    <%= label f, :content, "Contenido", class: "uk-form-label" %>
+    <%= label f, :content, "Contenido", class: "uk-form-label field-required" %>
     <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
   </div>
 
-  <div class="form-group uk-width-1-1">
+  <div class="post-thumbnail-field form-group uk-width-1-1">
+    <%= label f, :thumbnail, "Vista previa", class: "uk-form-label" %>
+    <%= if @changeset.data.thumbnail do %>
+      <img src="<%= @changeset.data.thumbnail %>" width="200">
+      <%= submit "Eliminar vista previa", name: "thumbnail_delete", value: "true" %>
+    <% end %>
+    <%= file_input f, :thumbnail %>
+    <%= error_tag f, :thumbnail %>
+  </div>
+
+  <div class="post-cover-field form-group uk-width-1-1">
     <%= label f, :cover, "Portada", class: "uk-form-label"%>
     <%= if @changeset.data.cover do %>
       <img src="<%= @changeset.data.cover %>" width="200">
@@ -109,8 +131,8 @@
 
   <div class="form-group">
     <%= label f, :featured_level, "Nivel de destacado", class: "uk-form-label" %>
-    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small", 
-          selected: assigns[:featured_level], 
+    <%= select f, :featured_level, FeaturedView.get_available_featured_levels(), class: "uk-select uk-form-small",
+          selected: assigns[:featured_level],
           prompt: "", style: "width: 100%" %>
     <%= error_tag f, :featured_level %>
   </div>
@@ -129,3 +151,44 @@
     <i class="fas fa-trash"></i>
   <% end%>
 <% end %>
+
+<script>
+const postType = document.getElementsByClassName('post-form-type').item(0);
+const mediaInput = document.getElementsByClassName('post-media-input').item(0);
+const coverField = document.getElementsByClassName('post-cover-field').item(0);
+const thumbnailField = document.getElementsByClassName('post-thumbnail-field').item(0);
+
+switch (postType.value) {
+  case "text":
+    mediaInput.style.display = 'none';  
+    thumbnailField.style.display = 'none';
+    break;
+  case "audio":
+    coverField.style.display = 'none';
+    break;
+  case "video":
+    thumbnailField.style.display = 'none';
+    coverField.style.display = 'none';
+    break;
+}
+
+postType.onchange = event => {
+  switch (event.target.value) {
+    case "text":
+      mediaInput.style.display = 'none';
+      coverField.style.display = 'block';
+      thumbnailField.style.display = 'none';
+      break;
+    case "audio":
+      mediaInput.style.display = 'block';
+      coverField.style.display = 'none';
+      thumbnailField.style.display = 'block';
+      break;
+    case "video":
+      mediaInput.style.display = 'block';
+      coverField.style.display = 'none';
+      thumbnailField.style.display = 'none';
+      break; 
+  }
+}
+</script>

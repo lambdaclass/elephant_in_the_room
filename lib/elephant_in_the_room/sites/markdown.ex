@@ -7,11 +7,19 @@ defmodule ElephantInTheRoom.Sites.Markdown do
       do: changeset
 
   def put_rendered_content(%Changeset{} = changeset) do
-    content = get_field(changeset, :content)
-    rendered_content = generate_markdown(content)
+    case get_field(changeset, :content) do
+      nil ->
+        rendered_content = generate_markdown("")
 
-    put_change(changeset, :rendered_content, rendered_content)
-    |> validate_length(:rendered_content, min: 1)
+        put_change(changeset, :rendered_content, rendered_content)
+
+      content ->
+        rendered_content = generate_markdown(content)
+
+        changeset
+        |> put_change(:rendered_content, rendered_content)
+        |> validate_length(:rendered_content, min: 1)
+    end
   end
 
   def generate_markdown(input), do: Cmark.to_html(input, [:hardbreaks])

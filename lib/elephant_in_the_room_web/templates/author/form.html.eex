@@ -7,13 +7,13 @@
 
   <fieldset class="uk-fieldset">
     <div class="uk-margin">
-      <%= label f, :name, "Nombre", class: "uk-form-label" %>
+      <%= label f, :name, "Nombre", class: "uk-form-label field-required" %>
       <%= text_input f, :name, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :name %>
     </div>
 
     <div class="uk-margin">
-      <%= label f, :is_columnist, "Columnista?", class: "uk-form-label" %>
+      <%= label f, :is_columnist, "Columnista?", class: "uk-form-label field-required" %>
       <%= radio_button(f, :is_columnist, true) %> Sí
       <%= radio_button(f, :is_columnist, false) %> No
       <%= error_tag f, :name %>

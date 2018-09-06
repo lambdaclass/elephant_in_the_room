@@ -9,6 +9,7 @@
 @import "_post";
 @import "_landing_page";
 @import "_category";
+@import "_media";
 @import "_magazine";
 @import "_administration";
 
@@ -211,4 +212,9 @@ div[role=main] {
   @media (min-width: 1376px) {
     min-width: 1280px;
   }
+}
+
+.field-required::after {
+  content: '*';
+  color: red;
 }

@@ -57,6 +57,7 @@ defmodule ElephantInTheRoomWeb.Router do
       post("/feedback", FeedbackController, :create)
       get("/latest", SiteController, :public_show_latest)
       get("/popular", SiteController, :public_show_popular)
+      get("/media", SiteController, :public_show_media)
       get("/author/:author_name", AuthorController, :public_show)
       get("/post/:year/:month/:day/:slug", PostController, :public_show)
       get("/category/:category_name", CategoryController, :public_show)

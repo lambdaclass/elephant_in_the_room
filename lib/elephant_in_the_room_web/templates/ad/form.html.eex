@@ -12,19 +12,19 @@
   <% end %>
 
   <div class="no-uk-margin">
-    <%= label f, :name, "Título", class: "uk-form-label" %>
+    <%= label f, :name, "Título", class: "uk-form-label field-required" %>
     <%= text_input f, :name, class: "uk-input uk-form-large", placeholder: "Título" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :pos, "Posicion", class: "uk-form-label" %>
+    <%= label f, :pos, "Posicion", class: "uk-form-label field-required" %>
     <%= text_input f, :pos, class: "uk-input", type: "number" %>
     <%= error_tag f, :pos %>
   </div>
 
   <div class="form-group">
-    <%= label f, :content, "Contenido", class: "uk-form-label" %>
+    <%= label f, :content, "Contenido", class: "uk-form-label field-required" %>
     <%= textarea f, :content, class: "post-edit-content uk-textarea uk-form-small", rows: "15"%>
     <%= error_tag f, :content %>
   </div>

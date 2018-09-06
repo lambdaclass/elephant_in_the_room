@@ -20,13 +20,13 @@
 
   <fieldset class="uk-fieldset">
     <div class="uk-no-margin">
-      <%= label f, :name, "Nombre", class: "uk-form-label" %>
+      <%= label f, :name, "Nombre", class: "uk-form-label field-required" %>
       <%= text_input f, :name, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :name %>
     </div>
 
     <div class="uk-no-margin">
-      <%= label f, :color, "Color", class: "uk-form-label" %>
+      <%= label f, :color, "Color", class: "uk-form-label field-required" %>
       <%= text_input f, :color, class: "uk-form-controls uk-input"%>
       <%= error_tag f, :name %>
     </div>
