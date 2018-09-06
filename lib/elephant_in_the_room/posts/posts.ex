@@ -199,6 +199,12 @@ defmodule ElephantInTheRoom.Posts do
     |> Repo.update()
   end
 
+  def delete_thumbnail(%Post{} = post) do
+    post
+    |> Post.changeset(%{"thumbnail" => nil})
+    |> Repo.update()
+  end
+
   def gen_og_meta_for_post(
         conn,
         %Post{title: title, thumbnail: _image, abstract: description} = post

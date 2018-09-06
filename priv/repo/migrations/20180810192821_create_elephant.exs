@@ -133,6 +133,8 @@ defmodule ElephantInTheRoom.Repo.Migrations.CreateElephant do
       add(:title, :string)
       add(:slug, :string)
       add(:abstract, :text)
+      add(:type, :string, null: false)
+      add(:media, :text)
       add(:content, :text)
       add(:rendered_content, :text)
       add(:cover, :string)

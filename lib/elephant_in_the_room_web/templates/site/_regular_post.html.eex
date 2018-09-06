@@ -1,11 +1,10 @@
-<%
-  alias ElephantInTheRoomWeb.PostView
-%>
+<% alias ElephantInTheRoomWeb.PostView %>
 
 <%= if assigns[:post] do %>
   <div class="post post-regular uk-flex uk-flex-column">
     <%= link to: PostView.show_link(@conn, @post) do %>
       <div class="image" style="background-image: url('<%= @post.thumbnail %>')">
+        <div class="media-button <%= media_button_by_type(@post) %>"></div>
       </div>
     <% end %>
 
