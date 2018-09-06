@@ -7,7 +7,7 @@
 
   <fieldset class="uk-fieldset">
     <div class="uk-margin">
-      <%= label f, :name, "Nombre", class: "uk-form-label" %>
+      <%= label f, :name, "Nombre", class: "uk-form-label field-required" %>
       <%= text_input f, :name, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :name %>
     </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="uk-margin">
-      <%= label f, :host, "Dominio", class: "uk-form-label" %>
+      <%= label f, :host, "Dominio", class: "uk-form-label field-required" %>
       <%= text_input f, :host, class: "uk-form-controls uk-input" %>
       <%= error_tag f, :host %>
     </div>
