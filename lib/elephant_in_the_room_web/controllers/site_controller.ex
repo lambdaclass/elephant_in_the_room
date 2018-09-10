@@ -129,20 +129,39 @@ defmodule ElephantInTheRoomWeb.SiteController do
     ads = Ad.get(site, :all)
     meta = Sites.gen_og_meta_for_site(conn)
 
-    {featured_posts_with_levels, aditional_posts} =
+    {featured_posts_with_levels, _aditional_posts} =
       Featured.get_all_featured_posts_ensure_filled_cached(site.id, 15)
+
+    section_1 =
+      featured_posts_with_levels
+      |> Featured.posts_from_level(1)
+      |> Enum.filter(fn post -> post.show end)
+
+    section_2 =
+      featured_posts_with_levels
+      |> Featured.posts_from_level(2)
+      |> Enum.filter(fn post -> post.show end)
+
+    section_3 =
+      featured_posts_with_levels
+      |> Featured.posts_from_level(3)
+      |> Enum.filter(fn post -> post.show end)
+
+    section_4 =
+      featured_posts_with_levels
+      |> Featured.posts_from_level(4)
+      |> Enum.filter(fn post -> post.show end)
 
     render(
       conn,
       "public_show.html",
       site: site,
       meta: meta,
-      latest_posts: Sites.get_latest_posts(site, amount: 15),
-      section_1_posts: Featured.get_posts_from_level_pair(1, featured_posts_with_levels),
-      section_2_posts: Featured.get_posts_from_level_pair(2, featured_posts_with_levels),
-      section_3_posts: Featured.get_posts_from_level_pair(3, featured_posts_with_levels),
-      section_4_posts: Featured.get_posts_from_level_pair(4, featured_posts_with_levels),
-      latest_posts: aditional_posts,
+      latest_posts: Sites.get_latest_posts(site, amount: 10),
+      section_1_posts: section_1,
+      section_2_posts: section_2,
+      section_3_posts: section_3,
+      section_4_posts: section_4,
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
       popular_posts: Sites.get_popular_posts(site, amount: 10),
       ads: ads
