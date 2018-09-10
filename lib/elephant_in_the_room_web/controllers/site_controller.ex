@@ -152,18 +152,28 @@ defmodule ElephantInTheRoomWeb.SiteController do
       |> Featured.posts_from_level(4)
       |> Enum.filter(fn post -> post.show end)
 
+      latest =
+        site
+        |> Sites.get_latest_posts(amount: 10)
+        |> Enum.filter(fn post -> post.show end)
+
+      popular =
+        site
+        |> Sites.get_popular_posts(amount: 10)
+        |> Enum.filter(fn post -> post.show end)
+
     render(
       conn,
       "public_show.html",
       site: site,
       meta: meta,
-      latest_posts: Sites.get_latest_posts(site, amount: 10),
+      latest_posts: latest,
       section_1_posts: section_1,
       section_2_posts: section_2,
       section_3_posts: section_3,
       section_4_posts: section_4,
       columnists_and_posts: Sites.get_columnists_and_posts(site, 10),
-      popular_posts: Sites.get_popular_posts(site, amount: 10),
+      popular_posts: popular,
       ads: ads
     )
   end
