@@ -26,7 +26,7 @@
     <fieldset class="uk-fieldset">
       <div class="uk-margin">
         <%= label f, :text, "Texto", class: "uk-form-label" %>
-        <%= textarea f, :text, class: "feedback-text uk-form-controls uk-input" %>
+        <%= textarea f, :text, class: "feedback-text uk-form-controls uk-textarea", rows: "4", cols: "50" %>
         <%= error_tag f, :text %>
       </div>
 
