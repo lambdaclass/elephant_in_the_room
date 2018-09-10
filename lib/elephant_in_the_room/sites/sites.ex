@@ -68,6 +68,13 @@ defmodule ElephantInTheRoom.Sites do
     |> Repo.insert()
   end
 
+  def create_site!(attrs \\ %{}) do
+    %Site{}
+    |> Site.changeset(attrs)
+    |> Changeset.cast_assoc(:categories, with: &Category.changeset/2)
+    |> Repo.insert!()
+  end
+
   def update_site(%Site{} = site, attrs) do
     site
     |> Site.changeset(attrs)

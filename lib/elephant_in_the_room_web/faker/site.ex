@@ -17,7 +17,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
   def insert_one(arg, attrs \\ %{})
 
   def insert_one(site_number, attrs)
-    when is_integer(site_number) do
+      when is_integer(site_number) do
     host = generate_local_name(site_number)
 
     changes =
@@ -25,17 +25,16 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
       |> Map.merge(attrs)
       |> Map.put("host", host)
 
-      case Sites.create_site(changes) do
-        {:ok, site} ->
-          site
+    case Sites.create_site(changes) do
+      {:ok, site} ->
+        site
 
-        {:error, _reason} ->
-          insert_one(site_number + 1, attrs)
-      end
+      {:error, _reason} ->
+        insert_one(site_number + 1, attrs)
+    end
   end
 
   def insert_one(host, attrs) when is_binary(host) do
-
     changes =
       default_attrs()
       |> Map.merge(attrs)
@@ -44,14 +43,14 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
     Sites.create_site!(changes)
   end
 
-  def insert_many(arg, hosts, attrs \\ %{})
+  def insert_many(arg, attrs \\ %{})
 
-  def insert_many(n, nil, attrs) do
-    Enum.to_list(0..n)
+  def insert_many(number, attrs) when is_integer(number) do
+    Enum.to_list(0..number)
     |> Enum.map(fn n -> insert_one(n, attrs) end)
   end
 
-  def insert_many(_n, hosts, attrs) do
+  def insert_many(hosts, attrs) do
     hosts
     |> Enum.map(fn host -> insert_one(host, attrs) end)
   end
