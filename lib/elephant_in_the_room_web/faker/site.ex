@@ -50,7 +50,7 @@ defmodule ElephantInTheRoomWeb.Faker.Site do
     |> Enum.map(fn n -> insert_one(n, attrs) end)
   end
 
-  def insert_many(hosts, attrs) do
+  def insert_many(hosts, attrs) when is_list(hosts) do
     hosts
     |> Enum.map(fn host -> insert_one(host, attrs) end)
   end
