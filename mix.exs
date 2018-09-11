@@ -63,7 +63,8 @@ defmodule ElephantInTheRoom.Mixfile do
 
       # image uploads
       {:arc, "~> 0.8.0"},
-      {:arc_ecto, "~> 0.7.0"}
+      {:arc_ecto, "~> 0.7.0"},
+      {:oembed, "~> 0.2.2"}
     ]
   end
 
