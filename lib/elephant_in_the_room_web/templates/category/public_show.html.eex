@@ -1,6 +1,4 @@
-<%
-  alias ElephantInTheRoomWeb.{PostView, SiteView}
-%>
+<% alias ElephantInTheRoomWeb.{PostView, SiteView} %>
 
 <div class="uk-container uk-container-small">
   <h1 class="uk-heading-primary uk-heading-divider uk-text-bold uk-text-uppercase uk-margin-top category-title"><%= @category.name %></h1>
@@ -12,7 +10,9 @@
         <% link_main_post = SiteView.show_link_with_date @conn, main_post %>
         <div class="uk-width-1-1 uk-margin-bottom">
           <%= link to: link_main_post do %>
-            <img data-src="<%= main_post.thumbnail %>" uk-img>
+            <div class="image" style="background-image: url('<%= main_post.thumbnail %>')">
+              <div class="media-button <%= SiteView.media_button_by_type(main_post) %>"></div>
+            </div>
           <% end %>
         </div>
         <div class="uk-width-1-1 uk-text-center uk-text-left@s">
@@ -31,7 +31,9 @@
         <div class="category-posts" uk-grid>
           <div class="uk-width-1-2">
             <%= link to: link_post do %>
-              <img data-src="<%= post.thumbnail %>" uk-img>
+              <div class="image" style="background-image: url('<%= post.thumbnail %>')">
+                <div class="media-button <%= SiteView.media_button_by_type(post) %>"></div>
+              </div>
             <% end %>
           </div>
           <div class="uk-width-1-2">
