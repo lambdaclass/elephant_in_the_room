@@ -162,6 +162,10 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
+  def validate_required_content(%Changeset{} = changeset, %{"cover" => nil}) do
+    changeset
+  end
+
   def validate_required_content(%Changeset{} = changeset, %{"thumbnail" => nil}) do
     changeset
   end
