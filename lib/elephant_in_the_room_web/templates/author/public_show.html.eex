@@ -1,6 +1,4 @@
-<%
-  alias ElephantInTheRoomWeb.Uploaders.Image
-%>
+<% alias ElephantInTheRoomWeb.{Uploaders.Image, SiteView} %>
 
 <div class="uk-container main-body-public-content">
   <div class="uk-margin-top" uk-grid>
@@ -14,12 +12,14 @@
   </div>
 
   <div uk-grid>
-    <%= for post <- @author.posts do %>
-      <div class="uk-width-1-3@m">
+    <%= for post <- @posts do %>
+      <div class="uk-width-1-3@m category-posts">
         <%= link to: show_link_with_date(@conn, post) do %>
           <div class="uk-card uk-card-default uk-card-body">
             <div class="uk-card-media-top">
-              <img src="<%= post.cover %>">
+              <div class="image" style="background-image: url('<%= post.thumbnail %>')">
+                <div class="media-button <%= SiteView.media_button_by_type(post) %>"></div>
+              </div>
             </div>
             <h2 class="uk-card-title uk-text-capitalize uk-text-center"><%= post.title %></h2>
             <p class="uk-text-justify"><%= post.abstract %></p>

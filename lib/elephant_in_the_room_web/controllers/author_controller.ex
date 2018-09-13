@@ -46,12 +46,16 @@ defmodule ElephantInTheRoomWeb.AuthorController do
     render(conn, "show.html", author: author)
   end
 
-  def public_show(conn, %{"author_name" => name}) do
+  def public_show(%{assigns: %{site: site}} = conn, %{"author_name" => name}) do
     author =
       Sites.from_name!(name, Author)
       |> Repo.preload(posts: [:site])
 
-    render(conn, "public_show.html", author: author)
+    posts =
+      author.posts
+      |> Enum.filter(fn post -> post.site_id == site.id end)
+
+    render(conn, "public_show.html", author: author, posts: posts)
   end
 
   def edit(conn, %{"author_name" => name}) do
