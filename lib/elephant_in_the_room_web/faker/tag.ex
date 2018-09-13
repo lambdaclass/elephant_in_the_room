@@ -14,8 +14,12 @@ defmodule ElephantInTheRoomWeb.Faker.Tag do
     case Posts.create_tag(attrs["site"], changes) do
       {:ok, tag} ->
         tag
+
       {:error, error} ->
-        Kernel.inspect(error) |> Logger.warn
+        error
+        |> Kernel.inspect()
+        |> Logger.warn()
+
         insert_one(attrs)
     end
   end

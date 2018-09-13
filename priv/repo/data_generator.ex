@@ -1,7 +1,11 @@
 alias ElephantInTheRoomWeb.Faker, as: ElephantFaker
 
+path = "./sites.txt"
+
+{number_of_sites, hosts} = ElephantFaker.Utils.get_sites_config(path)
+
 config = %{
-  sites: 2,
+  sites: number_of_sites || 2,
   magazines: 15,
   categories: 4,
   authors: 5,
@@ -15,7 +19,7 @@ config = %{
 authors = ElephantFaker.Author.insert_many(config.authors)
 _users = ElephantFaker.User.insert_many(config.users)
 
-for site <- ElephantFaker.Site.insert_many(config.sites) do
+for site <- ElephantFaker.Site.insert_many(hosts || config.sites) do
   magazines = ElephantFaker.Magazine.insert_many(config.magazines, %{"site_id" => site.id})
   categories = ElephantFaker.Category.insert_many(config.categories, %{"site" => site})
   tags = ElephantFaker.Tag.insert_many(config.tags, %{"site" => site})

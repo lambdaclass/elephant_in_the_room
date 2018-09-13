@@ -53,4 +53,20 @@ defmodule ElephantInTheRoomWeb.Faker.Utils do
 
     Map.put(attrs, "image", uploaded_image)
   end
+
+  def get_sites_config(path) do
+    case File.read(path) do
+      {:ok, content} ->
+        hosts =
+          content
+          |> String.split("\n")
+          |> Enum.filter(fn str -> str != "" end)
+
+        {length(hosts), hosts}
+
+      {:error, reason} ->
+        IO.puts(reason)
+        {nil, nil}
+    end
+  end
 end
