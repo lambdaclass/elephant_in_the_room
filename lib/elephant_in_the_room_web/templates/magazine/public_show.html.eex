@@ -50,7 +50,7 @@
       <div class="uk-text-center magazine-archive">
         <%= link "Ediciones", to: magazine_path(@conn, :public_index) %>
         <hr>
-        <div class="uk-child-width-1-2" uk-grid>
+        <div class="uk-child-width-1-1" uk-grid>
           <%= for magazine <- @magazines do %>
             <div class="uk-margin-remove-top">
               <%= link to: URI.encode(magazine_path(@conn, :public_show, magazine.title)) do %>
