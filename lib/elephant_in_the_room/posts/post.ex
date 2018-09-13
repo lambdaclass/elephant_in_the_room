@@ -12,6 +12,7 @@ defmodule ElephantInTheRoom.Posts.Post do
     field(:slug, :string)
     field(:abstract, :string)
     field(:type, :string)
+    field(:show, :boolean)
     field(:media, :string)
     field(:content, :string)
     field(:rendered_content, :string)
@@ -55,6 +56,7 @@ defmodule ElephantInTheRoom.Posts.Post do
       :content,
       :slug,
       :type,
+      :show,
       :media,
       :inserted_at,
       :abstract,

@@ -40,9 +40,9 @@ defmodule ElephantInTheRoom.Posts.Featured do
     |> Repo.transaction
   end
 
-  def get_posts_from_level_pair(level, [{%FeaturedLevel{level: level}, posts} | _]), do: posts
-  def get_posts_from_level_pair(level, [{_, _} | moreFeatured]), do: get_posts_from_level_pair(level, moreFeatured)
-  def get_posts_from_level_pair(_, _), do: []
+  def posts_from_level([{%FeaturedLevel{level: level_number}, posts} | _], level_number), do: posts
+  def posts_from_level([{_, _} | moreFeatured], level_number), do: posts_from_level(moreFeatured, level_number)
+  def posts_from_level(_, _), do: []
 
   def get_featured_posts(%FeaturedLevel{fetch_limit: :no_fetch}, _), do: []
   def get_featured_posts(%FeaturedLevel{level: level, fetch_limit: limit}, site_id) do

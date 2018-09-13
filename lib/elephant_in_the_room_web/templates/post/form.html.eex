@@ -51,6 +51,12 @@
     <%= error_tag f, :type %>
   </div>
 
+  <div class="post-form-show-checkbox no-uk-margin">
+    <%= label f, :show, "Mostrar en Inicio", class: "uk-form-label" %>
+    <%= checkbox f, :show, class: "uk-checkbox" %>
+    <%= error_tag f, :show %>
+  </div>
+
   <div class="no-uk-margin">
     <%= label f, :author, "Autor", class: "uk-form-label" %>
     <%= select f, :author_id, get_authors(), class: "uk-select uk-form-small", selected: get_selected_author(assigns[:post]), prompt: "", style: "width: 100%" %>
@@ -157,11 +163,13 @@ const postType = document.getElementsByClassName('post-form-type').item(0);
 const mediaInput = document.getElementsByClassName('post-media-input').item(0);
 const coverField = document.getElementsByClassName('post-cover-field').item(0);
 const thumbnailField = document.getElementsByClassName('post-thumbnail-field').item(0);
+const showPostCheckbox = document.getElementsByClassName('post-form-show-checkbox').item(0)
 
 switch (postType.value) {
   case "text":
     mediaInput.style.display = 'none';  
     thumbnailField.style.display = 'none';
+    showPostCheckbox.style.display = 'none';
     break;
   case "audio":
     coverField.style.display = 'none';
@@ -178,16 +186,19 @@ postType.onchange = event => {
       mediaInput.style.display = 'none';
       coverField.style.display = 'block';
       thumbnailField.style.display = 'none';
+      showPostCheckbox.style.display = 'none';
       break;
     case "audio":
       mediaInput.style.display = 'block';
       coverField.style.display = 'none';
       thumbnailField.style.display = 'block';
+      showPostCheckbox.style.display = 'block';
       break;
     case "video":
       mediaInput.style.display = 'block';
       coverField.style.display = 'none';
       thumbnailField.style.display = 'none';
+      showPostCheckbox.style.display = 'block';
       break; 
   }
 }
