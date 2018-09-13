@@ -330,7 +330,7 @@ defmodule ElephantInTheRoom.Sites do
     Magazine
     |> where([m], m.site_id == ^site.id)
     |> order_by(desc: :inserted_at)
-    |> Repo.paginate(page: page_number)
+    |> Repo.paginate(page: page_number, page_size: 5)
   end
 
   @doc """
