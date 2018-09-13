@@ -4,9 +4,13 @@
 }
 
 .magazine-index-cover {
-  width: 100%;
+  width: 60%;
   height: 130px;
   object-fit: cover;
+
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
 }
 
 .magazine {
