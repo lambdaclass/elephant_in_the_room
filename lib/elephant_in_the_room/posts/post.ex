@@ -91,11 +91,8 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
-  # Test this case: to reproduce create a post of type text and submit it.
-  # defp put_media_content(%Changeset{} = changeset, %{"type" => "text"}), do: changeset
-
-  defp put_media_content(%Changeset{} = changeset, %{"type" => type, "media" => media}) when
-    type != "text" do
+  defp put_media_content(%Changeset{} = changeset, %{"type" => type, "media" => media})
+       when type != "text" do
     with {:ok, media_properties} <- OEmbed.for(media),
          true <- valid_provider?(media_properties.provider_name, type),
          {:ok, response} <- HTTPoison.get(media_properties.thumbnail_url) do
@@ -129,12 +126,10 @@ defmodule ElephantInTheRoom.Posts.Post do
   end
 
   defp put_iframe(%Changeset{} = changeset, iframe) do
-    IO.inspect(iframe, label: "iframe")
     new_content =
       changeset
       |> get_field(:rendered_content)
       |> (fn rendered_content -> "#{iframe} <br/><br/> #{rendered_content}" end).()
-
 
     Changeset.put_change(changeset, :rendered_content, new_content)
   end
