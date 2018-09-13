@@ -69,7 +69,6 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> validate_required_site_or_magazine
     |> validate_abstract_max_length(new_attrs, 30)
     |> do_put_assoc(:tags, attrs)
-    |> check_media(attrs)
     |> do_put_assoc(:categories, attrs)
     |> validate_required([:title, :type])
     |> validate_required_content(attrs)
@@ -81,62 +80,64 @@ defmodule ElephantInTheRoom.Posts.Post do
     |> set_thumbnail(attrs)
   end
 
-  defp put_media_content(changeset, %{"type" => "text"}), do: changeset
+  defp put_media_content(%Changeset{} = changeset, %{"media" => "", "type" => type}) do
+    case type do
+      "text" ->
+        changeset
 
-  defp put_media_content(changeset, %{"type" => type, "media" => media})
+      "audio" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
+
+      "video" ->
+        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube o Vimeo")
+    end
+  end
+
+  defp put_media_content(%Changeset{} = changeset, %{"type" => type, "media" => media})
        when type != "text" do
-    media_iframe = generate_iframe(type, media)
-
-    case media_iframe do
-      {:ok, iframe} ->
-        new_content =
-          changeset
-          |> get_field(:rendered_content)
-          |> (fn rendered_content -> "#{iframe} <br/><br/> #{rendered_content}" end).()
-
-        put_change(changeset, :rendered_content, new_content)
-
+    with {:ok, media_properties} <- OEmbed.for(media),
+         true <- valid_provider?(media_properties.provider_name, type),
+         {:ok, response} <- HTTPoison.get(media_properties.thumbnail_url) do
+      changeset
+      |> put_iframe(media_properties.html)
+      |> put_media_thumbnail(response.body)
+    else
       _ ->
-        add_error(changeset, :media, "Enlace incorrecto. ")
+        add_error(
+          changeset,
+          :media,
+          "Debe agregar un enlace a un video de Youtube/Vimeo o un audio de SoundCloud"
+        )
     end
   end
 
-  defp put_media_content(changeset, _attrs), do: changeset
+  defp put_media_content(%Changeset{} = changeset, _attrs), do: changeset
 
-  def generate_iframe("video", media) do
-    case parse_youtube_link(media) do
-      {:ok, video_id} ->
-        {:ok,
-         ~s(<iframe width="560" height="315" src="https://www.youtube.com/embed/#{video_id}?rel=0&amp;showinfo=0"
-          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-        </iframe>)}
+  defp put_media_thumbnail(%Changeset{} = changeset, thumbnail) do
+    {:ok, filename} = Plug.Upload.random_file("thumbnail")
+    File.write(filename, thumbnail)
 
-      _ ->
-        {:error, :no_video_found}
-    end
+    upload = %Plug.Upload{
+      path: filename,
+      content_type: "image/jpg",
+      filename: UUID.generate()
+    }
+
+    {:ok, image_name} = Image.store(upload)
+    Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
   end
 
-  def generate_iframe("audio", media) do
-    case check_soundcloud_link(media) do
-      {:ok, media} ->
-        {:ok, media}
+  defp put_iframe(%Changeset{} = changeset, iframe) do
+    new_content =
+      changeset
+      |> get_field(:rendered_content)
+      |> (fn rendered_content -> "#{iframe} <br/><br/> #{rendered_content}" end).()
 
-      _ ->
-        {:error, :no_audio_found}
-    end
+    Changeset.put_change(changeset, :rendered_content, new_content)
   end
 
-  def check_soundcloud_link(media) do
-    soundcloud_pattern = ~r/https?:\/\/w.soundcloud\.com\/\S+\/\S+$/i
-
-    case Regex.run(soundcloud_pattern, media) do
-      nil ->
-        {:error, :no_audio_found}
-
-      _ ->
-        {:ok, media}
-    end
-  end
+  defp valid_provider?(provider, "video"), do: Enum.member?(["Youtube", "Vimeo"], provider)
+  defp valid_provider?(provider, "audio"), do: Enum.member?(["SoundCloud"], provider)
 
   defp validate_abstract_max_length(changeset, %{"abstract" => abstract}, max) do
     number_of_words =
@@ -163,6 +164,9 @@ defmodule ElephantInTheRoom.Posts.Post do
     end
   end
 
+  def validate_required_content(%Changeset{} = changeset, %{"cover" => nil}) do
+    changeset
+  end
 
   def validate_required_content(%Changeset{} = changeset, %{"thumbnail" => nil}) do
     changeset
@@ -200,69 +204,6 @@ defmodule ElephantInTheRoom.Posts.Post do
           _magazine_id ->
             add_error(changeset, :site_id, "Post can't belong to site and magazine")
         end
-    end
-  end
-
-  def check_media(%Changeset{} = changeset, %{"media" => "", "type" => type}) do
-    case type do
-      "text" ->
-        changeset
-
-      "audio" ->
-        add_error(changeset, :media, "Debe agregar un enlace a un audio de Soundcloud")
-
-      "video" ->
-        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
-    end
-  end
-
-  def check_media(%Changeset{} = changeset, %{"media" => media, "type" => "video"}) do
-    case get_youtube_thumbnail(media) do
-      {:ok, image_name} ->
-        Changeset.put_change(changeset, :thumbnail, "/images/#{image_name}")
-
-      {:error, :no_video_found} ->
-        add_error(changeset, :media, "Debe agregar un enlace a un video de Youtube")
-    end
-  end
-
-  def check_media(%Changeset{} = changeset, %{"media" => _media, "type" => "audio"}) do
-    image = get_soundcloud_thumbnail(changeset)
-    Changeset.put_change(changeset, :thumbnail, image)
-  end
-
-  def check_media(changeset, _attrs), do: changeset
-
-  defp get_soundcloud_thumbnail(changeset), do: get_default_image(changeset)
-
-  defp parse_youtube_link(link) do
-    youtube_video_pattern =
-      ~r/http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/
-
-    case Regex.run(youtube_video_pattern, link) do
-      [_video_link, video_id | _rest] ->
-        {:ok, video_id}
-
-      _ ->
-        {:error, :no_video_found}
-    end
-  end
-
-  defp get_youtube_thumbnail(content) do
-    with {:ok, video_id} <- parse_youtube_link(content),
-         {:ok, response} <- HTTPoison.get("https://img.youtube.com/vi/#{video_id}/0.jpg") do
-      {:ok, filename} = Plug.Upload.random_file("thumbnail")
-      File.write(filename, response.body)
-
-      upload = %Plug.Upload{
-        path: filename,
-        content_type: "image/jpg",
-        filename: UUID.generate()
-      }
-
-      Image.store(upload)
-    else
-      _ -> {:error, :no_video_found}
     end
   end
 
@@ -332,7 +273,7 @@ defmodule ElephantInTheRoom.Posts.Post do
 
   def set_thumbnail(%Changeset{valid?: false} = changeset, _attrs), do: changeset
 
-  def set_thumbnail(%Changeset{} = changeset, %{"changeset" => nil}) do
+  def set_thumbnail(%Changeset{} = changeset, %{"thumbnail" => nil}) do
     put_change(changeset, :thumbnail, nil)
   end
 
